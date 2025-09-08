@@ -38,82 +38,82 @@ export default function App() {
         }
       }}
     >
-      <Grid size={6}>
+      <Grid size={12}>
         <Stack
           direction="row"
           alignItems="center"
           justifyContent="center"
           sx={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: 8,
-            rowGap: 2,
+            display:'grid',
+            gridTemplateColumns: 'repeat(5, minmax(7em, auto))'
           }}
         >
-          <JuceKnob
-            identifier="saturationDriveSlider"
-            title="Drive"
-            defaultValue={0.5}
-            subDigit={1}
-            sx={{
-              flexShrink: 0
-            }}
-          />
+
           <JuceKnob
             identifier="transientAmountSlider"
-            title="Amount"
+            title="Attack"
             defaultValue={0.5}
-            subDigit={1}
+            subDigit={4}
             sx={{
               flexShrink: 0
             }}
           />
           <JuceKnob
             identifier="emphasisSlider"
-            title="Emphasis"
+            title="Release"
             defaultValue={0.5}
-            subDigit={1}
+            subDigit={4}
             sx={{
               flexShrink: 0
             }}
           />
           <JuceKnob
             identifier="tiltSlider"
-            title="Tone/Tilt"
+            title="Threshold"
             defaultValue={0.5}
-            subDigit={1}
+            subDigit={4}
           />
-        </Stack>
-      </Grid>
-      <Grid size={6}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: 8,
-            rowGap: 2,
-          }}
-        >
+          <JuceKnob
+            identifier="attackSlider"
+            title="Attack2"
+            defaultValue={0.5}
+            subDigit={4}
+            sx={{
+              flexShrink: 0
+            }}
+          />
+          <JuceKnob
+            identifier="releaseSlider"
+            title="Release2"
+            defaultValue={0.5}
+            subDigit={4}
+          />
           <JuceKnob
             identifier="inputGainSlider"
-            title="Input"
+            title="TAttack"
             defaultValue={0.5}
             subDigit={1}
           />
           <JuceKnob
             identifier="outputGainSlider"
-            title="Output"
+            title="TRelease"
             defaultValue={0.5}
             subDigit={1}
           />
           <JuceKnob
             identifier="dryWetSlider"
-            title="Dry/Wet"
+            title="Threshold"
             defaultValue={1.0}
             subDigit={1}
+          />
+          <JuceKnob
+            identifier="saturationDriveSlider"
+            title="Noise Level"
+            defaultValue={0.5}
+            subDigit={1}
+            sx={{
+              flexShrink: 0
+            }}
           />
           <Stack>
             <JuceToggleButton

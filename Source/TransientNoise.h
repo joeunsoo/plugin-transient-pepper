@@ -27,8 +27,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     // envelopeValues.resize(numChannels, 0.0f);
     
     transientFollower.prepare(spec);
-    transientFollower.setAttack(0.0001f);   // 0.01f = 10ms attack
-    transientFollower.setRelease(0.0001f);   // 0.1f = 100ms release
+    transientFollower.setFastAttack(0.0001f);   // 0.01f = 10ms attack
+    transientFollower.setFastRelease(0.0001f);   // 0.1f = 100ms release
     
     noiseGenerator.setSeed(juce::Random::getSystemRandom().nextInt());
   }
@@ -56,20 +56,30 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         float dynamicNoise = noiseLevel * 0.01f * transient;
         SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
-        // out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
-        out[n] = sample + noiseSample;
+        if (master) {
+          out[n] = transient * noiseLevel;
+        } else {
+          // out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
+          out[n] = sample + noiseSample;
+        }
       }
     }
   }
   
   void setNoiseLevel(SampleType level) { noiseLevel = level; }
-  void setAttack(SampleType value) { transientFollower.setAttack(value); }
-  void setRelease(SampleType value) { transientFollower.setRelease(value); }
+  void setFastAttack(SampleType value) { transientFollower.setFastAttack(value); }
+  void setFastRelease(SampleType value) { transientFollower.setFastRelease(value); }
+  void setSlowAttack(SampleType value) { transientFollower.setSlowAttack(value); }
+  void setSlowRelease(SampleType value) { transientFollower.setSlowRelease(value); }
+  void setTAttack(SampleType value) { transientFollower.setTAttack(value); }
+  void setTRelease(SampleType value) { transientFollower.setTRelease(value); }
   void setThreshold(SampleType value) { transientFollower.setThreshold(value); }
+  void setMaster(bool val) { master = val; }
   
   private:
   double sampleRate = 44100.0;
   int numChannels = 2;
+  bool master = false;
   
   juce::Random noiseGenerator;
   SampleType noiseLevel = 0.05f;

@@ -20,57 +20,87 @@ class TransientFollower
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
     
-    attackCoeff = calcCoeff(0.01f);
-    releaseCoeff = calcCoeff(0.1f);
-    threshold = 0.1f;
+    fastAttack = calcCoeff(0.01f);
+    fastRelease = calcCoeff(0.1f);
+    slowAttack = calcCoeff(0.01f);
+    slowRelease = calcCoeff(0.1f);
+    tAttack = calcCoeff(0.01f);
+    tRelease = calcCoeff(0.01f);
     
     prevEnv.resize(numChannels, 0.0f);
-    env.resize(numChannels, 0.0f);
+    fastEnv.resize(numChannels, 0.0f);
+    slowEnv.resize(numChannels, 0.0f);
     transient.resize(numChannels, 0.0f);
+    transientEnv.resize(numChannels, 0.0f);
   }
   
   void reset()
   {
     std::fill(prevEnv.begin(), prevEnv.end(), 0.0f);
-    std::fill(env.begin(), env.end(), 0.0f);
+    std::fill(fastEnv.begin(), fastEnv.end(), 0.0f);
+    std::fill(slowEnv.begin(), slowEnv.end(), 0.0f);
     std::fill(transient.begin(), transient.end(), 0.0f);
+    std::fill(transientEnv.begin(), transientEnv.end(), 0.0f);
   }
   
-  SampleType processSample(SampleType inputSample, size_t ch)
+  SampleType processSample(SampleType inputSample, size_t channel)
   {
     SampleType x = std::abs(inputSample);
     
-    // Envelope follower
-    if (x > env[ch])
-      env[ch] = attackCoeff * (env[ch] - x) + x;
+    // Fast envelope
+    if (x > fastEnv[channel])
+      fastEnv[channel] = fastAttack * (fastEnv[channel] - x) + x;
     else
-      env[ch] = releaseCoeff * (env[ch] - x) + x;
+      fastEnv[channel] = fastRelease * (fastEnv[channel] - x) + x;
     
-    // Difference / transient detection
-    SampleType diff = env[ch] - prevEnv[ch];
+    // Slow envelope
+    if (x > slowEnv[channel])
+      slowEnv[channel] = slowAttack * (slowEnv[channel] - x) + x;
+    else
+      slowEnv[channel] = slowRelease * (slowEnv[channel] - x) + x;
     
-    // Threshold detection
-    transient[ch] = diff > threshold ? 1.0f : 0.0f;
+
+    // Transient detection
+    SampleType diff = std::abs(fastEnv[channel] - slowEnv[channel]);
+
+    SampleType afterThreshold = diff > threshold ? diff : 0.0f;
+
+    // Transient envelope
+    if (afterThreshold > transientEnv[channel])
+      transientEnv[channel] = tAttack * (transientEnv[channel] - afterThreshold) + afterThreshold;
+    else
+      transientEnv[channel] = tRelease * (transientEnv[channel] - afterThreshold) + afterThreshold;
+
     
-    prevEnv[ch] = env[ch];
-    return env[ch];
+
+    return transientEnv[channel];
   }
   
-  void setAttack(SampleType a) { attackCoeff = calcCoeff(a); }
-  void setRelease(SampleType r) { releaseCoeff = calcCoeff(r); }
-  void setThreshold(SampleType t) { threshold = t; }
+  void setFastAttack(SampleType a) { fastAttack = calcCoeff(a); }
+  void setFastRelease(SampleType r) { fastRelease = calcCoeff(r); }
+  void setSlowAttack(SampleType a) { slowAttack = calcCoeff(a); }
+  void setSlowRelease(SampleType r) { slowRelease = calcCoeff(r); }
+  void setTAttack(SampleType a) { tAttack = calcCoeff(a); }
+  void setTRelease(SampleType r) { tRelease = calcCoeff(r); }
+  void setThreshold(SampleType t) {  }
   
   private:
   double sampleRate = 44100.0;
   int numChannels = 2;
   
-  SampleType attackCoeff = 0.01f;
-  SampleType releaseCoeff = 0.1f;
-  SampleType threshold = 0.01f; // 트랜지언트 감도
+  SampleType fastAttack = 0.0f;
+  SampleType fastRelease = 0.0f;
+  SampleType slowAttack = 0.0f;
+  SampleType slowRelease = 0.0f;
+  SampleType tAttack = 0.0f;
+  SampleType tRelease = 0.0f;
+  SampleType threshold = 0.03f;
   
-  std::vector<SampleType> env;
+  std::vector<SampleType> fastEnv;
+  std::vector<SampleType> slowEnv;
   std::vector<SampleType> prevEnv;
   std::vector<SampleType> transient;
+  std::vector<SampleType> transientEnv;
   
   
   float calcCoeff(SampleType timeInSeconds)

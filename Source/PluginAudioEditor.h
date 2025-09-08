@@ -57,6 +57,8 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderRelay       transientAmountSliderRelay    { "transientAmountSlider" };
   WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
   WebSliderRelay       tiltSliderRelay    { "tiltSlider" };
+  WebSliderRelay       attackSliderRelay    { "attackSlider" };
+  WebSliderRelay       releaseSliderRelay    { "releaseSlider" };
   WebSliderRelay       inputGainSliderRelay    { "inputGainSlider" };
   WebSliderRelay       outputGainSliderRelay    { "outputGainSlider" };
   WebSliderRelay       dryWetSliderRelay    { "dryWetSlider" };
@@ -73,6 +75,8 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withOptionsFrom (transientAmountSliderRelay)
       .withOptionsFrom (emphasisSliderRelay)
       .withOptionsFrom (tiltSliderRelay)
+      .withOptionsFrom (attackSliderRelay)
+      .withOptionsFrom (releaseSliderRelay)
       .withOptionsFrom (inputGainSliderRelay)
       .withOptionsFrom (outputGainSliderRelay)
       .withOptionsFrom (dryWetSliderRelay)
@@ -104,6 +108,8 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderParameterAttachment       transientAmountAttachment;
   WebSliderParameterAttachment       emphasisAttachment;
   WebSliderParameterAttachment       tiltAttachment;
+  WebSliderParameterAttachment       attackAttachment;
+  WebSliderParameterAttachment       releaseAttachment;
   WebSliderParameterAttachment       inputGainAttachment;
   WebSliderParameterAttachment       outputGainAttachment;
   WebSliderParameterAttachment       dryWetAttachment;

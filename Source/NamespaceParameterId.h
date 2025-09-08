@@ -20,6 +20,10 @@ PARAMETER_ID (saturationDrive)
 PARAMETER_ID (transientAmount)
 PARAMETER_ID (emphasis)
 PARAMETER_ID (tilt)
+
+PARAMETER_ID (attack)
+PARAMETER_ID (release)
+
 PARAMETER_ID (inputGain)
 PARAMETER_ID (outputGain)
 

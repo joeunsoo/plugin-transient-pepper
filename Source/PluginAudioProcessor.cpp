@@ -118,16 +118,24 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   tiltEQ.setGain(parameters.tilt.get());
   
   transientNoise.setNoiseLevel(parameters.saturationDrive.get());
-  transientNoise.setAttack(parameters.transientAmount.get() * 0.0001f);
-  transientNoise.setRelease(parameters.emphasis.get() * 0.0001f);
-  transientNoise.setThreshold(parameters.tilt.get() * 0.0001f);
+
+  transientNoise.setFastAttack(parameters.transientAmount.get());
+  transientNoise.setFastRelease(parameters.emphasis.get());
+  transientNoise.setSlowAttack(parameters.attack.get());
+  transientNoise.setSlowRelease(parameters.release.get());
+
+  // transientNoise.setTAttack(parameters.attack.get() * 0.001f);
+  // transientNoise.setTRelease(parameters.release.get() * 0.001f);
+
+  transientNoise.setThreshold(parameters.tilt.get() * 1000.0f);
   // transientNoise.setTransientAmount(parameters.transientAmount.get());
-  
+  transientNoise.setMaster(!parameters.master.get());
+
   dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
   
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
   
-  if (parameters.master.get()) {
+  // if (parameters.master.get()) {
     dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
     
     inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
@@ -147,7 +155,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     antiAliasingFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
-  }
+  // }
   
 }
 

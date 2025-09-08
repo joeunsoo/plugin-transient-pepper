@@ -21,8 +21,8 @@ struct Parameters {
   saturationDrive (addToLayout<AudioParameterFloat> (layout,
                                                      ID::saturationDrive,
                                                      "Noise Level",
-                                                     NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
-                                                     50.0f,
+                                                     NormalisableRange<float> { 0.0f, 400.0f, 0.1f, 1.0f },
+                                                     200.0f,
                                                      "%",
                                                      juce::AudioProcessorParameter::genericParameter,
                                                      [](float value, int) { return percentToString(value); },
@@ -31,31 +31,45 @@ struct Parameters {
 
   transientAmount (addToLayout<AudioParameterFloat> (layout,
                                                      ID::transientAmount,
-                                                     "Transient",
-                                                     NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
-                                                     50.0f,
-                                                     "%",
-                                                     juce::AudioProcessorParameter::genericParameter,
-                                                     [](float value, int) { return percentToString(value); },
-                                                     [](const juce::String& text) { return stringToPercent(text); }
+                                                     "Attack1",
+                                                     NormalisableRange<float> { 0.0001f, 0.010f, 0.0001f, 1.0f },
+                                                     0.005f,
+                                                     "",
+                                                     juce::AudioProcessorParameter::genericParameter
                                                      )),
 
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
-                                              "Emphasis",
-                                              NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
-                                              50.0f,
-                                              "%",
-                                              juce::AudioProcessorParameter::genericParameter,
-                                              [](float value, int) { return percentToString(value); },
-                                              [](const juce::String& text) { return stringToPercent(text); }
+                                              "Release1",
+                                              NormalisableRange<float> { 0.001f, 0.040f, 0.001f, 1.0f },
+                                              0.03f,
+                                              "",
+                                              juce::AudioProcessorParameter::genericParameter
+                                              )),
+
+  attack (addToLayout<AudioParameterFloat> (layout,
+                                                     ID::attack,
+                                                     "Attack2",
+                                                      NormalisableRange<float> { 0.020f, 0.04f, 0.001f, 1.0f },
+                                                     0.02f,
+                                                     "",
+                                                     juce::AudioProcessorParameter::genericParameter
+                                                     )),
+
+  release (addToLayout<AudioParameterFloat> (layout,
+                                              ID::release,
+                                              "Release2",
+                                               NormalisableRange<float> { 0.01f, 0.15f, 0.001f, 1.0f },
+                                              0.12f,
+                                              "",
+                                              juce::AudioProcessorParameter::genericParameter
                                               )),
 
   tilt (addToLayout<AudioParameterFloat> (layout,
                                           ID::tilt,
                                           "Tone/Tilt",
                                           NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
-                                          0.0f,
+                                          50.0f,
                                           "%",
                                           juce::AudioProcessorParameter::genericParameter,
                                           [](float value, int) { return percentToString(value); },
@@ -102,6 +116,8 @@ struct Parameters {
   AudioParameterFloat& transientAmount;
   AudioParameterFloat& emphasis;
   AudioParameterFloat& tilt;
+  AudioParameterFloat& attack;
+  AudioParameterFloat& release;
   AudioParameterFloat& inputGain;
   AudioParameterFloat& outputGain;
   AudioParameterFloat& dryWet;
