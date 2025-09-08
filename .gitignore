@@ -1,15 +1,15 @@
 **/.DS_Store
-/juce/Builds
+/Builds
 
 **/node_modules
-/juce/WebViewGUI/build
+WebViewGUI/build
 
-/juce/Assets
-/juce/JuceLibraryCode/BinaryData.cpp
-/juce/JuceLibraryCode/BinaryData.h
+/Assets
+/JuceLibraryCode/BinaryData.cpp
+/JuceLibraryCode/BinaryData.h
 
 # testing
-/juce/coverage
+/coverage
 
 # misc
 .DS_Store
