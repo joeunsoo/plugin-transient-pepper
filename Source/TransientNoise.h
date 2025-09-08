@@ -49,14 +49,14 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         SampleType sample = in[n];
         
         SampleType transient = transientFollower.processSample(sample, ch); // 엔벨로프 팔로워
-        float dynamicNoise = noiseLevel * 0.01f * transient;
+        float dynamicNoise = transient;
         SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
         if (master) {
-          out[n] = transient * noiseLevel * 0.1;
+          out[n] = transient;
         } else {
           // out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
-          out[n] = sample + noiseSample;
+          out[n] = noiseSample;
         }
       }
     }

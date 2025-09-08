@@ -50,16 +50,6 @@ export default function App() {
         >
 
           <JuceKnob
-            identifier="transientAmountSlider"
-            defaultValue={0.5}
-            subDigit={4}
-          />
-          <JuceKnob
-            identifier="emphasisSlider"
-            defaultValue={0.5}
-            subDigit={4}
-          />
-          <JuceKnob
             identifier="thresholdSlider"
             defaultValue={0.5}
             subDigit={4}
@@ -71,6 +61,21 @@ export default function App() {
           />
           <JuceKnob
             identifier="releaseSlider"
+            defaultValue={0.5}
+            subDigit={4}
+          />
+          <JuceKnob
+            identifier="noiseLevelSlider"
+            defaultValue={0.5}
+            subDigit={1}
+          />
+          <JuceKnob
+            identifier="transientAmountSlider"
+            defaultValue={0.5}
+            subDigit={4}
+          />
+          <JuceKnob
+            identifier="emphasisSlider"
             defaultValue={0.5}
             subDigit={4}
           />
@@ -90,12 +95,6 @@ export default function App() {
             identifier="dryWetSlider"
             title="Dry/Wet"
             defaultValue={1.0}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="saturationDriveSlider"
-            title="Noise Level"
-            defaultValue={0.5}
             subDigit={1}
           />
           <Stack>
