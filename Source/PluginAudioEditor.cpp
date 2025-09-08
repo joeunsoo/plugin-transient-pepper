@@ -130,8 +130,8 @@ masterAttachment (*processorRef.state.getParameter (ID::master.getParamID()),
                   masterToggleRelay,
                   processorRef.state.undoManager),
 
-saturationDriveAttachment (*processorRef.state.getParameter (ID::saturationDrive.getParamID()),
-                           saturationDriveSliderRelay,
+noiseLevelAttachment (*processorRef.state.getParameter (ID::noiseLevel.getParamID()),
+                      noiseLevelSliderRelay,
                            processorRef.state.undoManager),
 
 transientAmountAttachment (*processorRef.state.getParameter (ID::transientAmount.getParamID()),

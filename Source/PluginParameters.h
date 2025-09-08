@@ -18,8 +18,8 @@ struct Parameters {
   :
   master (addToLayout<AudioParameterBool> (layout, ID::master, "Master On/Off", true)),
 
-  saturationDrive (addToLayout<AudioParameterFloat> (layout,
-                                                     ID::saturationDrive,
+  noiseLevel (addToLayout<AudioParameterFloat> (layout,
+                                                     ID::noiseLevel,
                                                      "Noise Level",
                                                      NormalisableRange<float> { 0.0f, 400.0f, 0.1f, 1.0f },
                                                      200.0f,
@@ -47,6 +47,15 @@ struct Parameters {
                                               juce::AudioProcessorParameter::genericParameter
                                               )),
 
+  threshold (addToLayout<AudioParameterFloat> (layout,
+                                          ID::threshold,
+                                          "Threshold",
+                                          NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                          0.0500f,
+                                          "",
+                                          juce::AudioProcessorParameter::genericParameter
+                                          )),
+
   attack (addToLayout<AudioParameterFloat> (layout,
                                                      ID::attack,
                                                      "Attack",
@@ -64,15 +73,6 @@ struct Parameters {
                                              "",
                                              juce::AudioProcessorParameter::genericParameter
                                               )),
-
-  threshold (addToLayout<AudioParameterFloat> (layout,
-                                          ID::threshold,
-                                          "Threshold",
-                                          NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                          0.0500f,
-                                          "",
-                                          juce::AudioProcessorParameter::genericParameter
-                                          )),
 
   inputGain (addToLayout<AudioParameterFloat> (layout,
                                                ID::inputGain,
@@ -110,7 +110,7 @@ struct Parameters {
   }
   
   AudioParameterBool&  master;
-  AudioParameterFloat& saturationDrive;
+  AudioParameterFloat& noiseLevel;
   AudioParameterFloat& transientAmount;
   AudioParameterFloat& emphasis;
   AudioParameterFloat& threshold;

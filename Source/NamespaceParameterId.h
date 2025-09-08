@@ -15,12 +15,12 @@ namespace ID {
 
 PARAMETER_ID (master)
 
-PARAMETER_ID (saturationDrive)
+PARAMETER_ID (noiseLevel)
 
 PARAMETER_ID (transientAmount)
 PARAMETER_ID (emphasis)
-PARAMETER_ID (threshold)
 
+PARAMETER_ID (threshold)
 PARAMETER_ID (attack)
 PARAMETER_ID (release)
 

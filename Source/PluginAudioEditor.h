@@ -53,7 +53,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   PluginAudioProcessor& processorRef;
   
   WebToggleButtonRelay masterToggleRelay      { "masterToggle" };
-  WebSliderRelay       saturationDriveSliderRelay    { "saturationDriveSlider" };
+  WebSliderRelay       noiseLevelSliderRelay    { "noiseLevelSlider" };
   WebSliderRelay       transientAmountSliderRelay    { "transientAmountSlider" };
   WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
   WebSliderRelay       thresholdSliderRelay    { "thresholdSlider" };
@@ -71,7 +71,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                                .withUserDataFolder (File::getSpecialLocation (File::SpecialLocationType::tempDirectory)))
       .withNativeIntegrationEnabled()
       .withOptionsFrom (masterToggleRelay)
-      .withOptionsFrom (saturationDriveSliderRelay)
+      .withOptionsFrom (noiseLevelSliderRelay)
       .withOptionsFrom (transientAmountSliderRelay)
       .withOptionsFrom (emphasisSliderRelay)
       .withOptionsFrom (thresholdSliderRelay)
@@ -104,7 +104,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                              URL { localDevServerAddress }.getOrigin()) };
   
   WebToggleButtonParameterAttachment masterAttachment;
-  WebSliderParameterAttachment       saturationDriveAttachment;
+  WebSliderParameterAttachment       noiseLevelAttachment;
   WebSliderParameterAttachment       transientAmountAttachment;
   WebSliderParameterAttachment       emphasisAttachment;
   WebSliderParameterAttachment       thresholdAttachment;

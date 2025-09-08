@@ -44,7 +44,7 @@ export default function App() {
           alignItems="center"
           justifyContent="center"
           sx={{
-            display:'grid',
+            display: 'grid',
             gridTemplateColumns: 'repeat(5, minmax(7em, auto))'
           }}
         >
@@ -53,33 +53,24 @@ export default function App() {
             identifier="transientAmountSlider"
             defaultValue={0.5}
             subDigit={4}
-            sx={{
-              flexShrink: 0
-            }}
           />
           <JuceKnob
             identifier="emphasisSlider"
             defaultValue={0.5}
             subDigit={4}
-            sx={{
-              flexShrink: 0
-            }}
+          />
+          <JuceKnob
+            identifier="thresholdSlider"
+            defaultValue={0.5}
+            subDigit={4}
           />
           <JuceKnob
             identifier="attackSlider"
             defaultValue={0.5}
             subDigit={4}
-            sx={{
-              flexShrink: 0
-            }}
           />
           <JuceKnob
             identifier="releaseSlider"
-            defaultValue={0.5}
-            subDigit={4}
-          />
-          <JuceKnob
-            identifier="thresholdSlider"
             defaultValue={0.5}
             subDigit={4}
           />
@@ -106,9 +97,6 @@ export default function App() {
             title="Noise Level"
             defaultValue={0.5}
             subDigit={1}
-            sx={{
-              flexShrink: 0
-            }}
           />
           <Stack>
             <JuceToggleButton
