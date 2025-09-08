@@ -60,6 +60,15 @@ export default function App() {
             }}
           />
           <JuceKnob
+            identifier="transientAmountSlider"
+            title="Amount"
+            defaultValue={0.5}
+            subDigit={1}
+            sx={{
+              flexShrink: 0
+            }}
+          />
+          <JuceKnob
             identifier="emphasisSlider"
             title="Emphasis"
             defaultValue={0.5}
@@ -108,7 +117,8 @@ export default function App() {
           />
           <Stack>
             <JuceToggleButton
-              identifier="bypassToggle"
+              identifier="masterToggle"
+              title="In"
             />
           </Stack>
         </Stack>

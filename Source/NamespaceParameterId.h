@@ -10,16 +10,14 @@
 
 #pragma once
 
-namespace ID
-{
+namespace ID {
 #define PARAMETER_ID(str) static const ParameterID str { #str, 1 };
 
-PARAMETER_ID (bypass)
+PARAMETER_ID (master)
 
 PARAMETER_ID (saturationDrive)
-PARAMETER_ID (saturationHarmonics)
-PARAMETER_ID (saturationType)
 
+PARAMETER_ID (transientAmount)
 PARAMETER_ID (emphasis)
 PARAMETER_ID (tilt)
 PARAMETER_ID (inputGain)

@@ -7,9 +7,11 @@
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" id="juqXJH" jucerFormatVersion="1"
               pluginVST3Category="Distortion" companyEmail="info@joeunsoo.com"
-              pluginName="JE Transient Pepper">
+              pluginName="JE Transient Pepper" pluginCode="tspp" pluginManufacturerCode="JOES">
   <MAINGROUP id="eUJieJ" name="JETransientPepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
+      <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
+            file="Source/NamespaceParameterId.h"/>
       <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"
             file="Source/TransientNoise.h"/>
       <FILE id="ZuKSjA" name="AntiAliasingFilter.h" compile="0" resource="0"
@@ -17,9 +19,6 @@
       <FILE id="EbAnGz" name="DcOffsetFilter.h" compile="0" resource="0"
             file="Source/DcOffsetFilter.h"/>
       <FILE id="loxmGH" name="TiltEQ.h" compile="0" resource="0" file="Source/TiltEQ.h"/>
-      <FILE id="jeyeXn" name="Saturation.h" compile="0" resource="0" file="Source/Saturation.h"/>
-      <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
-            file="Source/NamespaceParameterId.h"/>
       <FILE id="UafBku" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="Ivb2Pa" name="PluginWrapper.h" compile="0" resource="0" file="Source/PluginWrapper.h"/>
       <FILE id="BQzs2Y" name="PluginAudioProcessor.h" compile="0" resource="0"

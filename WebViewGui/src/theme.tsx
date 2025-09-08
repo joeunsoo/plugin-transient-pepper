@@ -9,7 +9,7 @@ import {
 import { noDragSx } from '@/ui/Style';
 
 const primaryMain = '#535355';
-const secondryMain = '#7A2E2E';
+const secondryMain = '#E53935';
 const greyMain = '#4f5763';
 
 export const themeVars = {

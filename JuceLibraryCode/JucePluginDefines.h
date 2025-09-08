@@ -56,10 +56,10 @@
  #define JucePlugin_ManufacturerEmail      "info@joeunsoo.com"
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       0x4d616e75
+ #define JucePlugin_ManufacturerCode       0x4a4f4553
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             0x4a757178
+ #define JucePlugin_PluginCode             0x74737070
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                0

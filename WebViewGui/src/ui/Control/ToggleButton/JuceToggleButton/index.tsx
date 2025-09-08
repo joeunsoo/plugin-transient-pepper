@@ -11,10 +11,12 @@ import Button from './Button';
 
 type JuceCheckboxProps = {
   identifier: string,
+  title?: string,
 }
 
 export default function JuceCheckbox({
-  identifier
+  identifier,
+  title,
 }: JuceCheckboxProps) {
   const checkboxState = Juce.getToggleState(identifier);
 
@@ -49,7 +51,7 @@ export default function JuceCheckbox({
       <Button
         value={value}
         handleChange={handleChange}
-        label={properties.name}
+        label={title || properties.name}
       />
     </Box>
   );

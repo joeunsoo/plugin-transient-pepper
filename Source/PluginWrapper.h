@@ -7,12 +7,12 @@
 
 class PluginAudioProcessorWrapper  : public PluginAudioProcessor
 {
-    public:
-    PluginAudioProcessorWrapper()  : PluginAudioProcessor ({})
-    {}
-    
-    bool hasEditor() const override               { return true; }
-    AudioProcessorEditor* createEditor() override {
-        return new PluginAudioEditor (*this);
-    }
+  public:
+  PluginAudioProcessorWrapper()  : PluginAudioProcessor ({})
+  {}
+  
+  bool hasEditor() const override               { return true; }
+  AudioProcessorEditor* createEditor() override {
+    return new PluginAudioEditor (*this);
+  }
 };

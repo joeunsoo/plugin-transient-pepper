@@ -13,101 +13,101 @@
 static ZipFile* getZipFile()
 {
 #if DEBUG
-    static auto stream = createAssetInputStream ("webviewplugin-gui_1.0.0.zip", AssertAssetExists::no);
-    
-    if (stream == nullptr)
-        return nullptr;
-    
-    static ZipFile f { stream.get(), false };
-    return &f;
+  static auto stream = createAssetInputStream ("webviewplugin-gui_1.0.0.zip", AssertAssetExists::no);
+  
+  if (stream == nullptr)
+    return nullptr;
+  
+  static ZipFile f { stream.get(), false };
+  return &f;
 #else
-    const auto resourceDir = File::getSpecialLocation (File::currentExecutableFile)
-        .getParentDirectory().getParentDirectory().getChildFile ("Resources");
-    const auto resourceFile = resourceDir.getChildFile ("gui.zip");
-    
-    static auto stream = resourceFile.createInputStream();
-    
-    if (stream == nullptr)
-        return nullptr;
-    
-    static ZipFile f { stream.get(), false };
-    return &f;
+  const auto resourceDir = File::getSpecialLocation (File::currentExecutableFile)
+    .getParentDirectory().getParentDirectory().getChildFile ("Resources");
+  const auto resourceFile = resourceDir.getChildFile ("gui.zip");
+  
+  static auto stream = resourceFile.createInputStream();
+  
+  if (stream == nullptr)
+    return nullptr;
+  
+  static ZipFile f { stream.get(), false };
+  return &f;
 #endif
 }
 
 static const char* getMimeForExtension (const String& extension)
 {
-    static const std::unordered_map<String, const char*> mimeMap =
-    {
-        { { "htm"   },  "text/html"                },
-        { { "html"  },  "text/html"                },
-        { { "txt"   },  "text/plain"               },
-        { { "jpg"   },  "image/jpeg"               },
-        { { "jpeg"  },  "image/jpeg"               },
-        { { "svg"   },  "image/svg+xml"            },
-        { { "ico"   },  "image/vnd.microsoft.icon" },
-        { { "json"  },  "application/json"         },
-        { { "png"   },  "image/png"                },
-        { { "css"   },  "text/css"                 },
-        { { "map"   },  "application/json"         },
-        { { "js"    },  "text/javascript"          },
-        { { "woff2" },  "font/woff2"               }
-    };
-    
-    if (const auto it = mimeMap.find (extension.toLowerCase()); it != mimeMap.end())
-        return it->second;
-    
-    jassertfalse;
-    return "";
+  static const std::unordered_map<String, const char*> mimeMap =
+  {
+    { { "htm"   },  "text/html"                },
+    { { "html"  },  "text/html"                },
+    { { "txt"   },  "text/plain"               },
+    { { "jpg"   },  "image/jpeg"               },
+    { { "jpeg"  },  "image/jpeg"               },
+    { { "svg"   },  "image/svg+xml"            },
+    { { "ico"   },  "image/vnd.microsoft.icon" },
+    { { "json"  },  "application/json"         },
+    { { "png"   },  "image/png"                },
+    { { "css"   },  "text/css"                 },
+    { { "map"   },  "application/json"         },
+    { { "js"    },  "text/javascript"          },
+    { { "woff2" },  "font/woff2"               }
+  };
+  
+  if (const auto it = mimeMap.find (extension.toLowerCase()); it != mimeMap.end())
+    return it->second;
+  
+  jassertfalse;
+  return "";
 }
 
 static String getExtension (String filename)
 {
-    return filename.fromLastOccurrenceOf (".", false, false);
+  return filename.fromLastOccurrenceOf (".", false, false);
 }
 
 static auto streamToVector (InputStream& stream)
 {
-    std::vector<std::byte> result ((size_t) stream.getTotalLength());
-    stream.setPosition (0);
-    [[maybe_unused]] const auto bytesRead = stream.read (result.data(), result.size());
-    jassert (bytesRead == (ssize_t) result.size());
-    return result;
+  std::vector<std::byte> result ((size_t) stream.getTotalLength());
+  stream.setPosition (0);
+  [[maybe_unused]] const auto bytesRead = stream.read (result.data(), result.size());
+  jassert (bytesRead == (ssize_t) result.size());
+  return result;
 }
 
 std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (const String& url)
 {
-    const auto urlToRetrive = url == "/" ? String { "index.html" }
-    : url.fromFirstOccurrenceOf ("/", false, false);
-    
-    if (auto* archive = getZipFile())
+  const auto urlToRetrive = url == "/" ? String { "index.html" }
+  : url.fromFirstOccurrenceOf ("/", false, false);
+  
+  if (auto* archive = getZipFile())
+  {
+    if (auto* entry = archive->getEntry (urlToRetrive))
     {
-        if (auto* entry = archive->getEntry (urlToRetrive))
-        {
-            auto stream = rawToUniquePtr (archive->createStreamForEntry (*entry));
-            auto v = streamToVector (*stream);
-            auto mime = getMimeForExtension (getExtension (entry->filename).toLowerCase());
-            return WebBrowserComponent::Resource { std::move (v),
-                std::move (mime) };
-        }
+      auto stream = rawToUniquePtr (archive->createStreamForEntry (*entry));
+      auto v = streamToVector (*stream);
+      auto mime = getMimeForExtension (getExtension (entry->filename).toLowerCase());
+      return WebBrowserComponent::Resource { std::move (v),
+        std::move (mime) };
     }
-    
-    if (urlToRetrive == "index.html")
-    {
-        auto fallbackIndexHtml = createAssetInputStream ("webviewplugin-gui-fallback.html");
-        return WebBrowserComponent::Resource { streamToVector (*fallbackIndexHtml),
-            String { "text/html" } };
-    }
-    
-    if (urlToRetrive == "data.txt")
-    {
-        WebBrowserComponent::Resource resource;
-        static constexpr char testData[] = "testdata";
-        MemoryInputStream stream { testData, numElementsInArray (testData) - 1, false };
-        return WebBrowserComponent::Resource { streamToVector (stream), String { "text/html" } };
-    }
-
-    return std::nullopt;
+  }
+  
+  if (urlToRetrive == "index.html")
+  {
+    auto fallbackIndexHtml = createAssetInputStream ("webviewplugin-gui-fallback.html");
+    return WebBrowserComponent::Resource { streamToVector (*fallbackIndexHtml),
+      String { "text/html" } };
+  }
+  
+  if (urlToRetrive == "data.txt")
+  {
+    WebBrowserComponent::Resource resource;
+    static constexpr char testData[] = "testdata";
+    MemoryInputStream stream { testData, numElementsInArray (testData) - 1, false };
+    return WebBrowserComponent::Resource { streamToVector (stream), String { "text/html" } };
+  }
+  
+  return std::nullopt;
 }
 
 #if JUCE_ANDROID
@@ -119,17 +119,20 @@ const String localDevServerAddress = "http://localhost:3000/";
 
 bool SinglePageBrowser::pageAboutToLoad (const String& newURL)
 {
-    return newURL == localDevServerAddress || newURL == getResourceProviderRoot();
+  return newURL == localDevServerAddress || newURL == getResourceProviderRoot();
 }
 
 //==============================================================================
 PluginAudioEditor::PluginAudioEditor (PluginAudioProcessor& p)
 : AudioProcessorEditor (&p), processorRef (p),
-bypassAttachment (*processorRef.state.getParameter (ID::bypass.getParamID()),
-                  bypassToggleRelay,
+masterAttachment (*processorRef.state.getParameter (ID::master.getParamID()),
+                  masterToggleRelay,
                   processorRef.state.undoManager),
 saturationDriveAttachment (*processorRef.state.getParameter (ID::saturationDrive.getParamID()),
                            saturationDriveSliderRelay,
+                           processorRef.state.undoManager),
+transientAmountAttachment (*processorRef.state.getParameter (ID::transientAmount.getParamID()),
+                           transientAmountSliderRelay,
                            processorRef.state.undoManager),
 emphasisAttachment (*processorRef.state.getParameter (ID::emphasis.getParamID()),
                     emphasisSliderRelay,
@@ -147,45 +150,45 @@ dryWetAttachment (*processorRef.state.getParameter (ID::dryWet.getParamID()),
                   dryWetSliderRelay,
                   processorRef.state.undoManager)
 {
-    addAndMakeVisible (webComponent);
-    
+  addAndMakeVisible (webComponent);
+  
 #if DEBUG
-    webComponent.goToURL (localDevServerAddress);
+  webComponent.goToURL (localDevServerAddress);
 #else
-    webComponent.goToURL (WebBrowserComponent::getResourceProviderRoot());
+  webComponent.goToURL (WebBrowserComponent::getResourceProviderRoot());
 #endif
-    
-    setScale(processorRef.windowScale);
-    startTimerHz (20);
+  
+  setScale(processorRef.windowScale);
+  startTimerHz (20);
 }
 
 //==============================================================================
 void PluginAudioEditor::paint (Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+  // (Our component is opaque, so we must completely fill the background with a solid colour)
+  g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 
 void PluginAudioEditor::resized()
 {
-    webComponent.setBounds (getLocalBounds());
+  webComponent.setBounds (getLocalBounds());
 }
 
 void PluginAudioEditor::setScale(int scale)
 {
-    processorRef.windowScale = scale;
-    switch (processorRef.windowScale)
-    {
-        case 100:
-            setSize(500, 300);
-            break;
-        case 150:
-            setSize(500*1.5f, 300*1.5f);
-            break;
-        case 200:
-            setSize(500*2.0f, 300*2.0f);
-            break;
-        default:
-            setSize(500, 300);
-    }
+  processorRef.windowScale = scale;
+  switch (processorRef.windowScale)
+  {
+    case 100:
+      setSize(500, 300);
+      break;
+    case 150:
+      setSize(500*1.5f, 300*1.5f);
+      break;
+    case 200:
+      setSize(500*2.0f, 300*2.0f);
+      break;
+    default:
+      setSize(500, 300);
+  }
 }
