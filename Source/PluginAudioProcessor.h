@@ -65,9 +65,6 @@ class PluginAudioProcessor  : public AudioProcessor
   
   TiltEQProcessor<float> tiltEQ;
   
-  TiltEQProcessor<float> preEQ;
-  TiltEQProcessor<float> postEQ;
-  
   DcOffsetFilter<float> dcBlocker;
   AntiAliasingFilter antiAliasingFilter;
   

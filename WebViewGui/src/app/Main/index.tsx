@@ -99,8 +99,9 @@ export default function App() {
           />
           <Stack>
             <JuceToggleButton
-              identifier="masterToggle"
+              identifier="bypassToggle"
               title="In"
+              invertValue
             />
           </Stack>
         </Stack>

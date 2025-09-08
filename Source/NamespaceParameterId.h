@@ -13,7 +13,7 @@
 namespace ID {
 #define PARAMETER_ID(str) static const ParameterID str { #str, 1 };
 
-PARAMETER_ID (master)
+PARAMETER_ID (bypass)
 
 PARAMETER_ID (threshold)
 PARAMETER_ID (attack)

@@ -12,11 +12,13 @@ import Button from './Button';
 type JuceCheckboxProps = {
   identifier: string,
   title?: string,
+  invertValue?: boolean
 }
 
 export default function JuceCheckbox({
   identifier,
   title,
+  invertValue=false
 }: JuceCheckboxProps) {
   const checkboxState = Juce.getToggleState(identifier);
 
@@ -24,7 +26,7 @@ export default function JuceCheckbox({
   const [properties, setProperties] = useState(checkboxState.properties);
 
   const handleChange = (value: boolean) => {
-    checkboxState.setValue(value);
+    checkboxState.setValue(invertValue ? !value : value);
     setValue(value);
   };
 
@@ -49,7 +51,7 @@ export default function JuceCheckbox({
       }}
     >
       <Button
-        value={value}
+        value={invertValue ? !value : value}
         handleChange={handleChange}
         label={title || properties.name}
       />

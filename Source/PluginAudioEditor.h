@@ -52,7 +52,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   private:
   PluginAudioProcessor& processorRef;
   
-  WebToggleButtonRelay masterToggleRelay      { "masterToggle" };
+  WebToggleButtonRelay bypassToggleRelay      { "bypassToggle" };
   WebSliderRelay       noiseLevelSliderRelay    { "noiseLevelSlider" };
   WebSliderRelay       transientAmountSliderRelay    { "transientAmountSlider" };
   WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
@@ -70,7 +70,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withWinWebView2Options (WebBrowserComponent::Options::WinWebView2{}
                                .withUserDataFolder (File::getSpecialLocation (File::SpecialLocationType::tempDirectory)))
       .withNativeIntegrationEnabled()
-      .withOptionsFrom (masterToggleRelay)
+      .withOptionsFrom (bypassToggleRelay)
       .withOptionsFrom (noiseLevelSliderRelay)
       .withOptionsFrom (transientAmountSliderRelay)
       .withOptionsFrom (emphasisSliderRelay)
@@ -103,7 +103,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       },
                              URL { localDevServerAddress }.getOrigin()) };
   
-  WebToggleButtonParameterAttachment masterAttachment;
+  WebToggleButtonParameterAttachment bypassAttachment;
   WebSliderParameterAttachment       noiseLevelAttachment;
   WebSliderParameterAttachment       transientAmountAttachment;
   WebSliderParameterAttachment       emphasisAttachment;

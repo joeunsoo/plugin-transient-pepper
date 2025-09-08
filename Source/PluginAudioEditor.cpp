@@ -126,8 +126,8 @@ bool SinglePageBrowser::pageAboutToLoad (const String& newURL)
 PluginAudioEditor::PluginAudioEditor (PluginAudioProcessor& p)
 : AudioProcessorEditor (&p), processorRef (p),
 
-masterAttachment (*processorRef.state.getParameter (ID::master.getParamID()),
-                  masterToggleRelay,
+bypassAttachment (*processorRef.state.getParameter (ID::bypass.getParamID()),
+                  bypassToggleRelay,
                   processorRef.state.undoManager),
 
 noiseLevelAttachment (*processorRef.state.getParameter (ID::noiseLevel.getParamID()),

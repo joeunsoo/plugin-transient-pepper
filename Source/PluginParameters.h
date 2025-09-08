@@ -16,7 +16,7 @@ struct Parameters {
   public:
   explicit Parameters (AudioProcessorValueTreeState::ParameterLayout& layout)
   :
-  master (addToLayout<AudioParameterBool> (layout, ID::master, "Master On/Off", true)),
+  bypass (addToLayout<AudioParameterBool> (layout, ID::bypass, "Bypass", false)),
 
   attack (addToLayout<AudioParameterFloat> (layout,
                                                      ID::attack,
@@ -48,12 +48,10 @@ struct Parameters {
   noiseLevel (addToLayout<AudioParameterFloat> (layout,
                                                      ID::noiseLevel,
                                                      "-",
-                                                     NormalisableRange<float> { 0.0f, 400.0f, 0.1f, 1.0f },
-                                                     200.0f,
-                                                     "%",
-                                                     juce::AudioProcessorParameter::genericParameter,
-                                                     [](float value, int) { return percentToString(value); },
-                                                     [](const juce::String& text) { return stringToPercent(text); }
+                                                     NormalisableRange<float> { 0.0f, 1.0f, 0.1f, 1.0f },
+                                                     0.5f,
+                                                     "",
+                                                     juce::AudioProcessorParameter::genericParameter
                                                      )),
 
   transientAmount (addToLayout<AudioParameterFloat> (layout,
@@ -109,7 +107,7 @@ struct Parameters {
   {
   }
   
-  AudioParameterBool&  master;
+  AudioParameterBool&  bypass;
   AudioParameterFloat& attack;
   AudioParameterFloat& release;
   AudioParameterFloat& threshold;
@@ -138,7 +136,7 @@ struct Parameters {
     add (layout, std::move (param));
     return ref;
   }
-  
+
   static String percentToString (float value) {
     return juce::String(value, 1) + " %"; // << 표시될 문자열
   }

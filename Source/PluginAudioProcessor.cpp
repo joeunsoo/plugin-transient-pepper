@@ -65,17 +65,6 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   
   sampleRate = spec.sampleRate;
   
-  transientNoise.prepare(spec);
-  transientNoise.reset();
-  
-  dcBlocker.prepare(spec);
-  dcBlocker.reset();
-  antiAliasingFilter.prepare(spec);
-  antiAliasingFilter.reset();
-  
-  preEQ.prepare(spec);
-  postEQ.prepare(spec);
-  tiltEQ.prepare(spec);
   
   inputGain.setGainDecibels(0.0f);
   inputGain.reset();
@@ -85,6 +74,16 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   dryWetMixer.setMixingRule (juce::dsp::DryWetMixingRule::linear);
   dryWetMixer.prepare (spec);
   dryWetMixer.setWetMixProportion (1.0f);
+
+  transientNoise.prepare(spec);
+  transientNoise.reset();
+
+  tiltEQ.prepare(spec);
+
+  dcBlocker.prepare(spec);
+  dcBlocker.reset();
+  antiAliasingFilter.prepare(spec);
+  antiAliasingFilter.reset();
 }
 
 bool PluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -112,9 +111,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   
   inputGain.setGainDecibels(parameters.inputGain.get());
   outputGain.setGainDecibels(parameters.outputGain.get());
-  
-  preEQ.setGain(parameters.emphasis.get());
-  postEQ.setGain(0-parameters.emphasis.get());
+
   // tiltEQ.setGain(parameters.tilt.get());
   
   transientNoise.setNoiseLevel(parameters.noiseLevel.get());
@@ -123,22 +120,17 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.setTRelease(parameters.release.get());
 
   transientNoise.setThreshold(parameters.threshold.get());
-  transientNoise.setMaster(!parameters.master.get());
 
   dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
   
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
   
-  // if (parameters.master.get()) {
+  if (!parameters.bypass.get()) {
     dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
     
     inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
-    // preEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    // postEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     // tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
@@ -149,7 +141,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     // antiAliasingFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
-  // }
+  }
   
 }
 
