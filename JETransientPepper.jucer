@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="JERustyTone" companyName="JoEunsoo" version="1.0.0" userNotes="Saturation Plugin"
-              companyWebsite="http://joeunsoo.com" defines="PIP_JUCE_EXAMPLES_DIRECTORY=L1VzZXJzL2pvZXVuc29vL0pVQ0UvZXhhbXBsZXM="
+<JUCERPROJECT name="JETransientPepper" companyName="JoEunsoo" version="1.0.0"
+              userNotes="Saturation Plugin" companyWebsite="http://joeunsoo.com"
+              defines="PIP_JUCE_EXAMPLES_DIRECTORY=L1VzZXJzL2pvZXVuc29vL0pVQ0UvZXhhbXBsZXM="
               projectType="audioplug" pluginAUIsSandboxSafe="1" pluginManufacturer="JoEunsoo"
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" id="juqXJH" jucerFormatVersion="1"
               pluginVST3Category="Distortion" companyEmail="info@joeunsoo.com"
-              pluginName="JE Rusty Tone">
-  <MAINGROUP id="eUJieJ" name="JERustyTone">
+              pluginName="JE Transient Pepper">
+  <MAINGROUP id="eUJieJ" name="JETransientPepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
       <FILE id="ZuKSjA" name="AntiAliasingFilter.h" compile="0" resource="0"
             file="Source/AntiAliasingFilter.h"/>

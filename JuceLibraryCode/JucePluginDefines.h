@@ -41,10 +41,10 @@
  #define JucePlugin_Enable_ARA             0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "JE Rusty Tone"
+ #define JucePlugin_Name                   "JE Transient Pepper"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "JERustyTone"
+ #define JucePlugin_Desc                   "JETransientPepper"
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "JoEunsoo"
@@ -101,19 +101,19 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
- #define JucePlugin_AUExportPrefix         JERustyToneAU
+ #define JucePlugin_AUExportPrefix         JETransientPepperAU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "JERustyToneAU"
+ #define JucePlugin_AUExportPrefixQuoted   "JETransientPepperAU"
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.JoEunsoo.JERustyTone
+ #define JucePlugin_CFBundleIdentifier     com.JoEunsoo.JETransientPepper
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.JoEunsoo.JERustyTone
+ #define JucePlugin_AAXIdentifier          com.JoEunsoo.JETransientPepper
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -137,7 +137,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "JoEunsoo: JE Rusty Tone"
+ #define JucePlugin_IAAName                "JoEunsoo: JE Transient Pepper"
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16
@@ -152,10 +152,10 @@
  #define JucePlugin_ARATransformationFlags  0
 #endif
 #ifndef  JucePlugin_ARAFactoryID
- #define JucePlugin_ARAFactoryID           "com.JoEunsoo.JERustyTone.factory"
+ #define JucePlugin_ARAFactoryID           "com.JoEunsoo.JETransientPepper.factory"
 #endif
 #ifndef  JucePlugin_ARADocumentArchiveID
- #define JucePlugin_ARADocumentArchiveID   "com.JoEunsoo.JERustyTone.aradocumentarchive.1.0.0"
+ #define JucePlugin_ARADocumentArchiveID   "com.JoEunsoo.JETransientPepper.aradocumentarchive.1.0.0"
 #endif
 #ifndef  JucePlugin_ARACompatibleArchiveIDs
  #define JucePlugin_ARACompatibleArchiveIDs  ""
