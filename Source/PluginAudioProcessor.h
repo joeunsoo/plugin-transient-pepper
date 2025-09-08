@@ -15,6 +15,7 @@
 #include "AntiAliasingFilter.h"
 #include "DcOffsetFilter.h"
 #include "Saturation.h"
+#include "TransientNoise.h"
 #include "TiltEQ.h"
 
 //==============================================================================
@@ -61,7 +62,7 @@ class PluginAudioProcessor  : public AudioProcessor
         bypass (addToLayout<AudioParameterBool> (layout, ID::bypass, "Bypass", false)),
         saturationDrive (addToLayout<AudioParameterFloat> (layout,
                                                            ID::saturationDrive,
-                                                           "Saturation Drive",
+                                                           "Noise Level",
                                                            NormalisableRange<float> { 0.0f, 100.0f, 1.0f, 1.0f },
                                                            50.0f,
                                                            "%",
@@ -75,7 +76,7 @@ class PluginAudioProcessor  : public AudioProcessor
                                                            )),
         emphasis (addToLayout<AudioParameterFloat> (layout,
                                                     ID::emphasis,
-                                                    "Emphasis",
+                                                    "Transient",
                                                     NormalisableRange<float> { -12.0f, 12.0f, 0.5f, 1.0f },
                                                     0.0f,
                                                     "dB",
@@ -195,6 +196,8 @@ class PluginAudioProcessor  : public AudioProcessor
     AntiAliasingFilter antiAliasingFilter;
     
     juce::dsp::DryWetMixer<float> dryWetMixer;
+
+    TransientNoiseProcessor<float> transientNoise;
     
     int windowScale;
 

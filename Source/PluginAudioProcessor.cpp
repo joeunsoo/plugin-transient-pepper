@@ -65,6 +65,9 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
     
     sampleRate = spec.sampleRate;
     
+    transientNoise.prepare(spec);
+    transientNoise.reset();
+
     dcBlocker.prepare(spec);
     dcBlocker.reset();
     antiAliasingFilter.prepare(spec);
@@ -118,6 +121,9 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     preEQ.setGain(parameters.emphasis.get());
     postEQ.setGain(0-parameters.emphasis.get());
     tiltEQ.setGain(parameters.tilt.get());
+
+    transientNoise.setNoiseLevel(parameters.saturationDrive.get());
+    transientNoise.setTransientAmount(parameters.emphasis.get());
     
     dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
     
@@ -131,7 +137,8 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         
         preEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
         
-        saturation.process(dsp::ProcessContextReplacing<float> (outBlock));
+        // saturation.process(dsp::ProcessContextReplacing<float> (outBlock));
+        transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
         
         postEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
         

@@ -10,6 +10,8 @@
               pluginName="JE Transient Pepper">
   <MAINGROUP id="eUJieJ" name="JETransientPepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
+      <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"
+            file="Source/TransientNoise.h"/>
       <FILE id="ZuKSjA" name="AntiAliasingFilter.h" compile="0" resource="0"
             file="Source/AntiAliasingFilter.h"/>
       <FILE id="EbAnGz" name="DcOffsetFilter.h" compile="0" resource="0"
