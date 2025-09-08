@@ -27,6 +27,7 @@ PARAMETER_ID (inputGain)
 PARAMETER_ID (outputGain)
 
 PARAMETER_ID (dryWet)
+PARAMETER_ID (wetSolo)
 
 #undef PARAMETER_ID
 }

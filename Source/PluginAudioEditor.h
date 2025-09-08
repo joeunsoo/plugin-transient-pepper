@@ -62,6 +62,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderRelay       inputGainSliderRelay    { "inputGainSlider" };
   WebSliderRelay       outputGainSliderRelay    { "outputGainSlider" };
   WebSliderRelay       dryWetSliderRelay    { "dryWetSlider" };
+  WebToggleButtonRelay wetSoloToggleRelay      { "wetSoloToggle" };
   
   WebControlParameterIndexReceiver controlParameterIndexReceiver;
   
@@ -80,6 +81,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withOptionsFrom (inputGainSliderRelay)
       .withOptionsFrom (outputGainSliderRelay)
       .withOptionsFrom (dryWetSliderRelay)
+      .withOptionsFrom (wetSoloToggleRelay)
       .withOptionsFrom (controlParameterIndexReceiver)
       .withNativeFunction ("setWindowScale", [this](auto& var, auto complete) {
         setScale(var[0]);
@@ -113,6 +115,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderParameterAttachment       inputGainAttachment;
   WebSliderParameterAttachment       outputGainAttachment;
   WebSliderParameterAttachment       dryWetAttachment;
+  WebToggleButtonParameterAttachment       wetSoloAttachment;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioEditor)
 };

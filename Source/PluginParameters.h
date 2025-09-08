@@ -109,7 +109,8 @@ struct Parameters {
                                             juce::AudioProcessorParameter::genericParameter,
                                             [](float value, int) { return percentToString(value); },
                                             [](const juce::String& text) { return stringToPercent(text); }
-                                            ))
+                                            )),
+  wetSolo (addToLayout<AudioParameterBool> (layout, ID::wetSolo, "Wet Solo", false))
   {
   }
   
@@ -123,6 +124,7 @@ struct Parameters {
   AudioParameterFloat& inputGain;
   AudioParameterFloat& outputGain;
   AudioParameterFloat& dryWet;
+  AudioParameterBool& wetSolo;
   
   private:
   template <typename Param>

@@ -123,7 +123,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.transientFollower.setThreshold(parameters.threshold.get());
   transientNoise.transientFollower.setRatio(parameters.noiseLevel.get());
 
-  dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
+  dryWetMixer.setWetMixProportion (parameters.wetSolo.get() ? 1.0 :(parameters.dryWet.get() / 100.0f));
 
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
   

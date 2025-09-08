@@ -162,7 +162,12 @@ outputGainAttachment (*processorRef.state.getParameter (ID::outputGain.getParamI
 
 dryWetAttachment (*processorRef.state.getParameter (ID::dryWet.getParamID()),
                   dryWetSliderRelay,
+                  processorRef.state.undoManager),
+
+wetSoloAttachment (*processorRef.state.getParameter (ID::wetSolo.getParamID()),
+                  wetSoloToggleRelay,
                   processorRef.state.undoManager)
+
 {
   addAndMakeVisible (webComponent);
   

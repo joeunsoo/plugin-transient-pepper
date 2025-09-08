@@ -102,6 +102,9 @@ export default function App() {
           />
           <Stack>
             <JuceToggleButton
+              identifier="wetSoloToggle"
+            />
+            <JuceToggleButton
               identifier="bypassToggle"
               title="In"
               invertValue
