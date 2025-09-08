@@ -11,6 +11,7 @@ import { toFixedDigits } from '@/src/define';
 import { LabelTypographySx } from '@/ui/Style';
 
 import Knob from './Knob';
+import type { ValueToString } from '@/src/utils/valueToString';
 
 interface JuceSliderProps extends BoxProps {
   identifier: string,
@@ -18,6 +19,7 @@ interface JuceSliderProps extends BoxProps {
   subDigit?: number
   defaultValue?: number
   hideTitle?: boolean
+  valueToString?: ValueToString
 }
 
 export default function JuceSlider({
@@ -27,10 +29,11 @@ export default function JuceSlider({
   subDigit = toFixedDigits,
   hideTitle = false,
   sx,
+  valueToString,
   ...props
 }: JuceSliderProps) {
   const sliderState = Juce.getSliderState(identifier);
-
+console.log(sliderState);
   const [value, setValue] = useState<number>(sliderState.getNormalisedValue());
   const [properties, setProperties] = useState(sliderState.properties);
 
@@ -81,6 +84,14 @@ export default function JuceSlider({
     return sliderState.getScaledValue();
   }
 
+  const printValue = () => {
+    if (valueToString) {
+      return valueToString(sliderState.getScaledValue(), subDigit);
+    }
+
+    return `${sliderState.getScaledValue().toFixed(subDigit)} ${properties.label}`;
+  };
+
   return (
     <Box
       {...{
@@ -123,7 +134,7 @@ export default function JuceSlider({
           ...LabelTypographySx,
         }}
       >
-        {sliderState.getScaledValue().toFixed(subDigit)} {properties.label}
+        {printValue()}
       </Typography>
     </Box>
   );

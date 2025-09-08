@@ -7,6 +7,7 @@ import JuceKnob from '@/src/ui/Control/Slider/JuceKnob';
 
 import controlParameterIndexAnnotation from '@/src/define/controlParameterIndexAnnotation';
 import JuceToggleButton from '@/src/ui/Control/ToggleButton/JuceToggleButton';
+import { msToString } from '@/src/utils/valueToString';
 
 export default function App() {
   const controlParameterIndexUpdater = new Juce.ControlParameterIndexUpdater(
@@ -57,12 +58,14 @@ export default function App() {
           <JuceKnob
             identifier="attackSlider"
             defaultValue={0.5}
-            subDigit={4}
+            valueToString={msToString}
+            subDigit={1}
           />
           <JuceKnob
             identifier="releaseSlider"
             defaultValue={0.5}
-            subDigit={4}
+            valueToString={msToString}
+            subDigit={1}
           />
           <JuceKnob
             identifier="noiseLevelSlider"

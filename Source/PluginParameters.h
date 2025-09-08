@@ -1,12 +1,12 @@
 /*
-  ==============================================================================
-
-    PluginParameters.h
-    Created: 8 Sep 2025 6:33:58pm
-    Author:  JoEunsoo
-
-  ==============================================================================
-*/
+ ==============================================================================
+ 
+ PluginParameters.h
+ Created: 8 Sep 2025 6:33:58pm
+ Author:  JoEunsoo
+ 
+ ==============================================================================
+ */
 
 #pragma once
 #include "NamespaceParameterId.h"
@@ -17,43 +17,47 @@ struct Parameters {
   explicit Parameters (AudioProcessorValueTreeState::ParameterLayout& layout)
   :
   bypass (addToLayout<AudioParameterBool> (layout, ID::bypass, "Bypass", false)),
-
+  
   attack (addToLayout<AudioParameterFloat> (layout,
-                                                     ID::attack,
-                                                     "Attack",
-                                            NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                            ID::attack,
+                                            "Attack",
+                                            NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
                                             0.0500f,
-                                            "",
-                                            juce::AudioProcessorParameter::genericParameter
-                                                     )),
-
+                                            "ms",
+                                            juce::AudioProcessorParameter::genericParameter,
+                                            [](float value, int) { return msToString(value * 1000.0f); },
+                                            [](const juce::String& text) { return StringToMs(text); }
+                                            )),
+  
   release (addToLayout<AudioParameterFloat> (layout,
-                                              ID::release,
-                                              "Release",
-                                             NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                             ID::release,
+                                             "Release",
+                                             NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
                                              0.0500f,
-                                             "",
-                                             juce::AudioProcessorParameter::genericParameter
-                                              )),
-
+                                             "ms",
+                                             juce::AudioProcessorParameter::genericParameter,
+                                             [](float value, int) { return msToString(value * 1000.0f); },
+                                             [](const juce::String& text) { return StringToMs(text); }
+                                             )),
+  
   threshold (addToLayout<AudioParameterFloat> (layout,
-                                          ID::threshold,
-                                          "Threshold",
-                                          NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                          0.0500f,
-                                          "",
-                                          juce::AudioProcessorParameter::genericParameter
-                                          )),
-
+                                               ID::threshold,
+                                               "Threshold",
+                                               NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                               0.0500f,
+                                               "",
+                                               juce::AudioProcessorParameter::genericParameter
+                                               )),
+  
   noiseLevel (addToLayout<AudioParameterFloat> (layout,
-                                                     ID::noiseLevel,
-                                                     "-",
-                                                     NormalisableRange<float> { 0.0f, 1.0f, 0.1f, 1.0f },
-                                                     0.5f,
-                                                     "",
-                                                     juce::AudioProcessorParameter::genericParameter
-                                                     )),
-
+                                                ID::noiseLevel,
+                                                "-",
+                                                NormalisableRange<float> { 0.0f, 1.0f, 0.1f, 1.0f },
+                                                0.5f,
+                                                "",
+                                                juce::AudioProcessorParameter::genericParameter
+                                                )),
+  
   transientAmount (addToLayout<AudioParameterFloat> (layout,
                                                      ID::transientAmount,
                                                      "-",
@@ -62,7 +66,7 @@ struct Parameters {
                                                      "",
                                                      juce::AudioProcessorParameter::genericParameter
                                                      )),
-
+  
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
                                               "-",
@@ -71,7 +75,7 @@ struct Parameters {
                                               "",
                                               juce::AudioProcessorParameter::genericParameter
                                               )),
-
+  
   inputGain (addToLayout<AudioParameterFloat> (layout,
                                                ID::inputGain,
                                                "Input Gain",
@@ -82,7 +86,7 @@ struct Parameters {
                                                [](float value, int) { return dBToString(value); },
                                                [](const juce::String& text) { return StringToDB(text); }
                                                )),
-
+  
   outputGain (addToLayout<AudioParameterFloat> (layout,
                                                 ID::outputGain,
                                                 "Output Gain",
@@ -93,7 +97,7 @@ struct Parameters {
                                                 [](float value, int) { return dBToString(value); },
                                                 [](const juce::String& text) { return StringToDB(text); }
                                                 )),
-
+  
   dryWet (addToLayout<AudioParameterFloat> (layout,
                                             ID::dryWet,
                                             "Dry/Wet",
@@ -135,6 +139,15 @@ struct Parameters {
     auto& ref = *param;
     add (layout, std::move (param));
     return ref;
+  }
+  
+  //==============================================================================
+
+  static String msToString (float value) {
+    return juce::String(value, 0) + " ms"; // << 표시될 문자열
+  }
+  static float StringToMs (const juce::String& text) {
+    return text.dropLastCharacters(3).getFloatValue(); // "12 ms" → 12
   }
 
   static String percentToString (float value) {

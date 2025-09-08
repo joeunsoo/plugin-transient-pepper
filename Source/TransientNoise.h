@@ -43,13 +43,12 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     {
       auto* in = inputBlock.getChannelPointer(ch);
       auto* out = outputBlock.getChannelPointer(ch);
-      
+
       for (size_t n = 0; n < inputBlock.getNumSamples(); ++n)
       {
         SampleType sample = in[n];
         
-        SampleType transient = transientFollower.processSample(sample, ch); // 엔벨로프 팔로워
-        float dynamicNoise = transient;
+        SampleType dynamicNoise = transientFollower.processSample(sample, ch); // 엔벨로프 팔로워
         SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
 
         out[n] = noiseSample;
@@ -57,18 +56,17 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     }
   }
   
-  void setNoiseLevel(SampleType level) { noiseLevel = level; }
+  TransientFollower<SampleType> transientFollower;
+
   void setTAttack(SampleType value) { transientFollower.setTAttack(value); }
   void setTRelease(SampleType value) { transientFollower.setTRelease(value); }
   void setThreshold(SampleType value) { transientFollower.setThreshold(value); }
+
   
   private:
   double sampleRate = 44100.0;
   int numChannels = 2;
   
   juce::Random noiseGenerator;
-  SampleType noiseLevel = 0.05f;
-  
-  // std::vector<SampleType> envelopeValues;
-  TransientFollower<SampleType> transientFollower;
+
 };

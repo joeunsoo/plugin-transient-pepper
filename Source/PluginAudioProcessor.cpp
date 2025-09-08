@@ -113,13 +113,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   outputGain.setGainDecibels(parameters.outputGain.get());
 
   // tiltEQ.setGain(parameters.tilt.get());
-  
-  transientNoise.setNoiseLevel(parameters.noiseLevel.get());
 
-  transientNoise.setTAttack(parameters.attack.get());
-  transientNoise.setTRelease(parameters.release.get());
-
-  transientNoise.setThreshold(parameters.threshold.get());
+  transientNoise.transientFollower.setTAttack(parameters.attack.get());
+  transientNoise.transientFollower.setTRelease(parameters.release.get());
+  transientNoise.transientFollower.setThreshold(parameters.threshold.get());
 
   dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
   
