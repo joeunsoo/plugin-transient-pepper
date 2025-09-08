@@ -31,7 +31,7 @@ struct Parameters {
 
   transientAmount (addToLayout<AudioParameterFloat> (layout,
                                                      ID::transientAmount,
-                                                     "Attack1",
+                                                     "-",
                                                      NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
                                                      0.0500f,
                                                      "",
@@ -40,7 +40,7 @@ struct Parameters {
 
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
-                                              "Release1",
+                                              "-",
                                               NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
                                               0.0500f,
                                               "",
@@ -49,7 +49,7 @@ struct Parameters {
 
   attack (addToLayout<AudioParameterFloat> (layout,
                                                      ID::attack,
-                                                     "Attack2",
+                                                     "Attack",
                                             NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
                                             0.0500f,
                                             "",
@@ -58,16 +58,16 @@ struct Parameters {
 
   release (addToLayout<AudioParameterFloat> (layout,
                                               ID::release,
-                                              "Release2",
+                                              "Release",
                                              NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
                                              0.0500f,
                                              "",
                                              juce::AudioProcessorParameter::genericParameter
                                               )),
 
-  tilt (addToLayout<AudioParameterFloat> (layout,
-                                          ID::tilt,
-                                          "Tone/Tilt",
+  threshold (addToLayout<AudioParameterFloat> (layout,
+                                          ID::threshold,
+                                          "Threshold",
                                           NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
                                           0.0500f,
                                           "",
@@ -77,19 +77,23 @@ struct Parameters {
   inputGain (addToLayout<AudioParameterFloat> (layout,
                                                ID::inputGain,
                                                "Input Gain",
-                                               NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                               0.0500f,
-                                               "",
-                                               juce::AudioProcessorParameter::genericParameter
+                                               NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
+                                               0.0f,
+                                               "dB",
+                                               juce::AudioProcessorParameter::genericParameter,
+                                               [](float value, int) { return dBToString(value); },
+                                               [](const juce::String& text) { return StringToDB(text); }
                                                )),
 
   outputGain (addToLayout<AudioParameterFloat> (layout,
                                                 ID::outputGain,
                                                 "Output Gain",
-                                                NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                                0.0500f,
-                                                "",
-                                                juce::AudioProcessorParameter::genericParameter
+                                                NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
+                                                0.0f,
+                                                "dB",
+                                                juce::AudioProcessorParameter::genericParameter,
+                                                [](float value, int) { return dBToString(value); },
+                                                [](const juce::String& text) { return StringToDB(text); }
                                                 )),
 
   dryWet (addToLayout<AudioParameterFloat> (layout,
@@ -109,7 +113,7 @@ struct Parameters {
   AudioParameterFloat& saturationDrive;
   AudioParameterFloat& transientAmount;
   AudioParameterFloat& emphasis;
-  AudioParameterFloat& tilt;
+  AudioParameterFloat& threshold;
   AudioParameterFloat& attack;
   AudioParameterFloat& release;
   AudioParameterFloat& inputGain;
@@ -142,10 +146,10 @@ struct Parameters {
     return text.dropLastCharacters(2).getFloatValue(); // "12 %" → 12
   }
   
-  static String percentToDB (float value) {
+  static String dBToString (float value) {
     return juce::String(value, 1) + " dB";  // << 표시될 문자열
   }
-  static float dBToPercent (const juce::String& text) {
+  static float StringToDB (const juce::String& text) {
     return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
   }
 };

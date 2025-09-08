@@ -51,7 +51,6 @@ export default function App() {
 
           <JuceKnob
             identifier="transientAmountSlider"
-            title="Attack"
             defaultValue={0.5}
             subDigit={4}
             sx={{
@@ -60,7 +59,6 @@ export default function App() {
           />
           <JuceKnob
             identifier="emphasisSlider"
-            title="Release"
             defaultValue={0.5}
             subDigit={4}
             sx={{
@@ -69,7 +67,6 @@ export default function App() {
           />
           <JuceKnob
             identifier="attackSlider"
-            title="Attack2"
             defaultValue={0.5}
             subDigit={4}
             sx={{
@@ -78,27 +75,25 @@ export default function App() {
           />
           <JuceKnob
             identifier="releaseSlider"
-            title="Release2"
+            defaultValue={0.5}
+            subDigit={4}
+          />
+          <JuceKnob
+            identifier="thresholdSlider"
             defaultValue={0.5}
             subDigit={4}
           />
           <JuceKnob
             identifier="inputGainSlider"
-            title="TAttack"
+            title="Input Gain"
             defaultValue={0.5}
-            subDigit={4}
+            subDigit={1}
           />
           <JuceKnob
             identifier="outputGainSlider"
-            title="TRelease"
+            title="Output Gain"
             defaultValue={0.5}
-            subDigit={4}
-          />
-          <JuceKnob
-            identifier="tiltSlider"
-            title="Threshold"
-            defaultValue={0.5}
-            subDigit={4}
+            subDigit={1}
           />
           <JuceKnob
             identifier="dryWetSlider"

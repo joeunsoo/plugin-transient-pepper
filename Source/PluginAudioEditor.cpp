@@ -142,8 +142,8 @@ emphasisAttachment (*processorRef.state.getParameter (ID::emphasis.getParamID())
                     emphasisSliderRelay,
                     processorRef.state.undoManager),
 
-tiltAttachment (*processorRef.state.getParameter (ID::tilt.getParamID()),
-                tiltSliderRelay,
+thresholdAttachment (*processorRef.state.getParameter (ID::threshold.getParamID()),
+                     thresholdSliderRelay,
                 processorRef.state.undoManager),
 
 attackAttachment (*processorRef.state.getParameter (ID::attack.getParamID()),

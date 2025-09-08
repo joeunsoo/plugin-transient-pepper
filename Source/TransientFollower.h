@@ -24,22 +24,19 @@ class TransientFollower
     fastRelease = calcCoeff(0.0175f);
     slowAttack = calcCoeff(0.0200f);
     slowRelease = calcCoeff(0.1000f);
+
     tAttack = calcCoeff(0.01f);
     tRelease = calcCoeff(0.01f);
     
-    prevEnv.resize(numChannels, 0.0f);
     fastEnv.resize(numChannels, 0.0f);
     slowEnv.resize(numChannels, 0.0f);
-    transient.resize(numChannels, 0.0f);
     transientEnv.resize(numChannels, 0.0f);
   }
   
   void reset()
   {
-    std::fill(prevEnv.begin(), prevEnv.end(), 0.0f);
     std::fill(fastEnv.begin(), fastEnv.end(), 0.0f);
     std::fill(slowEnv.begin(), slowEnv.end(), 0.0f);
-    std::fill(transient.begin(), transient.end(), 0.0f);
     std::fill(transientEnv.begin(), transientEnv.end(), 0.0f);
   }
   
@@ -77,10 +74,6 @@ class TransientFollower
     return transientEnv[channel];
   }
   
-  void setFastAttack(SampleType a) { fastAttack = calcCoeff(a); }
-  void setFastRelease(SampleType r) { fastRelease = calcCoeff(r); }
-  void setSlowAttack(SampleType a) { slowAttack = calcCoeff(a); }
-  void setSlowRelease(SampleType r) { slowRelease = calcCoeff(r); }
   void setTAttack(SampleType a) { tAttack = calcCoeff(a); }
   void setTRelease(SampleType r) { tRelease = calcCoeff(r); }
   void setThreshold(SampleType t) { threshold = t; }
@@ -99,8 +92,6 @@ class TransientFollower
   
   std::vector<SampleType> fastEnv;
   std::vector<SampleType> slowEnv;
-  std::vector<SampleType> prevEnv;
-  std::vector<SampleType> transient;
   std::vector<SampleType> transientEnv;
   
   

@@ -23,12 +23,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   {
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
-    
-    // envelopeValues.resize(numChannels, 0.0f);
-    
+
     transientFollower.prepare(spec);
-    transientFollower.setFastAttack(0.0001f);   // 0.01f = 10ms attack
-    transientFollower.setFastRelease(0.0001f);   // 0.1f = 100ms release
     
     noiseGenerator.setSeed(juce::Random::getSystemRandom().nextInt());
   }
@@ -67,10 +63,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   }
   
   void setNoiseLevel(SampleType level) { noiseLevel = level; }
-  void setFastAttack(SampleType value) { transientFollower.setFastAttack(value); }
-  void setFastRelease(SampleType value) { transientFollower.setFastRelease(value); }
-  void setSlowAttack(SampleType value) { transientFollower.setSlowAttack(value); }
-  void setSlowRelease(SampleType value) { transientFollower.setSlowRelease(value); }
   void setTAttack(SampleType value) { transientFollower.setTAttack(value); }
   void setTRelease(SampleType value) { transientFollower.setTRelease(value); }
   void setThreshold(SampleType value) { transientFollower.setThreshold(value); }
