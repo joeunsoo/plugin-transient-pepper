@@ -10,6 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "TransientFollower.h"
 
 template <typename SampleType>
 class TransientNoiseProcessor : public juce::dsp::ProcessorBase
@@ -26,9 +27,9 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     prevSample.resize(numChannels, 0.0f);
     envelopeValues.resize(numChannels, 0.0f);
     
-    envelopeFollower.prepare(spec);
-    envelopeFollower.setAttack(0.001f);   // 0.01f = 10ms attack
-    envelopeFollower.setRelease(0.001f);   // 0.1f = 100ms release
+    transientFollower.prepare(spec);
+    transientFollower.setAttack(0.0001f);   // 0.01f = 10ms attack
+    transientFollower.setRelease(0.0001f);   // 0.1f = 100ms release
     
     noiseGenerator.setSeed(juce::Random::getSystemRandom().nextInt());
   }
@@ -53,58 +54,28 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
       {
         SampleType sample = in[n];
         
-        // Envelope follower (simple peak)
-        envelopeValues[ch] = envelopeFollower.processSample(sample, envelopeValues[ch]);
-        
         // 간단한 transient detection
-        SampleType transient = sample - prevSample[ch];
-        prevSample[ch] = sample;
+        // SampleType transient = sample - prevSample[ch];
+        // prevSample[ch] = sample;
+        // SampleType gain = 1.0f + transientAmount * std::abs(transient); // 트렌지언트 적용
         
+        // 노이즈
+        envelopeValues[ch] = transientFollower.processSample(sample, envelopeValues[ch]); // 엔벨로프 팔로워
         float dynamicNoise = noiseLevel * 0.01f * envelopeValues[ch];
-        
-        // noise 생성
         SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
-        // transient shaping
-        SampleType gain = 1.0f + transientAmount * std::abs(transient);
-        out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
+        // out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
+        out[n] = sample + noiseSample;
       }
     }
   }
   
   void setNoiseLevel(SampleType level) { noiseLevel = level; }
+  void setAttack(SampleType value) { transientFollower.setAttack(value); }
+  void setRelease(SampleType value) { transientFollower.setRelease(value); }
   void setTransientAmount(SampleType amount) { transientAmount = amount; }
   
   private:
-  // Envelope follower (simple peak detector)
-  struct EnvelopeFollower
-  {
-    void setAttack(SampleType a) { attack = a; alphaAttack = std::exp(-1.0f / (attack * sampleRate)); }
-    void setRelease(SampleType r) { release = r; alphaRelease = std::exp(-1.0f / (release * sampleRate)); }
-    
-    void prepare(const juce::dsp::ProcessSpec& spec)
-    {
-      sampleRate = spec.sampleRate;
-    }
-    
-    float processSample(SampleType input, SampleType env)
-    {
-      float rectified = std::abs(input);
-      if (rectified > env)
-        env = alphaAttack * env + (1.0f - alphaAttack) * rectified;
-      else
-        env = alphaRelease * env + (1.0f - alphaRelease) * rectified;
-      return env;
-    }
-    
-    float attack = 0.01f;
-    float release = 0.1f;
-    float alphaAttack = 0.99977f;
-    float alphaRelease = 0.9989f;
-    
-    double sampleRate = 44100.0;
-  };
-  
   double sampleRate = 44100.0;
   int numChannels = 2;
   
@@ -113,5 +84,5 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   SampleType transientAmount = 1.0f;
   std::vector<SampleType> prevSample;
   std::vector<SampleType> envelopeValues;
-  EnvelopeFollower envelopeFollower;
+  TransientFollower<SampleType> transientFollower;
 };

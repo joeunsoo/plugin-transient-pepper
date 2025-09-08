@@ -39,11 +39,9 @@ class TiltEQProcessor : public juce::dsp::ProcessorBase
   {
     auto tiltGain = juce::Decibels::decibelsToGain(tiltDb);
     
-    *lowShelf.state = *juce::dsp::IIR::Coefficients<SampleType>::makeLowShelf(
-                                                                              sampleRate, 1000.0f, 0.35f, 1.0f / tiltGain);
+    *lowShelf.state = *juce::dsp::IIR::Coefficients<SampleType>::makeLowShelf(sampleRate, 1000.0f, 0.35f, 1.0f / tiltGain);
     
-    *highShelf.state = *juce::dsp::IIR::Coefficients<SampleType>::makeHighShelf(
-                                                                                sampleRate, 1000.0f, 0.35f, tiltGain);
+    *highShelf.state = *juce::dsp::IIR::Coefficients<SampleType>::makeHighShelf(sampleRate, 1000.0f, 0.35f, tiltGain);
     
     lowShelf.process(context);
     highShelf.process(context);

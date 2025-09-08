@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "NamespaceParameterId.h"
+#include "PluginParameters.h"
 #include "AntiAliasingFilter.h"
 #include "DcOffsetFilter.h"
 #include "TransientNoise.h"
@@ -53,144 +54,6 @@ class PluginAudioProcessor  : public AudioProcessor
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
   
-  struct Parameters
-  {
-    public:
-    explicit Parameters (AudioProcessorValueTreeState::ParameterLayout& layout)
-    :
-    master (addToLayout<AudioParameterBool> (layout, ID::master, "Master On/Off", true)),
-    saturationDrive (addToLayout<AudioParameterFloat> (layout,
-                                                       ID::saturationDrive,
-                                                       "Noise Level",
-                                                       NormalisableRange<float> { 0.0f, 100.0f, 1.0f, 1.0f },
-                                                       50.0f,
-                                                       "%",
-                                                       juce::AudioProcessorParameter::genericParameter,
-                                                       [](float value, int) {
-      return juce::String(value, 1) + " %";  // << 표시될 문자열
-    },
-                                                       [](const juce::String& text) {
-      return text.dropLastCharacters(2).getFloatValue(); // "12 %" → 12
-    }
-                                                       )),
-    transientAmount (addToLayout<AudioParameterFloat> (layout,
-                                                       ID::transientAmount,
-                                                       "Transient",
-                                                       NormalisableRange<float> { 0.0f, 100.0f, 1.0f, 1.0f },
-                                                       50.0f,
-                                                       "%",
-                                                       juce::AudioProcessorParameter::genericParameter,
-                                                       [](float value, int) {
-      return juce::String(value, 1) + " %";  // << 표시될 문자열
-    },
-                                                       [](const juce::String& text) {
-      return text.dropLastCharacters(2).getFloatValue(); // "12 dB" → 12
-    }
-                                                       )),
-    emphasis (addToLayout<AudioParameterFloat> (layout,
-                                                ID::emphasis,
-                                                "Emphasis",
-                                                NormalisableRange<float> { -12.0f, 12.0f, 0.5f, 1.0f },
-                                                0.0f,
-                                                "dB",
-                                                juce::AudioProcessorParameter::genericParameter,
-                                                [](float value, int) {
-      return juce::String(value, 1) + " dB";  // << 표시될 문자열
-    },
-                                                [](const juce::String& text) {
-      return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
-    }
-                                                )),
-    tilt (addToLayout<AudioParameterFloat> (layout,
-                                            ID::tilt,
-                                            "Tone/Tilt",
-                                            NormalisableRange<float> { -12.0f, 12.0f, 0.5f, 1.0f },
-                                            0.0f,
-                                            "dB",
-                                            juce::AudioProcessorParameter::genericParameter,
-                                            [](float value, int) {
-      return juce::String(value, 1) + " dB";  // << 표시될 문자열
-    },
-                                            [](const juce::String& text) {
-      return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
-    }
-                                            )),
-    inputGain (addToLayout<AudioParameterFloat> (layout,
-                                                 ID::inputGain,
-                                                 "Input Gain",
-                                                 NormalisableRange<float> { -24.0f, 24.0f, 0.5f, 1.0f },
-                                                 0.0f,
-                                                 "dB",
-                                                 juce::AudioProcessorParameter::genericParameter,
-                                                 [](float value, int) {
-      return juce::String(value, 1) + " dB";  // << 표시될 문자열
-    },
-                                                 [](const juce::String& text) {
-      return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
-    }
-                                                 )),
-    outputGain (addToLayout<AudioParameterFloat> (layout,
-                                                  ID::outputGain,
-                                                  "Output Gain",
-                                                  NormalisableRange<float> { -24.0f, 24.0f, 0.5f, 1.0f },
-                                                  0.0f,
-                                                  "dB",
-                                                  juce::AudioProcessorParameter::genericParameter,
-                                                  [](float value, int) {
-      return juce::String(value, 1) + " dB";  // << 표시될 문자열
-    },
-                                                  [](const juce::String& text) {
-      return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
-    }
-                                                  )),
-    dryWet (addToLayout<AudioParameterFloat> (layout,
-                                              ID::dryWet,
-                                              "Dry/Wet",
-                                              NormalisableRange<float> { 0.0f, 100.0f, 1.0f, 1.0f },
-                                              100.0f,
-                                              "%",
-                                              juce::AudioProcessorParameter::genericParameter,
-                                              [](float value, int) {
-      return juce::String(value, 1) + " %";  // << 표시될 문자열
-    },
-                                              [](const juce::String& text) {
-      return text.dropLastCharacters(2).getFloatValue(); // "12 %" → 12
-    }
-                                              ))
-    {
-    }
-    
-    AudioParameterBool&  master;
-    AudioParameterFloat& saturationDrive;
-    AudioParameterFloat& transientAmount;
-    AudioParameterFloat& emphasis;
-    AudioParameterFloat& tilt;
-    AudioParameterFloat& inputGain;
-    AudioParameterFloat& outputGain;
-    AudioParameterFloat& dryWet;
-    
-    private:
-    template <typename Param>
-    static void add (AudioProcessorParameterGroup& group, std::unique_ptr<Param> param)
-    {
-      group.addChild (std::move (param));
-    }
-    
-    template <typename Param>
-    static void add (AudioProcessorValueTreeState::ParameterLayout& group, std::unique_ptr<Param> param)
-    {
-      group.add (std::move (param));
-    }
-    
-    template <typename Param, typename Group, typename... Ts>
-    static Param& addToLayout (Group& layout, Ts&&... ts)
-    {
-      auto param = std::make_unique<Param> (std::forward<Ts> (ts)...);
-      auto& ref = *param;
-      add (layout, std::move (param));
-      return ref;
-    }
-  };
   
   double sampleRate = 44100.0;
   
@@ -211,7 +74,7 @@ class PluginAudioProcessor  : public AudioProcessor
   juce::dsp::DryWetMixer<float> dryWetMixer;
   
   TransientNoiseProcessor<float> transientNoise;
-  
+
   int windowScale;
   
   private:

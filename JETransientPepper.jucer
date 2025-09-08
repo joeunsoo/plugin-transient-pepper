@@ -12,6 +12,8 @@
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
       <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
             file="Source/NamespaceParameterId.h"/>
+      <FILE id="tY5CLN" name="TransientFollower.h" compile="0" resource="0"
+            file="Source/TransientFollower.h"/>
       <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"
             file="Source/TransientNoise.h"/>
       <FILE id="ZuKSjA" name="AntiAliasingFilter.h" compile="0" resource="0"
@@ -20,6 +22,8 @@
             file="Source/DcOffsetFilter.h"/>
       <FILE id="loxmGH" name="TiltEQ.h" compile="0" resource="0" file="Source/TiltEQ.h"/>
       <FILE id="UafBku" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="syddNs" name="PluginParameters.h" compile="0" resource="0"
+            file="Source/PluginParameters.h"/>
       <FILE id="Ivb2Pa" name="PluginWrapper.h" compile="0" resource="0" file="Source/PluginWrapper.h"/>
       <FILE id="BQzs2Y" name="PluginAudioProcessor.h" compile="0" resource="0"
             file="Source/PluginAudioProcessor.h"/>

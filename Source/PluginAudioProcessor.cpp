@@ -118,25 +118,26 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   tiltEQ.setGain(parameters.tilt.get());
   
   transientNoise.setNoiseLevel(parameters.saturationDrive.get());
-  transientNoise.setTransientAmount(parameters.transientAmount.get());
+  transientNoise.setAttack(parameters.transientAmount.get() * 0.0001f);
+  transientNoise.setRelease(parameters.emphasis.get() * 0.0001f);
+  // transientNoise.setTransientAmount(parameters.transientAmount.get());
   
   dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
   
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
   
   if (parameters.master.get()) {
-    
     dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
     
     inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
-    preEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // preEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
     
-    postEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // postEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
-    tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
     

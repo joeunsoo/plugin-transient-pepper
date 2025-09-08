@@ -125,27 +125,35 @@ bool SinglePageBrowser::pageAboutToLoad (const String& newURL)
 //==============================================================================
 PluginAudioEditor::PluginAudioEditor (PluginAudioProcessor& p)
 : AudioProcessorEditor (&p), processorRef (p),
+
 masterAttachment (*processorRef.state.getParameter (ID::master.getParamID()),
                   masterToggleRelay,
                   processorRef.state.undoManager),
+
 saturationDriveAttachment (*processorRef.state.getParameter (ID::saturationDrive.getParamID()),
                            saturationDriveSliderRelay,
                            processorRef.state.undoManager),
+
 transientAmountAttachment (*processorRef.state.getParameter (ID::transientAmount.getParamID()),
                            transientAmountSliderRelay,
                            processorRef.state.undoManager),
+
 emphasisAttachment (*processorRef.state.getParameter (ID::emphasis.getParamID()),
                     emphasisSliderRelay,
                     processorRef.state.undoManager),
+
 tiltAttachment (*processorRef.state.getParameter (ID::tilt.getParamID()),
                 tiltSliderRelay,
                 processorRef.state.undoManager),
+
 inputGainAttachment (*processorRef.state.getParameter (ID::inputGain.getParamID()),
                      inputGainSliderRelay,
                      processorRef.state.undoManager),
+
 outputGainAttachment (*processorRef.state.getParameter (ID::outputGain.getParamID()),
                       outputGainSliderRelay,
                       processorRef.state.undoManager),
+
 dryWetAttachment (*processorRef.state.getParameter (ID::dryWet.getParamID()),
                   dryWetSliderRelay,
                   processorRef.state.undoManager)
