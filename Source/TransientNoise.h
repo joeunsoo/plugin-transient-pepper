@@ -57,7 +57,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
         if (master) {
-          out[n] = transient * noiseLevel;
+          out[n] = transient * noiseLevel * 0.1;
         } else {
           // out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
           out[n] = sample + noiseSample;

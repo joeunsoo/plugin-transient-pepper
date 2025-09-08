@@ -68,12 +68,6 @@ export default function App() {
             }}
           />
           <JuceKnob
-            identifier="tiltSlider"
-            title="Threshold"
-            defaultValue={0.5}
-            subDigit={4}
-          />
-          <JuceKnob
             identifier="attackSlider"
             title="Attack2"
             defaultValue={0.5}
@@ -92,17 +86,23 @@ export default function App() {
             identifier="inputGainSlider"
             title="TAttack"
             defaultValue={0.5}
-            subDigit={1}
+            subDigit={4}
           />
           <JuceKnob
             identifier="outputGainSlider"
             title="TRelease"
             defaultValue={0.5}
-            subDigit={1}
+            subDigit={4}
+          />
+          <JuceKnob
+            identifier="tiltSlider"
+            title="Threshold"
+            defaultValue={0.5}
+            subDigit={4}
           />
           <JuceKnob
             identifier="dryWetSlider"
-            title="Threshold"
+            title="Dry/Wet"
             defaultValue={1.0}
             subDigit={1}
           />

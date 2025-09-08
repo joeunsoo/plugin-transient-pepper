@@ -124,10 +124,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.setSlowAttack(parameters.attack.get());
   transientNoise.setSlowRelease(parameters.release.get());
 
-  // transientNoise.setTAttack(parameters.attack.get() * 0.001f);
-  // transientNoise.setTRelease(parameters.release.get() * 0.001f);
+  transientNoise.setTAttack(parameters.inputGain.get());
+  transientNoise.setTRelease(parameters.outputGain.get());
 
-  transientNoise.setThreshold(parameters.tilt.get() * 1000.0f);
+  transientNoise.setThreshold(parameters.tilt.get());
   // transientNoise.setTransientAmount(parameters.transientAmount.get());
   transientNoise.setMaster(!parameters.master.get());
 
@@ -138,7 +138,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   // if (parameters.master.get()) {
     dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
     
-    inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     // preEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
@@ -150,11 +150,11 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
     
-    dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
     
-    outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
-    antiAliasingFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
+    // antiAliasingFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
   // }
   
 }

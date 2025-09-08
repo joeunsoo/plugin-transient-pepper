@@ -32,8 +32,8 @@ struct Parameters {
   transientAmount (addToLayout<AudioParameterFloat> (layout,
                                                      ID::transientAmount,
                                                      "Attack1",
-                                                     NormalisableRange<float> { 0.0001f, 0.010f, 0.0001f, 1.0f },
-                                                     0.005f,
+                                                     NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                                     0.0500f,
                                                      "",
                                                      juce::AudioProcessorParameter::genericParameter
                                                      )),
@@ -41,8 +41,8 @@ struct Parameters {
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
                                               "Release1",
-                                              NormalisableRange<float> { 0.001f, 0.040f, 0.001f, 1.0f },
-                                              0.03f,
+                                              NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                              0.0500f,
                                               "",
                                               juce::AudioProcessorParameter::genericParameter
                                               )),
@@ -50,52 +50,46 @@ struct Parameters {
   attack (addToLayout<AudioParameterFloat> (layout,
                                                      ID::attack,
                                                      "Attack2",
-                                                      NormalisableRange<float> { 0.020f, 0.04f, 0.001f, 1.0f },
-                                                     0.02f,
-                                                     "",
-                                                     juce::AudioProcessorParameter::genericParameter
+                                            NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                            0.0500f,
+                                            "",
+                                            juce::AudioProcessorParameter::genericParameter
                                                      )),
 
   release (addToLayout<AudioParameterFloat> (layout,
                                               ID::release,
                                               "Release2",
-                                               NormalisableRange<float> { 0.01f, 0.15f, 0.001f, 1.0f },
-                                              0.12f,
-                                              "",
-                                              juce::AudioProcessorParameter::genericParameter
+                                             NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                             0.0500f,
+                                             "",
+                                             juce::AudioProcessorParameter::genericParameter
                                               )),
 
   tilt (addToLayout<AudioParameterFloat> (layout,
                                           ID::tilt,
                                           "Tone/Tilt",
-                                          NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
-                                          50.0f,
-                                          "%",
-                                          juce::AudioProcessorParameter::genericParameter,
-                                          [](float value, int) { return percentToString(value); },
-                                          [](const juce::String& text) { return stringToPercent(text); }
+                                          NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                          0.0500f,
+                                          "",
+                                          juce::AudioProcessorParameter::genericParameter
                                           )),
 
   inputGain (addToLayout<AudioParameterFloat> (layout,
                                                ID::inputGain,
                                                "Input Gain",
-                                               NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
-                                               0.0f,
-                                               "dB",
-                                               juce::AudioProcessorParameter::genericParameter,
-                                               [](float value, int) { return percentToDB(value); },
-                                               [](const juce::String& text) { return dBToPercent(text); }
+                                               NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                               0.0500f,
+                                               "",
+                                               juce::AudioProcessorParameter::genericParameter
                                                )),
 
   outputGain (addToLayout<AudioParameterFloat> (layout,
                                                 ID::outputGain,
                                                 "Output Gain",
-                                                NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
-                                                0.0f,
-                                                "dB",
-                                                juce::AudioProcessorParameter::genericParameter,
-                                                [](float value, int) { return percentToDB(value); },
-                                                [](const juce::String& text) { return dBToPercent(text); }
+                                                NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
+                                                0.0500f,
+                                                "",
+                                                juce::AudioProcessorParameter::genericParameter
                                                 )),
 
   dryWet (addToLayout<AudioParameterFloat> (layout,
