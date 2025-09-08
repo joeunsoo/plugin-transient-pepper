@@ -1,0 +1,20 @@
+{
+  "depcheck": {
+    "ignoreMatches": [
+      '@eslint/js',
+      '@vitejs/plugin-react',
+      'eslint-config-prettier',
+      'eslint-plugin-promise',
+      'eslint-plugin-react',
+      'eslint-plugin-react-hooks',
+      'eslint-plugin-import',
+      'eslint-plugin-react-refresh',
+      'eslint-import-resolver-typescript',
+
+      'globals',
+      "eslint",
+      "typescript-eslint",
+      "cross-env",
+    ]
+  }
+}
