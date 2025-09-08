@@ -60,11 +60,13 @@ struct Parameters {
   
   transientAmount (addToLayout<AudioParameterFloat> (layout,
                                                      ID::transientAmount,
-                                                     "-",
-                                                     NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                                     0.0500f,
-                                                     "",
-                                                     juce::AudioProcessorParameter::genericParameter
+                                                     "M/S",
+                                                     NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
+                                                     50.0f,
+                                                     "%",
+                                                     juce::AudioProcessorParameter::genericParameter,
+                                                     [](float value, int) { return percentToString(value); },
+                                                     [](const juce::String& text) { return stringToPercent(text); }
                                                      )),
   
   emphasis (addToLayout<AudioParameterFloat> (layout,

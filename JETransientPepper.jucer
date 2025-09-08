@@ -24,6 +24,7 @@
             file="Source/PluginAudioEditor.h"/>
       <FILE id="bU5RYr" name="PluginAudioEditor.cpp" compile="1" resource="0"
             file="Source/PluginAudioEditor.cpp"/>
+      <FILE id="VT7n7j" name="MidSideMixer.h" compile="0" resource="0" file="Source/MidSideMixer.h"/>
       <FILE id="tY5CLN" name="TransientFollower.h" compile="0" resource="0"
             file="Source/TransientFollower.h"/>
       <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"

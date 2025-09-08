@@ -16,6 +16,7 @@
 #include "AntiAliasingFilter.h"
 #include "DcOffsetFilter.h"
 #include "TransientNoise.h"
+#include "MidSideMixer.h"
 #include "TiltEQ.h"
 
 //==============================================================================
@@ -71,6 +72,7 @@ class PluginAudioProcessor  : public AudioProcessor
   juce::dsp::DryWetMixer<float> dryWetMixer;
   
   TransientNoiseProcessor<float> transientNoise;
+  MidSideMixer<float> midSideMixer;
 
   int windowScale;
   

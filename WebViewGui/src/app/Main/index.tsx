@@ -75,12 +75,12 @@ export default function App() {
           <JuceKnob
             identifier="transientAmountSlider"
             defaultValue={0.5}
-            subDigit={4}
+            subDigit={1}
           />
           <JuceKnob
             identifier="emphasisSlider"
             defaultValue={0.5}
-            subDigit={4}
+            subDigit={1}
           />
           <JuceKnob
             identifier="inputGainSlider"

@@ -84,6 +84,9 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   dcBlocker.reset();
   antiAliasingFilter.prepare(spec);
   antiAliasingFilter.reset();
+
+  midSideMixer.prepare(spec);
+  midSideMixer.reset();
 }
 
 bool PluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -113,6 +116,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   outputGain.setGainDecibels(parameters.outputGain.get());
 
   // tiltEQ.setGain(parameters.tilt.get());
+  midSideMixer.setMixLevel(parameters.transientAmount.get() / 100.0f);
 
   transientNoise.transientFollower.setTAttack(parameters.attack.get());
   transientNoise.transientFollower.setTRelease(parameters.release.get());
@@ -120,7 +124,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.transientFollower.setRatio(parameters.noiseLevel.get());
 
   dryWetMixer.setWetMixProportion (parameters.dryWet.get() / 100.0f);
-  
+
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
   
   if (!parameters.bypass.get()) {
@@ -129,9 +133,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
     // tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
+    midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
+
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
     
     // dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));

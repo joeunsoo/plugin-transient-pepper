@@ -31,7 +31,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   
   void reset() override
   {
-    // std::fill(envelopeValues.begin(), envelopeValues.end(), 0.0f);
+
   }
   
   void process(const juce::dsp::ProcessContextReplacing<SampleType>& context) override
@@ -68,5 +68,4 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   int numChannels = 2;
   
   juce::Random noiseGenerator;
-
 };
