@@ -51,9 +51,9 @@ struct Parameters {
   
   noiseLevel (addToLayout<AudioParameterFloat> (layout,
                                                 ID::noiseLevel,
-                                                "-",
-                                                NormalisableRange<float> { 0.0f, 1.0f, 0.1f, 1.0f },
-                                                0.5f,
+                                                "Ratio",
+                                                NormalisableRange<float> { 1.0f, 20.0f, 0.1f, 1.0f },
+                                                2.0f,
                                                 "",
                                                 juce::AudioProcessorParameter::genericParameter
                                                 )),

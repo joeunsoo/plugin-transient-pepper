@@ -60,8 +60,8 @@ class TransientFollower
     // Transient detection
     SampleType diff = fastEnv[channel] - slowEnv[channel];
     diff = diff > 0 ? diff : 0.0f;
-
-    diff = diff > threshold ? (diff - threshold) : 0.0f; // 트레숄드
+    auto over = diff - threshold;
+    diff = diff > threshold ? (threshold + (over / ratio)) : 0.0f; // 트레숄드 + Ratio
 
     // Transient envelope
     if (diff > transientEnv[channel])
@@ -69,14 +69,13 @@ class TransientFollower
     else
       transientEnv[channel] = tRelease * (transientEnv[channel] - diff) + diff;
 
-    
-
     return transientEnv[channel];
   }
   
   void setTAttack(SampleType a) { tAttack = calcCoeff(a); }
   void setTRelease(SampleType r) { tRelease = calcCoeff(r); }
   void setThreshold(SampleType t) { threshold = t; }
+  void setRatio(SampleType value) { ratio = value; }
   
   private:
   double sampleRate = 44100.0;
@@ -89,6 +88,7 @@ class TransientFollower
   SampleType tAttack = 0.0f;
   SampleType tRelease = 0.0f;
   SampleType threshold = 0.03f;
+  SampleType ratio = 2.0f;
   
   std::vector<SampleType> fastEnv;
   std::vector<SampleType> slowEnv;
