@@ -23,8 +23,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   {
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
-
-    envelopeValues.resize(numChannels, 0.0f);
+    
+    // envelopeValues.resize(numChannels, 0.0f);
     
     transientFollower.prepare(spec);
     transientFollower.setAttack(0.0001f);   // 0.01f = 10ms attack
@@ -35,7 +35,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   
   void reset() override
   {
-    std::fill(envelopeValues.begin(), envelopeValues.end(), 0.0f);
+    // std::fill(envelopeValues.begin(), envelopeValues.end(), 0.0f);
   }
   
   void process(const juce::dsp::ProcessContextReplacing<SampleType>& context) override
@@ -52,9 +52,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
       {
         SampleType sample = in[n];
         
-        // 노이즈
-        envelopeValues[ch] = transientFollower.processSample(sample, envelopeValues[ch]); // 엔벨로프 팔로워
-        float dynamicNoise = noiseLevel * 0.01f * envelopeValues[ch];
+        SampleType transient = transientFollower.processSample(sample, ch); // 엔벨로프 팔로워
+        float dynamicNoise = noiseLevel * 0.01f * transient;
         SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
         // out[n] = juce::jlimit(-1.0f, 1.0f, sample * gain + noiseSample);
@@ -66,6 +65,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void setNoiseLevel(SampleType level) { noiseLevel = level; }
   void setAttack(SampleType value) { transientFollower.setAttack(value); }
   void setRelease(SampleType value) { transientFollower.setRelease(value); }
+  void setThreshold(SampleType value) { transientFollower.setThreshold(value); }
   
   private:
   double sampleRate = 44100.0;
@@ -73,7 +73,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   
   juce::Random noiseGenerator;
   SampleType noiseLevel = 0.05f;
-
-  std::vector<SampleType> envelopeValues;
+  
+  // std::vector<SampleType> envelopeValues;
   TransientFollower<SampleType> transientFollower;
 };

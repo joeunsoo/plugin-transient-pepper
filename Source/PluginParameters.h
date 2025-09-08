@@ -54,12 +54,12 @@ struct Parameters {
   tilt (addToLayout<AudioParameterFloat> (layout,
                                           ID::tilt,
                                           "Tone/Tilt",
-                                          NormalisableRange<float> { -12.0f, 12.0f, 0.1f, 1.0f },
+                                          NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
                                           0.0f,
-                                          "dB",
+                                          "%",
                                           juce::AudioProcessorParameter::genericParameter,
-                                          [](float value, int) { return percentToDB(value); },
-                                          [](const juce::String& text) { return dBToPercent(text); }
+                                          [](float value, int) { return percentToString(value); },
+                                          [](const juce::String& text) { return stringToPercent(text); }
                                           )),
 
   inputGain (addToLayout<AudioParameterFloat> (layout,

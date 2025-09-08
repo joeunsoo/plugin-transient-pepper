@@ -12,31 +12,69 @@
 #include <JuceHeader.h>
 
 template <typename SampleType>
-struct TransientFollower
+class TransientFollower
 {
-  void setAttack(SampleType a) { attack = a; alphaAttack = std::exp(-1.0f / (attack * sampleRate)); }
-  void setRelease(SampleType r) { release = r; alphaRelease = std::exp(-1.0f / (release * sampleRate)); }
-  
+  public:
   void prepare(const juce::dsp::ProcessSpec& spec)
   {
     sampleRate = spec.sampleRate;
+    numChannels = spec.numChannels;
+    
+    attackCoeff = calcCoeff(0.01f);
+    releaseCoeff = calcCoeff(0.1f);
+    threshold = 0.1f;
+    
+    prevEnv.resize(numChannels, 0.0f);
+    env.resize(numChannels, 0.0f);
+    transient.resize(numChannels, 0.0f);
   }
   
-  float processSample(SampleType input, SampleType env)
+  void reset()
   {
-    float rectified = std::abs(input);
-    if (rectified > env) {
-      env = alphaAttack * env + (1.0f - alphaAttack) * rectified;
-    } else {
-      env = alphaRelease * env + (1.0f - alphaRelease) * rectified;
-    }
-    return env;
+    std::fill(prevEnv.begin(), prevEnv.end(), 0.0f);
+    std::fill(env.begin(), env.end(), 0.0f);
+    std::fill(transient.begin(), transient.end(), 0.0f);
   }
   
-  SampleType attack = 0.01f;
-  SampleType release = 0.1f;
-  SampleType alphaAttack = 0.99977f;
-  SampleType alphaRelease = 0.9989f;
+  SampleType processSample(SampleType inputSample, size_t ch)
+  {
+    SampleType x = std::abs(inputSample);
+    
+    // Envelope follower
+    if (x > env[ch])
+      env[ch] = attackCoeff * (env[ch] - x) + x;
+    else
+      env[ch] = releaseCoeff * (env[ch] - x) + x;
+    
+    // Difference / transient detection
+    SampleType diff = env[ch] - prevEnv[ch];
+    
+    // Threshold detection
+    transient[ch] = diff > threshold ? 1.0f : 0.0f;
+    
+    prevEnv[ch] = env[ch];
+    return env[ch];
+  }
   
+  void setAttack(SampleType a) { attackCoeff = calcCoeff(a); }
+  void setRelease(SampleType r) { releaseCoeff = calcCoeff(r); }
+  void setThreshold(SampleType t) { threshold = t; }
+  
+  private:
   double sampleRate = 44100.0;
+  int numChannels = 2;
+  
+  SampleType attackCoeff = 0.01f;
+  SampleType releaseCoeff = 0.1f;
+  SampleType threshold = 0.01f; // 트랜지언트 감도
+  
+  std::vector<SampleType> env;
+  std::vector<SampleType> prevEnv;
+  std::vector<SampleType> transient;
+  
+  
+  float calcCoeff(SampleType timeInSeconds)
+  {
+    return static_cast<SampleType>(std::exp(-1.0f / (timeInSeconds * (SampleType)sampleRate)));
+  }
 };
