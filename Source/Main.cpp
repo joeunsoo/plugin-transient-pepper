@@ -7,6 +7,7 @@
  */
 
 #include <JuceHeader.h>
+#include "Define.h"
 #include "PluginWrapper.h"
 
 //==============================================================================

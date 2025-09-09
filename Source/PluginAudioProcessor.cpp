@@ -9,6 +9,7 @@
  */
 
 #include <JuceHeader.h>
+#include "Define.h"
 #include "PluginAudioProcessor.h"
 
 
@@ -118,6 +119,13 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.transientFollower.setTRelease(parameters.release.get());
   transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
   transientNoise.setLinkChannels(parameters.linkChannels.get());
+
+#if ADVANCED
+  transientNoise.transientFollower.setFastAttack(parameters.fastAttack.get());
+  transientNoise.transientFollower.setFastRelease(parameters.fastRelease.get());
+  transientNoise.transientFollower.setSlowAttack(parameters.slowAttack.get());
+  transientNoise.transientFollower.setSlowRelease(parameters.slowRelease.get());
+#endif
 
   dryWetMixer.setWetMixProportion (parameters.wetSolo.get() ? 1.0 :(parameters.dryWet.get() / 100.0f));
 

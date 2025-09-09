@@ -9,6 +9,7 @@
  */
 
 #pragma once
+#include "Define.h"
 
 namespace ID {
 #define PARAMETER_ID(str) static const ParameterID str { #str, 1 };
@@ -30,6 +31,13 @@ PARAMETER_ID (outputGain)
 PARAMETER_ID (dryWet)
 PARAMETER_ID (wetSolo)
 PARAMETER_ID (linkChannels)
+
+#if ADVANCED
+PARAMETER_ID (fastAttack)
+PARAMETER_ID (fastRelease)
+PARAMETER_ID (slowAttack)
+PARAMETER_ID (slowRelease)
+#endif
 
 #undef PARAMETER_ID
 }

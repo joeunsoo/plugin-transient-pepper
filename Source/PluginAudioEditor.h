@@ -64,7 +64,12 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderRelay       dryWetSliderRelay    { "dryWetSlider" };
   WebToggleButtonRelay wetSoloToggleRelay      { "wetSoloToggle" };
   WebToggleButtonRelay linkChannelsToggleRelay      { "linkChannelsToggle" };
-  
+#if ADVANCED
+  WebSliderRelay       fastAttackSliderRelay    { "fastAttackSlider" };
+  WebSliderRelay       fastReleaseSliderRelay    { "fastReleaseSlider" };
+  WebSliderRelay       slowAttackSliderRelay    { "slowAttackSlider" };
+  WebSliderRelay       slowReleaseSliderRelay    { "slowReleaseSlider" };
+#endif
   WebControlParameterIndexReceiver controlParameterIndexReceiver;
   
   SinglePageBrowser webComponent { WebBrowserComponent::Options{}
@@ -84,6 +89,12 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withOptionsFrom (dryWetSliderRelay)
       .withOptionsFrom (wetSoloToggleRelay)
       .withOptionsFrom (linkChannelsToggleRelay)
+#if ADVANCED
+    .withOptionsFrom (fastAttackSliderRelay)
+    .withOptionsFrom (fastReleaseSliderRelay)
+    .withOptionsFrom (slowAttackSliderRelay)
+    .withOptionsFrom (slowReleaseSliderRelay)
+#endif
       .withOptionsFrom (controlParameterIndexReceiver)
       .withNativeFunction ("setWindowScale", [this](auto& var, auto complete) {
         setScale(var[0]);
@@ -120,6 +131,12 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebToggleButtonParameterAttachment       wetSoloAttachment;
   WebToggleButtonParameterAttachment       linkChannelsAttachment;
   
+#if ADVANCED
+  WebSliderParameterAttachment       fastAttackAttachment;
+  WebSliderParameterAttachment       fastReleaseAttachment;
+  WebSliderParameterAttachment       slowAttackAttachment;
+  WebSliderParameterAttachment       slowReleaseAttachment;
+#endif
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioEditor)
 };

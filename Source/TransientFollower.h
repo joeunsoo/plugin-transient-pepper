@@ -21,9 +21,9 @@ class TransientFollower
     numChannels = spec.numChannels;
     
     fastAttack = calcCoeff(0.0020f);
-    fastRelease = calcCoeff(0.0175f);
+    fastRelease = calcCoeff(0.0050f);
     slowAttack = calcCoeff(0.0200f);
-    slowRelease = calcCoeff(0.1000f);
+    slowRelease = calcCoeff(0.1200f);
     
     tAttack = calcCoeff(0.01f);
     tRelease = calcCoeff(0.01f);
@@ -71,6 +71,11 @@ class TransientFollower
     
     return transientEnv[channel];
   }
+  
+  void setFastAttack(SampleType a) { fastAttack = calcCoeff(a); }
+  void setFastRelease(SampleType r) { fastRelease = calcCoeff(r); }
+  void setSlowAttack(SampleType a) { slowAttack = calcCoeff(a); }
+  void setSlowRelease(SampleType r) { slowRelease = calcCoeff(r); }
   
   void setTAttack(SampleType a) { tAttack = calcCoeff(a); }
   void setTRelease(SampleType r) { tRelease = calcCoeff(r); }
