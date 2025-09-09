@@ -124,7 +124,7 @@ export default function App() {
             <JuceKnob
               identifier="dryWetSlider"
               title="Dry/Wet"
-              defaultValue={1.0}
+              defaultValue={0.5}
               subDigit={1}
             />
             <Stack>
