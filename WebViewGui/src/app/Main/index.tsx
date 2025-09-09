@@ -68,12 +68,12 @@ export default function App() {
             subDigit={1}
           />
           <JuceKnob
-            identifier="noiseLevelSlider"
+            identifier="tiltSlider"
             defaultValue={0.5}
             subDigit={1}
           />
           <JuceKnob
-            identifier="transientAmountSlider"
+            identifier="midSideSlider"
             defaultValue={0.5}
             subDigit={1}
           />

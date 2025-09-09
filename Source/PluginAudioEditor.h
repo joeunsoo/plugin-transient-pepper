@@ -53,8 +53,8 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   PluginAudioProcessor& processorRef;
   
   WebToggleButtonRelay bypassToggleRelay      { "bypassToggle" };
-  WebSliderRelay       noiseLevelSliderRelay    { "noiseLevelSlider" };
-  WebSliderRelay       transientAmountSliderRelay    { "transientAmountSlider" };
+  WebSliderRelay       tiltSliderRelay    { "tiltSlider" };
+  WebSliderRelay       midSideSliderRelay    { "midSideSlider" };
   WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
   WebSliderRelay       thresholdSliderRelay    { "thresholdSlider" };
   WebSliderRelay       attackSliderRelay    { "attackSlider" };
@@ -73,8 +73,8 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                                .withUserDataFolder (File::getSpecialLocation (File::SpecialLocationType::tempDirectory)))
       .withNativeIntegrationEnabled()
       .withOptionsFrom (bypassToggleRelay)
-      .withOptionsFrom (noiseLevelSliderRelay)
-      .withOptionsFrom (transientAmountSliderRelay)
+      .withOptionsFrom (tiltSliderRelay)
+      .withOptionsFrom (midSideSliderRelay)
       .withOptionsFrom (emphasisSliderRelay)
       .withOptionsFrom (thresholdSliderRelay)
       .withOptionsFrom (attackSliderRelay)
@@ -108,8 +108,8 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                              URL { localDevServerAddress }.getOrigin()) };
   
   WebToggleButtonParameterAttachment bypassAttachment;
-  WebSliderParameterAttachment       noiseLevelAttachment;
-  WebSliderParameterAttachment       transientAmountAttachment;
+  WebSliderParameterAttachment       tiltAttachment;
+  WebSliderParameterAttachment       midSideAttachment;
   WebSliderParameterAttachment       emphasisAttachment;
   WebSliderParameterAttachment       thresholdAttachment;
   WebSliderParameterAttachment       attackAttachment;

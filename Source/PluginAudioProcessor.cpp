@@ -115,8 +115,8 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   inputGain.setGainDecibels(parameters.inputGain.get());
   outputGain.setGainDecibels(parameters.outputGain.get());
 
-  tiltEQ.setGain(parameters.noiseLevel.get());
-  midSideMixer.setMixLevel(parameters.transientAmount.get() / 100.0f);
+  tiltEQ.setGain(parameters.tilt.get());
+  midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
 
   transientNoise.setEmphasis(parameters.emphasis.get());
   transientNoise.transientFollower.setTAttack(parameters.attack.get());

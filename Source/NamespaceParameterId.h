@@ -19,9 +19,9 @@ PARAMETER_ID (threshold)
 PARAMETER_ID (attack)
 PARAMETER_ID (release)
 
-PARAMETER_ID (noiseLevel)
+PARAMETER_ID (tilt)
 
-PARAMETER_ID (transientAmount)
+PARAMETER_ID (midSide)
 PARAMETER_ID (emphasis)
 
 PARAMETER_ID (inputGain)

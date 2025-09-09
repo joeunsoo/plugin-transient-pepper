@@ -49,9 +49,9 @@ struct Parameters {
                                                juce::AudioProcessorParameter::genericParameter
                                                )),
   
-  noiseLevel (addToLayout<AudioParameterFloat> (layout,
-                                                ID::noiseLevel,
-                                                "Tilt",
+  tilt (addToLayout<AudioParameterFloat> (layout,
+                                                ID::tilt,
+                                                "Tone",
                                                 NormalisableRange<float> { -12.0f, 12.0f, 0.1f, 1.0f },
                                                 0.0f,
                                                 "dB",
@@ -60,8 +60,8 @@ struct Parameters {
                                                 [](const juce::String& text) { return StringToDB(text); }
                                                 )),
   
-  transientAmount (addToLayout<AudioParameterFloat> (layout,
-                                                     ID::transientAmount,
+  midSide (addToLayout<AudioParameterFloat> (layout,
+                                                     ID::midSide,
                                                      "M/S",
                                                      NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
                                                      50.0f,
@@ -123,8 +123,8 @@ struct Parameters {
   AudioParameterFloat& attack;
   AudioParameterFloat& release;
   AudioParameterFloat& threshold;
-  AudioParameterFloat& noiseLevel;
-  AudioParameterFloat& transientAmount;
+  AudioParameterFloat& tilt;
+  AudioParameterFloat& midSide;
   AudioParameterFloat& emphasis;
   AudioParameterFloat& inputGain;
   AudioParameterFloat& outputGain;
