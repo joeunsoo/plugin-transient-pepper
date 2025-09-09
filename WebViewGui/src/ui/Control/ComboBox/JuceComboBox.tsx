@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { type SelectChangeEvent } from '@mui/material/Select';
 
-import controlParameterIndexAnnotation from '@/src/define/controlParameterIndexAnnotation';
+import { controlParameterIndexAnnotation } from '@/src/define';
 
 type JuceComboBoxProps = {
   identifier: string,

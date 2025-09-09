@@ -108,6 +108,22 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
     return WebBrowserComponent::Resource { streamToVector (stream), String { "text/html" } };
   }
   
+  if (urlToRetrive == "spectrumData.json")
+  {
+    Array<var> frames;
+    
+    for (const auto& frame : spectrumDataFrames)
+      frames.add (frame);
+    
+    DynamicObject::Ptr d (new DynamicObject());
+    d->setProperty ("timeResolutionMs", getTimerInterval());
+    d->setProperty ("frames", std::move (frames));
+    
+    const auto s = JSON::toString (d.get());
+    MemoryInputStream stream { s.getCharPointer(), s.getNumBytesAsUTF8(), false };
+    return WebBrowserComponent::Resource { streamToVector (stream), String { "application/json" } };
+  }
+  
   return std::nullopt;
 }
 
@@ -167,17 +183,17 @@ dryWetAttachment (*processorRef.state.getParameter (ID::dryWet.getParamID()),
 
 #if ADVANCED
 fastAttackAttachment (*processorRef.state.getParameter (ID::fastAttack.getParamID()),
-fastAttackSliderRelay,
-processorRef.state.undoManager),
+                      fastAttackSliderRelay,
+                      processorRef.state.undoManager),
 fastReleaseAttachment (*processorRef.state.getParameter (ID::fastRelease.getParamID()),
-fastReleaseSliderRelay,
-processorRef.state.undoManager),
+                       fastReleaseSliderRelay,
+                       processorRef.state.undoManager),
 slowAttackAttachment (*processorRef.state.getParameter (ID::slowAttack.getParamID()),
-slowAttackSliderRelay,
-processorRef.state.undoManager),
+                      slowAttackSliderRelay,
+                      processorRef.state.undoManager),
 slowReleaseAttachment (*processorRef.state.getParameter (ID::slowRelease.getParamID()),
-slowReleaseSliderRelay,
-processorRef.state.undoManager),
+                       slowReleaseSliderRelay,
+                       processorRef.state.undoManager),
 #endif
 
 wetSoloAttachment (*processorRef.state.getParameter (ID::wetSolo.getParamID()),
@@ -218,7 +234,7 @@ void PluginAudioEditor::setScale(int scale)
   
   int width = 640;
   int height = 360;
-
+  
   switch (processorRef.windowScale)
   {
     case 100:

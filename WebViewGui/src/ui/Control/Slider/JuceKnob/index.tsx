@@ -6,8 +6,7 @@ import * as Juce from 'juce-framework-frontend';
 import Box, { type BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import controlParameterIndexAnnotation from '@/src/define/controlParameterIndexAnnotation';
-import { toFixedDigits } from '@/src/define';
+import { controlParameterIndexAnnotation, toFixedDigits } from '@/src/define';
 import { LabelTypographySx } from '@/ui/Style';
 
 import Knob from './Knob';

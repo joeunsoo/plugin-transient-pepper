@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
+import FreqBandInfo from '@/ui/FreqBandInfo';
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
             >
               <Main />
             </Paper>
+            <FreqBandInfo />
           </Stack>
         </Stack>
       </Box>

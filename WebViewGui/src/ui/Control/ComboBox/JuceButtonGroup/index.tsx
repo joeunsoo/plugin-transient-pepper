@@ -7,7 +7,7 @@ import Box, { type BoxProps } from '@mui/material/Box';
 
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import controlParameterIndexAnnotation from '@/src/define/controlParameterIndexAnnotation';
+import { controlParameterIndexAnnotation } from '@/src/define';
 import Typography from '@mui/material/Typography';
 import { LabelTypographySx } from '@/src/ui/Style';
 

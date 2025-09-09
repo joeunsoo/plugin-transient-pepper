@@ -146,6 +146,16 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
   }
   
+  spectralBars.push (Span { buffer.getReadPointer (0), (size_t) buffer.getNumSamples() });
+
+  {
+      const SpinLock::ScopedTryLockType lock (spectrumDataLock);
+
+      if (! lock.isLocked())
+          return;
+
+      spectralBars.compute ({ spectrumData.data(), spectrumData.size() });
+  }
 }
 
 //==============================================================================

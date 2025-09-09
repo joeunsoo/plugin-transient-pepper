@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 import JuceKnob from '@/src/ui/Control/Slider/JuceKnob';
 
-import controlParameterIndexAnnotation from '@/src/define/controlParameterIndexAnnotation';
+import { controlParameterIndexAnnotation } from '@/src/define';
 import JuceToggleButton from '@/src/ui/Control/ToggleButton/JuceToggleButton';
 import { msToString } from '@/src/utils/valueToString';
 
