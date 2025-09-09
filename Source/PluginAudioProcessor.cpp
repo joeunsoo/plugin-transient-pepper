@@ -115,13 +115,14 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   inputGain.setGainDecibels(parameters.inputGain.get());
   outputGain.setGainDecibels(parameters.outputGain.get());
 
-  // tiltEQ.setGain(parameters.tilt.get());
+  tiltEQ.setGain(parameters.noiseLevel.get());
   midSideMixer.setMixLevel(parameters.transientAmount.get() / 100.0f);
 
+  transientNoise.setEmphasis(parameters.emphasis.get());
   transientNoise.transientFollower.setTAttack(parameters.attack.get());
   transientNoise.transientFollower.setTRelease(parameters.release.get());
   transientNoise.transientFollower.setThreshold(parameters.threshold.get());
-  transientNoise.transientFollower.setRatio(parameters.noiseLevel.get());
+  transientNoise.setLinkChannels(parameters.linkChannels.get());
 
   dryWetMixer.setWetMixProportion (parameters.wetSolo.get() ? 1.0 :(parameters.dryWet.get() / 100.0f));
 
@@ -133,7 +134,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-    // tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+    tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
 

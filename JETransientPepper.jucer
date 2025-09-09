@@ -61,9 +61,9 @@
     <XCODE_MAC targetFolder="Builds/MacOSX" xcodeValidArchs="arm64,x86_64">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" macOSDeploymentTarget="12.0"
-                       osxCompatibility="12.0 SDK"/>
+                       osxCompatibility="12.0 SDK" codeSigningIdentity="Apple Development: Eun Soo Jo (48GXV85C7B)"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" osxCompatibility="12.0 SDK"
-                       macOSDeploymentTarget="12.0"/>
+                       macOSDeploymentTarget="12.0" codeSigningIdentity="Apple Distribution: Eun Soo Jo (U4BB4TLGPQ)"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path=""/>

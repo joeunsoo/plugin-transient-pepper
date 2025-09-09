@@ -109,6 +109,9 @@ export default function App() {
               title="In"
               invertValue
             />
+            <JuceToggleButton
+              identifier="linkChannelsToggle"
+            />
           </Stack>
         </Stack>
       </Grid>

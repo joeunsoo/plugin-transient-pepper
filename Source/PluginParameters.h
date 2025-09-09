@@ -51,11 +51,13 @@ struct Parameters {
   
   noiseLevel (addToLayout<AudioParameterFloat> (layout,
                                                 ID::noiseLevel,
-                                                "Ratio",
-                                                NormalisableRange<float> { 1.0f, 20.0f, 0.1f, 1.0f },
-                                                2.0f,
-                                                "",
-                                                juce::AudioProcessorParameter::genericParameter
+                                                "Tilt",
+                                                NormalisableRange<float> { -12.0f, 12.0f, 0.1f, 1.0f },
+                                                0.0f,
+                                                "dB",
+                                                juce::AudioProcessorParameter::genericParameter,
+                                                [](float value, int) { return dBToString(value); },
+                                                [](const juce::String& text) { return StringToDB(text); }
                                                 )),
   
   transientAmount (addToLayout<AudioParameterFloat> (layout,
@@ -71,11 +73,13 @@ struct Parameters {
   
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
-                                              "-",
-                                              NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                              0.0500f,
-                                              "",
-                                              juce::AudioProcessorParameter::genericParameter
+                                              "Emphasis",
+                                              NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
+                                              0.0f,
+                                              "dB",
+                                              juce::AudioProcessorParameter::genericParameter,
+                                              [](float value, int) { return dBToString(value); },
+                                              [](const juce::String& text) { return StringToDB(text); }
                                               )),
   
   inputGain (addToLayout<AudioParameterFloat> (layout,
@@ -110,7 +114,8 @@ struct Parameters {
                                             [](float value, int) { return percentToString(value); },
                                             [](const juce::String& text) { return stringToPercent(text); }
                                             )),
-  wetSolo (addToLayout<AudioParameterBool> (layout, ID::wetSolo, "Wet Solo", false))
+  wetSolo (addToLayout<AudioParameterBool> (layout, ID::wetSolo, "Wet Solo", false)),
+  linkChannels (addToLayout<AudioParameterBool> (layout, ID::linkChannels, "Channel Link", false))
   {
   }
   
@@ -125,6 +130,7 @@ struct Parameters {
   AudioParameterFloat& outputGain;
   AudioParameterFloat& dryWet;
   AudioParameterBool& wetSolo;
+  AudioParameterBool& linkChannels;
   
   private:
   template <typename Param>

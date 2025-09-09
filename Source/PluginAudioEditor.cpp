@@ -132,7 +132,7 @@ bypassAttachment (*processorRef.state.getParameter (ID::bypass.getParamID()),
 
 noiseLevelAttachment (*processorRef.state.getParameter (ID::noiseLevel.getParamID()),
                       noiseLevelSliderRelay,
-                           processorRef.state.undoManager),
+                      processorRef.state.undoManager),
 
 transientAmountAttachment (*processorRef.state.getParameter (ID::transientAmount.getParamID()),
                            transientAmountSliderRelay,
@@ -144,7 +144,7 @@ emphasisAttachment (*processorRef.state.getParameter (ID::emphasis.getParamID())
 
 thresholdAttachment (*processorRef.state.getParameter (ID::threshold.getParamID()),
                      thresholdSliderRelay,
-                processorRef.state.undoManager),
+                     processorRef.state.undoManager),
 
 attackAttachment (*processorRef.state.getParameter (ID::attack.getParamID()),
                   attackSliderRelay,
@@ -165,8 +165,12 @@ dryWetAttachment (*processorRef.state.getParameter (ID::dryWet.getParamID()),
                   processorRef.state.undoManager),
 
 wetSoloAttachment (*processorRef.state.getParameter (ID::wetSolo.getParamID()),
-                  wetSoloToggleRelay,
-                  processorRef.state.undoManager)
+                   wetSoloToggleRelay,
+                   processorRef.state.undoManager),
+
+linkChannelsAttachment (*processorRef.state.getParameter (ID::linkChannels.getParamID()),
+                        linkChannelsToggleRelay,
+                        processorRef.state.undoManager)
 
 {
   addAndMakeVisible (webComponent);

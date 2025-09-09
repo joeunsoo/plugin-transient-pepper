@@ -20,6 +20,7 @@ PARAMETER_ID (attack)
 PARAMETER_ID (release)
 
 PARAMETER_ID (noiseLevel)
+
 PARAMETER_ID (transientAmount)
 PARAMETER_ID (emphasis)
 
@@ -28,6 +29,8 @@ PARAMETER_ID (outputGain)
 
 PARAMETER_ID (dryWet)
 PARAMETER_ID (wetSolo)
+PARAMETER_ID (linkChannels)
 
 #undef PARAMETER_ID
 }
+

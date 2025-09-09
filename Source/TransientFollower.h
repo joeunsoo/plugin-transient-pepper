@@ -88,12 +88,11 @@ class TransientFollower
   SampleType tAttack = 0.0f;
   SampleType tRelease = 0.0f;
   SampleType threshold = 0.03f;
-  SampleType ratio = 2.0f;
+  SampleType ratio = 20.0f;
   
   std::vector<SampleType> fastEnv;
   std::vector<SampleType> slowEnv;
   std::vector<SampleType> transientEnv;
-  
   
   float calcCoeff(SampleType timeInSeconds)
   {
