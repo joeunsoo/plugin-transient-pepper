@@ -43,10 +43,12 @@ struct Parameters {
   threshold (addToLayout<AudioParameterFloat> (layout,
                                                ID::threshold,
                                                "Threshold",
-                                               NormalisableRange<float> { 0.0001f, 0.1000f, 0.0001f, 1.0f },
-                                               0.0500f,
-                                               "",
-                                               juce::AudioProcessorParameter::genericParameter
+                                               NormalisableRange<float> { -40.0f, 0.0f, 0.1f, 1.0f },
+                                               -20.0f,
+                                               "dB",
+                                               juce::AudioProcessorParameter::genericParameter,
+                                               [](float value, int) { return dBToString(value); },
+                                               [](const juce::String& text) { return StringToDB(text); }
                                                )),
   
   tilt (addToLayout<AudioParameterFloat> (layout,

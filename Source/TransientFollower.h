@@ -24,7 +24,7 @@ class TransientFollower
     fastRelease = calcCoeff(0.0175f);
     slowAttack = calcCoeff(0.0200f);
     slowRelease = calcCoeff(0.1000f);
-
+    
     tAttack = calcCoeff(0.01f);
     tRelease = calcCoeff(0.01f);
     
@@ -56,26 +56,39 @@ class TransientFollower
     else
       slowEnv[channel] = slowRelease * (slowEnv[channel] - x) + x;
     
-
+    
     // Transient detection
     SampleType diff = fastEnv[channel] - slowEnv[channel];
     diff = diff > 0 ? diff : 0.0f;
     auto over = diff - threshold;
     diff = diff > threshold ? (threshold + (over / ratio)) : 0.0f; // 트레숄드 + Ratio
-
+    
     // Transient envelope
     if (diff > transientEnv[channel])
       transientEnv[channel] = tAttack * (transientEnv[channel] - diff) + diff;
     else
       transientEnv[channel] = tRelease * (transientEnv[channel] - diff) + diff;
-
+    
     return transientEnv[channel];
   }
   
   void setTAttack(SampleType a) { tAttack = calcCoeff(a); }
   void setTRelease(SampleType r) { tRelease = calcCoeff(r); }
   void setThreshold(SampleType t) { threshold = t; }
+  void setThresholdDecibels(SampleType t) { threshold = DecibelToLinear(t); }
   void setRatio(SampleType value) { ratio = value; }
+  
+  float DecibelToLinear(SampleType db)
+  {
+    SampleType linear;
+    
+    if (db > -144.0f)  // effectively minus infinity
+      linear = pow(10.0f, db / 20.0f);
+    else
+      linear = 0.0f;
+    
+    return linear;
+  }
   
   private:
   double sampleRate = 44100.0;
