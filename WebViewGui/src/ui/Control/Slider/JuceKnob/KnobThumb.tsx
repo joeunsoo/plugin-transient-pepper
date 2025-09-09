@@ -17,7 +17,7 @@ export default function Component({
         y1={15}
         x2={0}
         y2={45}
-        strokeWidth="6"
+        strokeWidth="8"
         strokeLinecap="round"
         stroke="var(--mui-palette-primary-lighter)"
       />

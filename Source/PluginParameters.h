@@ -64,7 +64,7 @@ struct Parameters {
   
   midSide (addToLayout<AudioParameterFloat> (layout,
                                                      ID::midSide,
-                                                     "M/S mix",
+                                                     "Mid/Side",
                                                      NormalisableRange<float> { 0.0f, 100.0f, 0.1f, 1.0f },
                                                      50.0f,
                                                      "%",
