@@ -71,6 +71,8 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   inputGain.reset();
   outputGain.setGainDecibels(0.0f);
   outputGain.reset();
+  tiltGain.setGainDecibels(0.0f);
+  tiltGain.reset();
   
   dryWetMixer.setMixingRule (juce::dsp::DryWetMixingRule::linear);
   dryWetMixer.prepare (spec);
@@ -114,6 +116,8 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   outputGain.setGainDecibels(parameters.outputGain.get());
 
   tiltEQ.setGain(parameters.tilt.get());
+  tiltGain.setGainDecibels(parameters.tilt.get() * (-0.6f));
+
   midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
 
   transientNoise.setEmphasis(parameters.emphasis.get());
@@ -139,8 +143,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
     
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
+
     tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
+    tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+
     midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
 
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스

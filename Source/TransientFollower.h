@@ -42,7 +42,8 @@ class TransientFollower
   
   SampleType processSample(SampleType inputSample, size_t channel)
   {
-    SampleType x = std::abs(inputSample);
+    SampleType autoGain = 1.0f + ((1.0f-threshold) * (20.0f - 1.0f));
+    SampleType x = std::abs(inputSample) * autoGain;
     
     // Fast envelope
     if (x > fastEnv[channel])

@@ -62,6 +62,7 @@ class PluginAudioProcessor  : public AudioProcessor
   AudioProcessorValueTreeState state;
   
   dsp::Gain<float> inputGain;
+  dsp::Gain<float> tiltGain;
   dsp::Gain<float> outputGain;
   
   TiltEQProcessor<float> tiltEQ;
