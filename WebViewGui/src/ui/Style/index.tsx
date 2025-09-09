@@ -4,4 +4,5 @@ export const noDragSx = {
 
 export const LabelTypographySx = {
   color:'var(--mui-palette-primary-lighter)',
+  fontSize: 'var(--mui-fontSize-sm)',
 };

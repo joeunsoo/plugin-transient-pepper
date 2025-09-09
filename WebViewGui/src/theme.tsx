@@ -158,7 +158,7 @@ export const themeVars = {
       styleOverrides: {
         root: {
           ...noDragSx,
-          fontWeight: 'var(--mui-fontWeight-lg)',
+          fontWeight: 'var(--mui-fontWeight-md)',
         },
       },
     }
