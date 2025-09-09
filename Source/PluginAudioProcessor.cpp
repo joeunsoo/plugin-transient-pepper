@@ -67,8 +67,8 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   sampleRate = spec.sampleRate;
   
   
-  inputGain.setGainDecibels(0.0f);
-  inputGain.reset();
+  noiseLevelGain.setGainDecibels(0.0f);
+  noiseLevelGain.reset();
   outputGain.setGainDecibels(0.0f);
   outputGain.reset();
   tiltGain.setGainDecibels(0.0f);
@@ -77,16 +77,18 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   dryWetMixer.setMixingRule (juce::dsp::DryWetMixingRule::linear);
   dryWetMixer.prepare (spec);
   dryWetMixer.setWetMixProportion (1.0f);
-
+  
   transientNoise.prepare(spec);
   transientNoise.reset();
-
+  
   tiltEQ.prepare(spec);
-
+  
   midSideMixer.prepare(spec);
   midSideMixer.reset();
   
   peakMeter.prepare(channels, samplesPerBlock);
+  dcBlocker.prepare(spec);
+  dcBlocker.reset();
 }
 
 bool PluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -112,43 +114,47 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
   
-  inputGain.setGainDecibels(parameters.inputGain.get());
-  outputGain.setGainDecibels(parameters.outputGain.get());
-
+  noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
+  
+  float dryWetAdjust = 6.0f - 0.12f * std::abs(parameters.dryWet.get() - 50.0f); // Dry/Wet 50% -6dB 손실 보정
+  outputGain.setGainDecibels(parameters.outputGain.get() + dryWetAdjust);
+  
   tiltEQ.setGain(parameters.tilt.get());
   tiltGain.setGainDecibels(parameters.tilt.get() * (-0.6f));
-
+  
   midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
-
+  
   transientNoise.setEmphasis(parameters.emphasis.get());
   transientNoise.transientFollower.setTAttack(parameters.attack.get());
   transientNoise.transientFollower.setTRelease(parameters.release.get());
   transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
   transientNoise.setLinkChannels(parameters.linkChannels.get());
-
+  
 #if ADVANCED
   transientNoise.transientFollower.setFastAttack(parameters.fastAttack.get());
   transientNoise.transientFollower.setFastRelease(parameters.fastRelease.get());
   transientNoise.transientFollower.setSlowAttack(parameters.slowAttack.get());
   transientNoise.transientFollower.setSlowRelease(parameters.slowRelease.get());
 #endif
-
+  
   dryWetMixer.setWetMixProportion (parameters.wetSolo.get() ? 1.0 :(parameters.dryWet.get() / 100.0f));
-
+  
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
   
   if (!parameters.bypass.get()) {
     dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
     
-    inputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-
+    
     tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
     tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-
+    
     midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
+    
+    dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
 
+    noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+    
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
     
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));

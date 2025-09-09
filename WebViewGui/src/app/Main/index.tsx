@@ -112,7 +112,7 @@ export default function App() {
             }}
           >
             <JuceKnob
-              identifier="inputGainSlider"
+              identifier="noiseLevelGainSlider"
               defaultValue={0.5}
               subDigit={1}
             />

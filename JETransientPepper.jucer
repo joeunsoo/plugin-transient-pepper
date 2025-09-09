@@ -26,6 +26,8 @@
       <FILE id="bU5RYr" name="PluginAudioEditor.cpp" compile="1" resource="0"
             file="Source/PluginAudioEditor.cpp"/>
       <FILE id="TkdTPf" name="PeakMeter.h" compile="0" resource="0" file="Source/PeakMeter.h"/>
+      <FILE id="TI3fZF" name="DCOffsetFilter.h" compile="0" resource="0"
+            file="Source/DCOffsetFilter.h"/>
       <FILE id="VT7n7j" name="MidSideMixer.h" compile="0" resource="0" file="Source/MidSideMixer.h"/>
       <FILE id="tY5CLN" name="TransientFollower.h" compile="0" resource="0"
             file="Source/TransientFollower.h"/>

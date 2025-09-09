@@ -84,9 +84,9 @@ struct Parameters {
                                               [](const juce::String& text) { return StringToDB(text); }
                                               )),
   
-  inputGain (addToLayout<AudioParameterFloat> (layout,
-                                               ID::inputGain,
-                                               "Input Gain",
+  noiseLevelGain (addToLayout<AudioParameterFloat> (layout,
+                                               ID::noiseLevelGain,
+                                               "Noise Level",
                                                NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
                                                0.0f,
                                                "dB",
@@ -168,7 +168,7 @@ struct Parameters {
   AudioParameterFloat& tilt;
   AudioParameterFloat& midSide;
   AudioParameterFloat& emphasis;
-  AudioParameterFloat& inputGain;
+  AudioParameterFloat& noiseLevelGain;
   AudioParameterFloat& outputGain;
   AudioParameterFloat& dryWet;
   

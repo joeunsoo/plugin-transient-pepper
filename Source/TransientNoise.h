@@ -46,8 +46,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     tiltEQ.setGain(emphasis);
     tiltEQ.process(context);
     
-    
-    tiltGain.setGainDecibels(emphasis * 0.25f);
+    tiltGain.setGainDecibels(emphasis * 0.4f);
     tiltGain.process(context);
 
     auto& inputBlock = context.getInputBlock();

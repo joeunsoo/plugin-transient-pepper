@@ -15,6 +15,7 @@
 #include "PluginParameters.h"
 
 #include "PeakMeter.h"
+#include "DCOffsetFilter.h"
 #include "TransientNoise.h"
 #include "MidSideMixer.h"
 #include "TiltEQ.h"
@@ -61,7 +62,7 @@ class PluginAudioProcessor  : public AudioProcessor
   Parameters parameters;
   AudioProcessorValueTreeState state;
   
-  dsp::Gain<float> inputGain;
+  dsp::Gain<float> noiseLevelGain;
   dsp::Gain<float> tiltGain;
   dsp::Gain<float> outputGain;
   
@@ -75,6 +76,8 @@ class PluginAudioProcessor  : public AudioProcessor
   std::vector<float> spectrumData = [] { return std::vector<float> (16, 0.0f); }();
   SpinLock peakDataLock;
   PeakMeter peakMeter;
+  
+  DCOffsetFilter<float> dcBlocker;
 
   int windowScale;
   

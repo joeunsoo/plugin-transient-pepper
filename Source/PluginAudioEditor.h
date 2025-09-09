@@ -80,7 +80,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderRelay       thresholdSliderRelay    { "thresholdSlider" };
   WebSliderRelay       attackSliderRelay    { "attackSlider" };
   WebSliderRelay       releaseSliderRelay    { "releaseSlider" };
-  WebSliderRelay       inputGainSliderRelay    { "inputGainSlider" };
+  WebSliderRelay       noiseLevelGainSliderRelay    { "noiseLevelGainSlider" };
   WebSliderRelay       outputGainSliderRelay    { "outputGainSlider" };
   WebSliderRelay       dryWetSliderRelay    { "dryWetSlider" };
   WebToggleButtonRelay wetSoloToggleRelay      { "wetSoloToggle" };
@@ -105,7 +105,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withOptionsFrom (thresholdSliderRelay)
       .withOptionsFrom (attackSliderRelay)
       .withOptionsFrom (releaseSliderRelay)
-      .withOptionsFrom (inputGainSliderRelay)
+      .withOptionsFrom (noiseLevelGainSliderRelay)
       .withOptionsFrom (outputGainSliderRelay)
       .withOptionsFrom (dryWetSliderRelay)
       .withOptionsFrom (wetSoloToggleRelay)
@@ -146,7 +146,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderParameterAttachment       thresholdAttachment;
   WebSliderParameterAttachment       attackAttachment;
   WebSliderParameterAttachment       releaseAttachment;
-  WebSliderParameterAttachment       inputGainAttachment;
+  WebSliderParameterAttachment       noiseLevelGainAttachment;
   WebSliderParameterAttachment       outputGainAttachment;
   WebSliderParameterAttachment       dryWetAttachment;
   WebToggleButtonParameterAttachment       wetSoloAttachment;

@@ -25,7 +25,7 @@ PARAMETER_ID (tilt)
 PARAMETER_ID (midSide)
 PARAMETER_ID (emphasis)
 
-PARAMETER_ID (inputGain)
+PARAMETER_ID (noiseLevelGain)
 PARAMETER_ID (outputGain)
 
 PARAMETER_ID (dryWet)
