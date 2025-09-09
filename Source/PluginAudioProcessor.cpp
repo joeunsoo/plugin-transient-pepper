@@ -80,11 +80,6 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 
   tiltEQ.prepare(spec);
 
-  dcBlocker.prepare(spec);
-  dcBlocker.reset();
-  antiAliasingFilter.prepare(spec);
-  antiAliasingFilter.reset();
-
   midSideMixer.prepare(spec);
   midSideMixer.reset();
 }
@@ -140,11 +135,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
     
-    // dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    // antiAliasingFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
   }
   
 }

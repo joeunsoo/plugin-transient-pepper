@@ -13,8 +13,7 @@
 #include <JuceHeader.h>
 #include "NamespaceParameterId.h"
 #include "PluginParameters.h"
-#include "AntiAliasingFilter.h"
-#include "DcOffsetFilter.h"
+
 #include "TransientNoise.h"
 #include "MidSideMixer.h"
 #include "TiltEQ.h"
@@ -65,9 +64,6 @@ class PluginAudioProcessor  : public AudioProcessor
   dsp::Gain<float> outputGain;
   
   TiltEQProcessor<float> tiltEQ;
-  
-  DcOffsetFilter<float> dcBlocker;
-  AntiAliasingFilter antiAliasingFilter;
   
   juce::dsp::DryWetMixer<float> dryWetMixer;
   

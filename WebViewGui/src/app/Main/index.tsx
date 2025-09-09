@@ -55,7 +55,7 @@ export default function App() {
             justifyContent="center"
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, minmax(7em, auto))'
+              gridTemplateColumns: 'repeat(2, 1fr)'
             }}
           >
             <JuceKnob
@@ -87,7 +87,7 @@ export default function App() {
             justifyContent="center"
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(1, minmax(7em, auto))'
+              gridTemplateColumns: 'repeat(1, 1fr)'
             }}
           >
             <JuceKnob
@@ -108,7 +108,7 @@ export default function App() {
             justifyContent="center"
             sx={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(2, minmax(7em, auto))'
+              gridTemplateColumns: 'repeat(2, 1fr)'
             }}
           >
             <JuceKnob
