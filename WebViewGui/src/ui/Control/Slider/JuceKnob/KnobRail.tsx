@@ -43,6 +43,11 @@ export default function Component() {
             k1="0" k2="1" k3="1" k4="0"
           />
         </filter>
+
+        <filter id="blendMultiply" filterUnits="objectBoundingBox" x="0%">
+          <feBlend in="SourceGraphic" mode="multiply" />
+          <feBlend in="SourceGraphic" mode="multiply" />
+        </filter>
       </defs>
       <g transform="translate(100,100)">
         <g filter="url(#whiteGlow)">
@@ -62,25 +67,36 @@ export default function Component() {
         </linearGradient>
         <circle r="68" fill="none" stroke="#000000" strokeWidth="10" opacity="0.2" />
         <circle r="68" fill="none" stroke="url(#rimHL)" strokeWidth="10" opacity="0.3" />
-        <circle r="65" fill="none" stroke="#000000" strokeWidth="1" />
+        <circle r="64" fill="none" stroke="#000000" strokeWidth="1" />
         <circle r="59" fill="none" stroke="url(#rimHL)" strokeWidth="11" opacity="1.0" />
-
-        <linearGradient id="mainGradient" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="black" stopOpacity="0" />
-          <stop offset="100%" stopColor="black" stopOpacity="0.3" />
-        </linearGradient>
 
         <g filter="url(#dropshadow)">
           <g filter="url(#whiteGlow)">
             <g filter="url(#redGlow)">
               <circle
                 r={50}
-                fill="var(--mui-palette-primary-darker)"
+                fill="var(--mui-palette-primary-main)"
               />
             </g>
           </g>
         </g>
-        <circle r={50} fill="url(#mainGradient)" />
+
+        <linearGradient id="lightGradient" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stopColor="#000000" stopOpacity="0" />
+          <stop offset="50%" stopColor="#909090" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+        </linearGradient>
+
+        <g filter="url(#blendMultiply)">
+          <g transform="rotate(45)">
+            <circle r={50} fill="url(#lightGradient)" opacity="1.0" />
+          </g>
+          <linearGradient id="mainGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="black" stopOpacity="0" />
+            <stop offset="100%" stopColor="black" stopOpacity="0.3" />
+          </linearGradient>
+          <circle r={50} fill="url(#mainGradient)" />
+        </g>
 
         <linearGradient id="stroke" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="var(--mui-palette-common-white)" stopOpacity="1.0" />
@@ -89,9 +105,9 @@ export default function Component() {
           <stop offset="100%" stopColor="var(--mui-palette-secondary-main)" stopOpacity="1.0" />
         </linearGradient>
         <g transform="rotate(-35)">
-          <circle r={52} fill="none" stroke="var(--mui-palette-primary-main)" strokeWidth="2" />
-          <circle r={52} fill="none" stroke="url(#stroke)" strokeWidth="2" />
-          <circle r={54} fill="none" stroke="#000000" strokeWidth="2" />
+          <circle r={50} fill="none" stroke="var(--mui-palette-primary-main)" strokeWidth="2" />
+          <circle r={50} fill="none" stroke="url(#stroke)" strokeWidth="2" />
+          <circle r={53} fill="none" stroke="#000000" strokeWidth="2" />
         </g>
 
         <radialGradient id="ring" cx="50%" cy="50%" r="50%">
@@ -107,7 +123,6 @@ export default function Component() {
           <stop offset="100%" stopColor="#000000" stopOpacity="0.5" />
         </linearGradient>
         <circle r={60} fill="none" stroke="url(#rimCover)" strokeWidth={10} opacity="0.3" />
-
       </g>
     </>
   );
