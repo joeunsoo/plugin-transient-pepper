@@ -94,18 +94,14 @@ export default function Component({
         </linearGradient>
 
         <g filter="url(#blendMultiply)">
-          <g transform={`rotate(${(value * 90) + 225 + 90})`}>
-            <g transform="rotate(45)">
-              <circle r={50} fill="url(#lightGradient)" opacity="1.0" />
-            </g>
+          <g transform="rotate(45)">
+            <circle r={50} fill="url(#lightGradient)" opacity="1.0" />
           </g>
           <linearGradient id="mainGradient" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="black" stopOpacity="0" />
             <stop offset="100%" stopColor="black" stopOpacity="0.3" />
           </linearGradient>
-          <g transform={`rotate(${(value * 90) + 225 + 90})`}>
-            <circle r={50} fill="url(#mainGradient)" />
-          </g>
+          <circle r={50} fill="url(#mainGradient)" />
         </g>
 
         <linearGradient id="stroke" x1="0" x2="0" y1="0" y2="1">
