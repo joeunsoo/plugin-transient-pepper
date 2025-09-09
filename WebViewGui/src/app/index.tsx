@@ -1,12 +1,12 @@
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
 
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
 import FreqBandInfo from '@/ui/FreqBandInfo';
+import StyledMainPaper from '../ui/StyledMainPaper';
 
 export default function App() {
   return (
@@ -23,6 +23,7 @@ export default function App() {
           sx={{
             flexGrow: 1,
             px: 5,
+            pt: 1,
             pb: 5,
           }}
         >
@@ -34,7 +35,7 @@ export default function App() {
               height: '100%',
             }}
           >
-            <Paper
+            <StyledMainPaper
               sx={{
                 width: '100%',
                 height: '100%',
@@ -43,7 +44,7 @@ export default function App() {
               }}
             >
               <Main />
-            </Paper>
+            </StyledMainPaper>
           </Stack>
         </Stack>
       </Box>

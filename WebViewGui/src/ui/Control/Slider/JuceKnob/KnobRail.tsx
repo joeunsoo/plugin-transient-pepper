@@ -1,9 +1,15 @@
-export default function Component() {
+export interface KnobProps {
+  value: number
+}
+
+export default function Component({
+  value
+}: KnobProps) {
   return (
     <>
       <defs>
 
-        <filter id="dropshadow" width="180%" height="180%">
+        <filter id="dropshadow" width="180%" height="180%" filterUnits="objectBoundingBox">
           <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blurredAlpha" />
           <feOffset in="blurredAlpha" dx="0" dy="25" result="offsetShadow" />
           <feFlood floodColor="#000" floodOpacity="0.9" result="shadowColor" />
@@ -44,7 +50,7 @@ export default function Component() {
           />
         </filter>
 
-        <filter id="blendMultiply" filterUnits="objectBoundingBox" x="0%">
+        <filter id="blendMultiply" filterUnits="objectBoundingBox">
           <feBlend in="SourceGraphic" mode="multiply" />
           <feBlend in="SourceGraphic" mode="multiply" />
         </filter>
@@ -88,14 +94,18 @@ export default function Component() {
         </linearGradient>
 
         <g filter="url(#blendMultiply)">
-          <g transform="rotate(45)">
-            <circle r={50} fill="url(#lightGradient)" opacity="1.0" />
+          <g transform={`rotate(${(value * 90) + 225 + 90})`}>
+            <g transform="rotate(45)">
+              <circle r={50} fill="url(#lightGradient)" opacity="1.0" />
+            </g>
           </g>
           <linearGradient id="mainGradient" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="black" stopOpacity="0" />
             <stop offset="100%" stopColor="black" stopOpacity="0.3" />
           </linearGradient>
-          <circle r={50} fill="url(#mainGradient)" />
+          <g transform={`rotate(${(value * 90) + 225 + 90})`}>
+            <circle r={50} fill="url(#mainGradient)" />
+          </g>
         </g>
 
         <linearGradient id="stroke" x1="0" x2="0" y1="0" y2="1">

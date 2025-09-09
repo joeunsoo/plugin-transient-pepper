@@ -8,9 +8,11 @@ import {
 } from '@mui/material/styles';
 import { noDragSx } from '@/ui/Style';
 
-const primaryMain = '#535355';
-const secondaryMain = '#E53935';
-const greyMain = '#4f5763';
+import {
+  primaryMain,
+  secondaryMain,
+  greyMain,
+} from '@/define';
 
 export const themeVars = {
   cssVariables: true,
