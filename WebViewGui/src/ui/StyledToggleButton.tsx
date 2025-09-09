@@ -2,6 +2,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ToggleButton, { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
+import { LabelTypographySx } from '@/ui/Style';
 
 export interface ToggleButtonProps
   extends MuiToggleButtonProps {
@@ -48,7 +49,11 @@ export default function JuceComboBox({
         spacing={2}
       >
         <Box className="button" />
-        <Typography>
+        <Typography
+          sx={{
+            ...LabelTypographySx,
+          }}
+        >
           {label}
         </Typography>
       </Stack>

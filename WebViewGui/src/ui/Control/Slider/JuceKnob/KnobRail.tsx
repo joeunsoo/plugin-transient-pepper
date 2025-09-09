@@ -1,10 +1,4 @@
-export interface KnobProps {
-  value: number
-}
-
-export default function Component({
-  value
-}: KnobProps) {
+export default function Component() {
   return (
     <>
       <defs>

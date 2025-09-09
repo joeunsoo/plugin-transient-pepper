@@ -2,7 +2,11 @@ export const noDragSx = {
   userSelect: 'none',
 };
 
-export const LabelTypographySx = {
-  color:'var(--mui-palette-primary-lighter)',
+export const LabelTypographySxWithoutColor = {
   fontSize: 'var(--mui-fontSize-sm)',
+};
+
+export const LabelTypographySx = {
+  ...LabelTypographySxWithoutColor,
+  color:'var(--mui-palette-primary-lighter)',
 };
