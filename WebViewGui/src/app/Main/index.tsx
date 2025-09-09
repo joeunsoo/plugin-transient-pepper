@@ -46,72 +46,101 @@ export default function App() {
           justifyContent="center"
           sx={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(5, minmax(7em, auto))'
+            gridTemplateColumns: '2fr 1fr 2fr'
           }}
         >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(7em, auto))'
+            }}
+          >
+            <JuceKnob
+              identifier="thresholdSlider"
+              defaultValue={0.5}
+              subDigit={4}
+            />
+            <JuceKnob
+              identifier="emphasisSlider"
+              defaultValue={0.5}
+              subDigit={1}
+            />
+            <JuceKnob
+              identifier="attackSlider"
+              defaultValue={0.5}
+              valueToString={msToString}
+              subDigit={1}
+            />
+            <JuceKnob
+              identifier="releaseSlider"
+              defaultValue={0.5}
+              valueToString={msToString}
+              subDigit={1}
+            />
+          </Stack>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(1, minmax(7em, auto))'
+            }}
+          >
+            <JuceKnob
+              identifier="tiltSlider"
+              defaultValue={0.5}
+              subDigit={1}
+            />
+            <JuceKnob
+              identifier="midSideSlider"
+              defaultValue={0.5}
+              subDigit={1}
+            />
+          </Stack>
 
-          <JuceKnob
-            identifier="thresholdSlider"
-            defaultValue={0.5}
-            subDigit={4}
-          />
-          <JuceKnob
-            identifier="attackSlider"
-            defaultValue={0.5}
-            valueToString={msToString}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="releaseSlider"
-            defaultValue={0.5}
-            valueToString={msToString}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="tiltSlider"
-            defaultValue={0.5}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="midSideSlider"
-            defaultValue={0.5}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="emphasisSlider"
-            defaultValue={0.5}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="inputGainSlider"
-            title="Input Gain"
-            defaultValue={0.5}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="outputGainSlider"
-            title="Output Gain"
-            defaultValue={0.5}
-            subDigit={1}
-          />
-          <JuceKnob
-            identifier="dryWetSlider"
-            title="Dry/Wet"
-            defaultValue={1.0}
-            subDigit={1}
-          />
-          <Stack>
-            <JuceToggleButton
-              identifier="wetSoloToggle"
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(7em, auto))'
+            }}
+          >
+            <JuceKnob
+              identifier="inputGainSlider"
+              defaultValue={0.5}
+              subDigit={1}
             />
-            <JuceToggleButton
-              identifier="bypassToggle"
-              title="In"
-              invertValue
+            <JuceKnob
+              identifier="outputGainSlider"
+              defaultValue={0.5}
+              subDigit={1}
             />
-            <JuceToggleButton
-              identifier="linkChannelsToggle"
+            <JuceKnob
+              identifier="dryWetSlider"
+              title="Dry/Wet"
+              defaultValue={1.0}
+              subDigit={1}
             />
+            <Stack>
+              <JuceToggleButton
+                identifier="wetSoloToggle"
+              />
+              <JuceToggleButton
+                identifier="bypassToggle"
+                title="In"
+                invertValue
+              />
+              <JuceToggleButton
+                identifier="linkChannelsToggle"
+                title="Link"
+              />
+            </Stack>
           </Stack>
         </Stack>
       </Grid>
