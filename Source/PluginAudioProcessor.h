@@ -14,7 +14,7 @@
 #include "NamespaceParameterId.h"
 #include "PluginParameters.h"
 
-#include "SpectralBars.h"
+#include "PeakMeter.h"
 #include "TransientNoise.h"
 #include "MidSideMixer.h"
 #include "TiltEQ.h"
@@ -72,8 +72,8 @@ class PluginAudioProcessor  : public AudioProcessor
   MidSideMixer<float> midSideMixer;
 
   std::vector<float> spectrumData = [] { return std::vector<float> (16, 0.0f); }();
-  SpinLock spectrumDataLock;
-  SpectralBars spectralBars;
+  SpinLock peakDataLock;
+  PeakMeter peakMeter;
 
   int windowScale;
   

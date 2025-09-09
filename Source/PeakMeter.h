@@ -1,0 +1,99 @@
+/*
+ ==============================================================================
+ 
+ PeakMeter.h
+ Created: 9 Sep 2025
+ Author:  JoEunsoo
+ 
+ ==============================================================================
+ */
+
+#pragma once
+
+#include <JuceHeader.h>
+
+class PeakMeter
+{
+  public:
+  PeakMeter () = default; // 크기 모르는 상태로 생성
+  
+  void prepare (int numChannels, int numSamples)
+  {
+    this->numChannels = numChannels;
+    this->numSamples  = numSamples;
+    
+    // 필요한 샘플 공간 확보 (채널 * 샘플)
+    data.allocate ((size_t) numChannels * (size_t) numSamples, true);
+    
+    // 포인터 배열 준비
+    channelPtrs.resize ((size_t) numChannels);
+    for (int ch = 0; ch < numChannels; ++ch)
+      channelPtrs[(size_t) ch] = data.getData() + (size_t) ch * (size_t) numSamples;
+    
+    // dsp::AudioBlock 생성
+    buffer = dsp::AudioBlock<float> (channelPtrs.data(),
+                                     (size_t) numChannels,
+                                     (size_t) numSamples);
+    
+    writeIx = 0;
+  }
+  
+  template <typename T>
+  void push (dsp::AudioBlock<T> block)
+  {
+    jassert (block.getNumChannels() == buffer.getNumChannels());
+    
+    const auto trimmed = block.getSubBlock ( block.getNumSamples()
+                                            - std::min (block.getNumSamples(), buffer.getNumSamples()));
+    
+    const auto bufferLength = (int64) buffer.getNumSamples();
+    
+    for (auto samplesRemaining = (int64) trimmed.getNumSamples(); samplesRemaining > 0;)
+    {
+      const auto writeOffset      = writeIx % bufferLength;
+      const auto numSamplesToWrite = std::min (samplesRemaining, bufferLength - writeOffset);
+      
+      auto destSubBlock   = buffer.getSubBlock ((size_t) writeOffset, (size_t) numSamplesToWrite);
+      const auto srcBlock = trimmed.getSubBlock (trimmed.getNumSamples() - (size_t) samplesRemaining,
+                                                 (size_t) numSamplesToWrite);
+      
+      destSubBlock.copyFrom (srcBlock);
+      
+      samplesRemaining -= numSamplesToWrite;
+      writeIx          += numSamplesToWrite;
+    }
+  }
+  
+  template <typename T>
+  void push (Span<T> s)
+  {
+    auto* ptr = s.begin();
+    dsp::AudioBlock<T> b (&ptr, 1, s.size());
+    push (b);
+  }
+  
+  void computePeak (Span<float> output) const
+  {
+    jassert ((size_t) output.size() >= buffer.getNumChannels());
+
+    for (size_t ch = 0; ch < buffer.getNumChannels(); ++ch)
+    {
+      float peak = 0.0f;
+      auto* channelData = buffer.getChannelPointer (ch);
+      
+      for (size_t i = 0; i < buffer.getNumSamples(); ++i) {
+        peak = std::max (peak, std::abs (channelData[i]));
+      }
+      output[ch] = peak;
+    }
+  }
+  
+  private:
+  HeapBlock<float> data;                  // float 타입으로 직접 할당
+  std::vector<float*> channelPtrs;        // 채널별 포인터
+  dsp::AudioBlock<float> buffer { nullptr, 0, 0 }; // 나중에 prepare()에서 세팅
+  int64 writeIx = 0;
+  
+  int numChannels = 0;
+  int numSamples  = 0;
+};

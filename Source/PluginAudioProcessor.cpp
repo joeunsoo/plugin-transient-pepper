@@ -83,6 +83,8 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
 
   midSideMixer.prepare(spec);
   midSideMixer.reset();
+  
+  peakMeter.prepare(channels, samplesPerBlock);
 }
 
 bool PluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -146,15 +148,13 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
   }
   
-  spectralBars.push (Span { buffer.getReadPointer (0), (size_t) buffer.getNumSamples() });
-
+  peakMeter.push (outBlock);
   {
-      const SpinLock::ScopedTryLockType lock (spectrumDataLock);
-
-      if (! lock.isLocked())
-          return;
-
-      spectralBars.compute ({ spectrumData.data(), spectrumData.size() });
+    const SpinLock::ScopedTryLockType lock (peakDataLock);
+    
+    if (! lock.isLocked()) { return; }
+    
+    peakMeter.computePeak ({ spectrumData.data(), spectrumData.size() });
   }
 }
 

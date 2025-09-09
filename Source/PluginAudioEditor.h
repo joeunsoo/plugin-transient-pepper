@@ -47,11 +47,11 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   void timerCallback() override {
     static constexpr size_t numFramesBuffered = 5;
 
-    SpinLock::ScopedLockType lock { processorRef.spectrumDataLock };
+    SpinLock::ScopedLockType lock { processorRef.peakDataLock };
 
     Array<var> frame;
 
-    for (size_t i = 1; i < processorRef.spectrumData.size(); ++i)
+    for (size_t i = 0; i < processorRef.spectrumData.size(); ++i)
         frame.add (processorRef.spectrumData[i]);
 
     spectrumDataFrames.push_back (std::move (frame));

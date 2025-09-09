@@ -18,6 +18,7 @@ export default function App() {
           overflow: 'hidden',
         }}
       >
+        <FreqBandInfo />
         <Stack
           sx={{
             flexGrow: 1,
@@ -43,7 +44,6 @@ export default function App() {
             >
               <Main />
             </Paper>
-            <FreqBandInfo />
           </Stack>
         </Stack>
       </Box>
