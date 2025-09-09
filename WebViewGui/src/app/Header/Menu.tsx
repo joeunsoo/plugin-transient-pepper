@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Scale from './Scale';
 
 export default function Page() {
@@ -24,12 +24,13 @@ export default function Page() {
     <Box>
       <IconButton
         onClick={handleClick}
+        size="small"
         sx={{
           color: 'var(--mui-palette-common-white)',
         }}
         disableRipple
       >
-        <MenuIcon />
+        <SettingsIcon />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -43,7 +44,7 @@ export default function Page() {
         }}
         sx={{
           '& .MuiPaper-root': {
-            backgroundColor: 'var(--mui-palette-primary-darken)',
+            backgroundColor: 'var(--mui-palette-primary-darker)',
             color: 'var(--mui-palette-common-white)',
             '& .MuiList-root': {
               py: 0,
@@ -54,7 +55,7 @@ export default function Page() {
               fontSize: 'var(--mui-fontSize-sm)',
             },
             '& .MuiMenuItem-root:hover': {
-              backgroundColor: 'var(--mui-palette-primary-dark)',
+              backgroundColor: 'var(--mui-palette-primary-darken)',
             },
             '& .MuiDivider-root': {
               borderColor: 'var(--mui-palette-primary-main)',

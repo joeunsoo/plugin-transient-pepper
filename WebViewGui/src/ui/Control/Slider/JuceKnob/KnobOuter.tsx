@@ -19,7 +19,7 @@ export default function Component() {
           A ${distance} ${distance} 0 ${angle1 < 0 ? 0 : 1} 1 ${x1} ${y1}
         `}
         fill="none"
-        stroke="var(--mui-palette-primary-dark)"
+        stroke="var(--mui-palette-primary-darkermost)"
         strokeWidth="4"
         style={{}}
       />

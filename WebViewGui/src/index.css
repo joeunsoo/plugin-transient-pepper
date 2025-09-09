@@ -1,9 +1,8 @@
 @import url("./pretendardvariable.css");
 
 :root {
-  --Background-Color: #242424;
-  --Header-minHeight: 2em;
-  --Footer-minHeight: 2em;
+  --Header-minHeight: 2.3em;
+
   /* font-size: 4vh; */
   font-size: 3vh;
   letter-spacing: -0.007em;

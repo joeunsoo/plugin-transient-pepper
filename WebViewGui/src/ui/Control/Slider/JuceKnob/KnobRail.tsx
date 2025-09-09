@@ -107,7 +107,7 @@ export default function Component() {
         <g transform="rotate(-35)">
           <circle r={50} fill="none" stroke="var(--mui-palette-primary-main)" strokeWidth="2" />
           <circle r={50} fill="none" stroke="url(#stroke)" strokeWidth="2" />
-          <circle r={53} fill="none" stroke="#000000" strokeWidth="2" />
+          <circle r={53} fill="none" stroke="#000000" strokeWidth="3" />
         </g>
 
         <radialGradient id="ring" cx="50%" cy="50%" r="50%">
