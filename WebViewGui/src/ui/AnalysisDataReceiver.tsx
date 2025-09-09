@@ -1,11 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
-import { SpectrumDataReceiverEventId } from '@/define';
-
-import Box from '@mui/material/Box';
+import { AnalysisDataReceiverEventId } from '@/define';
 
 function interpolate(a: number[], b: number[], s: number) {
   const result = new Array(a.length).fill(0);
@@ -23,7 +20,7 @@ function mod(dividend: number, divisor: number) {
   return dividend - divisor * quotient;
 }
 
-class SpectrumDataReceiver {
+export default class AnalysisDataReceiver {
   public bufferLength: number;
 
   public buffer: number[][];
@@ -36,7 +33,7 @@ class SpectrumDataReceiver {
 
   public timeResolutionMs: number;
 
-  public spectrumDataRegistrationId: string;
+  public analysisDataRegistrationId: string;
 
   constructor(bufferLength: number) {
     this.bufferLength = bufferLength;
@@ -51,10 +48,10 @@ class SpectrumDataReceiver {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
-    this.spectrumDataRegistrationId = window.__JUCE__.backend.addEventListener(
-      SpectrumDataReceiverEventId,
+    this.analysisDataRegistrationId = window.__JUCE__.backend.addEventListener(
+      AnalysisDataReceiverEventId,
       () => {
-        fetch(Juce.getBackendResourceAddress('spectrumData.json'))
+        fetch(Juce.getBackendResourceAddress('analysisData.json'))
           .then((response) => response.text())
           .then((text) => {
             const data = JSON.parse(text);
@@ -111,79 +108,7 @@ class SpectrumDataReceiver {
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
     window.__JUCE__.backend.removeEventListener(
-      this.spectrumDataRegistrationId
+      this.analysisDataRegistrationId
     );
   }
-}
-
-export default function FreqBandInfo() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  let dataReceiver: SpectrumDataReceiver | null = null;
-  const [isActive, setIsActive] = useState<boolean>(true);
-
-  const render = (timeStampMs: number) => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const grd = ctx.createLinearGradient(0, 0, 0, canvas.height);
-        grd.addColorStop(0, '#1976d2');
-        grd.addColorStop(1, '#dae9f8');
-        ctx.fillStyle = grd;
-
-        if (dataReceiver != null) {
-          const levels = dataReceiver.getLevels(timeStampMs);
-
-          if (levels != null) {
-            const numBars = levels.length;
-            const barWidth = canvas.width / numBars;
-            const barHeight = canvas.height;
-
-            for (const [i, l] of levels.entries()) {
-              ctx.fillRect(
-                i * barWidth,
-                barHeight - l * barHeight,
-                barWidth,
-                l * barHeight
-              );
-            }
-          }
-        }
-      }
-    }
-
-    if (isActive) window.requestAnimationFrame(render);
-  };
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    dataReceiver = new SpectrumDataReceiver(10);
-    setIsActive(true);
-    window.requestAnimationFrame(render);
-
-    return function cleanup() {
-      setIsActive(false);
-      dataReceiver?.unregister();
-    };
-  });
-
-  const canvasStyle = {
-    marginLeft: '0',
-    marginRight: '0',
-    marginTop: '1em',
-    display: 'block',
-    width: '94%',
-    bottom: '0',
-    position: 'absolute',
-  };
-
-  return (
-    <Box>
-      {/* eslint-disable */}
-      {/* @ts-ignore */}
-      <canvas height={90} style={canvasStyle} ref={canvasRef}></canvas>
-    </Box>
-  );
 }

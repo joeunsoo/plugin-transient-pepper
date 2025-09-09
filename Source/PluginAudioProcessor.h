@@ -73,7 +73,8 @@ class PluginAudioProcessor  : public AudioProcessor
   TransientNoiseProcessor<float> transientNoise;
   MidSideMixer<float> midSideMixer;
 
-  std::vector<float> spectrumData = [] { return std::vector<float> (16, 0.0f); }();
+  // 0, 1 출력 피크 레벨 (최대 채널 2개 제한 확인 필요)
+  std::vector<float> analysisData = [] { return std::vector<float> (16, 0.0f); }();
   SpinLock peakDataLock;
   PeakMeter peakMeter;
   

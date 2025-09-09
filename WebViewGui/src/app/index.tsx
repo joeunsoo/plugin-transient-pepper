@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
-import FreqBandInfo from '@/ui/FreqBandInfo';
 import StyledMainPaper from '../ui/StyledMainPaper';
 
 export default function App() {
@@ -18,7 +17,6 @@ export default function App() {
           overflow: 'hidden',
         }}
       >
-        <FreqBandInfo />
         <Stack
           sx={{
             flexGrow: 1,

@@ -165,8 +165,11 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     const SpinLock::ScopedTryLockType lock (peakDataLock);
     
     if (! lock.isLocked()) { return; }
-    
-    peakMeter.computePeak ({ spectrumData.data(), spectrumData.size() });
+
+    Span<float> peakMeterSpan(analysisData.data(), 2); // 0,1 사용
+    // Span<float> peakMeterSpan(analysisData.data() + 2, 2); // 2,3 사용
+
+    peakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() });
   }
 }
 

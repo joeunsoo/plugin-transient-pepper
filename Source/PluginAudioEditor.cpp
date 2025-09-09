@@ -108,11 +108,11 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
     return WebBrowserComponent::Resource { streamToVector (stream), String { "text/html" } };
   }
   
-  if (urlToRetrive == "spectrumData.json")
+  if (urlToRetrive == "analysisData.json")
   {
     Array<var> frames;
     
-    for (const auto& frame : spectrumDataFrames)
+    for (const auto& frame : analysisDataFrames)
       frames.add (frame);
     
     DynamicObject::Ptr d (new DynamicObject());

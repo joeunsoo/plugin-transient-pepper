@@ -32,7 +32,7 @@ export default function JuceSlider({
   ...props
 }: JuceSliderProps) {
   const sliderState = Juce.getSliderState(identifier);
-console.log(sliderState);
+
   const [value, setValue] = useState<number>(sliderState.getNormalisedValue());
   const [properties, setProperties] = useState(sliderState.properties);
 

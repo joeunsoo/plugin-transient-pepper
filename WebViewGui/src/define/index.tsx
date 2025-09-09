@@ -5,7 +5,7 @@ export const CompanyName = 'JoEunsoo';
 export const CompanyWebsite = 'https://joeunsoo.com';
 
 export const controlParameterIndexAnnotation = 'controlparameterindex';
-export const SpectrumDataReceiverEventId = 'spectrumData';
+export const AnalysisDataReceiverEventId = 'analysisData';
 
 export const primaryMain = '#535355';
 export const secondaryMain = '#E53935';

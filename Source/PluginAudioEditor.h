@@ -51,20 +51,20 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
 
     Array<var> frame;
 
-    for (size_t i = 0; i < processorRef.spectrumData.size(); ++i)
-        frame.add (processorRef.spectrumData[i]);
+    for (size_t i = 0; i < processorRef.analysisData.size(); ++i)
+        frame.add (processorRef.analysisData[i]);
 
-    spectrumDataFrames.push_back (std::move (frame));
+    analysisDataFrames.push_back (std::move (frame));
 
-    while (spectrumDataFrames.size() > numFramesBuffered)
-        spectrumDataFrames.pop_front();
+    while (analysisDataFrames.size() > numFramesBuffered)
+      analysisDataFrames.pop_front();
 
     static int64 callbackCounter = 0;
 
-    if (   spectrumDataFrames.size() == numFramesBuffered
+    if (   analysisDataFrames.size() == numFramesBuffered
         && callbackCounter++ % (int64) numFramesBuffered)
     {
-        webComponent.emitEventIfBrowserIsVisible ("spectrumData", var{});
+        webComponent.emitEventIfBrowserIsVisible ("analysisData", var{});
     }
   }
   
@@ -158,7 +158,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderParameterAttachment       slowAttackAttachment;
   WebSliderParameterAttachment       slowReleaseAttachment;
 #endif
-  std::deque<Array<var>> spectrumDataFrames;
+  std::deque<Array<var>> analysisDataFrames;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioEditor)
 };
