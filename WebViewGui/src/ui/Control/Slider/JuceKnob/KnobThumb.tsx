@@ -14,12 +14,12 @@ export default function Component({
     >
       <line
         x1={0}
-        y1={30}
+        y1={15}
         x2={0}
-        y2={60}
-        strokeWidth="7"
+        y2={45}
+        strokeWidth="6"
         strokeLinecap="round"
-        stroke="var(--mui-palette-primary-lightest)"
+        stroke="var(--mui-palette-primary-lighter)"
       />
     </g>
   );

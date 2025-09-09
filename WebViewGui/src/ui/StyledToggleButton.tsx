@@ -19,7 +19,7 @@ export default function JuceComboBox({
       sx={{
         px: 2,
         py: 2.2,
-        color: 'var(--mui-palette-text-disabled)',
+        color: 'var(--mui-palette-primary-light)',
         border: 'none',
         '& .button': {
           backgroundColor: 'var(--mui-palette-primary-darken)',
@@ -33,10 +33,10 @@ export default function JuceComboBox({
           backgroundColor: 'transparent',
         },
         '&.Mui-selected': {
-          color: 'unset',
+          color: 'var(--mui-palette-primary-lighter)',
           '& .button': {
             // boxShadow: 'none',
-            backgroundColor: 'var(--mui-palette-primary-lightest)',
+            backgroundColor: 'var(--mui-palette-primary-lighter)',
           }
         },
       }}

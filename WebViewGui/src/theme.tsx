@@ -9,7 +9,7 @@ import {
 import { noDragSx } from '@/ui/Style';
 
 const primaryMain = '#535355';
-const secondryMain = '#E53935';
+const secondaryMain = '#E53935';
 const greyMain = '#4f5763';
 
 export const themeVars = {
@@ -81,17 +81,17 @@ export const themeVars = {
       darkest: darken(primaryMain, 0.85),
       contrastText: getContrastRatio(primaryMain, '#fff') > 2.5 ? '#fff' : '#111',
     },
-    secondry: {
-      main: secondryMain,
-      lightest: lighten(secondryMain, 0.85),
-      lighter: lighten(secondryMain, 0.65),
-      lighten: lighten(secondryMain, 0.35),
-      light: lighten(secondryMain, 0.2),
-      dark: darken(secondryMain, 0.2),
-      darken: darken(secondryMain, 0.35),
-      darker: darken(secondryMain, 0.65),
-      darkest: darken(secondryMain, 0.85),
-      contrastText: getContrastRatio(secondryMain, '#fff') > 2.5 ? '#fff' : '#111',
+    secondary: {
+      main: secondaryMain,
+      lightest: lighten(secondaryMain, 0.85),
+      lighter: lighten(secondaryMain, 0.65),
+      lighten: lighten(secondaryMain, 0.35),
+      light: lighten(secondaryMain, 0.2),
+      dark: darken(secondaryMain, 0.2),
+      darken: darken(secondaryMain, 0.35),
+      darker: darken(secondaryMain, 0.65),
+      darkest: darken(secondaryMain, 0.85),
+      contrastText: getContrastRatio(secondaryMain, '#fff') > 2.5 ? '#fff' : '#111',
     },
     info: {
       main: greyMain,

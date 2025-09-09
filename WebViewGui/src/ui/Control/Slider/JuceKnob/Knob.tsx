@@ -15,6 +15,7 @@ import Slider, { type SliderProps } from '@mui/material/Slider';
 
 import KnobRail from './KnobRail';
 import KnobThumb from './KnobThumb';
+import KnobOuter from './KnobOuter';
 
 export interface KnobProps
   extends
@@ -108,6 +109,7 @@ export default function JuceSlider({
         <svg
           viewBox="15 15 170 170"
         >
+          <KnobOuter />
           <KnobRail />
           <KnobThumb value={props.value} />
         </svg>
