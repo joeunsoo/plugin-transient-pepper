@@ -5,7 +5,7 @@ import * as Juce from 'juce-framework-frontend';
 
 import Box from '@mui/material/Box';
 
-import { controlParameterIndexAnnotation } from '@/src/define';
+import { controlParameterIndexAnnotation } from '@/define';
 
 import Button from './Button';
 

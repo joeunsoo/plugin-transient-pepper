@@ -6,11 +6,14 @@ import * as Juce from 'juce-framework-frontend';
 import Box, { type BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { controlParameterIndexAnnotation, toFixedDigits } from '@/src/define';
-import { LabelTypographySx } from '@/ui/Style';
+import {
+  controlParameterIndexAnnotation,
+  toFixedDigits,
+  LabelTypographySx
+} from '@/define';
 
 import Knob from './Knob';
-import type { ValueToString } from '@/src/utils/valueToString';
+import type { ValueToString } from '@/utils/valueToString';
 
 interface JuceSliderProps extends BoxProps {
   identifier: string,

@@ -2,7 +2,7 @@ import Stack from '@mui/material/Stack';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { type SelectProps } from '@mui/material/Select';
 
-import StyledToggleButton from '@/src/ui/StyledToggleButton';
+import StyledToggleButton from '@/ui/StyledToggleButton';
 
 export interface JuceComboBoxProps
   extends Omit<

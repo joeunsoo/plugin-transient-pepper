@@ -4,7 +4,7 @@ import * as Juce from 'juce-framework-frontend';
 
 import Button from '@mui/material/Button';
 
-import { useSnackbarStore } from '@/src/store/SnackbarStore';
+import { useSnackbarStore } from '@/store/SnackbarStore';
 
 const sayHello = Juce.getNativeFunction('sayHello');
 

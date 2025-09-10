@@ -1,10 +1,16 @@
 import { create } from 'zustand';
 import { MotionValue } from 'framer-motion';
+import { AnalysisDataReceiverLength } from '@/define';
 
 interface AnalysisDataState {
-  motionValues: MotionValue<number>[];
+  motionValues: MotionValue<number>[],
+  outputNumChannels: MotionValue<number>,
 }
 
 export const useAnalysisDataStore = create<AnalysisDataState>(() => ({
-  motionValues: new Array(16).fill(new MotionValue(0)),
+  motionValues: Array.from(
+    { length: AnalysisDataReceiverLength },
+    () => new MotionValue(0)
+  ),
+  outputNumChannels: new MotionValue(0),
 }));

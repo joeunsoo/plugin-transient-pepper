@@ -4,7 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useSnackbarStore } from '@/src/store/SnackbarStore';
+import { useSnackbarStore } from '@/store/SnackbarStore';
 
 export default function App() {
   const { open, onClose, message } = useSnackbarStore();

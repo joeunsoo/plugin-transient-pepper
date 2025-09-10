@@ -3,11 +3,12 @@ import * as Juce from 'juce-framework-frontend';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 
-import JuceKnob from '@/src/ui/Control/Slider/JuceKnob';
+import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
-import { controlParameterIndexAnnotation } from '@/src/define';
-import JuceToggleButton from '@/src/ui/Control/ToggleButton/JuceToggleButton';
-import { msToString } from '@/src/utils/valueToString';
+import { controlParameterIndexAnnotation } from '@/define';
+import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
+import { msToString } from '@/utils/valueToString';
+import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
 
 export default function App() {
   const controlParameterIndexUpdater = new Juce.ControlParameterIndexUpdater(
@@ -142,6 +143,8 @@ export default function App() {
               />
             </Stack>
           </Stack>
+
+          <PeakMeterStereo id={0} />
         </Stack>
       </Grid>
     </Grid>

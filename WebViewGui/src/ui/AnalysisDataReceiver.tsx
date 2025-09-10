@@ -33,6 +33,8 @@ export default class AnalysisDataReceiver {
 
   public timeResolutionMs: number;
 
+  public outputNumChannels: number;
+
   public analysisDataRegistrationId: string;
 
   constructor(bufferLength: number) {
@@ -42,6 +44,7 @@ export default class AnalysisDataReceiver {
     this.writeIndex = 0;
     this.lastTimeStampMs = 0;
     this.timeResolutionMs = 0;
+    this.outputNumChannels = 0;
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
@@ -55,6 +58,8 @@ export default class AnalysisDataReceiver {
           .then((response) => response.text())
           .then((text) => {
             const data = JSON.parse(text);
+
+            self.outputNumChannels = data.outputNumChannels;
 
             if (self.timeResolutionMs === 0) {
               self.timeResolutionMs = data.timeResolutionMs;
@@ -79,6 +84,10 @@ export default class AnalysisDataReceiver {
 
   getBufferItem(index: number) {
     return this.buffer[mod(index, this.buffer.length)];
+  }
+
+  getOutputNumChannels() {
+    return this.outputNumChannels;
   }
 
   getLevels(timeStampMs: number) {

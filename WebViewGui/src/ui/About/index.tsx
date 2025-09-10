@@ -4,14 +4,14 @@ import {
   PluginName,
   CompanyName,
   PluginVersion
-} from '@/src/define';
+} from '@/define';
 
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-import { useAboutStore } from '@/src/store/AboutStore';
+import { useAboutStore } from '@/store/AboutStore';
 
 export default function App() {
   const { open, handleClose } = useAboutStore();

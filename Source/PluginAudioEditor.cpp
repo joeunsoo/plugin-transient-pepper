@@ -116,6 +116,7 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
       frames.add (frame);
     
     DynamicObject::Ptr d (new DynamicObject());
+    d->setProperty ("outputNumChannels", processorRef.getTotalNumOutputChannels());
     d->setProperty ("timeResolutionMs", getTimerInterval());
     d->setProperty ("frames", std::move (frames));
     

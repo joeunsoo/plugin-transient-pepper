@@ -1,6 +1,6 @@
 'use client';
 
-import { PluginName, CompanyName, CompanyWebsite } from '@/src/define';
+import { PluginName, CompanyName, CompanyWebsite } from '@/define';
 
 import * as Juce from 'juce-framework-frontend';
 
@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-import { useAboutStore } from '@/src/store/AboutStore';
+import { useAboutStore } from '@/store/AboutStore';
 
 import Menu from './Menu';
 

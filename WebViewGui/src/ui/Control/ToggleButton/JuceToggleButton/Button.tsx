@@ -1,6 +1,6 @@
 'use client';
 
-import StyledToggleButton from '@/src/ui/StyledToggleButton';
+import StyledToggleButton from '@/ui/StyledToggleButton';
 
 type JuceCheckboxProps = {
   value: boolean,

@@ -10,7 +10,6 @@ export default function FreqBandInfo() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let dataReceiver: AnalysisDataReceiver | null = null;
   const [isActive, setIsActive] = useState<boolean>(true);
-  const [value, setValue] = useState<string>('');
 
   const render = (timeStampMs: number) => {
     const canvas = canvasRef.current;
@@ -50,18 +49,6 @@ export default function FreqBandInfo() {
     }
   };
 
-  const render2 = (timeStampMs: number) => {
-    if (dataReceiver != null) {
-      const levels = dataReceiver.getLevels(timeStampMs);
-      if (levels) {
-        setValue(`${levels[0] * 100}px`);
-      }
-    }
-    if (isActive) {
-      window.requestAnimationFrame(render2);
-    }
-  };
-
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     dataReceiver = new AnalysisDataReceiver(10);
@@ -96,7 +83,6 @@ export default function FreqBandInfo() {
         }
       }}
     >
-      <div className="value" style={{ height: value }} />
       {/* eslint-disable */}
       {/* @ts-ignore */}
       <canvas height={90} style={canvasStyle} ref={canvasRef}></canvas>

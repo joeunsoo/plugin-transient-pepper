@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 
-import JuceKnob from '@/src/ui/Control/Slider/JuceKnob';
+import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
 export default function App() {
   return (
