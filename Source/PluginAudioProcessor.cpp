@@ -176,10 +176,19 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 //==============================================================================
 void PluginAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-  juce::ignoreUnused (destData);
+  // juce::ignoreUnused (destData);
+  
+  auto vsState = state.copyState();
+  std::unique_ptr<juce::XmlElement> xml (vsState.createXml());
+  copyXmlToBinary (*xml, destData);
 }
 
 void PluginAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-  juce::ignoreUnused (data, sizeInBytes);
+  // juce::ignoreUnused (data, sizeInBytes);
+  
+  std::unique_ptr<juce::XmlElement> xml (getXmlFromBinary (data, sizeInBytes));
+
+  if (xml != nullptr && xml->hasTagName (state.state.getType()))
+      state.replaceState (juce::ValueTree::fromXml (*xml));
 }
