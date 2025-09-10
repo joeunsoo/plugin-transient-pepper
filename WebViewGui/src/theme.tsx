@@ -149,6 +149,13 @@ export const themeVars = {
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          ...noDragSx,
+        },
+      },
+    },
     MuiMenu: {
       styleOverrides: {
         root: {

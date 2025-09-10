@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
 import Box, { type BoxProps } from '@mui/material/Box';
@@ -15,6 +15,7 @@ import {
 import Knob from './Knob';
 import type { ValueToString } from '@/utils/valueToString';
 import Tooltip from '@mui/material/Tooltip';
+import { uesControlStore } from '@/store/ControlStore';
 
 interface JuceSliderProps extends BoxProps {
   identifier: string,
@@ -35,8 +36,11 @@ export default function JuceSlider({
   valueToString,
   ...props
 }: JuceSliderProps) {
+  const ref = useRef<HTMLSpanElement|null>(null);
+  const { focusAnchor, setAnchor } = uesControlStore();
   const sliderState = Juce.getSliderState(identifier);
-
+  const [isDrag, setDrag] = useState<boolean>(false);
+  const [isOver, setOver] = useState<boolean>(false);
   const [value, setValue] = useState<number>(sliderState.getNormalisedValue());
   const [properties, setProperties] = useState(sliderState.properties);
 
@@ -83,6 +87,10 @@ export default function JuceSlider({
     };
   });
 
+  useEffect(() => {
+    setAnchor(ref.current, isDrag || isOver);
+  },[isDrag, isOver, setAnchor]);
+
   function calculateValue() {
     return sliderState.getScaledValue();
   }
@@ -108,8 +116,14 @@ export default function JuceSlider({
       }}
       {...props}
     >
-      <Tooltip title={printValue()} enterDelay={10}>
+      <Tooltip
+        open={focusAnchor === ref.current}
+        title={printValue()}
+        enterDelay={10}
+      >
         <Knob
+          ref={ref}
+          setIsDrag={setDrag}
           value={value}
           scale={calculateValue}
           onChange={handleChange}
@@ -119,6 +133,8 @@ export default function JuceSlider({
           onChangeCommitted={changeCommitted}
           onMouseDown={mouseDown}
           onDoubleClick={doubleClick}
+          onMouseOver={() => setOver(true)}
+          onMouseLeave={() => setOver(false)}
         />
       </Tooltip>
       {!hideTitle &&

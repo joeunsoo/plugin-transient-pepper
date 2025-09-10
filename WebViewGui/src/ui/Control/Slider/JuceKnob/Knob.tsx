@@ -25,7 +25,13 @@ export interface KnobProps
   > {
   value: number;
   dragRange?: number;
+  setIsDrag:React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export type InKnobProps = Omit<
+    KnobProps,
+    | 'setIsDrag'
+  >
 
 function sliderToBox({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -39,7 +45,7 @@ function sliderToBox({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   scale,
   ...props
-}: KnobProps): BoxProps {
+}: InKnobProps): BoxProps {
   return {
     ...props,
   };
@@ -47,6 +53,7 @@ function sliderToBox({
 
 export default function JuceSlider({
   dragRange = 150,
+  setIsDrag: setIsDragParent,
   ...props
 }: KnobProps) {
   const [isDrag, setIsDrag] = useState(false);
@@ -93,11 +100,13 @@ export default function JuceSlider({
           dragMomentum={false}
           onDragStart={() => {
             setIsDrag(true);
+            setIsDragParent(true);
           }}
           onDragEnd={(event) => {
             if (props.onChangeCommitted) {
               props.onChangeCommitted(event, progressScaleValue.get());
             }
+            setIsDragParent(false);
             setIsDrag(false);
           }}
           style={{
