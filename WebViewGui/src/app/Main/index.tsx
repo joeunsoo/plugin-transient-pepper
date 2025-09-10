@@ -8,7 +8,6 @@ import JuceKnob from '@/src/ui/Control/Slider/JuceKnob';
 import { controlParameterIndexAnnotation } from '@/src/define';
 import JuceToggleButton from '@/src/ui/Control/ToggleButton/JuceToggleButton';
 import { msToString } from '@/src/utils/valueToString';
-import AnalysisDataProvider from '../Provider/AnalysisDataProvider';
 
 export default function App() {
   const controlParameterIndexUpdater = new Juce.ControlParameterIndexUpdater(
@@ -143,7 +142,6 @@ export default function App() {
               />
             </Stack>
           </Stack>
-            <AnalysisDataProvider />
         </Stack>
       </Grid>
     </Grid>
