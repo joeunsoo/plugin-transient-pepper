@@ -12,25 +12,54 @@ export default function App() {
       alignItems="center"
       sx={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: '1fr 1fr 1fr',
         '> *': {
           height: '100%',
         }
       }}
     >
       <Stack
-        direction="row"
         alignItems="center"
-        justifyContent="center"
-        sx={{
-          width: '14em',
-          flexWrap: 'wrap-reverse'
-        }}
+        justifyContent="end"
       >
         <JuceKnob
           identifier="noiseLevelGainSlider"
           defaultValue={0.5}
           subDigit={1}
+        />
+        <JuceToggleButton
+          identifier="bypassToggle"
+          title="In"
+          invertValue
+        />
+      </Stack>
+
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifyContent="end"
+      >
+
+        <JuceKnob
+          identifier="dryWetSlider"
+          defaultValue={0.5}
+          subDigit={1}
+          sx={{
+            flexShrink: 0
+          }}
+        />
+          <JuceToggleButton
+            identifier="wetSoloToggle"
+          />
+      </Stack>
+
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifyContent="end"
+      >
+        <PeakMeterStereo
+          idx={0}
         />
         <JuceKnob
           identifier="outputGainSlider"
@@ -40,40 +69,10 @@ export default function App() {
             flexShrink: 0
           }}
         />
-        <PeakMeterStereo idx={0} />
-      </Stack>
-
-      <Stack
-        direction="column"
-        alignItems="center"
-        justifyContent="end"
-      >
-        <Stack
-          sx={{
-            flexShrink: 0,
-          }}
-        >
-          <JuceToggleButton
-            identifier="wetSoloToggle"
-          />
-          <JuceToggleButton
-            identifier="bypassToggle"
-            title="In"
-            invertValue
-          />
-          <JuceToggleButton
-            identifier="linkChannelsToggle"
-            title="Link"
-          />
-        </Stack>
-
-        <JuceKnob
-          identifier="dryWetSlider"
-          defaultValue={0.5}
-          subDigit={1}
-          sx={{
-            flexShrink: 0
-          }}
+        <JuceToggleButton
+          identifier="bypassToggle"
+          title="In"
+          invertValue
         />
       </Stack>
 

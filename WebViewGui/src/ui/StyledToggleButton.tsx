@@ -18,7 +18,9 @@ export default function JuceComboBox({
     <ToggleButton
       disableRipple
       sx={{
-        px: 2,
+        width:'100%',
+        justifyContent:'start',
+        px: 1,
         py: 2.2,
         color: 'var(--mui-palette-primary-light)',
         border: 'none',
@@ -46,7 +48,7 @@ export default function JuceComboBox({
       <Stack
         direction="row"
         alignItems="center"
-        spacing={2}
+        spacing={1.5}
       >
         <Box className="button" />
         <Typography

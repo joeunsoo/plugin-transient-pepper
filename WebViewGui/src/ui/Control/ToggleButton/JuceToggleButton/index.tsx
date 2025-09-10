@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
-import Box from '@mui/material/Box';
+import Box, { type BoxProps } from '@mui/material/Box';
 
-import { controlParameterIndexAnnotation } from '@/define';
+import { controlParameterIndexAnnotation, knobWidth } from '@/define';
 
 import Button from './Button';
 
-type JuceCheckboxProps = {
+interface JuceCheckboxProps extends BoxProps {
   identifier: string,
   title?: string,
   invertValue?: boolean
@@ -18,7 +18,9 @@ type JuceCheckboxProps = {
 export default function JuceCheckbox({
   identifier,
   title,
-  invertValue=false
+  invertValue = false,
+  sx,
+  ...props
 }: JuceCheckboxProps) {
   const checkboxState = Juce.getToggleState(identifier);
 
@@ -49,6 +51,11 @@ export default function JuceCheckbox({
         [controlParameterIndexAnnotation]:
           checkboxState.properties.parameterIndex,
       }}
+      sx={{
+        width: knobWidth,
+        ...sx
+      }}
+      {...props}
     >
       <Button
         value={invertValue ? !value : value}

@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
 import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
+import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 
 export default function App() {
   return (
@@ -11,10 +12,18 @@ export default function App() {
       alignItems="center"
       justifyContent="center"
       sx={{
-        width:'14em',
+        width: '14em',
         flexWrap: 'wrap-reverse',
       }}
     >
+      <JuceToggleButton
+        identifier="linkChannelsToggle"
+        title="Link"
+      />
+      <JuceToggleButton
+        identifier="linkChannelsToggle"
+        title="Link"
+      />
       <JuceKnob
         identifier="thresholdSlider"
         defaultValue={0.5}

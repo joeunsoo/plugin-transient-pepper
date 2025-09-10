@@ -27,3 +27,5 @@ export const LabelTypographySx = {
   ...LabelTypographySxWithoutColor,
   color:'var(--mui-palette-primary-lighter)',
 };
+
+export const knobWidth = '6.5em';

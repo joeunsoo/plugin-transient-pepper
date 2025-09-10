@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 import {
   controlParameterIndexAnnotation,
   toFixedDigits,
-  LabelTypographySx
+  LabelTypographySx,
+  knobWidth
 } from '@/define';
 
 import Knob from './Knob';
@@ -102,7 +103,7 @@ export default function JuceSlider({
           sliderState.properties.parameterIndex,
       }}
       sx={{
-        width: '6.0em',
+        width: knobWidth,
         ...sx
       }}
       {...props}

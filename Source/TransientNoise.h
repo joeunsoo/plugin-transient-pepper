@@ -54,7 +54,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 
     float normalized = (emphasis - minFreq) / (maxFreq - minFreq);
     float skewed = std::pow(normalized, skewFactor); // skew 적용
-    float x = skewed * 12.0f;
+    float x = (skewed * 18.0f) - 12.0f;
 
     tiltGain.setGainDecibels(x);
     tiltGain.process(context);
