@@ -24,7 +24,7 @@ export default function Page({
       {...props}
     >
       <SectionTitle sx={{ width: '100%' }}>
-        Shape
+        Shaping Noise
       </SectionTitle>
       <JuceKnob
         identifier="attackSlider"

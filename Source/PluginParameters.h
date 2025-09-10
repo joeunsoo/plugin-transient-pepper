@@ -95,7 +95,7 @@ struct Parameters {
   
   noiseLevelGain (addToLayout<AudioParameterFloat> (layout,
                                                ID::noiseLevelGain,
-                                               "Noise Level",
+                                               "Noise Gain",
                                                NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
                                                0.0f,
                                                "dB",
