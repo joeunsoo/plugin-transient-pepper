@@ -19,7 +19,8 @@ export default function Page({
     <Stack
       spacing={1}
       sx={{
-        flexGrow: 1
+        flexGrow: 1,
+        height: '100%'
       }}
     >
       {thresholds.map((value, index) => (
@@ -28,6 +29,7 @@ export default function Page({
           id={id}
           startLevel={value}
           endLevel={thresholds[index-1] || 1}
+          mix={index / length}
         />
       ))}
     </Stack>

@@ -28,10 +28,9 @@ export default function Page({
     <Stack
       direction="row"
       alignItems="center"
-      spacing={2}
+      spacing={1.5}
       sx={{
-        width: 'fit-content',
-        mx: 'auto'
+        flexGrow:1,
       }}
     >
       {numChannels > 0 &&

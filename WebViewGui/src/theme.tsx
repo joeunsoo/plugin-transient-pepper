@@ -6,9 +6,9 @@ import {
   darken,
   lighten,
 } from '@mui/material/styles';
-import { noDragSx } from '@/ui/Style';
 
 import {
+  noDragSx,
   primaryMain,
   secondaryMain,
   greyMain,

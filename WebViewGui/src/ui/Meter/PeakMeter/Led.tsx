@@ -1,3 +1,4 @@
+import { meterEndColor, meterStartColor } from '@/define';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 import Box from '@mui/material/Box';
 import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
@@ -5,13 +6,15 @@ import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-
 type PageProps = {
   id: number,
   startLevel: number,
-  endLevel: number
+  endLevel: number,
+  mix: number
 }
 
 export default function Page({
   id,
   startLevel,
-  endLevel
+  endLevel,
+  mix,
 }: PageProps) {
   const { motionValues } = useAnalysisDataStore();
   const value = useMotionValue(0);
@@ -24,11 +27,12 @@ export default function Page({
   return (
     <Box
       sx={{
-        width:'100%',
+        height: '100%',
         '& .value': {
-          width: '1em',
-          height: '0.8em',
-          backgroundColor: '#FF8F00'
+          height: '100%',
+          flexGrow: 1,
+          backgroundColor: `color-mix(in srgb, ${meterStartColor} ${mix * 100}%, ${meterEndColor} ${(1 - mix) * 100}%)`,
+          border:'1px solid var(--mui-palette-primary-darker)'
         }
       }}
     >
