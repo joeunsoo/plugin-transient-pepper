@@ -19,13 +19,19 @@ export default function App() {
       }}
     >
       <Stack
+        direction="row"
         alignItems="center"
         justifyContent="center"
         sx={{
-          height: '100%'
+          width: '14em',
+          flexWrap: 'wrap-reverse'
         }}
       >
-        <PeakMeterStereo idx={0} />
+        <JuceKnob
+          identifier="noiseLevelGainSlider"
+          defaultValue={0.5}
+          subDigit={1}
+        />
         <JuceKnob
           identifier="outputGainSlider"
           defaultValue={0.5}
@@ -34,19 +40,17 @@ export default function App() {
             flexShrink: 0
           }}
         />
+        <PeakMeterStereo idx={0} />
       </Stack>
 
       <Stack
         direction="column"
         alignItems="center"
-        justifyContent="center"
-        sx={{
-          height: '100%'
-        }}
+        justifyContent="end"
       >
         <Stack
           sx={{
-            flexGrow: 1,
+            flexShrink: 0,
           }}
         >
           <JuceToggleButton

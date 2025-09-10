@@ -107,7 +107,7 @@ export default function JuceSlider({
         />
 
         <svg
-          viewBox="15 15 170 170"
+          viewBox="20 20 160 165"
         >
           <KnobOuter />
           <KnobRail />

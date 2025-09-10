@@ -1,8 +1,8 @@
 import Stack from '@mui/material/Stack';
 
-import SectionControl from './SectionControl';
+import SectionDetect from './SectionDetect';
+import SectionShape from './SectionShape';
 import SectionLevel from './SectionLevel';
-import SectionTone from './SectionTone';
 
 export default function App() {
   return (
@@ -35,7 +35,7 @@ export default function App() {
         justifyContent="center"
         sx={{
           display: 'grid',
-          gridTemplateColumns: '3fr 2fr 2fr',
+          gridTemplateColumns: '2fr 2fr 3fr',
           width: '100%',
           height: '100%',
           '> *': {
@@ -43,8 +43,8 @@ export default function App() {
           }
         }}
       >
-        <SectionControl />
-        <SectionTone />
+        <SectionDetect />
+        <SectionShape />
         <SectionLevel />
       </Stack>
     </Stack>

@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
+import { msToString } from '@/utils/valueToString';
 
 export default function App() {
   return (
@@ -9,9 +10,8 @@ export default function App() {
       alignItems="center"
       justifyContent="center"
       sx={{
-        width: '14em',
-        flexWrap: 'wrap-reverse',
-        height: 'fit-content'
+        width:'14em',
+        flexWrap: 'wrap',
       }}
     >
       <JuceKnob
@@ -25,8 +25,15 @@ export default function App() {
         subDigit={1}
       />
       <JuceKnob
-        identifier="noiseLevelGainSlider"
+        identifier="attackSlider"
         defaultValue={0.5}
+        valueToString={msToString}
+        subDigit={1}
+      />
+      <JuceKnob
+        identifier="releaseSlider"
+        defaultValue={0.5}
+        valueToString={msToString}
         subDigit={1}
       />
     </Stack>

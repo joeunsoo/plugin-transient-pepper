@@ -102,12 +102,12 @@ export default function JuceSlider({
           sliderState.properties.parameterIndex,
       }}
       sx={{
-        width: '6.5em',
+        width: '6.0em',
         ...sx
       }}
       {...props}
     >
-      <Tooltip title={printValue()} enterDelay={0}>
+      <Tooltip title={printValue()} enterDelay={10}>
         <Knob
           value={value}
           scale={calculateValue}
