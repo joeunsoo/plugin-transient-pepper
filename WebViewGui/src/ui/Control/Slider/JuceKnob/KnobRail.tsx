@@ -65,8 +65,6 @@ export default function Component() {
           <stop offset="60%" stopColor="#000000" stopOpacity="1.0" />
           <stop offset="100%" stopColor="#000000" stopOpacity="0" />
         </linearGradient>
-        <circle r="68" fill="none" stroke="#000000" strokeWidth="10" opacity="0.2" />
-        <circle r="68" fill="none" stroke="url(#rimHL)" strokeWidth="10" opacity="0.3" />
         <circle r="64" fill="none" stroke="#000000" strokeWidth="1" />
         <circle r="59" fill="none" stroke="url(#rimHL)" strokeWidth="11" opacity="1.0" />
 
