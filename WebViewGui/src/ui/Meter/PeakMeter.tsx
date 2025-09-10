@@ -1,33 +1,33 @@
-'use client';
+import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
+import Box from '@mui/material/Box';
+import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
 
-import Stack from '@mui/material/Stack';
+export default function App() {
+  const { motionValues } = useAnalysisDataStore();
+  const value = useMotionValue(0);
 
-import {
-  motion,
-  useMotionValue,
-} from 'framer-motion';
-
-export default function StyledMainPaper() {
-  const x = useMotionValue(0);
+  useAnimationFrame(() => {
+    value.set(motionValues[0].get());
+  });
 
   return (
-    <Stack
-      direction="row"
+    <Box
       sx={{
-        width: '100%',
-        height: '200px',
-        backgroundColor: '#ffff00',
-        '& > div': {
+        '& .value': {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '100%',
           backgroundColor: '#ff0000'
         }
       }}
     >
       <motion.div
+        className="value"
         style={{
-          width: '50%',
-          height: x
+          height: value
         }}
       />
-    </Stack>
+    </Box>
   );
 }
