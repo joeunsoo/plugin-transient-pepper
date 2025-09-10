@@ -1,4 +1,10 @@
-export default function Component() {
+type PageProps = {
+  color?: string
+}
+
+export default function Page({
+  color='primary'
+}: PageProps) {
   return (
     <>
       <defs>

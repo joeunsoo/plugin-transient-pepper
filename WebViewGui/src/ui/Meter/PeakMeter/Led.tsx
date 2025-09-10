@@ -20,7 +20,7 @@ export default function Page({
 }: PageProps) {
   const { motionValues } = useAnalysisDataStore();
   const value = useMotionValue(0);
-  const scaleValue = useTransform(value, [startLevel, endLevel], [0.1, 1]);
+  const scaleValue = useTransform(value, [startLevel, endLevel], [0.3, 1]);
 
   useAnimationFrame(() => {
     value.set(motionValues[idx].get());
@@ -31,13 +31,15 @@ export default function Page({
       sx={{
         flexGrow: 1,
         height: '100%',
+        backgroundColor: '#000000',
+        border: '1px solid var(--mui-palette-primary-darker)',
+        overflow: 'hidden',
         '& .value': {
-          width:'100%',
+          width: '100%',
           height: '100%',
           flexGrow: 1,
           backgroundColor: `color-mix(in srgb, ${meterStartColor} ${mix * 100}%, ${meterEndColor} ${(1 - mix) * 100}%)`,
-          border:'1px solid var(--mui-palette-primary-darker)',
-          borderRadius: '0.2em',
+
         },
         ...sx
       }}

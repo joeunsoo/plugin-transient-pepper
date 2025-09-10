@@ -68,7 +68,7 @@ export const themeVars = {
     // mode: 'dark',
     background: {
       // default: '#f2f2f2',
-      default: darken(primaryMain, 0.85),
+      default: darken(secondaryMain, 0.85),
       paper: darken(primaryMain, 0.75),
     },
     primary: {

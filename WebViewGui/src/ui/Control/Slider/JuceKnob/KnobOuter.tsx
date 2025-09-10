@@ -5,7 +5,7 @@ function Dot({
   return (
       <circle
         r={4}
-        fill="var(--mui-palette-primary-main)"
+        fill="var(--mui-palette-primary-lighten)"
         {...props}
       />
   );
@@ -36,7 +36,7 @@ export default function Component() {
           A ${distance} ${distance} 0 ${angle1 < 0 ? 0 : 1} 1 ${x1} ${y1}
         `}
         fill="none"
-        stroke="var(--mui-palette-primary-main)"
+        stroke="var(--mui-palette-primary-lighten)"
         strokeWidth="1"
         style={{}}
       />

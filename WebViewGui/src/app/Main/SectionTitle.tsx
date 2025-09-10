@@ -1,6 +1,6 @@
 import Box, { type BoxProps } from '@mui/material/Box';
 
-export default function StyledMainPaper({
+export default function Component({
   children, sx, ...props
 }: BoxProps) {
   return (

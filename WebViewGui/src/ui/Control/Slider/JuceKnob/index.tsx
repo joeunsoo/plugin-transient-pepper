@@ -24,6 +24,7 @@ interface JuceSliderProps extends BoxProps {
   defaultValue?: number
   hideTitle?: boolean
   valueToString?: ValueToString
+  color?: string
 }
 
 export default function JuceSlider({
@@ -32,8 +33,9 @@ export default function JuceSlider({
   defaultValue = 0,
   subDigit = toFixedDigits,
   hideTitle = false,
-  sx,
   valueToString,
+  color = 'primary',
+  sx,
   ...props
 }: JuceSliderProps) {
   const ref = useRef<HTMLSpanElement|null>(null);
@@ -123,6 +125,7 @@ export default function JuceSlider({
       >
         <Knob
           ref={ref}
+          color={color}
           setIsDrag={setDrag}
           value={value}
           scale={calculateValue}

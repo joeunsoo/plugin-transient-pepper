@@ -13,14 +13,6 @@ export default function App() {
         px: 5,
         py: 5,
         flexGrow: 1,
-        '--Grid-borderWidth': '1px',
-        '& > div': {
-          borderRight: 'var(--Grid-borderWidth) solid',
-          borderColor: 'divider',
-        },
-        '& > div:last-child': {
-          borderRight: 'none',
-        },
         '& .MuiGrid-root': {
           display: 'flex',
           flexDirection: 'column',

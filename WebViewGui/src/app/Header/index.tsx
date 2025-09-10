@@ -23,7 +23,6 @@ export default function App() {
         position: 'static',
         px: 1,
         py: 1.5,
-        backgroundColor: 'var(--mui-palette-primary-darkest)',
       }}
     >
       <Stack

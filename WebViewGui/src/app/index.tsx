@@ -1,11 +1,11 @@
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
 
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
-import StyledMainPaper from '../ui/StyledMainPaper';
 import { noDragSx } from '@/define';
 
 export default function App() {
@@ -35,16 +35,22 @@ export default function App() {
               height: '100%',
             }}
           >
-            <StyledMainPaper
+            <Paper
               sx={{
                 width: '100%',
                 height: '100%',
                 display: 'flex',
                 borderRadius: 5,
+                boxShadow: 'none',
+                background: `
+                  linear-gradient(
+                    to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0) 100%
+                  )
+                `
               }}
             >
               <Main />
-            </StyledMainPaper>
+            </Paper>
           </Stack>
         </Stack>
       </Box>
