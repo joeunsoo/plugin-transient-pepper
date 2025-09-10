@@ -9,7 +9,7 @@ function Dot({
   return (
     <circle
       r={4}
-      fill={`var(--mui-palette-${ringColor}-lighten)`}
+      fill={`var(--mui-palette-${ringColor}-lighter)`}
       {...props}
     />
   );
@@ -46,9 +46,11 @@ export default function PageProps({
           A ${distance} ${distance} 0 ${angle1 < 0 ? 0 : 1} 1 ${x1} ${y1}
         `}
         fill="none"
-        stroke={`var(--mui-palette-${ringColor}-lighten)`}
-        strokeWidth="1"
-        style={{}}
+        stroke={`var(--mui-palette-${ringColor}-light)`}
+        strokeWidth={2}
+        style={{
+          opacity: 0.2
+        }}
       />
       <Dot
         cx={-dotDistance}

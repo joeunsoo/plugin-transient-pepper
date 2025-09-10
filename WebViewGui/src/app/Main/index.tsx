@@ -39,11 +39,11 @@ export default function App() {
           justifyContent="end"
           spacing={2}
           sx={{
-            backgroundColor: 'var(--mui-palette-info-darker)',
-            border: '1px solid var(--mui-palette-info-darken)',
+            backgroundColor: 'var(--mui-palette-secondary-darkermost)',
+            border: '1px solid var(--mui-palette-secondary-darken)',
             boxShadow: `
               0 1px 2px rgba(0,0,0,0.2),
-              inset 0 1px 0 rgba(255,255,255,0.5)
+              inset 0 1px 0 rgba(255,255,255,0.5);
             `,
             borderRadius: 3,
             '> *': {

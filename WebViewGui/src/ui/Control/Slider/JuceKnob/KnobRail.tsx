@@ -108,7 +108,7 @@ export default function Page({
           <stop offset="0%" stopColor="var(--mui-palette-common-white)" stopOpacity="1.0" />
           <stop offset="20%" stopColor="var(--mui-palette-primary-main)" stopOpacity="0" />
           <stop offset="80%" stopColor="var(--mui-palette-primary-main)" stopOpacity="0" />
-          <stop offset="100%" stopColor="var(--mui-palette-secondary-main)" stopOpacity="1.0" />
+          <stop offset="100%" stopColor={`var(--mui-palette-${ringColor}-darkish)`} stopOpacity="1.0" />
         </linearGradient>
         <g transform="rotate(-35)">
           <circle r={50} fill="none" stroke={`var(--mui-palette-${color}-darker)`} strokeWidth="2" />
