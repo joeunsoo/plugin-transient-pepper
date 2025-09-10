@@ -14,6 +14,7 @@ import {
 
 import Knob from './Knob';
 import type { ValueToString } from '@/utils/valueToString';
+import Tooltip from '@mui/material/Tooltip';
 
 interface JuceSliderProps extends BoxProps {
   identifier: string,
@@ -106,17 +107,19 @@ export default function JuceSlider({
       }}
       {...props}
     >
-      <Knob
-        value={value}
-        scale={calculateValue}
-        onChange={handleChange}
-        min={0}
-        max={1}
-        step={1 / (properties.numSteps - 1)}
-        onChangeCommitted={changeCommitted}
-        onMouseDown={mouseDown}
-        onDoubleClick={doubleClick}
-      />
+      <Tooltip title={printValue()} enterDelay={0}>
+        <Knob
+          value={value}
+          scale={calculateValue}
+          onChange={handleChange}
+          min={0}
+          max={1}
+          step={1 / (properties.numSteps - 1)}
+          onChangeCommitted={changeCommitted}
+          onMouseDown={mouseDown}
+          onDoubleClick={doubleClick}
+        />
+      </Tooltip>
       {!hideTitle &&
         <Typography
           className="cursorDefault"
@@ -129,15 +132,6 @@ export default function JuceSlider({
           {title || properties.name}
         </Typography>
       }
-      <Typography
-        className="cursorDefault"
-        textAlign="center"
-        sx={{
-          ...LabelTypographySx,
-        }}
-      >
-        {printValue()}
-      </Typography>
     </Box>
   );
 }

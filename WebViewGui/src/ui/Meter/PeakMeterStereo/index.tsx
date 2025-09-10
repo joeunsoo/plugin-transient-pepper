@@ -4,18 +4,20 @@ import { useState } from 'react';
 import { useAnimationFrame } from 'framer-motion';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 
-import Stack from '@mui/material/Stack';
+import Stack, { type StackProps } from '@mui/material/Stack';
 
 import PeakMeter from '../PeakMeter';
 
-type PageProps = {
-  id: number,
+interface PageProps extends StackProps {
+  idx: number,
   length?: number
 }
 
 export default function Page({
-  id,
-  length
+  idx,
+  length,
+  sx,
+  ...props
 }: PageProps) {
   const { outputNumChannels } = useAnalysisDataStore();
   const [numChannels, setNumChannels] = useState<number>(0);
@@ -30,14 +32,19 @@ export default function Page({
       alignItems="center"
       spacing={1.5}
       sx={{
+        width:'100%',
+        maxWidth:'4em',
+        height:'100%',
         flexGrow:1,
+        ...sx
       }}
+      {...props}
     >
       {numChannels > 0 &&
-        <PeakMeter id={id} length={length} />
+        <PeakMeter idx={idx} length={length} />
       }
       {numChannels > 1 &&
-        <PeakMeter id={id + 1} length={length} />
+        <PeakMeter idx={idx + 1} length={length} />
       }
     </Stack>
   );

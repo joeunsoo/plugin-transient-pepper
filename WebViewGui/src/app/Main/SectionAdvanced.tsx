@@ -10,7 +10,7 @@ export default function App() {
       justifyContent="center"
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)'
+        gridTemplateColumns: 'repeat(2, 1fr)',
       }}
     >
       <JuceKnob
