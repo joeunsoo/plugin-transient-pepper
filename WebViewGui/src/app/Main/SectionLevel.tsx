@@ -1,11 +1,13 @@
-import Stack from '@mui/material/Stack';
+import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
 
-export default function App() {
+export default function Page({
+  sx, ...props
+}: StackProps) {
   return (
     <Stack
       direction="row"
@@ -13,15 +15,21 @@ export default function App() {
       justifyContent="end"
       spacing={2}
       sx={{
+        pt: 1,
+        pb: 4,
         '> *': {
           height: '100%',
-        }
+        },
+        ...sx
       }}
+      {...props}
     >
       <Stack
         alignItems="center"
         justifyContent="end"
+        spacing={3}
       >
+        <PeakMeterStereo idx={0} />
         <JuceKnob
           identifier="noiseLevelGainSlider"
           defaultValue={0.5}
@@ -55,16 +63,16 @@ export default function App() {
       >
         <Stack>
           <JuceToggleButton
-            identifier="linkChannelsToggle"
-            title="Link"
-          />
-          <JuceToggleButton
-            identifier="wetSoloToggle"
-          />
-          <JuceToggleButton
             identifier="bypassToggle"
             title="In"
             invertValue
+          />
+          <JuceToggleButton
+            identifier="linkChannelsToggle"
+            title="L/R Link"
+          />
+          <JuceToggleButton
+            identifier="wetSoloToggle"
           />
         </Stack>
 

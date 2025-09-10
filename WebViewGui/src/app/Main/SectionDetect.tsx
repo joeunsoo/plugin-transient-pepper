@@ -1,42 +1,43 @@
-import Stack from '@mui/material/Stack';
+import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
+import SectionTitle from './SectionTitle';
+import Box from '@mui/material/Box';
 
-import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
-
-export default function App() {
+export default function Page({
+  sx, ...props
+}: StackProps) {
   return (
     <Stack
       direction="row"
-      alignItems="end"
-      justifyContent="start"
+      alignItems="center"
+      alignContent="flex-start"
+      justifyContent="center"
       spacing={2}
+      sx={{
+        backgroundColor: 'var(--mui-palette-info-darker)',
+        border: '0.2em solid var(--mui-palette-info-darkest)',
+        borderRadius: 3,
+        flexWrap: 'wrap',
+        ...sx
+      }}
+      {...props}
     >
-      <Stack
-        alignItems="center"
-        justifyContent="center"
-        spacing={3}
-        sx={{
-          height: '100%',
-        }}
-      >
-        <PeakMeterStereo idx={0} />
-        <JuceKnob
-          identifier="thresholdSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
-      </Stack>
-      <Stack
-        direction="row"
-        sx={{ flexShrink: 0 }}
-      >
-        <JuceKnob
-          identifier="emphasisSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
-      </Stack>
+      <SectionTitle sx={{ width: '100%' }}>
+        Transient Detector
+      </SectionTitle>
+      <JuceKnob
+        identifier="thresholdSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
+      <JuceKnob
+        identifier="emphasisSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
+      <Box sx={{ width: 'var(--knob-width)' }} />
+      <Box sx={{ width: 'var(--knob-width)' }} />
     </Stack>
   );
 }

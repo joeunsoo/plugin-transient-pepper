@@ -10,8 +10,8 @@ export default function App() {
       alignItems="center"
       justifyContent="center"
       sx={{
-        px:5,
-        py:5,
+        px: 5,
+        py: 5,
         flexGrow: 1,
         '--Grid-borderWidth': '1px',
         '& > div': {
@@ -33,9 +33,8 @@ export default function App() {
         direction="row"
         alignItems="center"
         justifyContent="center"
+        spacing={4}
         sx={{
-          display: 'grid',
-          gridTemplateColumns: '2fr 3fr 3fr',
           width: '100%',
           height: '100%',
           '> *': {
@@ -43,9 +42,23 @@ export default function App() {
           }
         }}
       >
-        <SectionDetect />
-        <SectionShape />
-        <SectionLevel />
+        <Stack
+          alignItems="stretch"
+          justifyContent="end"
+          spacing={2}
+          sx={{
+            '> *': {
+              flexGrow: 1
+            },
+            '--knob-width': '6.0em'
+          }}
+        >
+          <SectionDetect />
+          <SectionShape />
+        </Stack>
+        <SectionLevel
+          sx={{ flexShrink: 0 }}
+        />
       </Stack>
     </Stack>
   );
