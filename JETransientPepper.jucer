@@ -33,6 +33,8 @@
             file="Source/TransientFollower.h"/>
       <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"
             file="Source/TransientNoise.h"/>
+      <FILE id="zjRcRB" name="BandPassFilter.h" compile="0" resource="0"
+            file="Source/BandPassFilter.h"/>
       <FILE id="loxmGH" name="TiltEQ.h" compile="0" resource="0" file="Source/TiltEQ.h"/>
     </GROUP>
     <GROUP id="A9VZOH" name="Assets">

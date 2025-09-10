@@ -62,7 +62,10 @@ class TransientFollower
     SampleType diff = fastEnv[channel] - slowEnv[channel];
     diff = diff > 0 ? diff : 0.0f;
     auto over = diff - threshold;
+    
+    // Ratio
     diff = diff > threshold ? (threshold + (over / ratio)) : 0.0f; // 트레숄드 + Ratio
+    diff = juce::jlimit(0.0f, 1.0f, diff);
     
     // Transient envelope
     if (diff > transientEnv[channel])
@@ -112,6 +115,7 @@ class TransientFollower
   std::vector<SampleType> fastEnv;
   std::vector<SampleType> slowEnv;
   std::vector<SampleType> transientEnv;
+  std::vector<SampleType> lpfState;
   
   float calcCoeff(SampleType timeInSeconds)
   {

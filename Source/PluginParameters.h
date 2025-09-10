@@ -76,9 +76,9 @@ struct Parameters {
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
                                               "Emphasis",
-                                              NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
-                                              0.0f,
-                                              "dB",
+                                              NormalisableRange<float> { 100.0f, 12000.0f, 0.1f, 0.27f },
+                                              1000.0f,
+                                              "Hz",
                                               juce::AudioProcessorParameter::genericParameter,
                                               [](float value, int) { return dBToString(value); },
                                               [](const juce::String& text) { return StringToDB(text); }
@@ -203,6 +203,13 @@ struct Parameters {
   
   //==============================================================================
 
+  static String hzToString (float value) {
+    return juce::String(value, 1) + " Hz"; // << 표시될 문자열
+  }
+  static float stringToHz (const juce::String& text) {
+    return text.dropLastCharacters(3).getFloatValue(); // "12 %" → 12
+  }
+  
   static String msToString (float value) {
     return juce::String(value, 0) + " ms"; // << 표시될 문자열
   }
