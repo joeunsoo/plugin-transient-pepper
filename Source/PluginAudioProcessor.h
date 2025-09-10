@@ -80,6 +80,7 @@ class PluginAudioProcessor  : public AudioProcessor
 
   SpinLock peakDataLock;
   PeakMeter peakMeter;
+  PeakMeter noisePeakMeter;
   
   DCOffsetFilter<float> dcBlocker;
 

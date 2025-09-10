@@ -72,7 +72,7 @@ class PeakMeter
     push (b);
   }
   
-  void computePeak (Span<float> output) const
+  void computePeak (Span<float> output, int offset) const
   {
     jassert ((size_t) output.size() >= buffer.getNumChannels());
 
@@ -84,7 +84,7 @@ class PeakMeter
       for (size_t i = 0; i < buffer.getNumSamples(); ++i) {
         peak = std::max (peak, std::abs (channelData[i]));
       }
-      output[ch] = peak;
+      output[ch + offset] = peak;
     }
   }
   

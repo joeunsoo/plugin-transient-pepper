@@ -29,7 +29,7 @@ export default function Page({
         justifyContent="end"
         spacing={3}
       >
-        <PeakMeterStereo idx={0} />
+        <PeakMeterStereo idx={2} />
         <JuceKnob
           identifier="noiseLevelGainSlider"
           defaultValue={0.5}
