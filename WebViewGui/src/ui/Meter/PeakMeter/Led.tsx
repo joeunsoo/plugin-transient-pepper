@@ -29,6 +29,7 @@ export default function Page({
   return (
     <Box
       sx={{
+        flexGrow: 1,
         height: '100%',
         '& .value': {
           width:'100%',

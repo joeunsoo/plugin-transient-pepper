@@ -35,7 +35,7 @@ export default function App() {
         justifyContent="center"
         sx={{
           display: 'grid',
-          gridTemplateColumns: '2fr 2fr 3fr',
+          gridTemplateColumns: '2fr 3fr 3fr',
           width: '100%',
           height: '100%',
           '> *': {

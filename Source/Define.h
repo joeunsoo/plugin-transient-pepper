@@ -11,3 +11,4 @@
 #pragma once
 
 #define ADVANCED false
+#define EMPHASIS_BPF false

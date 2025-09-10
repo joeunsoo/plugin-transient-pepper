@@ -20,12 +20,11 @@ export const noDragSx = {
 };
 
 export const LabelTypographySxWithoutColor = {
-  fontSize: 'var(--mui-fontSize-sm)',
+  fontSize: 'calc(var(--knob-width) * 0.13)',
+  // fontSize: 'var(--mui-fontSize-sm)',
 };
 
 export const LabelTypographySx = {
   ...LabelTypographySxWithoutColor,
   color:'var(--mui-palette-primary-lighter)',
 };
-
-export const knobWidth = '6.5em';

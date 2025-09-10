@@ -32,17 +32,14 @@ export default function Page({
       alignItems="center"
       spacing={1.5}
       sx={{
-        width:'100%',
-        maxWidth:'4em',
-        height:'100%',
-        flexGrow:1,
+        flexGrow: 1,
+        width: '100%',
+        maxWidth: '4em',
         ...sx
       }}
       {...props}
     >
-      {numChannels > 0 &&
-        <PeakMeter idx={idx} length={length} />
-      }
+      <PeakMeter idx={idx} length={length} />
       {numChannels > 1 &&
         <PeakMeter idx={idx + 1} length={length} />
       }

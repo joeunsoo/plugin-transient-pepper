@@ -32,7 +32,10 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 
     bandpassFilter.prepare(spec);
     bandpassFilter.reset();
-    
+
+    tiltEQ.prepare(spec);
+    tiltEQ.reset();
+
     tiltGain.setGainDecibels(0.0f);
     tiltGain.reset();
   }
@@ -44,6 +47,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   
   void process(const juce::dsp::ProcessContextReplacing<SampleType>& context) override
   {
+#if EMPHASIS_BPF
     bandpassFilter.setFrequency(emphasis);
     bandpassFilter.process(context);
     
@@ -58,6 +62,13 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 
     tiltGain.setGainDecibels(x);
     tiltGain.process(context);
+#else
+    tiltEQ.setGain(emphasis);
+    tiltEQ.process(context);
+
+    tiltGain.setGainDecibels(emphasis * 0.4f);
+    tiltGain.process(context);
+#endif
 
     if (true) {
       auto& inputBlock = context.getInputBlock();
@@ -106,13 +117,12 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   private:
   double sampleRate = 44100.0;
   int numChannels = 2;
-  
   bool linkChannels = true;
   SampleType emphasis = 0.0f;
 
   juce::Random noiseGenerator;
 
   BandPassFilter<float> bandpassFilter;
-  // TiltEQProcessor<float> tiltEQ;
+  TiltEQProcessor<float> tiltEQ;
   dsp::Gain<float> tiltGain;
 };

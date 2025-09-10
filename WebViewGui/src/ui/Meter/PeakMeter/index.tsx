@@ -1,6 +1,5 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 import Led from './Led';
-import Container from '@mui/material/Container';
 
 interface PageProps extends StackProps {
   idx: number,
@@ -19,26 +18,24 @@ export default function Page({
   );
 
   return (
-    <Container>
-      <Stack
-        spacing={1.5}
-        sx={{
-          flexGrow: 1,
-          backgroundColor:'#ff0000',
-          ...sx
-        }}
-        {...props}
-      >
-        {thresholds.map((value, index) => (
-          <Led
-            key={index}
-            idx={idx}
-            startLevel={value}
-            endLevel={thresholds[index - 1] || 1}
-            mix={index / length}
-          />
-        ))}
-      </Stack>
-    </Container>
+    <Stack
+      spacing={1.5}
+      sx={{
+        height:'100%',
+        flexGrow: 1,
+        ...sx
+      }}
+      {...props}
+    >
+      {thresholds.map((value, index) => (
+        <Led
+          key={index}
+          idx={idx}
+          startLevel={value}
+          endLevel={thresholds[index - 1] || 1}
+          mix={index / length}
+        />
+      ))}
+    </Stack>
   );
 }

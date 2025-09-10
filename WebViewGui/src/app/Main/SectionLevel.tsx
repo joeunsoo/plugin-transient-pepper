@@ -10,9 +10,9 @@ export default function App() {
     <Stack
       direction="row"
       alignItems="center"
+      justifyContent="end"
+      spacing={2}
       sx={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr 1fr',
         '> *': {
           height: '100%',
         }
@@ -27,36 +27,13 @@ export default function App() {
           defaultValue={0.5}
           subDigit={1}
         />
-        <JuceToggleButton
-          identifier="bypassToggle"
-          title="In"
-          invertValue
-        />
       </Stack>
 
       <Stack
         direction="column"
         alignItems="center"
         justifyContent="end"
-      >
-
-        <JuceKnob
-          identifier="dryWetSlider"
-          defaultValue={0.5}
-          subDigit={1}
-          sx={{
-            flexShrink: 0
-          }}
-        />
-          <JuceToggleButton
-            identifier="wetSoloToggle"
-          />
-      </Stack>
-
-      <Stack
-        direction="column"
-        alignItems="center"
-        justifyContent="end"
+        spacing={3}
       >
         <PeakMeterStereo
           idx={0}
@@ -69,13 +46,37 @@ export default function App() {
             flexShrink: 0
           }}
         />
-        <JuceToggleButton
-          identifier="bypassToggle"
-          title="In"
-          invertValue
+      </Stack>
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifyContent="end"
+        spacing={1}
+      >
+        <Stack>
+          <JuceToggleButton
+            identifier="linkChannelsToggle"
+            title="Link"
+          />
+          <JuceToggleButton
+            identifier="wetSoloToggle"
+          />
+          <JuceToggleButton
+            identifier="bypassToggle"
+            title="In"
+            invertValue
+          />
+        </Stack>
+
+        <JuceKnob
+          identifier="dryWetSlider"
+          defaultValue={0.5}
+          subDigit={1}
+          sx={{
+            flexShrink: 0
+          }}
         />
       </Stack>
-
     </Stack>
   );
 }

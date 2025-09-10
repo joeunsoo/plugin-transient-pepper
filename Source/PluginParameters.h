@@ -26,7 +26,7 @@ struct Parameters {
                                             "ms",
                                             juce::AudioProcessorParameter::genericParameter,
                                             [](float value, int) { return msToString(value * 1000.0f); },
-                                            [](const juce::String& text) { return StringToMs(text); }
+                                            [](const juce::String& text) { return stringToMs(text); }
                                             )),
   
   release (addToLayout<AudioParameterFloat> (layout,
@@ -37,7 +37,7 @@ struct Parameters {
                                              "ms",
                                              juce::AudioProcessorParameter::genericParameter,
                                              [](float value, int) { return msToString(value * 1000.0f); },
-                                             [](const juce::String& text) { return StringToMs(text); }
+                                             [](const juce::String& text) { return stringToMs(text); }
                                              )),
   
   threshold (addToLayout<AudioParameterFloat> (layout,
@@ -48,7 +48,7 @@ struct Parameters {
                                                "dB",
                                                juce::AudioProcessorParameter::genericParameter,
                                                [](float value, int) { return dBToString(value); },
-                                               [](const juce::String& text) { return StringToDB(text); }
+                                               [](const juce::String& text) { return stringToDB(text); }
                                                )),
   
   tilt (addToLayout<AudioParameterFloat> (layout,
@@ -59,7 +59,7 @@ struct Parameters {
                                                 "dB",
                                                 juce::AudioProcessorParameter::genericParameter,
                                                 [](float value, int) { return dBToString(value); },
-                                                [](const juce::String& text) { return StringToDB(text); }
+                                                [](const juce::String& text) { return stringToDB(text); }
                                                 )),
   
   midSide (addToLayout<AudioParameterFloat> (layout,
@@ -76,12 +76,21 @@ struct Parameters {
   emphasis (addToLayout<AudioParameterFloat> (layout,
                                               ID::emphasis,
                                               "Emphasis",
+#if EMPHASIS_BPF
                                               NormalisableRange<float> { 100.0f, 12000.0f, 0.1f, 0.27f },
                                               1000.0f,
                                               "Hz",
                                               juce::AudioProcessorParameter::genericParameter,
+                                              [](float value, int) { return hzToString(value); },
+                                              [](const juce::String& text) { return stringToHz(text); }
+#else
+                                              NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
+                                              0.0f,
+                                              "dB",
+                                              juce::AudioProcessorParameter::genericParameter,
                                               [](float value, int) { return dBToString(value); },
-                                              [](const juce::String& text) { return StringToDB(text); }
+                                              [](const juce::String& text) { return stringToDB(text); }
+#endif
                                               )),
   
   noiseLevelGain (addToLayout<AudioParameterFloat> (layout,
@@ -92,7 +101,7 @@ struct Parameters {
                                                "dB",
                                                juce::AudioProcessorParameter::genericParameter,
                                                [](float value, int) { return dBToString(value); },
-                                               [](const juce::String& text) { return StringToDB(text); }
+                                               [](const juce::String& text) { return stringToDB(text); }
                                                )),
   
   outputGain (addToLayout<AudioParameterFloat> (layout,
@@ -103,7 +112,7 @@ struct Parameters {
                                                 "dB",
                                                 juce::AudioProcessorParameter::genericParameter,
                                                 [](float value, int) { return dBToString(value); },
-                                                [](const juce::String& text) { return StringToDB(text); }
+                                                [](const juce::String& text) { return stringToDB(text); }
                                                 )),
   
   dryWet (addToLayout<AudioParameterFloat> (layout,
@@ -213,7 +222,7 @@ struct Parameters {
   static String msToString (float value) {
     return juce::String(value, 0) + " ms"; // << 표시될 문자열
   }
-  static float StringToMs (const juce::String& text) {
+  static float stringToMs (const juce::String& text) {
     return text.dropLastCharacters(3).getFloatValue(); // "12 ms" → 12
   }
 
@@ -227,7 +236,7 @@ struct Parameters {
   static String dBToString (float value) {
     return juce::String(value, 1) + " dB";  // << 표시될 문자열
   }
-  static float StringToDB (const juce::String& text) {
+  static float stringToDB (const juce::String& text) {
     return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
   }
 };

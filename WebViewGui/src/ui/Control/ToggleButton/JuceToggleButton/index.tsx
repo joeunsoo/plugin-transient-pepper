@@ -5,7 +5,7 @@ import * as Juce from 'juce-framework-frontend';
 
 import Box, { type BoxProps } from '@mui/material/Box';
 
-import { controlParameterIndexAnnotation, knobWidth } from '@/define';
+import { controlParameterIndexAnnotation } from '@/define';
 
 import Button from './Button';
 
@@ -52,7 +52,7 @@ export default function JuceCheckbox({
           checkboxState.properties.parameterIndex,
       }}
       sx={{
-        width: knobWidth,
+        width: 'var(--knob-width)',
         ...sx
       }}
       {...props}
