@@ -6,6 +6,7 @@ import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
 import StyledMainPaper from '../ui/StyledMainPaper';
+import { noDragSx } from '@/define';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           display: 'flex',
           minHeight: '100dvh',
           overflow: 'hidden',
+          ...noDragSx
         }}
       >
         <Stack
