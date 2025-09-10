@@ -25,6 +25,7 @@ interface JuceSliderProps extends BoxProps {
   hideTitle?: boolean
   valueToString?: ValueToString
   color?: string
+  ringColor?: string
 }
 
 export default function JuceSlider({
@@ -35,6 +36,7 @@ export default function JuceSlider({
   hideTitle = false,
   valueToString,
   color = 'primary',
+  ringColor = 'secondary',
   sx,
   ...props
 }: JuceSliderProps) {
@@ -126,6 +128,7 @@ export default function JuceSlider({
         <Knob
           ref={ref}
           color={color}
+          ringColor={ringColor}
           setIsDrag={setDrag}
           value={value}
           scale={calculateValue}

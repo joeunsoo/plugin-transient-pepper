@@ -28,6 +28,7 @@ export interface KnobProps
   dragRange?: number;
   setIsDrag:React.Dispatch<React.SetStateAction<boolean>>;
   color?:string;
+  ringColor?: string
 }
 
 export type InKnobProps = Omit<
@@ -57,6 +58,7 @@ export default function JuceSlider({
   dragRange = 150,
   setIsDrag: setIsDragParent,
   color,
+  ringColor='secondary',
   ...props
 }: KnobProps) {
   const [isDrag, setIsDrag] = useState(false);
@@ -121,8 +123,13 @@ export default function JuceSlider({
         <svg
           viewBox="20 20 160 165"
         >
-          <KnobOuter />
-          <KnobRail color={color} />
+          <KnobOuter
+            ringColor={ringColor}
+          />
+          <KnobRail
+            color={color}
+            ringColor={ringColor}
+          />
           <KnobThumb value={props.value} />
         </svg>
       </Box>

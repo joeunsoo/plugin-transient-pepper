@@ -1,9 +1,11 @@
 type PageProps = {
   color?: string
+  ringColor?: string
 }
 
 export default function Page({
-  color='primary'
+  color='primary',
+  ringColor='secondary'
 }: PageProps) {
   return (
     <>
@@ -60,7 +62,7 @@ export default function Page({
           <g filter="url(#redGlow)">
             <circle
               r={65}
-              fill="var(--mui-palette-primary-dark)"
+              fill={`var(--mui-palette-${ringColor}-darken)`}
             />
           </g>
         </g>
@@ -79,16 +81,16 @@ export default function Page({
             <g filter="url(#redGlow)">
               <circle
                 r={50}
-                fill="var(--mui-palette-primary-main)"
+                fill={`var(--mui-palette-${color}-dark)`}
               />
             </g>
           </g>
         </g>
 
         <linearGradient id="lightGradient" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#000000" stopOpacity="0" />
-          <stop offset="50%" stopColor="#909090" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+          <stop offset="0%" stopColor={`var(--mui-palette-${color}-darkest)`} stopOpacity="0" />
+          <stop offset="50%" stopColor={`var(--mui-palette-${color}-light)`} stopOpacity="0.8" />
+          <stop offset="100%" stopColor={`var(--mui-palette-${color}-darkest)`} stopOpacity="0" />
         </linearGradient>
 
         <g filter="url(#blendMultiply)">
@@ -109,7 +111,7 @@ export default function Page({
           <stop offset="100%" stopColor="var(--mui-palette-secondary-main)" stopOpacity="1.0" />
         </linearGradient>
         <g transform="rotate(-35)">
-          <circle r={50} fill="none" stroke="var(--mui-palette-primary-main)" strokeWidth="2" />
+          <circle r={50} fill="none" stroke={`var(--mui-palette-${color}-darker)`} strokeWidth="2" />
           <circle r={50} fill="none" stroke="url(#stroke)" strokeWidth="2" />
           <circle r={53} fill="none" stroke="#000000" strokeWidth="3" />
         </g>

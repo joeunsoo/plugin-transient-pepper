@@ -83,6 +83,7 @@ export const themeVars = {
       darker: darken(primaryMain, 0.60),
       darkermost: darken(primaryMain, 0.70),
       darkest: darken(primaryMain, 0.85),
+      blackest: darken(primaryMain, 0.90),
       contrastText: getContrastRatio(primaryMain, '#fff') > 2.5 ? '#fff' : '#111',
     },
     secondary: {
@@ -97,6 +98,7 @@ export const themeVars = {
       darker: darken(secondaryMain, 0.60),
       darkermost: darken(secondaryMain, 0.70),
       darkest: darken(secondaryMain, 0.85),
+      blackest: darken(secondaryMain, 0.90),
       contrastText: getContrastRatio(secondaryMain, '#fff') > 2.5 ? '#fff' : '#111',
     },
     info: {
@@ -111,6 +113,7 @@ export const themeVars = {
       darker: darken(greyMain, 0.60),
       darkermost: darken(greyMain, 0.70),
       darkest: darken(greyMain, 0.85),
+      blackest: darken(greyMain, 0.90),
       contrastText: getContrastRatio(greyMain, '#fff') > 2.5 ? '#fff' : '#111',
     },
     common: {
