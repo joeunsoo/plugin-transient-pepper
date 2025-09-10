@@ -137,26 +137,33 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.transientFollower.setSlowRelease(parameters.slowRelease.get());
 #endif
   
-  dryWetMixer.setWetMixProportion (parameters.wetSolo.get() ? 1.0 :(parameters.dryWet.get() / 100.0f));
+  float wetMix = (parameters.dryWet.get() / 100.0f);
+  if (parameters.wetSolo.get()) {
+    wetMix = 1.0f;
+  }
+  if (parameters.bypass.get()) {
+    wetMix = 0.0f;
+  }
+  dryWetMixer.setWetMixProportion (wetMix);
   
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
+
+  dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
+  
+  transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
+  
+  tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+  tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+  
+  midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
+  
+  dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
+  
+  noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+  
+  dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
   
   if (!parameters.bypass.get()) {
-    dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
-    
-    transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
-    tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
-
-    noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
-    
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
   }
   
@@ -165,10 +172,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     const SpinLock::ScopedTryLockType lock (peakDataLock);
     
     if (! lock.isLocked()) { return; }
-
+    
     Span<float> peakMeterSpan(analysisData.data(), 2); // 0,1 사용
     // Span<float> peakMeterSpan(analysisData.data() + 2, 2); // 2,3 사용
-
+    
     peakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() });
   }
 }
@@ -188,7 +195,7 @@ void PluginAudioProcessor::setStateInformation (const void* data, int sizeInByte
   // juce::ignoreUnused (data, sizeInBytes);
   
   std::unique_ptr<juce::XmlElement> xml (getXmlFromBinary (data, sizeInBytes));
-
+  
   if (xml != nullptr && xml->hasTagName (state.state.getType()))
-      state.replaceState (juce::ValueTree::fromXml (*xml));
+    state.replaceState (juce::ValueTree::fromXml (*xml));
 }
