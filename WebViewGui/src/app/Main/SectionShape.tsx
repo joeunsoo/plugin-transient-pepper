@@ -29,7 +29,7 @@ export default function Page({
         spacing="var(--column-spacing)"
         sx={{
           width: '100%',
-          '--knob-width': '7.5em',
+          '--knob-width': '8.0em',
         }}
       >
         <JuceKnob

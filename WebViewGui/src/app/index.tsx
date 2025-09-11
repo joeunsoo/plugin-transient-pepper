@@ -23,7 +23,7 @@ export default function App() {
           sx={{
             flexGrow: 1,
             px: 3,
-            pt: 1,
+            pt: 0,
             pb: 2,
           }}
         >
