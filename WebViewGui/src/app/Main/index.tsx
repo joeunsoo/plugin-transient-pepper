@@ -2,7 +2,9 @@ import Stack from '@mui/material/Stack';
 
 import SectionDetect from './SectionDetect';
 import SectionShape from './SectionShape';
-import SectionLevel from './SectionLevel';
+import SectionMix from './SectionMix';
+import SectionNoiseGain from './SectionNoiseGain';
+import Divider from '@mui/material/Divider';
 
 export default function App() {
   return (
@@ -25,39 +27,74 @@ export default function App() {
         direction="row"
         alignItems="center"
         justifyContent="center"
-        spacing={4}
         sx={{
           width: '100%',
           height: '100%',
           '> *': {
+            flexGrow: 1,
             height: '100%',
-          }
+          },
+          '--knob-width': '5.0em',
+          '--row-spacing': '0.6em',
+          '--column-spacing': '0.4em',
         }}
       >
         <Stack
-          alignItems="stretch"
-          justifyContent="end"
-          spacing={2}
-          sx={{
-            backgroundColor: 'var(--mui-palette-secondary-darkermost)',
-            border: '1px solid var(--mui-palette-secondary-darken)',
-            boxShadow: `
+          direction="row"
+          justifyContent="space-between"
+          spacing={4}
+          divider={
+            <Divider
+              orientation="vertical"
+              sx={{
+                width: 0,
+                borderLeft: '1px solid #303030',
+                borderRight: '1px solid var(--mui-palette-secondary-darker)',
+                flexGrow: 0,
+              }}
+            />
+          }
+        >
+          <Stack
+            alignItems="stretch"
+            justifyContent="stretch"
+            sx={{
+            px: 4,
+            py: 4,
+              '> *': {
+                flexGrow: 1,
+              },
+            }}
+          >
+            <SectionDetect />
+            <SectionShape />
+          </Stack>
+          <Stack
+            direction="row"
+            sx={{
+              px: 4,
+              py: 4,
+              borderRadius: 3,
+              backgroundColor: 'var(--mui-palette-secondary-darkermost)',
+              outline: '1px solid var(--mui-palette-secondary-darker)',
+              boxShadow: `
               0 1px 2px rgba(0,0,0,0.2),
               inset 0 1px 0 rgba(255,255,255,0.5)
             `,
-            borderRadius: 3,
-            '> *': {
-              flexGrow: 1
-            },
-            '--knob-width': '6.0em'
+            }}
+          >
+            <SectionNoiseGain />
+          </Stack>
+        </Stack>
+        <Stack
+          direction="row"
+          sx={{
+            pl: 4,
+            py: 4
           }}
         >
-          <SectionDetect />
-          <SectionShape />
+          <SectionMix />
         </Stack>
-        <SectionLevel
-          sx={{ flexShrink: 0 }}
-        />
       </Stack>
     </Stack>
   );

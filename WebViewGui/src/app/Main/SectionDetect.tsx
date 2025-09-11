@@ -12,8 +12,8 @@ export default function Page({
       direction="row"
       alignItems="center"
       alignContent="flex-start"
-      justifyContent="center"
-      spacing={2}
+      justifyContent="space-between"
+      spacing="var(--column-spacing)"
       sx={{
         flexWrap: 'wrap',
         ...sx
@@ -21,17 +21,15 @@ export default function Page({
       {...props}
     >
       <SectionTitle sx={{ width: '100%' }}>
-        Transient Detector
+        Transient Noise Sculptor
       </SectionTitle>
       <JuceKnob
         identifier="thresholdSlider"
         defaultValue={0.5}
         subDigit={1}
-      />
-      <JuceKnob
-        identifier="emphasisSlider"
-        defaultValue={0.5}
-        subDigit={1}
+        sx={{
+          '--knob-width': '8.0em',
+        }}
       />
       <Box sx={{ width: 'var(--knob-width)' }} />
       <Box sx={{ width: 'var(--knob-width)' }} />

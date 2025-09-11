@@ -2,7 +2,6 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import { msToString } from '@/utils/valueToString';
-import SectionTitle from './SectionTitle';
 
 export default function Page({
   sx, ...props
@@ -11,18 +10,20 @@ export default function Page({
     <Stack
       direction="row"
       alignItems="center"
-      alignContent="flex-start"
-      justifyContent="center"
-      spacing={2}
+      alignContent="flex-end"
+      justifyContent="space-between"
+      spacing="var(--column-spacing)"
       sx={{
         flexWrap: 'wrap',
         ...sx
       }}
       {...props}
     >
-      <SectionTitle sx={{ width: '100%' }}>
-        Shaping Noise
-      </SectionTitle>
+      <JuceKnob
+        identifier="emphasisSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
       <JuceKnob
         identifier="attackSlider"
         defaultValue={0.5}

@@ -2,14 +2,10 @@
 
 import {
   createTheme,
-  darken,
-  lighten,
 } from '@mui/material/styles';
 
 import {
   noDragSx,
-  primaryMain,
-  secondaryMain,
   palette,
 } from '@/define';
 
@@ -67,8 +63,8 @@ export const themeVars = {
     // mode: 'dark',
     background: {
       // default: '#f2f2f2',
-      default: darken(secondaryMain, 0.85),
-      paper: darken(primaryMain, 0.75),
+      default: palette.secondary.blackest,
+      paper: palette.secondary.blackest,
     },
     Tooltip: {
       bg: palette.secondary.darkest
@@ -82,7 +78,7 @@ export const themeVars = {
       gray: '#666666',
     },
     text: {
-      primary: lighten(primaryMain, 0.85),
+      primary: palette.primary.lightest,
       secondary: 'rgba(255, 255, 255, 0.7)',
       disabled: 'rgba(255, 255, 255, 0.5)',
       icon: 'rgba(255, 255, 255, 0.5)',

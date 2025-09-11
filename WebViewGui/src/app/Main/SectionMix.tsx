@@ -13,10 +13,8 @@ export default function Page({
       direction="row"
       alignItems="center"
       justifyContent="end"
-      spacing={2}
+      spacing="var(--column-spacing)"
       sx={{
-        pt: 1,
-        pb: 4,
         '> *': {
           height: '100%',
         },
@@ -25,23 +23,10 @@ export default function Page({
       {...props}
     >
       <Stack
-        alignItems="center"
-        justifyContent="end"
-        spacing={3}
-      >
-        <PeakMeterStereo idx={2} />
-        <JuceKnob
-          identifier="noiseLevelGainSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
-      </Stack>
-
-      <Stack
         direction="column"
         alignItems="center"
         justifyContent="end"
-        spacing={3}
+      spacing="var(--row-spacing)"
       >
         <PeakMeterStereo
           idx={0}
@@ -59,7 +44,7 @@ export default function Page({
         direction="column"
         alignItems="center"
         justifyContent="end"
-        spacing={1}
+      spacing="var(--row-spacing)"
       >
         <Stack>
           <JuceToggleButton

@@ -36,7 +36,7 @@ export default function JuceSlider({
   hideTitle = false,
   valueToString,
   color = 'primary',
-  ringColor = 'secondary',
+  ringColor = 'primary',
   sx,
   ...props
 }: JuceSliderProps) {

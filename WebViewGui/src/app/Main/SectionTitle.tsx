@@ -6,7 +6,7 @@ export default function Component({
   return (
     <Box
       sx={{
-        px: 5,
+        px: 3,
         fontWeight: 'var(--mui-fontWeight-lg)',
         fontSize: 'var(--mui-fontSize-sm)',
         color: 'var(--mui-palette-info-lightermost)',
