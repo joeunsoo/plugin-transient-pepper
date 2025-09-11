@@ -4,7 +4,8 @@ import SectionAdjust from './SectionAdjust';
 import SectionShape from './SectionShape';
 import SectionMix from './SectionMix';
 import SectionNoiseGain from './SectionNoiseGain';
-import { GlassSx } from '@/define';
+import { GlassSx, palette } from '@/define';
+import { alpha } from '@mui/material/styles';
 
 export default function App() {
   return (
@@ -62,7 +63,7 @@ export default function App() {
             flexShrink: 0,
             p: 4,
             borderRadius: 3,
-            backgroundColor: 'var(--mui-palette-secondary-darkermost)',
+            backgroundColor: alpha(palette.secondary.main, 0.3),
             outline: '1px solid var(--mui-palette-secondary-darker)',
             ...GlassSx
           }}
