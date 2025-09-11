@@ -57,7 +57,7 @@ function sliderToBox({
 export default function JuceSlider({
   dragRange = 150,
   setIsDrag: setIsDragParent,
-  color,
+  color='primary',
   ringColor='secondary',
   ...props
 }: KnobProps) {
@@ -96,7 +96,6 @@ export default function JuceSlider({
         sx={{
           position: 'relative',
           width: '100%',
-          color: 'var(--mui-palette-primary-main)',
         }}
       >
         <motion.div
@@ -124,12 +123,9 @@ export default function JuceSlider({
 
         <svg
           viewBox="20 20 160 165"
-          style={{
-            color: 'var(--mui-palette-secondary-lightest)'
-          }}
         >
           <KnobOuter
-            ringColor={ringColor}
+            color={color}
           />
           <KnobRail
             color={color}

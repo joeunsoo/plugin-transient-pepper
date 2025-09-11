@@ -13,7 +13,7 @@ export default function App() {
       alignItems="center"
       justifyContent="center"
       sx={{
-        py: 5,
+        py: 4,
         flexGrow: 1,
         '& .MuiGrid-root': {
           display: 'flex',

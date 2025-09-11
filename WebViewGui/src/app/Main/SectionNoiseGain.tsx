@@ -19,7 +19,7 @@ export default function Page({
         identifier="noiseLevelGainSlider"
         defaultValue={0.5}
         subDigit={1}
-        color="secondary"
+        ringColor="secondary"
       />
     </Stack>
   );

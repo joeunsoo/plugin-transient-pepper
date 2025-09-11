@@ -1,6 +1,6 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 import { uesControlStore } from '@/store/ControlStore';
-import { calcBypassWetOpacity } from '@/define';
+import { calcBypassWetOpacity, GlassSx } from '@/define';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
@@ -37,13 +37,13 @@ export default function Page({
         height: '100%',
         flexGrow: 1,
         opacity: calcBypassWetOpacity({ bypassed, wetSolo, ignoreBypass, ignoreWetSolo }),
-        backgroundColor: '#000000',
-        border: '1px solid var(--mui-palette-primary-darker)',
+        backgroundColor: 'var(--mui-palette-secondary-blackest)',
+        borderRadius: '0.2em',
         overflow: 'hidden',
+        ...GlassSx,
         '& .value': {
           width: '100%',
-          height: '100%',
-          backgroundColor: '#ff0000',
+          backgroundColor: 'var(--mui-palette-secondary-main)',
 
         },
         ...sx

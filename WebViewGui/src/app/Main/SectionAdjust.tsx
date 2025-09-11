@@ -39,6 +39,7 @@ export default function Page({
           identifier="thresholdSlider"
           defaultValue={0.5}
           subDigit={1}
+          ringColor="secondary"
         />
         <JuceKnob
           identifier="emphasisSlider"

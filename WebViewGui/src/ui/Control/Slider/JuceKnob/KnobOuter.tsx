@@ -1,26 +1,26 @@
 interface DotProps extends React.SVGProps<SVGCircleElement> {
-  ringColor?: string
+  color?: string
 }
 
 function Dot({
-  ringColor= 'secondary',
+  color = 'primary',
   ...props
 }: DotProps) {
   return (
     <circle
       r={4}
-      fill={`var(--mui-palette-${ringColor}-lighter)`}
+      fill={`var(--mui-palette-${color}-darken)`}
       {...props}
     />
   );
 }
 
 type PageProps = {
-  ringColor?: string
+  color?: string
 }
 
 export default function PageProps({
-  ringColor = 'secondary'
+  color = 'primary'
 }: PageProps) {
   const distance = 75;
   const dotDistance = 76;
@@ -46,7 +46,7 @@ export default function PageProps({
           A ${distance} ${distance} 0 ${angle1 < 0 ? 0 : 1} 1 ${x1} ${y1}
         `}
         fill="none"
-        stroke={`var(--mui-palette-${ringColor}-light)`}
+        stroke={`var(--mui-palette-${color}-dark)`}
         strokeWidth={2}
         style={{
           opacity: 0.2
@@ -55,12 +55,12 @@ export default function PageProps({
       <Dot
         cx={-dotDistance}
         cy={0}
-        ringColor={ringColor}
+        color={color}
       />
       <Dot
         cx={dotX}
         cy={dotY}
-        ringColor={ringColor}
+        color={color}
       />
     </g>
   );

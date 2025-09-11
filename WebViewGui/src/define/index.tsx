@@ -38,10 +38,15 @@ export function generatePalette(color: string) {
 }
 
 export const primaryMain = '#535355';
-export const secondaryMain = '#E53935'; // #FF4C4C
+export const secondaryMain = '#DF2926'; // #E53935 #FF4C4C
 export const infoMain = '#6b3058';
 
-export const palette = {
+interface PaletteProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [prop: string]: any
+}
+
+export const palette:PaletteProps = {
   primary: generatePalette(primaryMain),
   secondary: generatePalette(secondaryMain),
   info: generatePalette(infoMain)

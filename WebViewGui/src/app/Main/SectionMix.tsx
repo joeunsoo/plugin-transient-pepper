@@ -32,25 +32,6 @@ export default function Page({
         justifyContent="end"
         spacing="var(--row-spacing)"
       >
-        <PeakMeterStereo
-          idx={0}
-          ignoreBypass
-        />
-        <JuceKnob
-          identifier="outputGainSlider"
-          defaultValue={0.5}
-          subDigit={1}
-          sx={{
-            flexShrink: 0
-          }}
-        />
-      </Stack>
-      <Stack
-        direction="column"
-        alignItems="center"
-        justifyContent="end"
-        spacing="var(--row-spacing)"
-      >
         <Stack>
           <JuceToggleButton
             identifier="bypassToggle"
@@ -77,6 +58,25 @@ export default function Page({
             flexShrink: 0
           }}
           ignoreWetSolo={false}
+        />
+      </Stack>
+      <Stack
+        direction="column"
+        alignItems="center"
+        justifyContent="end"
+        spacing="var(--row-spacing)"
+      >
+        <PeakMeterStereo
+          idx={0}
+          ignoreBypass
+        />
+        <JuceKnob
+          identifier="outputGainSlider"
+          defaultValue={0.5}
+          subDigit={1}
+          sx={{
+            flexShrink: 0
+          }}
         />
       </Stack>
     </Stack>

@@ -2,8 +2,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ToggleButton, { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
-import { LabelTypographySx, palette } from '@/define';
-import { alpha } from '@mui/material/styles';
+import { GlassSx, LabelTypographySx } from '@/define';
 
 export interface ToggleButtonProps
   extends MuiToggleButtonProps {
@@ -32,7 +31,7 @@ export default function JuceComboBox({
           padding: '0.7em 1.2em',
           borderRadius: '999px',
           background: 'linear-gradient(135deg, var(--mui-palette-secondary-darker), var(--mui-palette-secondary-blackest))',
-          boxShadow: `0 0.3em 0.4em ${alpha(palette.primary.darker, 0.5)}`,
+          ...GlassSx,
           transform: 'translateY(-1px)'
         },
         '&:hover,  &.Mui-selected:hover': {
@@ -41,8 +40,8 @@ export default function JuceComboBox({
         '&.Mui-selected': {
           backgroundColor: 'transparent',
           '& .button': {
-            background: 'linear-gradient(135deg, var(--mui-palette-secondary-main), var(--mui-palette-secondary-darkermost))',
-            boxShadow: `0 0.25em 0.35em ${alpha(palette.secondary.darker, 0.4)}`,
+            background: 'linear-gradient(135deg, var(--mui-palette-secondary-main), var(--mui-palette-secondary-dark))',
+            ...GlassSx,
             transform: 'translateY(1px)'
           }
         },
