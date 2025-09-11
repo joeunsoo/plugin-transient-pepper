@@ -1,4 +1,4 @@
-import { GlassSx } from '@/define';
+import { GlassSx,  } from '@/define';
 import Box, { type BoxProps } from '@mui/material/Box';
 
 export default function Page({

@@ -25,11 +25,11 @@ export default function Page({
       </SectionTitle>
       <Stack
         direction="row"
-        justifyContent="start"
+        justifyContent="space-between"
         spacing="var(--column-spacing)"
         sx={{
           width: '100%',
-          '--knob-width': '8.0em',
+          '--knob-width': '7.5em',
         }}
       >
         <JuceKnob

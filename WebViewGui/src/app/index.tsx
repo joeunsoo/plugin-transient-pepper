@@ -24,7 +24,7 @@ export default function App() {
             flexGrow: 1,
             px: 3,
             pt: 1,
-            pb: 3,
+            pb: 1,
           }}
         >
           <Header />

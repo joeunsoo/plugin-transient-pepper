@@ -9,6 +9,7 @@ export default function Page({
   return (
     <Stack
       direction="row"
+      justifyContent="space-between"
       spacing="var(--column-spacing)"
       {...props}
     >

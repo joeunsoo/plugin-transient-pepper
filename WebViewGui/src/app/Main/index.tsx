@@ -16,7 +16,7 @@ export default function App() {
       spacing={5}
       sx={{
         p: 4,
-        py: 8,
+        pb: 8,
         width: '100%',
         height: '100%',
         '> *': {
@@ -30,19 +30,19 @@ export default function App() {
       <Stack
         direction="column"
         justifyContent="space-between"
-        spacing={4}
+        spacing={5}
         sx={{
           flexShrink: 0,
         }}
       >
-        <SectionShape />
         <SectionDetector />
+        <SectionShape />
       </Stack>
       <Stack
         direction="column"
         alignItems="end"
         justifyContent="end"
-        spacing={4}
+        spacing={5}
         sx={{
           flexGrow: 1,
         }}
