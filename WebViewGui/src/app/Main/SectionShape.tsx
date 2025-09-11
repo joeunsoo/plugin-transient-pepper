@@ -19,7 +19,7 @@ export default function Page({
       {...props}
     >
       <SectionTitle>
-        Noise Sculptor
+        Noise Shape
       </SectionTitle>
       <Stack
         direction="row"
