@@ -17,6 +17,7 @@ import Knob from './Knob';
 import type { ValueToString } from '@/utils/valueToString';
 import Tooltip from '@mui/material/Tooltip';
 import { uesControlStore } from '@/store/ControlStore';
+import Stack from '@mui/material/Stack';
 
 interface JuceSliderProps extends BoxProps {
   identifier: string,
@@ -27,8 +28,10 @@ interface JuceSliderProps extends BoxProps {
   valueToString?: ValueToString
   color?: string
   ringColor?: string
-  ignoreBypass?:boolean
-  ignoreWetSolo?:boolean
+  ignoreBypass?: boolean
+  ignoreWetSolo?: boolean
+  lowIcon?: React.ReactNode
+  highIcon?: React.ReactNode
 }
 
 export default function JuceSlider({
@@ -40,12 +43,14 @@ export default function JuceSlider({
   valueToString,
   color = 'primary',
   ringColor = 'primary',
-  ignoreBypass=false,
-  ignoreWetSolo=true,
+  ignoreBypass = false,
+  ignoreWetSolo = true,
+  lowIcon,
+  highIcon,
   sx,
   ...props
 }: JuceSliderProps) {
-  const ref = useRef<HTMLSpanElement|null>(null);
+  const ref = useRef<HTMLSpanElement | null>(null);
   const { focusAnchor, setAnchor, bypassed, wetSolo } = uesControlStore();
   const sliderState = Juce.getSliderState(identifier);
   const [isDrag, setDrag] = useState<boolean>(false);
@@ -98,7 +103,7 @@ export default function JuceSlider({
 
   useEffect(() => {
     setAnchor(ref.current, isDrag);
-  },[isDrag, isOver, setAnchor]);
+  }, [isDrag, isOver, setAnchor]);
 
   function calculateValue() {
     return sliderState.getScaledValue();
@@ -126,42 +131,61 @@ export default function JuceSlider({
       }}
       {...props}
     >
-      <Tooltip
-        open={
-          (focusAnchor === ref.current)
-          || (!focusAnchor) && isOver
-        }
-        title={printValue()}
-        enterDelay={10}
-      >
-        <Knob
-          ref={ref}
-          color={color}
-          ringColor={ringColor}
-          setIsDrag={setDrag}
-          value={value}
-          scale={calculateValue}
-          onChange={handleChange}
-          min={0}
-          max={1}
-          step={1 / (properties.numSteps - 1)}
-          onChangeCommitted={changeCommitted}
-          onMouseDown={mouseDown}
-          onDoubleClick={doubleClick}
-          onMouseOver={() => setOver(true)}
-          onMouseLeave={() => setOver(false)}
-        />
-      </Tooltip>
+      <Knob
+        ref={ref}
+        color={color}
+        ringColor={ringColor}
+        setIsDrag={setDrag}
+        value={value}
+        scale={calculateValue}
+        onChange={handleChange}
+        min={0}
+        max={1}
+        step={1 / (properties.numSteps - 1)}
+        onChangeCommitted={changeCommitted}
+        onMouseDown={mouseDown}
+        onDoubleClick={doubleClick}
+        onMouseOver={() => setOver(true)}
+        onMouseLeave={() => setOver(false)}
+      />
       {!hideTitle &&
-        <Typography
-          textAlign="center"
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          spacing={1}
           sx={{
-            ...LabelTypographySx,
             mt: '-0.5em',
           }}
         >
-          {title || properties.name}
-        </Typography>
+          {lowIcon}
+          <Tooltip
+            open={
+              (focusAnchor === ref.current)
+              || (!focusAnchor) && isOver
+            }
+            title={printValue()}
+            enterDelay={10}
+            slotProps={{
+              tooltip: {
+                sx: {
+                  mt: '0.5em !important',
+                }
+              }
+            }}
+          >
+            <Typography
+              textAlign="center"
+              sx={{
+                lineHeight: '1.0em',
+                ...LabelTypographySx,
+              }}
+            >
+              {title || properties.name}
+            </Typography>
+          </Tooltip>
+          {highIcon}
+        </Stack>
       }
     </Box>
   );

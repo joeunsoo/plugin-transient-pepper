@@ -114,6 +114,7 @@ export const themeVars = {
       styleOverrides: {
         tooltip: {
           ...noDragSx,
+          mt:50,
         },
       },
     },

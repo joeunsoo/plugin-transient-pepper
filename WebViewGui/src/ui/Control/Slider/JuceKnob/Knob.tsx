@@ -124,6 +124,9 @@ export default function JuceSlider({
 
         <svg
           viewBox="20 20 160 165"
+          style={{
+            color: 'var(--mui-palette-secondary-lightest)'
+          }}
         >
           <KnobOuter
             ringColor={ringColor}
