@@ -9,9 +9,10 @@ import { controlParameterIndexAnnotation } from '@/define';
 
 import Button from './Button';
 
-interface JuceCheckboxProps extends BoxProps {
+interface JuceCheckboxProps
+  extends Omit<BoxProps, 'title'> {
   identifier: string,
-  title?: string,
+  title?: React.ReactNode,
   invertValue?: boolean
 }
 

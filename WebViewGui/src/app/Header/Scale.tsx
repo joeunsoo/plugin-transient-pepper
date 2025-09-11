@@ -40,7 +40,7 @@ export default function Page({
 
   return (
     <>
-      <ListSubheader className="cursorDefault">
+      <ListSubheader>
         Scale
       </ListSubheader>
       {[100, 150, 200].map((value) => (

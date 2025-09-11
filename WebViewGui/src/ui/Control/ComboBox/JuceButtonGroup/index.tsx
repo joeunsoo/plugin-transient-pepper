@@ -68,7 +68,6 @@ export default function JuceComboBox({
       />
       {!hideTitle &&
         <Typography
-          className="cursorDefault"
           textAlign="center"
           sx={{
             ...LabelTypographySx,

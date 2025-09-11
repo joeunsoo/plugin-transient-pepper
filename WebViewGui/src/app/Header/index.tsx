@@ -37,7 +37,7 @@ export default function App() {
           onClick={() => setOpen(true)}
           variant="text"
           sx={{
-            color: 'var(--mui-palette-common-white)',
+            color: 'var(--mui-palette-secondary-main)',
             fontWeight: 'var(--mui-fontWeight-xl)',
           }}
           disableRipple

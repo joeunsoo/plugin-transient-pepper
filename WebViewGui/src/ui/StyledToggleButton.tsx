@@ -19,8 +19,8 @@ export default function JuceComboBox({
     <ToggleButton
       disableRipple
       sx={{
-        width:'100%',
-        justifyContent:'start',
+        width: '100%',
+        justifyContent: 'start',
         px: 1,
         py: 2,
         border: 'none',
@@ -29,7 +29,7 @@ export default function JuceComboBox({
           fontWeight: 'var(--mui-fontWeight-lg)',
           border: '0.1em solid var(--mui-palette-primary-darker)',
           p: '0.8em',
-          padding: '0.7em 1.8em',
+          padding: '0.7em 1.2em',
           borderRadius: '999px',
           background: 'linear-gradient(135deg, var(--mui-palette-primary-dark), var(--mui-palette-primary-main))',
           boxShadow: `0 0.3em 0.4em ${alpha(palette.primary.darker, 0.5)}`,
@@ -53,15 +53,27 @@ export default function JuceComboBox({
         direction="row"
         alignItems="center"
         spacing={1.5}
+        sx={{
+          flexGrow: 1,
+        }}
       >
         <Box className="button" />
-        <Typography
+        <Stack
+          alignItems="center"
+          justifyContent="center"
           sx={{
-            ...LabelTypographySx,
+            flexGrow: 1,
           }}
         >
-          {label}
-        </Typography>
+          <Typography
+            sx={{
+              ...LabelTypographySx,
+              textAlign: 'center',
+            }}
+          >
+            {label}
+          </Typography>
+        </Stack>
       </Stack>
     </ToggleButton>
   );

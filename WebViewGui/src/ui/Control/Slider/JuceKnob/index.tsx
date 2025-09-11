@@ -92,7 +92,7 @@ export default function JuceSlider({
   });
 
   useEffect(() => {
-    setAnchor(ref.current, isDrag || isOver);
+    setAnchor(ref.current, isDrag);
   },[isDrag, isOver, setAnchor]);
 
   function calculateValue() {
@@ -121,7 +121,10 @@ export default function JuceSlider({
       {...props}
     >
       <Tooltip
-        open={focusAnchor === ref.current}
+        open={
+          (focusAnchor === ref.current)
+          || (focusAnchor === null) && isOver
+        }
         title={printValue()}
         enterDelay={10}
       >
@@ -145,7 +148,6 @@ export default function JuceSlider({
       </Tooltip>
       {!hideTitle &&
         <Typography
-          className="cursorDefault"
           textAlign="center"
           sx={{
             ...LabelTypographySx,

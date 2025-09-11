@@ -91,6 +91,7 @@ export const themeVars = {
       styleOverrides: {
         root: {
           textTransform: 'none',
+          cursor: 'default',
         },
       },
     },
@@ -98,6 +99,7 @@ export const themeVars = {
       styleOverrides: {
         root: {
           textTransform: 'none',
+          cursor: 'default',
         },
       },
     },

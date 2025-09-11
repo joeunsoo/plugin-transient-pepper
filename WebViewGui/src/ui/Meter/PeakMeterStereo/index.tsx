@@ -34,7 +34,7 @@ export default function Page({
       sx={{
         flexGrow: 1,
         width: '100%',
-        maxWidth: '4em',
+        maxWidth: '2.8em',
         ...sx
       }}
       {...props}

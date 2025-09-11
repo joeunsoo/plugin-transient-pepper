@@ -8,7 +8,7 @@ interface PageProps extends StackProps {
 
 export default function Page({
   idx,
-  length = 7,
+  length = 15,
   sx,
   ...props
 }: PageProps) {
@@ -19,7 +19,7 @@ export default function Page({
 
   return (
     <Stack
-      spacing={1.5}
+      spacing={0.7}
       sx={{
         height:'100%',
         flexGrow: 1,

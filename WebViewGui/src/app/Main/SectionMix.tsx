@@ -26,7 +26,7 @@ export default function Page({
         direction="column"
         alignItems="center"
         justifyContent="end"
-      spacing="var(--row-spacing)"
+        spacing="var(--row-spacing)"
       >
         <PeakMeterStereo
           idx={0}
@@ -44,20 +44,20 @@ export default function Page({
         direction="column"
         alignItems="center"
         justifyContent="end"
-      spacing="var(--row-spacing)"
+        spacing="var(--row-spacing)"
       >
         <Stack>
           <JuceToggleButton
             identifier="bypassToggle"
-            title="In"
-            invertValue
+            title="Bypass"
           />
           <JuceToggleButton
             identifier="linkChannelsToggle"
-            title="L/R Link"
+            title={<>L/R<br />Link</>}
           />
           <JuceToggleButton
             identifier="wetSoloToggle"
+            title={<>Wet<br />Solo</>}
           />
         </Stack>
 

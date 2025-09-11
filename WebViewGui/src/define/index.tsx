@@ -61,6 +61,13 @@ export const LabelTypographySxWithoutColor = {
 
 export const LabelTypographySx = {
   ...LabelTypographySxWithoutColor,
-  color: 'var(--mui-palette-info-lightermost)',
-  // color: 'var(--mui-palette-primary-lighter)',
+  color: 'var(--mui-palette-common-white)',
+};
+
+export const GlassSx = {
+  boxShadow: `
+    inset 0 1px 1px rgba(255,255,255,0.1),
+    inset 0 -1px 2px rgba(0,0,0,0.7),
+    0 4px 8px rgba(0,0,0,0.5);
+  `,
 };

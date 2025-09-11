@@ -1,6 +1,7 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
+import SectionTitle from './SectionTitle';
 import { msToString } from '@/utils/valueToString';
 
 export default function Page({
@@ -8,44 +9,44 @@ export default function Page({
 }: StackProps) {
   return (
     <Stack
-      direction="row"
+      direction="column"
       alignItems="center"
-      alignContent="flex-end"
-      justifyContent="space-between"
+      justifyContent="stretch"
       spacing="var(--column-spacing)"
       sx={{
-        flexWrap: 'wrap',
         ...sx
       }}
       {...props}
     >
-      <JuceKnob
-        identifier="emphasisSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
+      <SectionTitle>
+        Noise Sculptor
+      </SectionTitle>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        sx={{
+          flexGrow: 1,
+          width: '100%',
+          '--knob-width': '8.0em',
+        }}
+      >
       <JuceKnob
         identifier="attackSlider"
         defaultValue={0.5}
         valueToString={msToString}
         subDigit={1}
+        ringColor="secondary"
+        color="secondary"
       />
       <JuceKnob
         identifier="releaseSlider"
         defaultValue={0.5}
         valueToString={msToString}
         subDigit={1}
+        ringColor="secondary"
+        color="secondary"
       />
-      <JuceKnob
-        identifier="tiltSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
-      <JuceKnob
-        identifier="midSideSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
+      </Stack>
     </Stack>
   );
 }

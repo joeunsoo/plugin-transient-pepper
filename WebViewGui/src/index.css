@@ -16,6 +16,6 @@ body, #root {
   overflow: hidden;
 }
 
-.cursorDefault {
+html body * {
   cursor: default;
 }

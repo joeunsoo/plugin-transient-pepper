@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
-import { noDragSx } from '@/define';
+import { noDragSx, GlassSx } from '@/define';
 
 export default function App() {
   return (
@@ -41,12 +41,14 @@ export default function App() {
                 height: '100%',
                 display: 'flex',
                 borderRadius: 5,
-                boxShadow: 'none',
                 background: `
                   linear-gradient(
-                    to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0) 100%
+                    to bottom,
+                    rgba(255,255,255,0.3),
+                    rgba(255,255,255,0) 100%
                   )
-                `
+                `,
+                ...GlassSx
               }}
             >
               <Main />

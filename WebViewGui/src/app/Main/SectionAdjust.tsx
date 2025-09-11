@@ -1,7 +1,6 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-import SectionTitle from './SectionTitle';
 import Box from '@mui/material/Box';
 
 export default function Page({
@@ -10,29 +9,35 @@ export default function Page({
   return (
     <Stack
       direction="row"
-      alignItems="center"
-      alignContent="flex-start"
-      justifyContent="space-between"
+      alignItems="end"
+      justifyContent="center"
       spacing="var(--column-spacing)"
       sx={{
-        flexWrap: 'wrap',
         ...sx
       }}
       {...props}
     >
-      <SectionTitle sx={{ width: '100%' }}>
-        Transient Noise Sculptor
-      </SectionTitle>
       <JuceKnob
         identifier="thresholdSlider"
         defaultValue={0.5}
         subDigit={1}
-        sx={{
-          '--knob-width': '8.0em',
-        }}
       />
-      <Box sx={{ width: 'var(--knob-width)' }} />
-      <Box sx={{ width: 'var(--knob-width)' }} />
+      <JuceKnob
+        identifier="emphasisSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
+      <Box sx={{ width: '3em' }} />
+      <JuceKnob
+        identifier="tiltSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
+      <JuceKnob
+        identifier="midSideSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
     </Stack>
   );
 }

@@ -6,12 +6,9 @@ export default function Component({
   return (
     <Box
       sx={{
-        px: 3,
         fontWeight: 'var(--mui-fontWeight-lg)',
         fontSize: 'var(--mui-fontSize-sm)',
-        color: 'var(--mui-palette-info-lightermost)',
-        pt:3,
-        pb:2.5,
+        color: 'var(--mui-palette-common-white)',
         ...sx,
       }}
       {...props}
