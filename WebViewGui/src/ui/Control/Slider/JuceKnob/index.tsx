@@ -9,7 +9,8 @@ import Typography from '@mui/material/Typography';
 import {
   controlParameterIndexAnnotation,
   toFixedDigits,
-  LabelTypographySx
+  LabelTypographySx,
+  ignoreBypassOpacity
 } from '@/define';
 
 import Knob from './Knob';
@@ -26,6 +27,7 @@ interface JuceSliderProps extends BoxProps {
   valueToString?: ValueToString
   color?: string
   ringColor?: string
+  ignoreBypass?:boolean
 }
 
 export default function JuceSlider({
@@ -37,11 +39,12 @@ export default function JuceSlider({
   valueToString,
   color = 'primary',
   ringColor = 'primary',
+  ignoreBypass=false,
   sx,
   ...props
 }: JuceSliderProps) {
   const ref = useRef<HTMLSpanElement|null>(null);
-  const { focusAnchor, setAnchor } = uesControlStore();
+  const { focusAnchor, setAnchor, bypassed } = uesControlStore();
   const sliderState = Juce.getSliderState(identifier);
   const [isDrag, setDrag] = useState<boolean>(false);
   const [isOver, setOver] = useState<boolean>(false);
@@ -116,6 +119,7 @@ export default function JuceSlider({
       sx={{
         width: 'var(--knob-width)',
         flexShrink: 0,
+        opacity: (!ignoreBypass && bypassed) ? ignoreBypassOpacity : 1.0,
         ...sx
       }}
       {...props}

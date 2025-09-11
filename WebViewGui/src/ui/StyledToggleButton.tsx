@@ -27,11 +27,11 @@ export default function JuceComboBox({
         '& .button': {
           backgroundColor: 'var(--mui-palette-primary-darken)',
           fontWeight: 'var(--mui-fontWeight-lg)',
-          border: '0.1em solid var(--mui-palette-primary-darker)',
+          border: '0.1em solid var(--mui-palette-primary-darkest)',
           p: '0.8em',
           padding: '0.7em 1.2em',
           borderRadius: '999px',
-          background: 'linear-gradient(135deg, var(--mui-palette-primary-dark), var(--mui-palette-primary-main))',
+          background: 'linear-gradient(135deg, var(--mui-palette-primary-darker), var(--mui-palette-primary-dark))',
           boxShadow: `0 0.3em 0.4em ${alpha(palette.primary.darker, 0.5)}`,
         },
         '&:hover,  &.Mui-selected:hover': {
@@ -41,7 +41,7 @@ export default function JuceComboBox({
           backgroundColor: 'transparent',
           '& .button': {
             border: '0.1em solid var(--mui-palette-secondary-darker)',
-            background: 'linear-gradient(135deg, var(--mui-palette-secondary-lightest), var(--mui-palette-common-white))',
+            background: 'linear-gradient(135deg, var(--mui-palette-secondary-lighter), var(--mui-palette-common-white))',
             boxShadow: `0 0.25em 0.35em ${alpha(palette.secondary.darker, 0.4)}`,
             transform: 'translateY(2px)'
           }

@@ -5,15 +5,18 @@ import * as Juce from 'juce-framework-frontend';
 
 import Box, { type BoxProps } from '@mui/material/Box';
 
-import { controlParameterIndexAnnotation } from '@/define';
+import { controlParameterIndexAnnotation, ignoreBypassOpacity } from '@/define';
 
 import Button from './Button';
+import { uesControlStore } from '@/store/ControlStore';
 
 interface JuceCheckboxProps
-  extends Omit<BoxProps, 'title'> {
+  extends Omit<BoxProps, 'title' | 'onChange'> {
   identifier: string,
   title?: React.ReactNode,
   invertValue?: boolean
+  onChange?: (e: Event, value: boolean) => void
+  ignoreBypass?:boolean
 }
 
 export default function JuceCheckbox({
@@ -21,8 +24,11 @@ export default function JuceCheckbox({
   title,
   invertValue = false,
   sx,
+  onChange,
+  ignoreBypass=false,
   ...props
 }: JuceCheckboxProps) {
+  const { bypassed } = uesControlStore();
   const checkboxState = Juce.getToggleState(identifier);
 
   const [value, setValue] = useState(checkboxState.getValue());
@@ -31,6 +37,9 @@ export default function JuceCheckbox({
   const handleChange = (value: boolean) => {
     checkboxState.setValue(invertValue ? !value : value);
     setValue(value);
+    if (onChange) {
+      onChange(new Event('change'), value);
+    }
   };
 
   useEffect(() => {
@@ -54,6 +63,7 @@ export default function JuceCheckbox({
       }}
       sx={{
         width: 'var(--knob-width)',
+        opacity: (!ignoreBypass && bypassed) ? ignoreBypassOpacity : 1.0,
         ...sx
       }}
       {...props}

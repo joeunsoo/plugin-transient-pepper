@@ -24,7 +24,7 @@ export default function App() {
             flexGrow: 1,
             px: 5,
             pt: 1,
-            pb: 5,
+            pb: 0,
           }}
         >
           <Header />
@@ -44,7 +44,7 @@ export default function App() {
                 background: `
                   linear-gradient(
                     to bottom,
-                    rgba(255,255,255,0.3),
+                    rgba(255,255,255,0.1),
                     rgba(255,255,255,0) 100%
                   )
                 `,

@@ -11,12 +11,14 @@ import PeakMeter from '../PeakMeter';
 interface PageProps extends StackProps {
   idx: number,
   length?: number
+  ignoreBypass?:boolean
 }
 
 export default function Page({
   idx,
   length,
   sx,
+  ignoreBypass=false,
   ...props
 }: PageProps) {
   const { outputNumChannels } = useAnalysisDataStore();
@@ -39,9 +41,9 @@ export default function Page({
       }}
       {...props}
     >
-      <PeakMeter idx={idx} length={length} />
+      <PeakMeter idx={idx} length={length} ignoreBypass={ignoreBypass} />
       {numChannels > 1 &&
-        <PeakMeter idx={idx + 1} length={length} />
+        <PeakMeter idx={idx + 1} length={length} ignoreBypass={ignoreBypass} />
       }
     </Stack>
   );

@@ -1,14 +1,22 @@
 import { create } from 'zustand';
 
 interface ControlState {
-  focusAnchor?: HTMLElement | null; // 열기 여부
-  setAnchor: (el: HTMLElement | null, open: boolean) => void; // 열기 여부 설정
+  bypassed: boolean,
+  setBypass: (value: boolean) => void;
+
+  // 툴팁 포커스 엘리멘트
+  focusAnchor?: HTMLElement | null;
+  setAnchor: (el: HTMLElement | null, open: boolean) => void;
 }
 
 export const uesControlStore = create<ControlState>((set) => ({
+  bypassed: false,
+  setBypass: (value: boolean) => set(() => ({
+    bypassed: value,
+  })),
+
   focusAnchor: undefined,
   setAnchor: (el: HTMLElement | null, open: boolean) => set((state) => {
-    console.log(el);
     if (open) {
       if (!state.focusAnchor) {
         return { focusAnchor: el };

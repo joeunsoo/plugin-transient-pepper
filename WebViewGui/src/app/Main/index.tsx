@@ -63,8 +63,14 @@ export default function App() {
             flexShrink: 0,
             p: 4,
             borderRadius: 3,
-            backgroundColor: alpha(palette.secondary.main, 0.3),
-            outline: '1px solid var(--mui-palette-secondary-darker)',
+            background: `
+              linear-gradient(
+                to bottom,
+                ${alpha(palette.secondary.main, 0.3)},
+                ${alpha(palette.secondary.main, 0)} 100%
+              )
+            `,
+            outline: `1px solid ${alpha(palette.secondary.darker, 0.3)}`,
             ...GlassSx
           }}
         >

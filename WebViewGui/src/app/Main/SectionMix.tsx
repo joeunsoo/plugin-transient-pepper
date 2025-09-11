@@ -5,9 +5,13 @@ import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
 
+import { uesControlStore } from '@/store/ControlStore';
+
 export default function Page({
   sx, ...props
 }: StackProps) {
+  const { setBypass } = uesControlStore();
+
   return (
     <Stack
       direction="row"
@@ -30,6 +34,7 @@ export default function Page({
       >
         <PeakMeterStereo
           idx={0}
+          ignoreBypass
         />
         <JuceKnob
           identifier="outputGainSlider"
@@ -38,6 +43,7 @@ export default function Page({
           sx={{
             flexShrink: 0
           }}
+          ignoreBypass
         />
       </Stack>
       <Stack
@@ -50,6 +56,8 @@ export default function Page({
           <JuceToggleButton
             identifier="bypassToggle"
             title="Bypass"
+            onChange={(e, value) => setBypass(value)}
+            ignoreBypass
           />
           <JuceToggleButton
             identifier="linkChannelsToggle"
