@@ -67,9 +67,13 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
       for (size_t ch = 0; ch < numChannels; ++ch)
       {
         SampleType dynamicNoise = linkChannels ? linkedEnvelope : sampleEnvelopes[ch];
-        SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
+#if !CHECK_ENV
+        SampleType noiseSample = dynamicNoise * (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         outputBlock.getChannelPointer(ch)[n] = noiseSample;
+#else
+        outputBlock.getChannelPointer(ch)[n] = dynamicNoise;
+#endif
       }
     }
   }

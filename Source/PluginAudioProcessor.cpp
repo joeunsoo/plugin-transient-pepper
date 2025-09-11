@@ -180,13 +180,15 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   }
 
   transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-  
+
   tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
   tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
   
   midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
-  
+
+#if !CHECK_ENV
   dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
+#endif
   
   noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 노이즈 게인
   noisePeakMeter.push (outBlock); // 노이즈 레벨 미터 저장

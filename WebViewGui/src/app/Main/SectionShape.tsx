@@ -35,7 +35,6 @@ export default function Page({
         defaultValue={0.5}
         valueToString={msToString}
         subDigit={1}
-        ringColor="secondary"
         color="secondary"
       />
       <JuceKnob
@@ -43,7 +42,6 @@ export default function Page({
         defaultValue={0.5}
         valueToString={msToString}
         subDigit={1}
-        ringColor="secondary"
         color="secondary"
       />
       </Stack>

@@ -168,7 +168,7 @@ struct Parameters {
 #endif
   
   wetSolo (addToLayout<AudioParameterBool> (layout, ID::wetSolo, "Wet Solo", false)),
-  linkChannels (addToLayout<AudioParameterBool> (layout, ID::linkChannels, "Channel Link", false))
+  linkChannels (addToLayout<AudioParameterBool> (layout, ID::linkChannels, "Channels Link", false))
   
   {
   }
