@@ -13,7 +13,6 @@ export default function Page({
   idx,
   sx,
   ignoreBypass=false,
-  ignoreWetSolo=true,
   ...props
 }: PeakMeterProps & StackProps) {
   const { outputNumChannels } = useAnalysisDataStore();
@@ -39,13 +38,11 @@ export default function Page({
       <PeakMeterBar
         idx={idx}
         ignoreBypass={ignoreBypass}
-        ignoreWetSolo={ignoreWetSolo}
       />
       {numChannels > 1 &&
         <PeakMeterBar
           idx={idx + 1}
           ignoreBypass={ignoreBypass}
-          ignoreWetSolo={ignoreWetSolo}
         />
       }
     </Stack>

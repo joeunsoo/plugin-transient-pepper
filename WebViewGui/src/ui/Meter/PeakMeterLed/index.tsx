@@ -1,7 +1,7 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 import Led from './Led';
 import { uesControlStore } from '@/store/ControlStore';
-import { calcBypassWetOpacity } from '@/define';
+import { testOpacity } from '@/define';
 import applySkew from '@/utils/applySkew';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 
@@ -14,10 +14,10 @@ export default function Page({
   length = 15,
   sx,
   ignoreBypass = false,
-  ignoreWetSolo = true,
+  addTest=[],
   ...props
 }: PeakMeterLedProps) {
-  const { bypassed, wetSolo } = uesControlStore();
+  const { bypassed } = uesControlStore();
   const thresholds = Array.from(
     { length },
     // (v, i) => 1 - ((1 / length) * (i + 1))
@@ -30,7 +30,10 @@ export default function Page({
       sx={{
         height: '100%',
         flexGrow: 1,
-        opacity: calcBypassWetOpacity({ bypassed, wetSolo, ignoreBypass, ignoreWetSolo }),
+        opacity: testOpacity([
+          bypassed && !ignoreBypass,
+          ...addTest
+        ]),
         ...sx
       }}
       {...props}

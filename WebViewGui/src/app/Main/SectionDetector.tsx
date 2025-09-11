@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
@@ -7,6 +9,8 @@ import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 export default function Page({
   sx, ...props
 }: StackProps) {
+  const [bpfOn, setBpfOn] = useState<boolean>(true);
+
   return (
     <Stack
       direction="column"
@@ -32,6 +36,7 @@ export default function Page({
         <JuceToggleButton
           identifier="bpfPowerToggle"
           title="BPF On"
+          onChange={(e, value) => setBpfOn(!value)}
         />
       </Stack>
 
@@ -55,6 +60,7 @@ export default function Page({
           identifier="bpfFrequencySlider"
           defaultValue={0.5}
           subDigit={1}
+          addTest={[bpfOn]}
         />
       </Stack>
     </Stack>

@@ -1,3 +1,5 @@
+
+import { useState } from 'react';
 import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
@@ -5,12 +7,11 @@ import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import NoiseGain from './NoiseGain';
 import OutputGain from './OutputGain';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
-import { uesControlStore } from '@/store/ControlStore';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
-  const { setWetSolo } = uesControlStore();
+  const [wetSolo, setWetSolo] = useState<boolean>(false);
 
   return (
     <Stack
@@ -50,7 +51,7 @@ export default function Page({
           sx={{
             flexShrink: 0
           }}
-          ignoreWetSolo={false}
+          addTest={[wetSolo]}
         />
       </Stack>
 

@@ -79,25 +79,10 @@ export const GlassSx = {
 
 export const ignoreBypassOpacity = 0.5;
 
-type calcBypassWetOpacityProps = {
-  bypassed?:boolean
-  wetSolo?:boolean
-  ignoreBypass:boolean
-  ignoreWetSolo:boolean
-}
+export function testOpacity(
+  data: boolean[] // value
+) {
+  const result = data.find((item) => item);
 
-export function calcBypassWetOpacity({
-  bypassed=false,
-  wetSolo=false,
-  ignoreBypass=false,
-  ignoreWetSolo=true
-}:calcBypassWetOpacityProps) {
-  if (
-    (bypassed && !ignoreBypass)
-    || (wetSolo && !ignoreWetSolo)
-  ) {
-    return ignoreBypassOpacity;
-  }
-
-  return 1.0;
+  return result ? ignoreBypassOpacity : 1.0 ;
 }

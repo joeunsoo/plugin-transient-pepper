@@ -5,7 +5,7 @@ import * as Juce from 'juce-framework-frontend';
 
 import Box, { type BoxProps } from '@mui/material/Box';
 
-import { calcBypassWetOpacity, controlParameterIndexAnnotation } from '@/define';
+import { testOpacity, controlParameterIndexAnnotation } from '@/define';
 
 import Button from './Button';
 import { uesControlStore } from '@/store/ControlStore';
@@ -26,10 +26,10 @@ export default function JuceCheckbox({
   sx,
   onChange,
   ignoreBypass = false,
-  ignoreWetSolo = true,
+  addTest=[],
   ...props
 }: JuceCheckboxProps) {
-  const { bypassed, wetSolo } = uesControlStore();
+  const { bypassed } = uesControlStore();
   const checkboxState = Juce.getToggleState(identifier);
 
   const [value, setValue] = useState(checkboxState.getValue());
@@ -65,7 +65,10 @@ export default function JuceCheckbox({
       }}
       sx={{
         width: 'var(--knob-width)',
-        opacity: calcBypassWetOpacity({ bypassed, wetSolo, ignoreBypass, ignoreWetSolo }),
+        opacity: testOpacity([
+          bypassed && !ignoreBypass,
+          ...addTest
+        ]),
         ...sx
       }}
       {...props}

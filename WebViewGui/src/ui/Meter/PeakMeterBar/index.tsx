@@ -1,6 +1,6 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 import { uesControlStore } from '@/store/ControlStore';
-import { calcBypassWetOpacity, GlassSx } from '@/define';
+import { testOpacity, GlassSx } from '@/define';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
@@ -14,10 +14,10 @@ export default function Page({
   idx,
   sx,
   ignoreBypass = false,
-  ignoreWetSolo = true,
+  addTest=[],
   ...props
 }: PeakMeterLedProps) {
-  const { bypassed, wetSolo } = uesControlStore();
+  const { bypassed } = uesControlStore();
 
   const { motionValues } = useAnalysisDataStore();
   const value = useMotionValue(0);
@@ -36,7 +36,10 @@ export default function Page({
       sx={{
         height: '100%',
         flexGrow: 1,
-        opacity: calcBypassWetOpacity({ bypassed, wetSolo, ignoreBypass, ignoreWetSolo }),
+        opacity: testOpacity([
+          bypassed && !ignoreBypass,
+          ...addTest
+        ]),
         backgroundColor: 'var(--mui-palette-secondary-blackest)',
         borderRadius: '0.2em',
         overflow: 'hidden',

@@ -10,7 +10,7 @@ import {
   controlParameterIndexAnnotation,
   toFixedDigits,
   LabelTypographySx,
-  calcBypassWetOpacity
+  testOpacity
 } from '@/define';
 
 import Knob from './Knob';
@@ -43,14 +43,14 @@ export default function JuceSlider({
   color = 'primary',
   ringColor = 'primary',
   ignoreBypass = false,
-  ignoreWetSolo = true,
+  addTest=[],
   lowIcon,
   highIcon,
   sx,
   ...props
 }: JuceSliderProps) {
   const ref = useRef<HTMLSpanElement | null>(null);
-  const { focusAnchor, setAnchor, bypassed, wetSolo } = uesControlStore();
+  const { focusAnchor, setAnchor, bypassed } = uesControlStore();
   const sliderState = Juce.getSliderState(identifier);
   const [isDrag, setDrag] = useState<boolean>(false);
   const [isOver, setOver] = useState<boolean>(false);
@@ -125,7 +125,10 @@ export default function JuceSlider({
       sx={{
         width: 'var(--knob-width)',
         flexShrink: 0,
-        opacity: calcBypassWetOpacity({ bypassed, wetSolo, ignoreBypass, ignoreWetSolo }),
+        opacity: testOpacity([
+          bypassed && !ignoreBypass,
+          ...addTest
+        ]),
         ...sx
       }}
       {...props}
