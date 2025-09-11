@@ -22,9 +22,9 @@ export default function App() {
         <Stack
           sx={{
             flexGrow: 1,
-            px: 5,
+            px: 3,
             pt: 1,
-            pb: 0,
+            pb: 3,
           }}
         >
           <Header />

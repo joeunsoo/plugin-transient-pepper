@@ -53,7 +53,7 @@ export default function Page({
             sx={{
               position: 'absolute',
               left: 0,
-              top: '-2.3em'
+              top: '-2.5em'
             }}
           >
             <JuceToggleButton

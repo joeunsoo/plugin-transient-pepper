@@ -2,7 +2,7 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 import Led from './Led';
 import { uesControlStore } from '@/store/ControlStore';
 import { calcBypassWetOpacity } from '@/define';
-import applySkew from '@/utils/ApplySkew';
+import applySkew from '@/utils/applySkew';
 
 interface PageProps extends StackProps {
   idx: number,

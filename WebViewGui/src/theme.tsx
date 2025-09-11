@@ -63,7 +63,7 @@ export const themeVars = {
     // mode: 'dark',
     background: {
       // default: '#f2f2f2',
-      default: palette.secondary.blackest,
+      default: palette.primary.blackest,
       paper: palette.secondary.blackest,
     },
     Tooltip: {

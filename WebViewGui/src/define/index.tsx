@@ -38,7 +38,7 @@ export function generatePalette(color: string) {
 }
 
 export const primaryMain = '#535355';
-export const secondaryMain = '#E53935';
+export const secondaryMain = '#E53935'; // #FF4C4C
 export const infoMain = '#6b3058';
 
 export const palette = {
