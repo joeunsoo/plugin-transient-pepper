@@ -9,8 +9,10 @@ import MenuItem from '@mui/material/MenuItem';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import Scale from './Scale';
+import { useAboutStore } from '@/store/AboutStore';
 
 export default function Page() {
+  const { setOpen: setAboutOpen  } = useAboutStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,6 +73,10 @@ export default function Page() {
         }}
       >
         <Scale onClick={handleClose} />
+        <Divider />
+        <MenuItem onClick={() => { setAboutOpen(true); handleClose(); }}>
+          About
+        </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>
           Deactivate

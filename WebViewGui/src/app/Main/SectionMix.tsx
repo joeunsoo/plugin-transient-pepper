@@ -2,16 +2,12 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
-import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
-import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
-
-import { uesControlStore } from '@/store/ControlStore';
+import NoiseGain from './NoiseGain';
+import OutputGain from './OutputGain';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
-  const { setBypass, setWetSolo } = uesControlStore();
-
   return (
     <Stack
       direction="row"
@@ -32,24 +28,12 @@ export default function Page({
         justifyContent="end"
         spacing="var(--row-spacing)"
       >
-        <Stack>
-          <JuceToggleButton
-            identifier="bypassToggle"
-            title="Bypass"
-            onChange={(e, value) => setBypass(value)}
-            ignoreBypass
-          />
-          <JuceToggleButton
-            identifier="linkChannelsToggle"
-            title={<>L/R<br />Link</>}
-          />
-          <JuceToggleButton
-            identifier="wetSoloToggle"
-            title={<>Wet<br />Solo</>}
-            onChange={(e, value) => setWetSolo(value)}
-          />
+        <Stack
+          direction="row"
+          sx={{ flexGrow: 1 }}
+        >
+          <NoiseGain />
         </Stack>
-
         <JuceKnob
           identifier="dryWetSlider"
           defaultValue={0.5}
@@ -60,25 +44,8 @@ export default function Page({
           ignoreWetSolo={false}
         />
       </Stack>
-      <Stack
-        direction="column"
-        alignItems="center"
-        justifyContent="end"
-        spacing="var(--row-spacing)"
-      >
-        <PeakMeterStereo
-          idx={0}
-          ignoreBypass
-        />
-        <JuceKnob
-          identifier="outputGainSlider"
-          defaultValue={0.5}
-          subDigit={1}
-          sx={{
-            flexShrink: 0
-          }}
-        />
-      </Stack>
+
+      <OutputGain />
     </Stack>
   );
 }

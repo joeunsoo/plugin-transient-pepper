@@ -14,8 +14,6 @@ export default function Page({
   return (
     <Stack
       direction="column"
-      alignItems="center"
-      justifyContent="stretch"
       spacing="var(--row-spacing)"
       sx={{
         ...sx
@@ -27,10 +25,9 @@ export default function Page({
       </SectionTitle>
       <Stack
         direction="row"
-        justifyContent="center"
+        justifyContent="start"
         spacing="var(--column-spacing)"
         sx={{
-          flexGrow: 1,
           width: '100%',
           '--knob-width': '8.0em',
         }}

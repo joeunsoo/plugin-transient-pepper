@@ -8,14 +8,15 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-import { useAboutStore } from '@/store/AboutStore';
+import JuceToggleBypass from '@/ui/Control/ToggleButton/JuceToggleBypass';
+import { uesControlStore } from '@/store/ControlStore';
 
 import Menu from './Menu';
 
 const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
 export default function App() {
-  const { setOpen } = useAboutStore();
+  const { setBypass } = uesControlStore();
 
   return (
     <Box
@@ -33,17 +34,29 @@ export default function App() {
           minHeight: 'var(--Header-minHeight)'
         }}
       >
-        <Button
-          onClick={() => setOpen(true)}
-          variant="text"
-          sx={{
-            color: 'var(--mui-palette-secondary-main)',
-            fontWeight: 'var(--mui-fontWeight-xl)',
-          }}
-          disableRipple
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="start"
+          spacing={2}
         >
-          {PluginName}
-        </Button>
+          <JuceToggleBypass
+            identifier="bypassToggle"
+            onChange={(e, value) => setBypass(value)}
+            ignoreBypass
+            invertValue
+          />
+          <Button
+            variant="text"
+            sx={{
+              color: 'var(--mui-palette-secondary-main)',
+              fontWeight: 'var(--mui-fontWeight-xl)',
+            }}
+            disableRipple
+          >
+            {PluginName}
+          </Button>
+        </Stack>
 
         <Stack
           direction="row"

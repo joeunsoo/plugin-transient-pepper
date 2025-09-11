@@ -1,91 +1,62 @@
 import Stack from '@mui/material/Stack';
 
-import SectionAdjust from './SectionAdjust';
+import SectionDetector from './SectionDetector';
 import SectionShape from './SectionShape';
 import SectionMix from './SectionMix';
-import SectionNoiseGain from './SectionNoiseGain';
-import { GlassSx, palette } from '@/define';
-import { alpha } from '@mui/material/styles';
+import SectionTone from './SectionTone';
+import SectionGraph from './SectionGraph';
 
 export default function App() {
+
   return (
     <Stack
+      direction="row"
       alignItems="center"
-      justifyContent="center"
+      justifyContent="space-between"
+      spacing={5}
       sx={{
-        py: 4,
-        flexGrow: 1,
-        '& .MuiGrid-root': {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }
+        p: 4,
+        py: 8,
+        width: '100%',
+        height: '100%',
+        '> *': {
+          height: '100%',
+        },
+        '--knob-width': '5.3em',
+        '--row-spacing': '0.6em',
+        '--column-spacing': '0.4em',
       }}
     >
       <Stack
-        direction="row"
-        alignItems="center"
+        direction="column"
         justifyContent="space-between"
+        spacing={4}
         sx={{
-          width: '100%',
-          height: '100%',
-          '> *': {
-            height: '100%',
-          },
-          '--knob-width': '5.3em',
-          '--row-spacing': '0.6em',
-          '--column-spacing': '0.4em',
+          flexShrink: 0,
         }}
       >
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          spacing={4}
-          sx={{
-            flexGrow: 1,
-            p: 4,
-          }}
-        >
-          <Stack
-            direction="column"
-            sx={{
-              width: '100%'
-            }}
-          >
-            <SectionShape sx={{ flexGrow: 1 }} />
-            <SectionAdjust />
-          </Stack>
-        </Stack>
-        <Stack
-          direction="row"
-          sx={{
-            flexShrink: 0,
-            p: 4,
-            borderRadius: 3,
-            background: `
-              linear-gradient(
-                to bottom,
-                ${alpha(palette.secondary.main, 0.3)},
-                ${alpha(palette.secondary.main, 0)} 100%
-              )
-            `,
-            outline: `1px solid ${alpha(palette.secondary.darker, 0.3)}`,
-            ...GlassSx
-          }}
-        >
-          <SectionNoiseGain />
-        </Stack>
-        <Stack
-          direction="row"
-          justifyContent="end"
-          sx={{
-            flexShrink: 0,
-            p: 4,
-          }}
-        >
-          <SectionMix />
-        </Stack>
+        <SectionShape />
+        <SectionDetector />
+      </Stack>
+      <Stack
+        direction="column"
+        alignItems="end"
+        justifyContent="end"
+        spacing={4}
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        <SectionGraph />
+        <SectionTone />
+      </Stack>
+      <Stack
+        direction="row"
+        sx={{
+          flexShrink: 0,
+        }}
+      >
+        <SectionMix />
       </Stack>
     </Stack>
   );

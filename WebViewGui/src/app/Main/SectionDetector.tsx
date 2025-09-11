@@ -59,7 +59,7 @@ export default function Page({
           >
             <JuceToggleButton
               identifier="bpfPowerToggle"
-              title="On"
+              title="BPF On"
             />
           </Box>
           <JuceKnob
@@ -68,22 +68,6 @@ export default function Page({
             subDigit={1}
           />
         </Stack>
-      </Stack>
-
-      <Stack
-        direction="row"
-        spacing="var(--column-spacing)"
-      >
-        <JuceKnob
-          identifier="tiltSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
-        <JuceKnob
-          identifier="midSideSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
       </Stack>
     </Stack>
   );
