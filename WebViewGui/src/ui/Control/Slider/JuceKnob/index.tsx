@@ -129,7 +129,7 @@ export default function JuceSlider({
       <Tooltip
         open={
           (focusAnchor === ref.current)
-          || (focusAnchor === null) && isOver
+          || (!focusAnchor) && isOver
         }
         title={printValue()}
         enterDelay={10}

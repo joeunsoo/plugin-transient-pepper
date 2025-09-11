@@ -70,6 +70,12 @@ class PluginAudioProcessor  : public AudioProcessor
   
   juce::dsp::DryWetMixer<float> dryWetMixer;
   
+  TiltEQProcessor<float> detectorTiltEQ;
+  dsp::Gain<float> detectorTiltGain;
+
+  BandPassFilter<float> bandPassFilter;
+  dsp::Gain<float> bandPassFilterGain;
+
   TransientNoiseProcessor<float> transientNoise;
   MidSideMixer<float> midSideMixer;
 

@@ -57,12 +57,12 @@ export default function Page({
             }}
           >
             <JuceToggleButton
-              identifier="bpfToggle"
+              identifier="bpfPowerToggle"
               title="On"
             />
           </Box>
           <JuceKnob
-            identifier="bpfSlider"
+            identifier="bpfFrequencySlider"
             defaultValue={0.5}
             subDigit={1}
           />

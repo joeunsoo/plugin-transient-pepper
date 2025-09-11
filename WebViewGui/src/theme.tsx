@@ -67,7 +67,7 @@ export const themeVars = {
       paper: palette.secondary.blackest,
     },
     Tooltip: {
-      bg: palette.secondary.darkest
+      bg: palette.secondary.darkermost
     },
     primary: palette.primary,
     secondary: palette.secondary,

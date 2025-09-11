@@ -74,12 +74,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   PluginAudioProcessor& processorRef;
   
   WebToggleButtonRelay bypassToggleRelay      { "bypassToggle" };
-  WebSliderRelay       tiltSliderRelay    { "tiltSlider" };
-  WebSliderRelay       midSideSliderRelay    { "midSideSlider" };
-  WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
-  WebSliderRelay       thresholdSliderRelay    { "thresholdSlider" };
   WebSliderRelay       attackSliderRelay    { "attackSlider" };
   WebSliderRelay       releaseSliderRelay    { "releaseSlider" };
+
+  WebSliderRelay       thresholdSliderRelay    { "thresholdSlider" };
+  WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
+  WebToggleButtonRelay bpfPowerToggleRelay      { "bpfPowerToggle" };
+  WebSliderRelay       bpfFrequencySliderRelay    { "bpfFrequencySlider" };
+
+  WebSliderRelay       tiltSliderRelay    { "tiltSlider" };
+  WebSliderRelay       midSideSliderRelay    { "midSideSlider" };
+
   WebSliderRelay       noiseLevelGainSliderRelay    { "noiseLevelGainSlider" };
   WebSliderRelay       outputGainSliderRelay    { "outputGainSlider" };
   WebSliderRelay       dryWetSliderRelay    { "dryWetSlider" };
@@ -99,12 +104,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                                .withUserDataFolder (File::getSpecialLocation (File::SpecialLocationType::tempDirectory)))
       .withNativeIntegrationEnabled()
       .withOptionsFrom (bypassToggleRelay)
-      .withOptionsFrom (tiltSliderRelay)
-      .withOptionsFrom (midSideSliderRelay)
-      .withOptionsFrom (emphasisSliderRelay)
-      .withOptionsFrom (thresholdSliderRelay)
       .withOptionsFrom (attackSliderRelay)
       .withOptionsFrom (releaseSliderRelay)
+
+      .withOptionsFrom (thresholdSliderRelay)
+      .withOptionsFrom (emphasisSliderRelay)
+      .withOptionsFrom (bpfPowerToggleRelay)
+      .withOptionsFrom (bpfFrequencySliderRelay)
+
+      .withOptionsFrom (tiltSliderRelay)
+      .withOptionsFrom (midSideSliderRelay)
+
       .withOptionsFrom (noiseLevelGainSliderRelay)
       .withOptionsFrom (outputGainSliderRelay)
       .withOptionsFrom (dryWetSliderRelay)
@@ -140,12 +150,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                              URL { localDevServerAddress }.getOrigin()) };
   
   WebToggleButtonParameterAttachment bypassAttachment;
-  WebSliderParameterAttachment       tiltAttachment;
-  WebSliderParameterAttachment       midSideAttachment;
-  WebSliderParameterAttachment       emphasisAttachment;
-  WebSliderParameterAttachment       thresholdAttachment;
   WebSliderParameterAttachment       attackAttachment;
   WebSliderParameterAttachment       releaseAttachment;
+
+  WebSliderParameterAttachment       thresholdAttachment;
+  WebSliderParameterAttachment       emphasisAttachment;
+  WebToggleButtonParameterAttachment       bpfPowerAttachment;
+  WebSliderParameterAttachment       bpfFrequencyAttachment;
+
+  WebSliderParameterAttachment       tiltAttachment;
+  WebSliderParameterAttachment       midSideAttachment;
+
   WebSliderParameterAttachment       noiseLevelGainAttachment;
   WebSliderParameterAttachment       outputGainAttachment;
   WebSliderParameterAttachment       dryWetAttachment;

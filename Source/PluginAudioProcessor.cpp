@@ -78,6 +78,16 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   dryWetMixer.prepare (spec);
   dryWetMixer.setWetMixProportion (1.0f);
   
+  detectorTiltEQ.prepare(spec);
+  detectorTiltEQ.reset();
+  detectorTiltGain.setGainDecibels(0.0f);
+  detectorTiltGain.reset();
+
+  bandPassFilter.prepare(spec);
+  bandPassFilter.reset();
+  bandPassFilterGain.prepare(spec);
+  bandPassFilterGain.reset();
+
   transientNoise.prepare(spec);
   transientNoise.reset();
   
@@ -115,7 +125,27 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
   
+  detectorTiltEQ.setGain(parameters.emphasis.get());
+  detectorTiltGain.setGainDecibels(parameters.emphasis.get() * 0.4f);
+  
+  bandPassFilter.setFrequency(parameters.bpfFrequency.get());
+  
+  float normalized = (parameters.bpfFrequency.get() - 100.0f) / (12000.0f - 100.0f); // (value - minFreq) / (maxFreq - minFreq)
+  float skewed = std::pow(normalized, 0.27f); // skew 적용, 중앙값 1000Hz로 맞춘 경우
+
+  bandPassFilterGain.setGainDecibels((skewed * 18.0f) - 12.0f);
+
+  transientNoise.transientFollower.setTAttack(parameters.attack.get());
+  transientNoise.transientFollower.setTRelease(parameters.release.get());
+  transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
+  transientNoise.setLinkChannels(parameters.linkChannels.get());
+
   noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
+  
+  tiltEQ.setGain(parameters.tilt.get());
+  tiltGain.setGainDecibels(parameters.tilt.get() * (-0.6f));
+  
+  midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
   
   float wetMix = parameters.dryWet.get();
   if (parameters.wetSolo.get()) {
@@ -129,48 +159,47 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   float dryWetAdjust = 6.0f - 0.12f * std::abs(wetMix - 50.0f); // Dry/Wet 50% -6dB 손실 보정
   outputGain.setGainDecibels(parameters.outputGain.get() + dryWetAdjust);
   
-  tiltEQ.setGain(parameters.tilt.get());
-  tiltGain.setGainDecibels(parameters.tilt.get() * (-0.6f));
-  
-  midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
-  
-  transientNoise.setEmphasis(parameters.emphasis.get());
-  transientNoise.transientFollower.setTAttack(parameters.attack.get());
-  transientNoise.transientFollower.setTRelease(parameters.release.get());
-  transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
-  transientNoise.setLinkChannels(parameters.linkChannels.get());
-  
 #if ADVANCED
   transientNoise.transientFollower.setFastAttack(parameters.fastAttack.get());
   transientNoise.transientFollower.setFastRelease(parameters.fastRelease.get());
   transientNoise.transientFollower.setSlowAttack(parameters.slowAttack.get());
   transientNoise.transientFollower.setSlowRelease(parameters.slowRelease.get());
 #endif
-  
-  
+
+  /// DSP 계산 시작
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
 
   dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
   
+  detectorTiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+  detectorTiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+  
+  if (parameters.bpfPower.get()) {
+    bandPassFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
+    bandPassFilterGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+  }
+
   transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
   
   tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
   tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
   
-  midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock));
+  midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
   
-  dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock));
+  dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
   
-  noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-  noisePeakMeter.push (outBlock);
+  noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 노이즈 게인
+  noisePeakMeter.push (outBlock); // 노이즈 레벨 미터 저장
 
   dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
   
   if (!parameters.bypass.get()) {
-    outputGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+    outputGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 출력 게인
   }
   
-  peakMeter.push (outBlock);
+  peakMeter.push (outBlock); // Ouput 피크미터 저장
+  
+  // 미터 데이터 락
   {
     const SpinLock::ScopedTryLockType lock (peakDataLock);
     
