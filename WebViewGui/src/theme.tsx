@@ -2,7 +2,6 @@
 
 import {
   createTheme,
-  getContrastRatio,
   darken,
   lighten,
 } from '@mui/material/styles';
@@ -11,7 +10,7 @@ import {
   noDragSx,
   primaryMain,
   secondaryMain,
-  grayMain,
+  palette,
 } from '@/define';
 
 export const themeVars = {
@@ -71,54 +70,12 @@ export const themeVars = {
       default: darken(secondaryMain, 0.85),
       paper: darken(primaryMain, 0.75),
     },
-    primary: {
-      main: primaryMain,
-      lightest: lighten(primaryMain, 0.85),
-      lightermost: lighten(primaryMain, 0.70),
-      lighter: lighten(primaryMain, 0.60),
-      lighten: lighten(primaryMain, 0.35),
-      light: lighten(primaryMain, 0.2),
-      dark: darken(primaryMain, 0.2),
-      darken: darken(primaryMain, 0.35),
-      darkish: darken(primaryMain, 0.50),
-      darker: darken(primaryMain, 0.60),
-      darkermost: darken(primaryMain, 0.70),
-      darkest: darken(primaryMain, 0.85),
-      blackest: darken(primaryMain, 0.90),
-      contrastText: getContrastRatio(primaryMain, '#fff') > 2.5 ? '#fff' : '#111',
+    Tooltip: {
+      bg: palette.secondary.darkest
     },
-    secondary: {
-      main: secondaryMain,
-      lightest: lighten(secondaryMain, 0.85),
-      lightermost: lighten(secondaryMain, 0.70),
-      lighter: lighten(secondaryMain, 0.60),
-      lighten: lighten(secondaryMain, 0.35),
-      light: lighten(secondaryMain, 0.2),
-      dark: darken(secondaryMain, 0.2),
-      darken: darken(secondaryMain, 0.35),
-      darkish: darken(secondaryMain, 0.50),
-      darker: darken(secondaryMain, 0.60),
-      darkermost: darken(secondaryMain, 0.70),
-      darkest: darken(secondaryMain, 0.85),
-      blackest: darken(secondaryMain, 0.90),
-      contrastText: getContrastRatio(secondaryMain, '#fff') > 2.5 ? '#fff' : '#111',
-    },
-    info: {
-      main: grayMain,
-      lightest: lighten(grayMain, 0.85),
-      lightermost: lighten(grayMain, 0.70),
-      lighter: lighten(grayMain, 0.60),
-      lighten: lighten(grayMain, 0.35),
-      light: lighten(grayMain, 0.2),
-      dark: darken(grayMain, 0.2),
-      darken: darken(grayMain, 0.35),
-      darkish: darken(grayMain, 0.50),
-      darker: darken(grayMain, 0.60),
-      darkermost: darken(grayMain, 0.70),
-      darkest: darken(grayMain, 0.85),
-      blackest: darken(grayMain, 0.90),
-      contrastText: getContrastRatio(grayMain, '#fff') > 2.5 ? '#fff' : '#111',
-    },
+    primary: palette.primary,
+    secondary: palette.secondary,
+    info: palette.info,
     common: {
       white: '#ffffff',
       black: '#000000',

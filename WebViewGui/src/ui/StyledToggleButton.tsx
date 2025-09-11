@@ -2,7 +2,8 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ToggleButton, { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
-import { LabelTypographySx } from '@/define';
+import { LabelTypographySx, palette } from '@/define';
+import { alpha } from '@mui/material/styles';
 
 export interface ToggleButtonProps
   extends MuiToggleButtonProps {
@@ -21,25 +22,28 @@ export default function JuceComboBox({
         width:'100%',
         justifyContent:'start',
         px: 1,
-        py: 2.2,
-        color: 'var(--mui-palette-primary-light)',
+        py: 2,
         border: 'none',
         '& .button': {
           backgroundColor: 'var(--mui-palette-primary-darken)',
           fontWeight: 'var(--mui-fontWeight-lg)',
-          borderRadius: '0.5em',
           border: '0.1em solid var(--mui-palette-primary-darker)',
           p: '0.8em',
-          boxShadow: '0em 0.3em 0.4em rgba(0,0,0,0.5)',
+          padding: '0.7em 1.8em',
+          borderRadius: '999px',
+          background: 'linear-gradient(135deg, var(--mui-palette-primary-dark), var(--mui-palette-primary-main))',
+          boxShadow: `0 0.3em 0.4em ${alpha(palette.primary.darker, 0.5)}`,
         },
-        '&:hover, &.Mui-selected, &.Mui-selected:hover': {
-          backgroundColor: 'transparent',
+        '&:hover,  &.Mui-selected:hover': {
+          backgroundColor: 'rgba(255,255,255,0.1)'
         },
         '&.Mui-selected': {
-          color: 'var(--mui-palette-primary-lighter)',
+          backgroundColor: 'transparent',
           '& .button': {
-            // boxShadow: 'none',
-            backgroundColor: 'var(--mui-palette-primary-lighter)',
+            border: '0.1em solid var(--mui-palette-secondary-darker)',
+            background: 'linear-gradient(135deg, var(--mui-palette-secondary-lightest), var(--mui-palette-common-white))',
+            boxShadow: `0 0.25em 0.35em ${alpha(palette.secondary.darker, 0.4)}`,
+            transform: 'translateY(2px)'
           }
         },
       }}

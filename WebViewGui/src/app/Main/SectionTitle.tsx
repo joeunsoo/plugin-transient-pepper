@@ -9,6 +9,7 @@ export default function Component({
         px: 5,
         fontWeight: 'var(--mui-fontWeight-lg)',
         fontSize: 'var(--mui-fontSize-sm)',
+        color: 'var(--mui-palette-info-lightermost)',
         pt:3,
         pb:2.5,
         ...sx,

@@ -6,7 +6,7 @@ import AnalysisDataReceiver from '@/ui/AnalysisDataReceiver';
 import { useAnimationFrame } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-const valuesIdxs = Array.from({ length: AnalysisDataReceiverLength }, (v, i) => i);
+const valuesIdxs = new Array(AnalysisDataReceiverLength).fill(0);
 
 export default function App() {
   const { motionValues, outputNumChannels } = useAnalysisDataStore();
@@ -21,7 +21,7 @@ export default function App() {
         const data = dataReceiver.getLevels(time);
         if (data) {
           valuesIdxs.map(
-            (idx) => motionValues[idx].set(data[idx])
+            (value, idx) => motionValues[idx].set(data[idx])
           );
         }
       }
