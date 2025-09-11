@@ -18,7 +18,7 @@
     "dev": "vite --port 3000",
     "start": "vite --port 3000",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . && tsc --noEmit",
     "preview": "vite preview",
     "zip": "npm-build-zip --name=gui --name_only=true --destination=../Assets"
   },

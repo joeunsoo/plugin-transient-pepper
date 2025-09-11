@@ -84,10 +84,10 @@ class TransientFollower
   void setTAttack(SampleType a) { tAttack = calcCoeff(a); }
   void setTRelease(SampleType r) { tRelease = calcCoeff(r); }
   void setThreshold(SampleType t) { threshold = t; }
-  void setThresholdDecibels(SampleType t) { threshold = DecibelToLinear(t); }
+  void setThresholdDecibels(SampleType t) { threshold = decibelToLinear(t); }
   void setRatio(SampleType value) { ratio = value; }
   
-  float DecibelToLinear(SampleType db)
+  float decibelToLinear(SampleType db)
   {
     SampleType linear;
     
