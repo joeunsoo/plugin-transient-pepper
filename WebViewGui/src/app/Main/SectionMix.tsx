@@ -43,7 +43,6 @@ export default function Page({
           sx={{
             flexShrink: 0
           }}
-          ignoreBypass
         />
       </Stack>
       <Stack

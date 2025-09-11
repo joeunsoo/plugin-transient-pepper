@@ -2,6 +2,7 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 import Led from './Led';
 import { uesControlStore } from '@/store/ControlStore';
 import { calcBypassWetOpacity } from '@/define';
+import applySkew from '@/utils/ApplySkew';
 
 interface PageProps extends StackProps {
   idx: number,
@@ -21,7 +22,8 @@ export default function Page({
   const { bypassed, wetSolo } = uesControlStore();
   const thresholds = Array.from(
     { length },
-    (v, i) => (1 - ((1 / length) * (i + 1)))
+    // (v, i) => 1 - ((1 / length) * (i + 1))
+    (v, i) => applySkew(1 - ((1 / length) * (i + 1)), 0.0, 1.0, 0.85)
   );
 
   return (

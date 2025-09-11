@@ -117,7 +117,16 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   
   noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
   
-  float dryWetAdjust = 6.0f - 0.12f * std::abs(parameters.dryWet.get() - 50.0f); // Dry/Wet 50% -6dB 손실 보정
+  float wetMix = parameters.dryWet.get();
+  if (parameters.wetSolo.get()) {
+    wetMix = 100.0f;
+  }
+  if (parameters.bypass.get()) {
+    wetMix = 0.0f;
+  }
+  dryWetMixer.setWetMixProportion(wetMix / 100.0f);
+
+  float dryWetAdjust = 6.0f - 0.12f * std::abs(wetMix - 50.0f); // Dry/Wet 50% -6dB 손실 보정
   outputGain.setGainDecibels(parameters.outputGain.get() + dryWetAdjust);
   
   tiltEQ.setGain(parameters.tilt.get());
@@ -138,14 +147,6 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.transientFollower.setSlowRelease(parameters.slowRelease.get());
 #endif
   
-  float wetMix = (parameters.dryWet.get() / 100.0f);
-  if (parameters.wetSolo.get()) {
-    wetMix = 1.0f;
-  }
-  if (parameters.bypass.get()) {
-    wetMix = 0.0f;
-  }
-  dryWetMixer.setWetMixProportion (wetMix);
   
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
 
