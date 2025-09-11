@@ -47,6 +47,9 @@ export default function JuceCheckbox({
   useEffect(() => {
     const valueListenerId = checkboxState.valueChangedEvent.addListener(() => {
       setValue(checkboxState.getValue());
+      if (onChange) {
+        onChange(new Event('change'), checkboxState.getValue());
+      }
     });
     const propertiesListenerId =
       checkboxState.propertiesChangedEvent.addListener(() => setProperties(checkboxState.properties));
@@ -56,6 +59,14 @@ export default function JuceCheckbox({
       checkboxState.propertiesChangedEvent.removeListener(propertiesListenerId);
     };
   });
+
+  useEffect(() => {
+    setValue(checkboxState.getValue());
+    if (onChange) {
+      onChange(new Event('change'), checkboxState.getValue());
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box
