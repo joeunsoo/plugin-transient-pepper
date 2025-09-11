@@ -16,7 +16,7 @@ export default function Page({
       direction="column"
       alignItems="center"
       justifyContent="stretch"
-      spacing="var(--column-spacing)"
+      spacing="var(--row-spacing)"
       sx={{
         ...sx
       }}
@@ -28,7 +28,7 @@ export default function Page({
       <Stack
         direction="row"
         justifyContent="center"
-        spacing="var(--row-spacing)"
+        spacing="var(--column-spacing)"
         sx={{
           flexGrow: 1,
           width: '100%',

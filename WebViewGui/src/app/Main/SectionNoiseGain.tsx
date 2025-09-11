@@ -9,6 +9,7 @@ export default function Page({
 }: StackProps) {
   return (
     <Stack
+      direction="column"
       alignItems="center"
       justifyContent="end"
       spacing="var(--row-spacing)"
