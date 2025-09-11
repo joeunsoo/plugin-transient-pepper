@@ -18,8 +18,9 @@ import type { ValueToString } from '@/utils/valueToString';
 import Tooltip from '@mui/material/Tooltip';
 import { uesControlStore } from '@/store/ControlStore';
 import Stack from '@mui/material/Stack';
+import type { UIProps } from '@/types/UI';
 
-interface JuceSliderProps extends BoxProps {
+interface JuceSliderProps extends UIProps, BoxProps {
   identifier: string,
   title?: string,
   subDigit?: number
@@ -28,8 +29,6 @@ interface JuceSliderProps extends BoxProps {
   valueToString?: ValueToString
   color?: string
   ringColor?: string
-  ignoreBypass?: boolean
-  ignoreWetSolo?: boolean
   lowIcon?: React.ReactNode
   highIcon?: React.ReactNode
 }

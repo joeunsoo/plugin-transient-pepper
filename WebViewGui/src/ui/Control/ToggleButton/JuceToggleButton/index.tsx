@@ -9,15 +9,14 @@ import { calcBypassWetOpacity, controlParameterIndexAnnotation } from '@/define'
 
 import Button from './Button';
 import { uesControlStore } from '@/store/ControlStore';
+import type { UIProps } from '@/types/UI';
 
 interface JuceCheckboxProps
-  extends Omit<BoxProps, 'title' | 'onChange'> {
+  extends UIProps, Omit<BoxProps, 'title' | 'onChange'> {
   identifier: string,
   title?: React.ReactNode,
   invertValue?: boolean
   onChange?: (e: Event, value: boolean) => void
-  ignoreBypass?: boolean
-  ignoreWetSolo?: boolean
 }
 
 export default function JuceCheckbox({

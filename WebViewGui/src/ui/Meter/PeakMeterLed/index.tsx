@@ -3,12 +3,10 @@ import Led from './Led';
 import { uesControlStore } from '@/store/ControlStore';
 import { calcBypassWetOpacity } from '@/define';
 import applySkew from '@/utils/applySkew';
+import type { PeakMeterProps } from '@/types/PeakMeter';
 
-interface PageProps extends StackProps {
-  idx: number,
+interface PeakMeterLedProps extends PeakMeterProps, StackProps {
   length?: number,
-  ignoreBypass?: boolean,
-  ignoreWetSolo?: boolean,
 }
 
 export default function Page({
@@ -18,7 +16,7 @@ export default function Page({
   ignoreBypass = false,
   ignoreWetSolo = true,
   ...props
-}: PageProps) {
+}: PeakMeterLedProps) {
   const { bypassed, wetSolo } = uesControlStore();
   const thresholds = Array.from(
     { length },
