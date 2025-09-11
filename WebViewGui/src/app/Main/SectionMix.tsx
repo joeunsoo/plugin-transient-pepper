@@ -40,7 +40,7 @@ export default function Page({
         </Stack>
         <JuceToggleButton
           identifier="wetSoloToggle"
-          title={<>Wet<br />Solo</>}
+          title="Wet Solo"
           onChange={(e, value) => setWetSolo(value)}
         />
         <JuceKnob

@@ -22,44 +22,40 @@ export default function Page({
       </SectionTitle>
       <Stack
         direction="row"
+        justifyContent="space-between"
         spacing="var(--column-spacing)"
-        sx={{
-          flexWrap: 'wrap',
-          position: 'relative'
-        }}
       >
-        <Stack
-          spacing="var(--row-spacing)"
-        >
-          <JuceKnob
-            identifier="thresholdSlider"
-            defaultValue={0.5}
-            subDigit={1}
-            ringColor="secondary"
-          />
-          <JuceToggleButton
-            identifier="linkChannelsToggle"
-            title="L/R Link"
-          />
-        </Stack>
+        <JuceToggleButton
+          identifier="linkChannelsToggle"
+          title="L/R Link"
+        />
+        <JuceToggleButton
+          identifier="bpfPowerToggle"
+          title="BPF On"
+        />
+      </Stack>
+
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        spacing="var(--column-spacing)"
+      >
+        <JuceKnob
+          identifier="thresholdSlider"
+          defaultValue={0.5}
+          subDigit={1}
+          ringColor="secondary"
+        />
         <JuceKnob
           identifier="emphasisSlider"
           defaultValue={0.5}
           subDigit={1}
         />
-        <Stack
-          spacing="var(--row-spacing)"
-        >
-          <JuceKnob
-            identifier="bpfFrequencySlider"
-            defaultValue={0.5}
-            subDigit={1}
-          />
-          <JuceToggleButton
-            identifier="bpfPowerToggle"
-            title="BPF On"
-          />
-        </Stack>
+        <JuceKnob
+          identifier="bpfFrequencySlider"
+          defaultValue={0.5}
+          subDigit={1}
+        />
       </Stack>
     </Stack>
   );

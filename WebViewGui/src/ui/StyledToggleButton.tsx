@@ -1,5 +1,3 @@
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ToggleButton, { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
 import { GlassSx, LabelTypographySx } from '@/define';
@@ -19,61 +17,25 @@ export default function JuceComboBox({
       disableRipple
       sx={{
         width: '100%',
-        justifyContent: 'start',
-        px: 1,
-        py: 2,
-        border: 'none',
-        '& .button': {
-          backgroundColor: 'var(--mui-palette-primary-darken)',
-          fontWeight: 'var(--mui-fontWeight-lg)',
-          border: '0.1em solid var(--mui-palette-primary-darkest)',
-          p: '0.8em',
-          padding: '0.7em 1.1em',
-          borderRadius: '999px',
-          background: 'linear-gradient(135deg, var(--mui-palette-secondary-darker), var(--mui-palette-secondary-blackest))',
-          ...GlassSx,
-          transform: 'translateY(-1px)'
-        },
-        '&:hover,  &.Mui-selected:hover': {
-          backgroundColor: 'rgba(255,255,255,0.1)'
-        },
+        border: '0.1em solid var(--mui-palette-primary-darkest)',
+        my: '0.2em',
+        py: '0.5em',
+        borderRadius: '0.3em',
+        background: 'linear-gradient(135deg, var(--mui-palette-secondary-darker), var(--mui-palette-secondary-blackest))',
+        ...GlassSx,
         '&.Mui-selected': {
-          backgroundColor: 'transparent',
-          '& .button': {
-            background: 'linear-gradient(135deg, var(--mui-palette-secondary-main), var(--mui-palette-secondary-dark))',
-            ...GlassSx,
-            transform: 'translateY(1px)'
-          }
+          background: 'linear-gradient(135deg, var(--mui-palette-secondary-main), var(--mui-palette-secondary-dark))',
         },
       }}
       {...props}
     >
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1.5}
+      <Typography
         sx={{
-          flexGrow: 1,
+          ...LabelTypographySx,
         }}
       >
-        <Box className="button" />
-        <Stack
-          alignItems="center"
-          justifyContent="center"
-          sx={{
-            flexGrow: 1,
-          }}
-        >
-          <Typography
-            sx={{
-              ...LabelTypographySx,
-              textAlign: 'center',
-            }}
-          >
-            {label}
-          </Typography>
-        </Stack>
-      </Stack>
+        {label}
+      </Typography>
     </ToggleButton>
   );
 }
