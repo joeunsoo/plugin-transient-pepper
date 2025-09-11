@@ -10,7 +10,7 @@ import { uesControlStore } from '@/store/ControlStore';
 export default function Page({
   sx, ...props
 }: StackProps) {
-  const { setBypass } = uesControlStore();
+  const { setBypass, setWetSolo } = uesControlStore();
 
   return (
     <Stack
@@ -66,6 +66,7 @@ export default function Page({
           <JuceToggleButton
             identifier="wetSoloToggle"
             title={<>Wet<br />Solo</>}
+            onChange={(e, value) => setWetSolo(value)}
           />
         </Stack>
 
@@ -76,6 +77,7 @@ export default function Page({
           sx={{
             flexShrink: 0
           }}
+          ignoreWetSolo={false}
         />
       </Stack>
     </Stack>

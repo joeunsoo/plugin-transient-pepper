@@ -12,6 +12,7 @@ interface PageProps extends StackProps {
   idx: number,
   length?: number
   ignoreBypass?:boolean
+  ignoreWetSolo?:boolean
 }
 
 export default function Page({
@@ -19,6 +20,7 @@ export default function Page({
   length,
   sx,
   ignoreBypass=false,
+  ignoreWetSolo=true,
   ...props
 }: PageProps) {
   const { outputNumChannels } = useAnalysisDataStore();
@@ -41,9 +43,19 @@ export default function Page({
       }}
       {...props}
     >
-      <PeakMeter idx={idx} length={length} ignoreBypass={ignoreBypass} />
+      <PeakMeter
+        idx={idx}
+        length={length}
+        ignoreBypass={ignoreBypass}
+        ignoreWetSolo={ignoreWetSolo}
+      />
       {numChannels > 1 &&
-        <PeakMeter idx={idx + 1} length={length} ignoreBypass={ignoreBypass} />
+        <PeakMeter
+          idx={idx + 1}
+          length={length}
+          ignoreBypass={ignoreBypass}
+          ignoreWetSolo={ignoreWetSolo}
+        />
       }
     </Stack>
   );

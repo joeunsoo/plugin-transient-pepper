@@ -1,12 +1,13 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 import Led from './Led';
 import { uesControlStore } from '@/store/ControlStore';
-import { ignoreBypassOpacity } from '@/define';
+import { calcBypassWetOpacity } from '@/define';
 
 interface PageProps extends StackProps {
   idx: number,
-  length?: number
-  ignoreBypass: boolean;
+  length?: number,
+  ignoreBypass?: boolean,
+  ignoreWetSolo?: boolean,
 }
 
 export default function Page({
@@ -14,9 +15,10 @@ export default function Page({
   length = 15,
   sx,
   ignoreBypass = false,
+  ignoreWetSolo = true,
   ...props
 }: PageProps) {
-  const { bypassed } = uesControlStore();
+  const { bypassed, wetSolo } = uesControlStore();
   const thresholds = Array.from(
     { length },
     (v, i) => (1 - ((1 / length) * (i + 1)))
@@ -28,7 +30,7 @@ export default function Page({
       sx={{
         height: '100%',
         flexGrow: 1,
-        opacity: (!ignoreBypass && bypassed) ? ignoreBypassOpacity : 1.0,
+        opacity: calcBypassWetOpacity({ bypassed, wetSolo, ignoreBypass, ignoreWetSolo }),
         ...sx
       }}
       {...props}
