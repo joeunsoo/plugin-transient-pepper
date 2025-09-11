@@ -4,10 +4,14 @@ import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
 import NoiseGain from './NoiseGain';
 import OutputGain from './OutputGain';
+import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
+import { uesControlStore } from '@/store/ControlStore';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
+  const { setWetSolo } = uesControlStore();
+
   return (
     <Stack
       direction="row"
@@ -34,6 +38,11 @@ export default function Page({
         >
           <NoiseGain />
         </Stack>
+        <JuceToggleButton
+          identifier="wetSoloToggle"
+          title={<>Wet<br />Solo</>}
+          onChange={(e, value) => setWetSolo(value)}
+        />
         <JuceKnob
           identifier="dryWetSlider"
           defaultValue={0.5}

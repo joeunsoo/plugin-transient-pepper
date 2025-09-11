@@ -1,7 +1,6 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-import Box from '@mui/material/Box';
 import SectionTitle from './SectionTitle';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 
@@ -10,63 +9,55 @@ export default function Page({
 }: StackProps) {
   return (
     <Stack
-      direction="row"
-      alignItems="end"
+      direction="column"
       justifyContent="space-between"
       spacing="var(--column-spacing)"
       sx={{
-        pt:'2.8em',
         ...sx
       }}
       {...props}
     >
+      <SectionTitle>
+        Transient Detector
+      </SectionTitle>
       <Stack
         direction="row"
         spacing="var(--column-spacing)"
-        sx={{ position: 'relative' }}
+        sx={{
+          flexWrap: 'wrap',
+          position: 'relative'
+        }}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 0,
-            top: '-1.8em'
-          }}
+        <Stack
+          spacing="var(--row-spacing)"
         >
-          <SectionTitle>
-            Transient Detector
-          </SectionTitle>
-        </Box>
-        <JuceKnob
-          identifier="thresholdSlider"
-          defaultValue={0.5}
-          subDigit={1}
-          ringColor="secondary"
-        />
+          <JuceKnob
+            identifier="thresholdSlider"
+            defaultValue={0.5}
+            subDigit={1}
+            ringColor="secondary"
+          />
+          <JuceToggleButton
+            identifier="linkChannelsToggle"
+            title="L/R Link"
+          />
+        </Stack>
         <JuceKnob
           identifier="emphasisSlider"
           defaultValue={0.5}
           subDigit={1}
         />
-
         <Stack
-          sx={{ position: 'relative' }}
+          spacing="var(--row-spacing)"
         >
-          <Box
-            sx={{
-              position: 'absolute',
-              left: 0,
-              top: '-2.5em'
-            }}
-          >
-            <JuceToggleButton
-              identifier="bpfPowerToggle"
-              title="BPF On"
-            />
-          </Box>
           <JuceKnob
             identifier="bpfFrequencySlider"
             defaultValue={0.5}
             subDigit={1}
+          />
+          <JuceToggleButton
+            identifier="bpfPowerToggle"
+            title="BPF On"
           />
         </Stack>
       </Stack>

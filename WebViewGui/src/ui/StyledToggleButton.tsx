@@ -28,7 +28,7 @@ export default function JuceComboBox({
           fontWeight: 'var(--mui-fontWeight-lg)',
           border: '0.1em solid var(--mui-palette-primary-darkest)',
           p: '0.8em',
-          padding: '0.7em 1.2em',
+          padding: '0.7em 1.1em',
           borderRadius: '999px',
           background: 'linear-gradient(135deg, var(--mui-palette-secondary-darker), var(--mui-palette-secondary-blackest))',
           ...GlassSx,
