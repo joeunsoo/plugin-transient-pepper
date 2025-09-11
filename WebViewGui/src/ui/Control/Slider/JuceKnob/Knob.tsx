@@ -85,6 +85,8 @@ export default function JuceSlider({
       <Box
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onMouseDown={(e: any) => {
+          if (e.button !== 0) return false; // 마우스 좌클릭에서만 반응
+
           if (props.onMouseDown) {
             props.onMouseDown(e);
           }
