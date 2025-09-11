@@ -2,6 +2,8 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import Box from '@mui/material/Box';
+import SectionTitle from './SectionTitle';
+import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 
 export default function Page({
   sx, ...props
@@ -10,34 +12,78 @@ export default function Page({
     <Stack
       direction="row"
       alignItems="end"
-      justifyContent="center"
+      justifyContent="space-between"
       spacing="var(--column-spacing)"
       sx={{
         ...sx
       }}
       {...props}
     >
-      <JuceKnob
-        identifier="thresholdSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
-      <JuceKnob
-        identifier="emphasisSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
-      <Box sx={{ width: '3em' }} />
-      <JuceKnob
-        identifier="tiltSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
-      <JuceKnob
-        identifier="midSideSlider"
-        defaultValue={0.5}
-        subDigit={1}
-      />
+      <Stack
+        direction="row"
+        spacing="var(--column-spacing)"
+        sx={{ position: 'relative' }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            left: 0,
+            top: '-1.8em'
+          }}
+        >
+          <SectionTitle>
+            Transient Detector
+          </SectionTitle>
+        </Box>
+        <JuceKnob
+          identifier="thresholdSlider"
+          defaultValue={0.5}
+          subDigit={1}
+        />
+        <JuceKnob
+          identifier="emphasisSlider"
+          defaultValue={0.5}
+          subDigit={1}
+        />
+
+        <Stack
+          sx={{ position: 'relative' }}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              left: 0,
+              top: '-2.3em'
+            }}
+          >
+            <JuceToggleButton
+              identifier="bpfToggle"
+              title="On"
+            />
+          </Box>
+          <JuceKnob
+            identifier="bpfSlider"
+            defaultValue={0.5}
+            subDigit={1}
+          />
+        </Stack>
+      </Stack>
+
+      <Stack
+        direction="row"
+        spacing="var(--column-spacing)"
+      >
+        <JuceKnob
+          identifier="tiltSlider"
+          defaultValue={0.5}
+          subDigit={1}
+        />
+        <JuceKnob
+          identifier="midSideSlider"
+          defaultValue={0.5}
+          subDigit={1}
+        />
+      </Stack>
     </Stack>
   );
 }
