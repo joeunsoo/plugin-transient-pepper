@@ -3,7 +3,8 @@
 import {
   PluginName,
   CompanyName,
-  PluginVersion
+  PluginVersion,
+  GlassSx
 } from '@/define';
 
 import Paper from '@mui/material/Paper';
@@ -30,24 +31,37 @@ export default function App() {
           width: '50%',
           boxSizing: 'border-box',
           transform: 'translate(-50%, -50%)',
+          ...GlassSx,
           p: 4
         }}
       >
         <Stack
           direction="column"
           alignItems="center"
-          spacing={0}
           sx={{
             textAlign: 'center'
           }}
         >
-          <Typography variant="h6" component="h2">
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{
+              fontWeight: 'var(--mui-fontWeight-xl)'
+            }}
+          >
             {PluginName}
           </Typography>
-          <Typography>
+          <Typography
+            variant="body2"
+          >
             {PluginVersion}
           </Typography>
-          <Typography>
+          <Typography
+            sx={{
+              pt:5,
+              fontWeight: 'var(--mui-fontWeight-xl)'
+            }}
+          >
             &copy; {CompanyName}.
           </Typography>
         </Stack>

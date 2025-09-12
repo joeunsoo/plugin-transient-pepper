@@ -64,7 +64,7 @@ export const themeVars = {
     background: {
       // default: '#f2f2f2',
       default: palette.secondary.blackest,
-      paper: palette.secondary.blackest,
+      paper: palette.primary.darker,
     },
     Tooltip: {
       bg: palette.secondary.darkermost
