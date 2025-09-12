@@ -7,12 +7,14 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 
 import type { SelectChangeEvent } from '@mui/material/Select';
 
-import { controlParameterIndexAnnotation, LabelTypographySx } from '@/define';
+import { controlParameterIndexAnnotation, LabelTypographySx, testOpacity } from '@/define';
 import Typography from '@mui/material/Typography';
 
 import Select from './Select';
+import { uesControlStore } from '@/store/ControlStore';
+import type { UIProps } from '@/types/UI';
 
-interface JuceComboBoxProps extends StackProps {
+interface JuceComboBoxProps extends UIProps, StackProps {
   identifier: string,
   hideTitle?: boolean
 }
@@ -20,10 +22,13 @@ interface JuceComboBoxProps extends StackProps {
 export default function JuceComboBox({
   identifier,
   hideTitle = false,
+  ignoreBypass,
+  addTest = [],
   sx,
   ...props
 }: JuceComboBoxProps) {
   const comboBoxState = Juce.getComboBoxState(identifier);
+    const { bypassed } = uesControlStore();
 
   const [value, setValue] = useState(comboBoxState.getChoiceIndex());
   const [properties, setProperties] = useState(comboBoxState.properties);
@@ -58,6 +63,10 @@ export default function JuceComboBox({
           comboBoxState.properties.parameterIndex,
       }}
       sx={{
+        opacity: testOpacity([
+          bypassed && !ignoreBypass,
+          ...addTest
+        ]),
         flexGrow:1,
         ...sx
       }}

@@ -60,7 +60,7 @@ export const noDragSx = {
 };
 
 export const LabelTypographySxWithoutColor = {
-  fontSize: 'calc(var(--knob-width) * 0.13)',
+  fontSize: 'calc(var(--knob-width) * 0.15)',
   // fontSize: 'var(--mui-fontSize-sm)',
 };
 

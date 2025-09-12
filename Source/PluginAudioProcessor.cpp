@@ -126,8 +126,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   
   noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
   
-  tiltEQ.setGain(parameters.tilt.get());
-  tiltGain.setGainDecibels(parameters.tilt.get() * (-0.6f));
+  float tiltValue = parameters.tilt.get();
+  tiltEQ.setGain(tiltValue);
+  float tiltGainValue = skewedMap(tiltValue, -12.0f, 12.0f, -6.0f, 0.0f, 1.0f);
+  tiltGain.setGainDecibels(tiltGainValue);
   
   midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
   

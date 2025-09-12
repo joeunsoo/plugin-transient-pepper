@@ -16,7 +16,7 @@ export default function App() {
       spacing={5}
       sx={{
         p: 4,
-        pb: 8,
+        pb: 6,
         width: '100%',
         height: '100%',
         '> *': {

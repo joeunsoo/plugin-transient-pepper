@@ -72,7 +72,7 @@ class AirLayer
   
   float processSample()
   {
-    return 1.0f * rng.nextFloat();
+    return 0.8f * rng.nextFloat();
   }
   
   private:
