@@ -1,15 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useDragControls,
-  useMotionValueEvent,
-} from 'framer-motion';
-
+import { motion, useMotionValue, useTransform, useMotionValueEvent } from 'framer-motion';
 import Box, { type BoxProps } from '@mui/material/Box';
 import Slider, { type SliderProps } from '@mui/material/Slider';
 
@@ -17,58 +9,34 @@ import KnobRail from './KnobRail';
 import KnobThumb from './KnobThumb';
 import KnobOuter from './KnobOuter';
 
-export interface KnobProps
-  extends
-  Omit<
-    SliderProps,
-    | 'value'
-    | 'color'
-    | 'onDragStart'
-  > {
+export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDragStart'> {
   value: number;
   dragRange?: number;
-  setIsDrag:React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDrag: React.Dispatch<React.SetStateAction<boolean>>;
   onDragStart?: () => void;
-  color?:string;
-  ringColor?: string
+  color?: string;
+  ringColor?: string;
+  shiftSensitivity?: number; // Shift 눌렀을 때 감도
 }
 
-export type InKnobProps = Omit<
-    KnobProps,
-    | 'setIsDrag'
-  >
+export type InKnobProps = Omit<KnobProps, 'setIsDrag'>;
 
-function sliderToBox({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  defaultValue,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onMouseDown,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onChange,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onDragStart,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onChangeCommitted,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  scale,
-  ...props
-}: InKnobProps): BoxProps {
-  return {
-    ...props,
-  };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function sliderToBox({ defaultValue, onMouseDown, onChange, onDragStart, onChangeCommitted, scale, ...props }: InKnobProps): BoxProps {
+  return { ...props };
 }
 
 export default function JuceSlider({
   dragRange = 150,
   setIsDrag: setIsDragParent,
-  color='primary',
-  ringColor='secondary',
+  color = 'primary',
+  ringColor = 'secondary',
+  shiftSensitivity = 0.1,
   ...props
 }: KnobProps) {
   const [isDrag, setIsDrag] = useState(false);
   const handleValue = useMotionValue(props.value * (1 - dragRange));
   const progressScaleValue = useTransform(handleValue, [0, -dragRange], [0, 1]);
-  const dragControls = useDragControls();
 
   useMotionValueEvent(progressScaleValue, 'change', (latest) => {
     if (isDrag && props.onChange) {
@@ -83,70 +51,61 @@ export default function JuceSlider({
   }, [dragRange, handleValue, isDrag, props.value]);
 
   return (
-    <Box
-      {...sliderToBox(props)}
-    >
+    <Box {...sliderToBox(props)}>
       <Box
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onMouseDown={(e: any) => {
-          if (e.button !== 0) return false; // 마우스 좌클릭에서만 반응
+        sx={{ position: 'relative', width: '100%' }}
+        onMouseDown={(e: React.MouseEvent) => {
+          if (e.button !== 0) return;
 
-          if (props.onMouseDown) {
-            props.onMouseDown(e);
+          setIsDrag(true);
+          setIsDragParent(true);
+          if (props.onDragStart) props.onDragStart();
+
+          let lastY = e.clientY;
+
+          function onMouseMove(ev: MouseEvent) {
+            const dy = ev.clientY - lastY;
+            const sensitivity = ev.shiftKey ? shiftSensitivity : 1;
+
+            let newValue = handleValue.get() + dy * sensitivity;
+
+            // dragConstraints 적용
+            if (newValue < -dragRange) newValue = -dragRange;
+            if (newValue > 0) newValue = 0;
+
+            handleValue.set(newValue);
+            lastY = ev.clientY; // 이전 기준 갱신
           }
 
-          return dragControls.start(e, { snapToCursor: false, distanceThreshold: 0 });
-        }}
-        sx={{
-          position: 'relative',
-          width: '100%',
+          function onMouseUp() {
+            if (props.onChangeCommitted) {
+              props.onChangeCommitted(new Event('change'), progressScaleValue.get());
+            }
+            setIsDrag(false);
+            setIsDragParent(false);
+
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+          }
+
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
         }}
       >
         <motion.div
           className="handle"
-          drag="y"
-          dragConstraints={{ top: -dragRange, bottom: 0 }}
-          dragControls={dragControls}
-          dragMomentum={false}
-          onDragStart={() => {
-            if (props.onDragStart) {
-              props.onDragStart();
-            }
-            setIsDrag(true);
-            setIsDragParent(true);
-          }}
-          onDragEnd={(event) => {
-            if (props.onChangeCommitted) {
-              props.onChangeCommitted(event, progressScaleValue.get());
-            }
-            setIsDragParent(false);
-            setIsDrag(false);
-          }}
-          style={{
-            y: handleValue,
-            display: 'none',
-          }}
+          // drag="none"
+          style={{ y: handleValue, display: 'none' }}
         />
 
-        <svg
-          viewBox="20 20 160 165"
-        >
-          <KnobOuter
-            color={color}
-          />
-          <KnobRail
-            color={color}
-            ringColor={ringColor}
-          />
+        <svg viewBox="20 20 160 165">
+          <KnobOuter color={color} />
+          <KnobRail color={color} ringColor={ringColor} />
           <KnobThumb value={props.value} />
         </svg>
       </Box>
 
-      <Slider
-        {...props}
-        value={props.value}
-        sx={{ display: 'none' }}
-      />
+      <Slider {...props} value={props.value} sx={{ display: 'none' }} />
     </Box>
   );
 }
