@@ -74,11 +74,12 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   PluginAudioProcessor& processorRef;
   
   WebToggleButtonRelay bypassToggleRelay      { "bypassToggle" };
+  WebComboBoxRelay     generatorTypeComboRelay { "generatorTypeCombo" };
   WebSliderRelay       attackSliderRelay    { "attackSlider" };
   WebSliderRelay       releaseSliderRelay    { "releaseSlider" };
 
   WebSliderRelay       thresholdSliderRelay    { "thresholdSlider" };
-  WebSliderRelay       emphasisSliderRelay    { "emphasisSlider" };
+
   WebToggleButtonRelay bpfPowerToggleRelay      { "bpfPowerToggle" };
   WebSliderRelay       bpfFrequencySliderRelay    { "bpfFrequencySlider" };
 
@@ -104,11 +105,11 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                                .withUserDataFolder (File::getSpecialLocation (File::SpecialLocationType::tempDirectory)))
       .withNativeIntegrationEnabled()
       .withOptionsFrom (bypassToggleRelay)
+      .withOptionsFrom (generatorTypeComboRelay)
       .withOptionsFrom (attackSliderRelay)
       .withOptionsFrom (releaseSliderRelay)
 
       .withOptionsFrom (thresholdSliderRelay)
-      .withOptionsFrom (emphasisSliderRelay)
       .withOptionsFrom (bpfPowerToggleRelay)
       .withOptionsFrom (bpfFrequencySliderRelay)
 
@@ -150,11 +151,12 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                              URL { localDevServerAddress }.getOrigin()) };
   
   WebToggleButtonParameterAttachment bypassAttachment;
+
+  WebComboBoxParameterAttachment       generatorTypeAttachment;
   WebSliderParameterAttachment       attackAttachment;
   WebSliderParameterAttachment       releaseAttachment;
 
   WebSliderParameterAttachment       thresholdAttachment;
-  WebSliderParameterAttachment       emphasisAttachment;
   WebToggleButtonParameterAttachment       bpfPowerAttachment;
   WebSliderParameterAttachment       bpfFrequencyAttachment;
 

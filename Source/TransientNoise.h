@@ -28,13 +28,9 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
     
-    sidechainTilt.prepare(spec);
-    sidechainTilt.reset();
-    sidechainTiltGain.setGainDecibels(0.0f);
-    sidechainTiltGain.reset();
-    
     sidechainBPF.prepare(spec);
     sidechainBPF.reset();
+    sidechainBPF.setFrequency(sidechainBPFFreq);
     sidechainBPFGain.prepare(spec);
     sidechainBPFGain.reset();
     
@@ -68,18 +64,12 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     sidechainBlock.copyFrom (inputBlock); // 원본 입력을 복사
     juce::dsp::ProcessContextReplacing<SampleType> sidechainContext (sidechainBlock);
 
-    // 파라미터
-    sidechainTilt.setGain(emphasis);
-    sidechainTiltGain.setGainDecibels(emphasis * 0.4f);
-    
-    sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 100.0f, 12000.0f, -6.0f, 12.0f, 0.27f));
+    sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, 0.0f, 18.0f, 0.12f)); // 0.27f
     sidechainBPF.setFrequency(sidechainBPFFreq);
     
     SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 40.0f, 10.0f, 1.0f);
 
     // 사이드체인 적용
-    sidechainTilt.process(sidechainContext);
-    sidechainTiltGain.process(sidechainContext);
     
     if (sidechainBPFOn) {
       sidechainBPF.process(sidechainContext);
@@ -127,16 +117,26 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
           shapeEnv[ch] = release * (shapeEnv[ch] - diff) + diff;
         
         SampleType out = inputBlock.getChannelPointer(ch)[n];
-        out = hfClick.processSample(shapeEnv[ch] > 0.001f ? shapeEnv[ch] : 0.0f );
-        // out = bitCrusher.processSample(static_cast<float>(out));
-        // out = airLayer.processSample();
+        switch (generatorType)
+        {
+          case 0:
+            out = airLayer.processSample();
+            break;
+          case 1:
+            out = bitCrusher.processSample(static_cast<float>(out));;
+            break;
+          case 2:
+            out = hfClick.processSample(shapeEnv[ch] > 0.001f ? shapeEnv[ch] : 0.0f );
+            break;
+        }
         
-#if !CHECK_ENV
-        outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch] * out;
+#if CHECK_ENV
+          outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch];
+#elif CHECK_SIDECHAIN
+          outputBlock.getChannelPointer(ch)[n] = sidechainBlock.getChannelPointer(ch)[n]; // 사이드체인
 #else
-        outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch];
+          outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch] * out;
 #endif
-        // outputBlock.getChannelPointer(ch)[n] = sidechainBlock.getChannelPointer(ch)[n]; // 사이드체인
       }
     }
   }
@@ -144,7 +144,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   TransientFollower<SampleType> transientFollower;
   
   void setLinkChannels(bool value) { linkChannels = value; }
-  void setEmphasis(SampleType value) { emphasis = value; }
+
   void setSidechainBPFOn(bool value) { sidechainBPFOn = value; }
   void setSidechainBPFFreq(float value) { sidechainBPFFreq = value; }
   
@@ -153,19 +153,17 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void setThreshold(SampleType t) { threshold = t; }
   void setThresholdDecibels(SampleType t) { threshold = decibelToLinear(t); }
   void setRatio(SampleType value) { ratio = value; }
+  void setGeneratorType(int value) { generatorType = value; }
 
   private:
   double sampleRate = 44100.0;
   int numChannels = 2;
   bool linkChannels = true;
   
+  int generatorType = 0;
   HFClick hfClick;
   BitCrusher bitCrusher;
   AirLayer airLayer;
-  
-  TiltEQProcessor<SampleType> sidechainTilt;
-  dsp::Gain<SampleType> sidechainTiltGain;
-  SampleType emphasis = 0.0f;
   
   BandPassFilter<SampleType> sidechainBPF;
   dsp::Gain<SampleType> sidechainBPFGain;

@@ -18,6 +18,11 @@ struct Parameters {
   :
   bypass (addToLayout<AudioParameterBool> (layout, ID::bypass, "Bypass", false)),
   
+  generatorType (addToLayout<AudioParameterChoice> (layout,
+                                                 ID::generatorType,
+                                                 "Noise type",
+                                                 StringArray { "Air", "Bitcrush", "HFClick" },
+                                                 0)),
   attack (addToLayout<AudioParameterFloat> (layout,
                                             ID::attack,
                                             "Attack",
@@ -51,23 +56,11 @@ struct Parameters {
                                                [](const juce::String& text) { return stringToDB(text); }
                                                )),
   
-  
-  emphasis (addToLayout<AudioParameterFloat> (layout,
-                                              ID::emphasis,
-                                              "Emphasis",
-                                              NormalisableRange<float> { -24.0f, 24.0f, 0.1f, 1.0f },
-                                              0.0f,
-                                              "dB",
-                                              juce::AudioProcessorParameter::genericParameter,
-                                              [](float value, int) { return dBToString(value); },
-                                              [](const juce::String& text) { return stringToDB(text); }
-                                              )),
   bpfPower (addToLayout<AudioParameterBool> (layout, ID::bpfPower, "BPF On/Off", false)),
-  
   bpfFrequency (addToLayout<AudioParameterFloat> (layout,
                                                   ID::bpfFrequency,
                                                   "BPF Freq",
-                                                  NormalisableRange<float> { 100.0f, 12000.0f, 0.1f, 0.2683f },
+                                                  NormalisableRange<float> { 50.0f, 12000.0f, 0.1f, 0.2683f },
                                                   1000.0f,
                                                   "Hz",
                                                   juce::AudioProcessorParameter::genericParameter,
@@ -174,11 +167,11 @@ struct Parameters {
   }
   
   AudioParameterBool&  bypass;
+  AudioParameterChoice& generatorType;
   AudioParameterFloat& attack;
   AudioParameterFloat& release;
   
   AudioParameterFloat& threshold;
-  AudioParameterFloat& emphasis;
   
   AudioParameterBool& bpfPower;
   AudioParameterFloat& bpfFrequency;

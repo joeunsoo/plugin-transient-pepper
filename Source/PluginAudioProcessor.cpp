@@ -115,7 +115,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
   
-  transientNoise.setEmphasis(parameters.emphasis.get());
+  transientNoise.setGeneratorType(parameters.generatorType.getIndex());
   transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
   transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
   
@@ -158,7 +158,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   
   midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
 
-#if !CHECK_ENV
+#if !CHECK_ENV && !CHECK_SIDECHAIN && !DISABLE_DCOFFSET_FILTER 
   dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
 #endif
   

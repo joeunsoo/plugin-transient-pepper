@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
-import Box, { type BoxProps } from '@mui/material/Box';
+import Stack, { type StackProps } from '@mui/material/Stack';
 
 import type { SelectChangeEvent } from '@mui/material/Select';
 
@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 
 import Select from './Select';
 
-interface JuceComboBoxProps extends BoxProps {
+interface JuceComboBoxProps extends StackProps {
   identifier: string,
   hideTitle?: boolean
 }
@@ -51,12 +51,14 @@ export default function JuceComboBox({
   });
 
   return (
-    <Box
+    <Stack
+      justifyContent="space-between"
       {...{
         [controlParameterIndexAnnotation]:
           comboBoxState.properties.parameterIndex,
       }}
       sx={{
+        flexGrow:1,
         ...sx
       }}
       {...props}
@@ -71,12 +73,13 @@ export default function JuceComboBox({
           textAlign="center"
           sx={{
             ...LabelTypographySx,
-            mt: '0.5em'
+            mt: '0.5em',
+            flexShrink:0,
           }}
         >
           {properties.name}
         </Typography>
       }
-    </Box>
+    </Stack>
   );
 }

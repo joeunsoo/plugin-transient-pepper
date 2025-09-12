@@ -5,7 +5,6 @@ import SectionShape from './SectionShape';
 import SectionMix from './SectionMix';
 import SectionTone from './SectionTone';
 import SectionGraph from './SectionGraph';
-import SectionAdvanced from './SectionAdvanced';
 
 export default function App() {
 
@@ -31,18 +30,12 @@ export default function App() {
       <Stack
         direction="column"
         justifyContent="space-between"
-        spacing={5}
-        sx={{
-          flexShrink: 0,
-        }}
       >
         <SectionDetector />
         <SectionShape />
       </Stack>
       <Stack
         direction="column"
-        alignItems="end"
-        justifyContent="end"
         spacing={5}
         sx={{
           flexGrow: 1,
@@ -51,12 +44,7 @@ export default function App() {
         <SectionGraph />
         <SectionTone />
       </Stack>
-      <Stack
-        direction="row"
-        sx={{
-          flexShrink: 0,
-        }}
-      >
+      <Stack direction="row">
         <SectionMix />
       </Stack>
     </Stack>

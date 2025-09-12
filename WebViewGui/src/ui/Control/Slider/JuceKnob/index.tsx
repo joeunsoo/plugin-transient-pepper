@@ -162,7 +162,7 @@ export default function JuceSlider({
           justifyContent="center"
           spacing={1}
           sx={{
-            mt: '-0.5em',
+            mt: '0em',
           }}
         >
           {lowIcon}
@@ -184,8 +184,9 @@ export default function JuceSlider({
             <Typography
               textAlign="center"
               sx={{
-                lineHeight: '1.0em',
                 ...LabelTypographySx,
+                lineHeight: '1.0em',
+                transform:'translateY(-0.5em)'
               }}
             >
               {title || properties.name}

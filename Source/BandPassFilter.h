@@ -67,7 +67,7 @@ private:
 
     // 목표 파라미터
     float frequency = 1000.0f;
-    float q = 5.0f;
+    float q = 10.0f;
 
     // 현재 보간값
     float currentFrequency = 1000.0f;

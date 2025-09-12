@@ -11,4 +11,6 @@
 #pragma once
 
 #define CHECK_ENV false
+#define CHECK_SIDECHAIN false
+#define DISABLE_DCOFFSET_FILTER false
 #define ADVANCED false

@@ -15,7 +15,7 @@ export default function Page({
     <Stack
       direction="column"
       justifyContent="space-between"
-      spacing="var(--column-spacing)"
+      spacing="var(--row-spacing)"
       sx={{
         ...sx
       }}
@@ -26,7 +26,7 @@ export default function Page({
       </SectionTitle>
       <Stack
         direction="row"
-        justifyContent="space-between"
+        justifyContent="start"
         spacing="var(--column-spacing)"
       >
         <JuceToggleButton
@@ -42,7 +42,7 @@ export default function Page({
 
       <Stack
         direction="row"
-        justifyContent="space-between"
+        justifyContent="start"
         spacing="var(--column-spacing)"
       >
         <JuceKnob
@@ -50,11 +50,6 @@ export default function Page({
           defaultValue={0.5}
           subDigit={1}
           ringColor="secondary"
-        />
-        <JuceKnob
-          identifier="emphasisSlider"
-          defaultValue={0.5}
-          subDigit={1}
         />
         <JuceKnob
           identifier="bpfFrequencySlider"

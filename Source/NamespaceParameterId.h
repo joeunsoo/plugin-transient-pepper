@@ -16,11 +16,11 @@ namespace ID {
 
 PARAMETER_ID (bypass)
 
+PARAMETER_ID (generatorType)
 PARAMETER_ID (attack)
 PARAMETER_ID (release)
 
 PARAMETER_ID (threshold)
-PARAMETER_ID (emphasis)
 
 PARAMETER_ID (bpfPower)
 PARAMETER_ID (bpfFrequency)
