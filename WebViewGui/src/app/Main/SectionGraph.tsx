@@ -1,4 +1,5 @@
 import { GlassSx,  } from '@/define';
+import Graph from '@/ui/Graph';
 import Box, { type BoxProps } from '@mui/material/Box';
 
 export default function Page({
@@ -12,11 +13,15 @@ export default function Page({
         backgroundColor: 'var(--mui-palette-secondary-blackest)',
         borderRadius: 3,
         ...GlassSx,
+        '& > svg': {
+          borderRadius: 3,
+        },
         ...sx,
       }}
       {...props}
     >
-
+      <Graph
+      />
     </Box>
   );
 }

@@ -43,6 +43,9 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     attack = calcCoeff(0.01f, sampleRate);
     release = calcCoeff(0.01f, sampleRate);
     shapeEnv.resize(numChannels, 0.0f);
+
+    envBuffer.setSize((int)spec.numChannels, (int)spec.maximumBlockSize);
+    envBlock = juce::dsp::AudioBlock<SampleType>(envBuffer);
   }
   
   void reset() override
@@ -115,7 +118,9 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
           shapeEnv[ch] = attack * (shapeEnv[ch] - diff) + diff;
         else
           shapeEnv[ch] = release * (shapeEnv[ch] - diff) + diff;
-        
+
+        envBlock.getChannelPointer(ch)[n] = shapeEnv[ch]; // 보관
+
         SampleType out = inputBlock.getChannelPointer(ch)[n];
         switch (generatorType)
         {
@@ -154,6 +159,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void setThresholdDecibels(SampleType t) { threshold = decibelToLinear(t); }
   void setRatio(SampleType value) { ratio = value; }
   void setGeneratorType(int value) { generatorType = value; }
+  
+  juce::dsp::AudioBlock<SampleType> envBlock { envBuffer };
 
   private:
   double sampleRate = 44100.0;
@@ -177,4 +184,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   SampleType threshold = 0.03f;
   SampleType ratio = 20.0f;
   dsp::Gain<SampleType> thresholdGain;
+
+  juce::AudioBuffer<SampleType> envBuffer;
 };

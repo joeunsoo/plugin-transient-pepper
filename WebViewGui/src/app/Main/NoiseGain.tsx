@@ -15,7 +15,7 @@ export default function Page({
       spacing="var(--row-spacing)"
       {...props}
     >
-      <PeakMeterStereo idx={2} />
+      <PeakMeterStereo idx={6} />
       <JuceKnob
         identifier="noiseLevelGainSlider"
         defaultValue={0.5}

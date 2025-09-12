@@ -88,6 +88,9 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   
   noisePeakMeter.prepare(channels, samplesPerBlock);
   peakMeter.prepare(channels, samplesPerBlock);
+  envPeakMeter.prepare(channels, samplesPerBlock);
+  inputPeakMeter.prepare(channels, samplesPerBlock);
+
   dcBlocker.prepare(spec);
   dcBlocker.reset();
 }
@@ -150,10 +153,12 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
   /// DSP 계산 시작
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
+  inputPeakMeter.push (outBlock);
 
   dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
   
   transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
+  envPeakMeter.push (transientNoise.envBlock); // Ouput 피크미터 저장
 
   tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
   tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
@@ -181,10 +186,12 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     
     if (! lock.isLocked()) { return; }
     
-    Span<float> peakMeterSpan(analysisData.data(), 4); // 0,1 사용
+    Span<float> peakMeterSpan(analysisData.data(), 8); // 0,1 사용
     
     peakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 0); // 0,1
     noisePeakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 2); // 2,3
+    inputPeakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 4); // 4,5
+    envPeakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 6); // 6,7
   }
 }
 
