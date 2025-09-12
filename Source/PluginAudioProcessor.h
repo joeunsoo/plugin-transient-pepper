@@ -19,6 +19,7 @@
 #include "TransientNoise.h"
 #include "MidSideMixer.h"
 #include "TiltEQ.h"
+#include "TransientNoiseSculptor.h"
 
 //==============================================================================
 class PluginAudioProcessor  : public AudioProcessor
@@ -78,6 +79,8 @@ class PluginAudioProcessor  : public AudioProcessor
 
   TransientNoiseProcessor<float> transientNoise;
   MidSideMixer<float> midSideMixer;
+  
+  TransientNoiseSculptor<float> noiseSculptor;
 
   /*
    0, 1 = L,R 출력 피크 레벨

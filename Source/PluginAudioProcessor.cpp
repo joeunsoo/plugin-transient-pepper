@@ -100,6 +100,8 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   peakMeter.prepare(channels, samplesPerBlock);
   dcBlocker.prepare(spec);
   dcBlocker.reset();
+  
+  noiseSculptor.prepare(spec);
 }
 
 bool PluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -139,6 +141,11 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.transientFollower.setTRelease(parameters.release.get());
   transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
   transientNoise.setLinkChannels(parameters.linkChannels.get());
+  
+  // noiseSculptor.transientFollower.setTAttack(parameters.attack.get());
+  // noiseSculptor.transientFollower.setTRelease(parameters.release.get());
+  // noiseSculptor.transientFollower.setThresholdDecibels(parameters.threshold.get());
+  // noiseSculptor.setLinkChannels(parameters.linkChannels.get());
 
   noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
   
@@ -180,6 +187,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   }
 
   transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
+  // noiseSculptor.process(dsp::ProcessContextReplacing<float> (outBlock));
 
   tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
   tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));

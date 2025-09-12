@@ -1,8 +1,8 @@
 /*
  ==============================================================================
  
- TransientNoise.h
- Created: 8 Sep 2025 3:45:52pm
+ TransientNoiseSculptor.h
+ Created: 12 Sep 2025 1:32:55am
  Author:  JoEunsoo
  
  ==============================================================================
@@ -10,23 +10,16 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "TransientFollower.h"
-#include "TiltEQ.h"
-#include "BandPassFilter.h"
-#include "TransientNoiseSculptor.h"
 #include "TransientNoiseLayer.h"
 
 template <typename SampleType>
-class TransientNoiseProcessor : public juce::dsp::ProcessorBase
+class TransientNoiseSculptor : public juce::dsp::ProcessorBase
 {
   public:
-  TransientNoiseProcessor() {}
-  ~TransientNoiseProcessor() override {}
-  
   void prepare(const juce::dsp::ProcessSpec& spec) override
   {
-    sampleRate = spec.sampleRate;
-    numChannels = spec.numChannels;
+    sr = spec.sampleRate;
+    blockSize = static_cast<int>(spec.maximumBlockSize);
     
     transientFollower.prepare(spec);
     
@@ -34,22 +27,31 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     resonator.prepare(spec);
     bitCrusher.prepare(spec);
     airLayer.prepare(spec);
-
-    noiseGenerator.setSeed(juce::Random::getSystemRandom().nextInt());
+    
+    envelopeBuffer.setSize(1, blockSize);
+    envelopeBuffer.clear();
   }
   
   void reset() override
   {
-    
+    prevSample = 0.0f;
+    envelopeBuffer.clear();
+  }
+  
+  bool detectTransient(SampleType input)
+  {
+    const SampleType threshold = static_cast<SampleType>(0.05);
+    bool isTransient = std::abs(input) > threshold && prevSample <= threshold;
+    prevSample = std::abs(input);
+    return isTransient;
   }
   
   void process(const juce::dsp::ProcessContextReplacing<SampleType>& context) override
   {
     auto& inputBlock = context.getInputBlock();
     auto& outputBlock = context.getOutputBlock();
-    
-    const auto numSamples = inputBlock.getNumSamples();
-    const auto numChannels = inputBlock.getNumChannels();
+    int numSamples = static_cast<int>(outputBlock.getNumSamples());
+    int numChannels = static_cast<int>(outputBlock.getNumChannels());
     
     for (size_t n = 0; n < numSamples; ++n)
     {
@@ -71,23 +73,22 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         linkedEnvelope /= (float)numChannels;
       }
       
-      for (size_t ch = 0; ch < numChannels; ++ch)
+      for (int ch = 0; ch < numChannels; ++ch)
       {
-        SampleType dynamicNoise = linkChannels ? linkedEnvelope : sampleEnvelopes[ch];
+        SampleType input = inputBlock.getChannelPointer(ch)[n];
+        // bool trig = detectTransient(input);
         
-        SampleType in = inputBlock.getChannelPointer(ch)[n];
         SampleType out = 0;
-        // out = hfClick.processSample(ch, static_cast<float>(1.0));
-        // out = resonator.processSample(ch, static_cast<float>(in));
-        // out = bitCrusher.processSample(static_cast<float>(in));
-        // out = airLayer.processSample();
-        // out = (noiseGenerator.nextFloat() * 2.0f - 1.0f);
+        
+        SampleType dynamicNoise = linkChannels ? linkedEnvelope : sampleEnvelopes[ch];
+        input = dynamicNoise * input * 1.5f;
 
-#if !CHECK_ENV
-        outputBlock.getChannelPointer(ch)[n] = dynamicNoise * out;
-#else
-        outputBlock.getChannelPointer(ch)[n] = dynamicNoise;
-#endif
+          // out += hfClick.processSample(ch, static_cast<float>(1.0));
+          out += resonator.processSample(ch, static_cast<float>(input));
+          // out += bitCrusher.processSample(static_cast<float>(input));
+          // out += airLayer.processSample();
+        out = dynamicNoise * out * 0.1f;
+        outputBlock.getChannelPointer(ch)[n] = out;
       }
     }
   }
@@ -95,14 +96,17 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   TransientFollower<SampleType> transientFollower;
   
   void setLinkChannels(bool value) { linkChannels = value; }
-  
-  private:
-  double sampleRate = 44100.0;
-  int numChannels = 2;
-  bool linkChannels = true;
-  
-  juce::Random noiseGenerator;
 
+  private:
+  double sr = 44100.0;
+  int blockSize = 512;
+  SampleType prevSample = 0;
+  bool linkChannels = false;
+  
+  juce::AudioBuffer<float> envelopeBuffer;
+  
+  
+  // 레이어 인스턴스
   HFClick hfClick;
   TransientResonator resonator;
   BitCrusher bitCrusher;

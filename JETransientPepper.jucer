@@ -33,6 +33,10 @@
             file="Source/TransientFollower.h"/>
       <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"
             file="Source/TransientNoise.h"/>
+      <FILE id="dI6yre" name="TransientNoiseLayer.h" compile="0" resource="0"
+            file="Source/TransientNoiseLayer.h"/>
+      <FILE id="yVGFPk" name="TransientNoiseSculptor.h" compile="0" resource="0"
+            file="Source/TransientNoiseSculptor.h"/>
       <FILE id="zjRcRB" name="BandPassFilter.h" compile="0" resource="0"
             file="Source/BandPassFilter.h"/>
       <FILE id="loxmGH" name="TiltEQ.h" compile="0" resource="0" file="Source/TiltEQ.h"/>
