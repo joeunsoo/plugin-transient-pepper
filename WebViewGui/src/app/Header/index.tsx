@@ -1,8 +1,6 @@
 'use client';
 
-import { PluginName, CompanyName, CompanyWebsite } from '@/define';
-
-import * as Juce from 'juce-framework-frontend';
+import { PluginName, CompanyName } from '@/define';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -12,8 +10,6 @@ import JuceToggleBypass from '@/ui/Control/ToggleButton/JuceToggleBypass';
 import { uesControlStore } from '@/store/ControlStore';
 
 import Menu from './Menu';
-
-const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
 export default function App() {
   const { setBypass } = uesControlStore();
@@ -65,7 +61,6 @@ export default function App() {
           spacing={2}
         >
           <Button
-            onClick={() => visitWebsite(CompanyWebsite)}
             sx={{
               color: 'var(--mui-palette-common-white)',
               fontSize: 'var(--mui-fontSize-xs)',

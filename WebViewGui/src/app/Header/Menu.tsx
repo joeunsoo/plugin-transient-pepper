@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import * as Juce from 'juce-framework-frontend';
+
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -10,6 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Scale from './Scale';
 import { useAboutStore } from '@/store/AboutStore';
+import { CompanyWebsite } from '@/define';
+
+const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
 export default function Page() {
   const { setOpen: setAboutOpen  } = useAboutStore();
@@ -74,6 +79,9 @@ export default function Page() {
       >
         <Scale onClick={handleClose} />
         <Divider />
+        <MenuItem onClick={() => { visitWebsite(CompanyWebsite); handleClose(); }}>
+          Visit JoEunsoo.com
+        </MenuItem>
         <MenuItem onClick={() => { setAboutOpen(true); handleClose(); }}>
           About
         </MenuItem>
