@@ -119,9 +119,9 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
   transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
   
-  transientNoise.transientFollower.setTAttack(parameters.attack.get());
-  transientNoise.transientFollower.setTRelease(parameters.release.get());
-  transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
+  transientNoise.setAttack(parameters.attack.get());
+  transientNoise.setRelease(parameters.release.get());
+  transientNoise.setThresholdDecibels(parameters.threshold.get());
   transientNoise.setLinkChannels(parameters.linkChannels.get());
   
   noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
@@ -132,12 +132,8 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   midSideMixer.setMixLevel(parameters.midSide.get() / 100.0f);
   
   float wetMix = parameters.dryWet.get();
-  if (parameters.wetSolo.get()) {
-    wetMix = 100.0f;
-  }
-  if (parameters.bypass.get()) {
-    wetMix = 0.0f;
-  }
+  if (parameters.wetSolo.get()) wetMix = 100.0f;
+  if (parameters.bypass.get()) wetMix = 0.0f;
   dryWetMixer.setWetMixProportion(wetMix / 100.0f);
 
   float dryWetAdjust = 6.0f - 0.12f * std::abs(wetMix - 50.0f); // Dry/Wet 50% -6dB 손실 보정

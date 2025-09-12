@@ -23,10 +23,12 @@ export interface KnobProps
     SliderProps,
     | 'value'
     | 'color'
+    | 'onDragStart'
   > {
   value: number;
   dragRange?: number;
   setIsDrag:React.Dispatch<React.SetStateAction<boolean>>;
+  onDragStart?: () => void;
   color?:string;
   ringColor?: string
 }
@@ -43,6 +45,8 @@ function sliderToBox({
   onMouseDown,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChange,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onDragStart,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onChangeCommitted,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -105,6 +109,9 @@ export default function JuceSlider({
           dragControls={dragControls}
           dragMomentum={false}
           onDragStart={() => {
+            if (props.onDragStart) {
+              props.onDragStart();
+            }
             setIsDrag(true);
             setIsDragParent(true);
           }}

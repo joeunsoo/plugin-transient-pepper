@@ -10,6 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "Utils.h"
 #include "TransientFollower.h"
 #include "TiltEQ.h"
 #include "BandPassFilter.h"
@@ -40,79 +41,102 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     transientFollower.prepare(spec);
     
     hfClick.prepare(spec);
-    resonator.prepare(spec);
     bitCrusher.prepare(spec);
     airLayer.prepare(spec);
-    noiseGenerator.setSeed(juce::Random::getSystemRandom().nextInt());
+
+    attack = calcCoeff(0.01f, sampleRate);
+    release = calcCoeff(0.01f, sampleRate);
+    shapeEnv.resize(numChannels, 0.0f);
   }
   
   void reset() override
   {
-    
+    std::fill(shapeEnv.begin(), shapeEnv.end(), 0.0f);
   }
   
   void process(const juce::dsp::ProcessContextReplacing<SampleType>& context) override
   {
-    sidechainTilt.setGain(emphasis);
-    sidechainTiltGain.setGainDecibels(emphasis * 0.4f);
-    
-    // (value - minFreq) / (maxFreq - minFreq)
-    float normalized = (sidechainBPFFreq - 100.0f) / (12000.0f - 100.0f);
-    float skewed = std::pow(normalized, 0.27f); // skew 적용, 중앙값 1000Hz로 맞춘 경우
-    sidechainBPFGain.setGainDecibels((skewed * 18.0f) - 12.0f);
-    sidechainBPF.setFrequency(sidechainBPFFreq);
-    
-    sidechainTilt.process(context);
-    sidechainTiltGain.process(context);
-    
-    if (sidechainBPFOn) {
-      sidechainBPF.process(context);
-      sidechainBPFGain.process(context);
-    }
-    
     auto& inputBlock = context.getInputBlock();
     auto& outputBlock = context.getOutputBlock();
     
     const auto numSamples = inputBlock.getNumSamples();
     const auto numChannels = inputBlock.getNumChannels();
     
+    // 사이드체인으로 Block 복사
+    juce::HeapBlock<char> tempBlockMem;
+    juce::dsp::AudioBlock<SampleType> sidechainBlock (tempBlockMem, numChannels, numSamples);
+    sidechainBlock.copyFrom (inputBlock); // 원본 입력을 복사
+    juce::dsp::ProcessContextReplacing<SampleType> sidechainContext (sidechainBlock);
+
+    // 파라미터
+    sidechainTilt.setGain(emphasis);
+    sidechainTiltGain.setGainDecibels(emphasis * 0.4f);
+    
+    sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 100.0f, 12000.0f, -6.0f, 12.0f, 0.27f));
+    sidechainBPF.setFrequency(sidechainBPFFreq);
+    
+    SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 40.0f, 10.0f, 1.0f);
+
+    // 사이드체인 적용
+    sidechainTilt.process(sidechainContext);
+    sidechainTiltGain.process(sidechainContext);
+    
+    if (sidechainBPFOn) {
+      sidechainBPF.process(sidechainContext);
+      sidechainBPFGain.process(sidechainContext);
+    }
+    
     for (size_t n = 0; n < numSamples; ++n)
     {
-      SampleType linkedEnvelope = 0.0f;
-      
-      // 채널별 엔벨로프 계산
-      std::vector<SampleType> sampleEnvelopes(numChannels, 0.0f);
+      SampleType linkedDiff = 0.0f; // 채널 링크
+      std::vector<SampleType> sampleDiffs(numChannels, 0.0f); // 채널별
       for (size_t ch = 0; ch < numChannels; ++ch)
       {
-        SampleType sample = inputBlock.getChannelPointer(ch)[n];
-        sampleEnvelopes[ch] = transientFollower.processSample(sample, ch); // 엔벨로프 팔로워
+        SampleType sideChainSample = sidechainBlock.getChannelPointer(ch)[n];
+        sampleDiffs[ch] = transientFollower.processSample(sideChainSample, ch); // 엔벨로프 팔로워
       }
       
-      // Step 2: 링크 모드 처리
-      if (linkChannels)
-      {
+      // 링크 모드 처리
+      if (linkChannels) {
         // 평균값 링크 (원하면 max() 등 다른 방식 가능)
-        for (auto v : sampleEnvelopes) linkedEnvelope += v;
-        linkedEnvelope /= (SampleType)numChannels;
+        // for (auto v : sampleEnvelopes) linkedEnvelope += v;
+        // linkedEnvelope /= (SampleType)numChannels;
+
+        // 최대값 링크
+        linkedDiff = *std::max_element(sampleDiffs.begin(), sampleDiffs.end());
       }
       
       for (size_t ch = 0; ch < numChannels; ++ch)
       {
-        SampleType dynamicNoise = linkChannels ? linkedEnvelope : sampleEnvelopes[ch];
+        SampleType diff = linkChannels ? linkedDiff : sampleDiffs[ch];
+
+        // Threshold, Ratio
+        diff = diff > 0 ? diff : 0.0f; // 0 아래 0.0f
+        if (diff < threshold)
+          diff = 0.0f; // Threshold 아래 0.0f
+        else
+          diff = threshold + ((diff - threshold) / ratio); // 트레숄드 보다 높은건 Ratio 적용
+        diff = juce::jlimit(0.0f, 1.0f, diff); // 안전하게 제한
         
-        SampleType in = inputBlock.getChannelPointer(ch)[n];
-        SampleType out = 0;
-        // out = hfClick.processSample(ch, static_cast<float>(1.0));
-        // out = resonator.processSample(ch, static_cast<float>(in));
-        // out = bitCrusher.processSample(static_cast<float>(in));
+        diff *= thresholdGain;
+
+        // Transient envelope
+        if (diff > shapeEnv[ch])
+          shapeEnv[ch] = attack * (shapeEnv[ch] - diff) + diff;
+        else
+          shapeEnv[ch] = release * (shapeEnv[ch] - diff) + diff;
+        
+        SampleType out = inputBlock.getChannelPointer(ch)[n];
+        out = hfClick.processSample(shapeEnv[ch] > 0.001f ? shapeEnv[ch] : 0.0f );
+        // out = bitCrusher.processSample(static_cast<float>(out));
         // out = airLayer.processSample();
-        out = (noiseGenerator.nextFloat() * 2.0f - 1.0f);
         
 #if !CHECK_ENV
-        outputBlock.getChannelPointer(ch)[n] = dynamicNoise * out;
+        outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch] * out;
 #else
-        outputBlock.getChannelPointer(ch)[n] = dynamicNoise;
+        outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch];
 #endif
+        // outputBlock.getChannelPointer(ch)[n] = sidechainBlock.getChannelPointer(ch)[n]; // 사이드체인
       }
     }
   }
@@ -124,15 +148,18 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void setSidechainBPFOn(bool value) { sidechainBPFOn = value; }
   void setSidechainBPFFreq(float value) { sidechainBPFFreq = value; }
   
+  void setAttack(SampleType a) { attack = calcCoeff(a,sampleRate); }
+  void setRelease(SampleType r) { release = calcCoeff(r,sampleRate); }
+  void setThreshold(SampleType t) { threshold = t; }
+  void setThresholdDecibels(SampleType t) { threshold = decibelToLinear(t); }
+  void setRatio(SampleType value) { ratio = value; }
+
   private:
   double sampleRate = 44100.0;
   int numChannels = 2;
   bool linkChannels = true;
   
-  juce::Random noiseGenerator;
-  
   HFClick hfClick;
-  TransientResonator resonator;
   BitCrusher bitCrusher;
   AirLayer airLayer;
   
@@ -144,4 +171,12 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   dsp::Gain<SampleType> sidechainBPFGain;
   bool sidechainBPFOn = false;
   float sidechainBPFFreq = 1000.0f;
+  
+  std::vector<SampleType> shapeEnv;
+  
+  SampleType attack = 0.0f;
+  SampleType release = 0.0f;
+  SampleType threshold = 0.03f;
+  SampleType ratio = 20.0f;
+  dsp::Gain<SampleType> thresholdGain;
 };

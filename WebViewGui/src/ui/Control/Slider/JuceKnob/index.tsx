@@ -73,11 +73,15 @@ export default function JuceSlider({
     resetValue();
   };
 
+  const dragStart = () => {
+    sliderState.sliderDragStarted();
+  };
+
   const mouseDown = (e: React.MouseEvent) => {
     if (e.metaKey) {
       resetValue();
     } else {
-      sliderState.sliderDragStarted();
+      // sliderState.sliderDragStarted();
     }
   };
 
@@ -147,6 +151,7 @@ export default function JuceSlider({
         onChangeCommitted={changeCommitted}
         onMouseDown={mouseDown}
         onDoubleClick={doubleClick}
+        onDragStart={dragStart}
         onMouseOver={() => setOver(true)}
         onMouseLeave={() => setOver(false)}
       />

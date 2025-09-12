@@ -12,4 +12,3 @@
 
 #define CHECK_ENV false
 #define ADVANCED false
-#define EMPHASIS_BPF false

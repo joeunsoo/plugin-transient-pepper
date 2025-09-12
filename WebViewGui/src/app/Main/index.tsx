@@ -5,6 +5,7 @@ import SectionShape from './SectionShape';
 import SectionMix from './SectionMix';
 import SectionTone from './SectionTone';
 import SectionGraph from './SectionGraph';
+import SectionAdvanced from './SectionAdvanced';
 
 export default function App() {
 

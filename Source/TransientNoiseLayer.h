@@ -15,58 +15,29 @@
 // HFClick
 class HFClick
 {
-  public:
-  void prepare(const juce::dsp::ProcessSpec& spec)
-  {
-    sr = spec.sampleRate;
-    phase = 0;
-    osc.initialise([](float x) { return std::sin(x); });
-    dsp::ProcessSpec pspec{ sr, spec.maximumBlockSize, spec.numChannels };
-    osc.prepare(pspec);
-  }
-  
-  float processSample(int channel, float trig)
-  {
-    if (trig > 0.0f)
+public:
+    void prepare(const juce::dsp::ProcessSpec& spec)
     {
-      float value = 0.3f * osc.processSample(phase);
-      phase += 2.0f * juce::MathConstants<float>::pi * 10000.0f / sr; // 10kHz
-      return value;
+        sr = spec.sampleRate;
+        dsp::ProcessSpec pspec{ sr, spec.maximumBlockSize, spec.numChannels };
+        
+        osc.initialise([](float x){ return std::sin(x); });
+        osc.prepare(pspec);
+        osc.setFrequency(10000.0f); // 10 kHz
     }
-    else
-    {
-      return 0.0f;
-    }
-  }
-  
-  private:
-  double sr = 44100.0;
-  float phase = 0.0f;
-  juce::dsp::Oscillator<float> osc;
-};
 
-//==============================================================================
-// TransientResonator
-class TransientResonator
-{
-  public:
-  void prepare(const juce::dsp::ProcessSpec& spec)
-  {
-    dsp::ProcessSpec pspec = spec;
-    filter.reset();
-    filter.prepare(pspec);
-    filter.setType(juce::dsp::StateVariableTPTFilterType::bandpass);
-    filter.setCutoffFrequency(2000.0f);
-    filter.setResonance(1.0f);
-  }
-  
-  float processSample(int channel, float input)
-  {
-    return filter.processSample(channel, input);
-  }
-  
-  private:
-  juce::dsp::StateVariableTPTFilter<float> filter;
+    float processSample(float trig)
+    {
+        if (trig > 0.0f)
+        {
+            return 0.3f * osc.processSample(0.0f); // input은 0으로 그냥 호출
+        }
+        return 0.0f;
+    }
+
+private:
+    double sr = 44100.0;
+    juce::dsp::Oscillator<float> osc;
 };
 
 //==============================================================================
@@ -76,16 +47,16 @@ class BitCrusher
   public:
   void prepare(const juce::dsp::ProcessSpec& spec)
   {
-    step = 1.0f / 8.0f;
+    step = 1.0f / 2.0f;
   }
   
   float processSample(float input)
   {
-    return std::floor(input / step) * step;
+    return std::floor(input / step) * step * 1.0f;
   }
   
   private:
-  float step = 1.0f / 8.0f;
+  float step = 1.0f / 2.0f;
 };
 
 //==============================================================================
@@ -101,8 +72,7 @@ class AirLayer
   
   float processSample()
   {
-    return 0.05f * rng.nextFloat();
-    // return (rng.nextFloat() * 2.0f - 1.0f);
+    return 1.0f * rng.nextFloat();
   }
   
   private:
