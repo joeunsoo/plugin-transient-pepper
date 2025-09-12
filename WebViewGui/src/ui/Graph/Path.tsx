@@ -42,7 +42,6 @@ export default function Page({
   return (
     <motion.path
       d={pathData}
-      strokeWidth={2}
       r={height}
       fill="none"
       animate={{ d: pathData }}

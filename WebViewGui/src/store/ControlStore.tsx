@@ -4,6 +4,9 @@ interface ControlState {
   bypassed: boolean,
   setBypass: (value: boolean) => void;
 
+  threshold: number,
+  setThreshold: (value: number) => void;
+
   // 툴팁 포커스 엘리멘트
   focusAnchor?: HTMLElement | null;
   setAnchor: (el: HTMLElement | null, open: boolean) => void;
@@ -13,6 +16,11 @@ export const uesControlStore = create<ControlState>((set) => ({
   bypassed: false,
   setBypass: (value: boolean) => set(() => ({
     bypassed: value,
+  })),
+
+  threshold: 0,
+  setThreshold: (value: number) => set(() => ({
+    threshold: value,
   })),
 
   focusAnchor: undefined,

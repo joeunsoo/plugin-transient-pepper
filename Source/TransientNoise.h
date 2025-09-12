@@ -118,6 +118,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
           shapeEnv[ch] = attack * (shapeEnv[ch] - diff) + diff;
         else
           shapeEnv[ch] = release * (shapeEnv[ch] - diff) + diff;
+        shapeEnv[ch] = juce::jlimit(-1.0f,1.0f,shapeEnv[ch]);
 
         envBlock.getChannelPointer(ch)[n] = shapeEnv[ch]; // 보관
 

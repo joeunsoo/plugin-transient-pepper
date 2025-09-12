@@ -20,7 +20,7 @@ import { uesControlStore } from '@/store/ControlStore';
 import Stack from '@mui/material/Stack';
 import type { UIProps } from '@/types/UI';
 
-interface JuceSliderProps extends UIProps, BoxProps {
+interface JuceSliderProps extends UIProps, Omit<BoxProps,'onChange'> {
   identifier: string,
   title?: string,
   subDigit?: number
@@ -31,6 +31,7 @@ interface JuceSliderProps extends UIProps, BoxProps {
   ringColor?: string
   lowIcon?: React.ReactNode
   highIcon?: React.ReactNode
+  onChange?: (v: number) => void
 }
 
 export default function JuceSlider({
@@ -43,10 +44,11 @@ export default function JuceSlider({
   color = 'primary',
   ringColor = 'primary',
   ignoreBypass = false,
-  addTest=[],
+  addTest = [],
   lowIcon,
   highIcon,
   sx,
+  onChange,
   ...props
 }: JuceSliderProps) {
   const ref = useRef<HTMLSpanElement | null>(null);
@@ -61,12 +63,18 @@ export default function JuceSlider({
     if (typeof newValue === 'number') {
       sliderState.setNormalisedValue(newValue);
       setValue(newValue);
+      if (onChange) {
+        onChange(newValue);
+      }
     }
   };
 
   const resetValue = () => {
     sliderState.setNormalisedValue(defaultValue);
     setValue(defaultValue);
+    if (onChange) {
+      onChange(defaultValue);
+    }
   };
 
   const doubleClick = () => {
@@ -162,7 +170,7 @@ export default function JuceSlider({
           justifyContent="center"
           spacing={1}
           sx={{
-            transform:'translateY(-0.5em)'
+            transform: 'translateY(-0.5em)'
           }}
         >
           {lowIcon}

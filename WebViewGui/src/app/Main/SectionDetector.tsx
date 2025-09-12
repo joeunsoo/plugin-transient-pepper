@@ -5,11 +5,13 @@ import Stack, { type StackProps } from '@mui/material/Stack';
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import SectionTitle from './SectionTitle';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
+import { uesControlStore } from '@/store/ControlStore';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
   const [bpfOn, setBpfOn] = useState<boolean>(true);
+  const { setThreshold } = uesControlStore();
 
   return (
     <Stack
@@ -50,6 +52,7 @@ export default function Page({
           defaultValue={0.5}
           subDigit={1}
           ringColor="secondary"
+          onChange={(v) => setThreshold(v)}
         />
         <JuceKnob
           identifier="bpfFrequencySlider"
