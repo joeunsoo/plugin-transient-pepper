@@ -118,6 +118,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
   
+  
   transientNoise.setGeneratorType(parameters.generatorType.getIndex());
   transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
   transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
@@ -153,31 +154,44 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
   /// DSP 계산 시작
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
+  
+  
+  const auto numSamples = outBlock.getNumSamples();
+  const auto numChannels = outBlock.getNumChannels();
+  
   inputPeakMeter.push (outBlock);
 
-  dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
-  
-  transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-  envPeakMeter.push (transientNoise.envBlock); // Ouput 피크미터 저장
-
-  tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
-  tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-  
-  midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
-
-#if !CHECK_ENV && !CHECK_SIDECHAIN && !DISABLE_DCOFFSET_FILTER 
-  dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
+  if (!parameters.bypass.get()) { // Bypass 아닐때
+    dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
+    
+    transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
+    envPeakMeter.push (transientNoise.envBlock); // Ouput 피크미터 저장
+    
+    tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+    tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+    
+    midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
+    
+#if !CHECK_ENV && !CHECK_SIDECHAIN && !DISABLE_DCOFFSET_FILTER
+    dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
 #endif
-  
-  noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 노이즈 게인
-  noisePeakMeter.push (outBlock); // 노이즈 레벨 미터 저장
-
-  dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
-  
-  if (!parameters.bypass.get()) {
+    
+    noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 노이즈 게인
+    noisePeakMeter.push (outBlock); // 노이즈 레벨 미터 저장
+    
+    dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스
+    
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 출력 게인
+  } else { // Bypass 중
+    juce::AudioBuffer<float> buffer((int)numChannels, (int)numSamples);
+    buffer.clear(); // 완전히 0으로 초기화
+
+    juce::dsp::AudioBlock<float> emptyBlock(buffer);
+
+    envPeakMeter.push (emptyBlock); // Ouput 피크미터 저장
+    noisePeakMeter.push (emptyBlock); // 노이즈 레벨 미터 저장
   }
-  
+
   peakMeter.push (outBlock); // Ouput 피크미터 저장
   
   // 미터 데이터 락
