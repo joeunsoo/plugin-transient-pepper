@@ -19,7 +19,6 @@
 #include "TransientNoise.h"
 #include "MidSideMixer.h"
 #include "TiltEQ.h"
-#include "TransientNoiseSculptor.h"
 
 //==============================================================================
 class PluginAudioProcessor  : public AudioProcessor
@@ -70,20 +69,13 @@ class PluginAudioProcessor  : public AudioProcessor
   TiltEQProcessor<float> tiltEQ;
   
   juce::dsp::DryWetMixer<float> dryWetMixer;
-  
-  TiltEQProcessor<float> detectorTiltEQ;
-  dsp::Gain<float> detectorTiltGain;
-
-  BandPassFilter<float> bandPassFilter;
-  dsp::Gain<float> bandPassFilterGain;
 
   TransientNoiseProcessor<float> transientNoise;
   MidSideMixer<float> midSideMixer;
-  
-  TransientNoiseSculptor<float> noiseSculptor;
 
   /*
    0, 1 = L,R 출력 피크 레벨
+   2, 3 = L,R 노이즈 레벨
   */
   std::vector<float> analysisData = [] { return std::vector<float> (16, 0.0f); }();
 

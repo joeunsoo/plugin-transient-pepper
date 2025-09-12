@@ -77,16 +77,6 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   dryWetMixer.setMixingRule (juce::dsp::DryWetMixingRule::linear);
   dryWetMixer.prepare (spec);
   dryWetMixer.setWetMixProportion (1.0f);
-  
-  detectorTiltEQ.prepare(spec);
-  detectorTiltEQ.reset();
-  detectorTiltGain.setGainDecibels(0.0f);
-  detectorTiltGain.reset();
-
-  bandPassFilter.prepare(spec);
-  bandPassFilter.reset();
-  bandPassFilterGain.prepare(spec);
-  bandPassFilterGain.reset();
 
   transientNoise.prepare(spec);
   transientNoise.reset();
@@ -100,8 +90,6 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   peakMeter.prepare(channels, samplesPerBlock);
   dcBlocker.prepare(spec);
   dcBlocker.reset();
-  
-  noiseSculptor.prepare(spec);
 }
 
 bool PluginAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
@@ -127,26 +115,15 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
   
-  detectorTiltEQ.setGain(parameters.emphasis.get());
-  detectorTiltGain.setGainDecibels(parameters.emphasis.get() * 0.4f);
+  transientNoise.setEmphasis(parameters.emphasis.get());
+  transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
+  transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
   
-  bandPassFilter.setFrequency(parameters.bpfFrequency.get());
-  
-  float normalized = (parameters.bpfFrequency.get() - 100.0f) / (12000.0f - 100.0f); // (value - minFreq) / (maxFreq - minFreq)
-  float skewed = std::pow(normalized, 0.27f); // skew 적용, 중앙값 1000Hz로 맞춘 경우
-
-  bandPassFilterGain.setGainDecibels((skewed * 18.0f) - 12.0f);
-
   transientNoise.transientFollower.setTAttack(parameters.attack.get());
   transientNoise.transientFollower.setTRelease(parameters.release.get());
   transientNoise.transientFollower.setThresholdDecibels(parameters.threshold.get());
   transientNoise.setLinkChannels(parameters.linkChannels.get());
   
-  // noiseSculptor.transientFollower.setTAttack(parameters.attack.get());
-  // noiseSculptor.transientFollower.setTRelease(parameters.release.get());
-  // noiseSculptor.transientFollower.setThresholdDecibels(parameters.threshold.get());
-  // noiseSculptor.setLinkChannels(parameters.linkChannels.get());
-
   noiseLevelGain.setGainDecibels(parameters.noiseLevelGain.get());
   
   tiltEQ.setGain(parameters.tilt.get());
@@ -178,16 +155,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
   dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
   
-  detectorTiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
-  detectorTiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-  
-  if (parameters.bpfPower.get()) {
-    bandPassFilter.process(dsp::ProcessContextReplacing<float> (outBlock));
-    bandPassFilterGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-  }
-
   transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
-  // noiseSculptor.process(dsp::ProcessContextReplacing<float> (outBlock));
 
   tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
   tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
