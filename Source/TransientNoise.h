@@ -51,6 +51,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void reset() override
   {
     std::fill(shapeEnv.begin(), shapeEnv.end(), 0.0f);
+    airLayer.reset();
   }
   
   void process(const juce::dsp::ProcessContextReplacing<SampleType>& context) override

@@ -67,8 +67,13 @@ class AirLayer
   void prepare(const juce::dsp::ProcessSpec& spec)
   {
     //rng.setSeedRandomly();
-    rng.setSeed(juce::Random::getSystemRandom().nextInt());
+    rng.setSeed(seedValue);
   }
+  void reset()
+  {
+    rng.setSeed(seedValue);
+  }
+  
   
   float processSample()
   {
@@ -77,4 +82,5 @@ class AirLayer
   
   private:
   juce::Random rng;
+  int seedValue = 20250912;
 };
