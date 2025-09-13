@@ -29,7 +29,7 @@ var
 
 procedure InitializeWizard;
 begin
-  VST3PathPage := CreateInputDirPage(wpWelcome,
+  VST3PathPage := CreateInputDirPage(wpLicense,
     'VST3 Installation Folder',
     '',
     'Choose the folder where the VST3 plugin will be installed.',
