@@ -17,7 +17,7 @@ class LicenseManager
   LicenseManager()
   {
     juce::PropertiesFile::Options options;
-    options.applicationName     = "JoEunsoo";
+    options.applicationName     = "com.joeunsoo";
     options.filenameSuffix      = "plist";
     options.osxLibrarySubFolder = "Preferences";
     options.storageFormat       = juce::PropertiesFile::storeAsBinary;
@@ -28,7 +28,7 @@ class LicenseManager
   String getActivate()
   {
     if (propertiesFile == nullptr) return {};
-    juce::String value = propertiesFile->getValue("TransientPepper", ""); // 기본값 10
+    juce::String value = propertiesFile->getValue("TransientPepperLicence", ""); // 기본값 10
     
     return value;
   }
@@ -37,7 +37,7 @@ class LicenseManager
   {
     if (propertiesFile == nullptr) return;
 
-    propertiesFile->setValue("TransientPepper", email);
+    propertiesFile->setValue("TransientPepperLicence", email);
     propertiesFile->saveIfNeeded();
   }
   
@@ -45,7 +45,7 @@ class LicenseManager
   {
     if (propertiesFile == nullptr) return;
 
-    propertiesFile->setValue("TransientPepper", "");
+    propertiesFile->setValue("TransientPepperLicence", "");
     propertiesFile->saveIfNeeded();
   }
   
