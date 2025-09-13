@@ -128,17 +128,19 @@ export default function LoginForm() {
           )}
         />
 
-        <Typography
-          textAlign="right"
-          onClick={() => {
-            visitWebsite(`${CompanyWebsite}/reset-password`);
-          }}
-          sx={{
-            fontSize: 'var(--mui-fontSize-xs)'
-          }}
-        >
-          Forgot password?
-        </Typography>
+        <Stack alignItems="end">
+          <Typography
+            textAlign="right"
+            onClick={() => {
+              visitWebsite(`${CompanyWebsite}/reset-password`);
+            }}
+            sx={{
+              fontSize: 'var(--mui-fontSize-xs)'
+            }}
+          >
+            Forgot password?
+          </Typography>
+        </Stack>
         <Button
           loading={loading}
           type="submit"
