@@ -76,7 +76,7 @@ export default tseslint.config([
       'arrow-body-style': 'warn', // 화살표 함수 안에 return을 사용할 수 있다.
       'react/no-unescaped-entities': 'warn', // 문자열 내에서 " ' > } 허용
       'implicit-arrow-linebreak': 'warn', // 연산자 다음 줄 바꿈을 사용할 수 있다.
-      'linebreak-style': ['error', 'unix'], // unix = LF, windows = CRLF
+      'linebreak-style': ['off', 'unix'], // unix = LF, windows = CRLF
 
       // 'react/no-array-index-key': 'warn', // key 값으로 index
       'react/prop-types': 'warn',

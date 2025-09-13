@@ -14,24 +14,29 @@
 static ZipFile* getZipFile()
 {
 #if DEBUG
-  static auto stream = createAssetInputStream ("webviewplugin-gui_1.0.0.zip", AssertAssetExists::no);
-  
-  if (stream == nullptr)
-    return nullptr;
-  
-  static ZipFile f { stream.get(), false };
+  static std::unique_ptr<InputStream> stream;
+
+  if (!stream)
+      stream = createAssetInputStream("webviewplugin-gui_1.0.0.zip", AssertAssetExists::no);
+
+  if (!stream)
+      return nullptr;
+
+  static ZipFile f{ stream.get(), false }; // stream 수명은 f보다 길어야 함
   return &f;
 #else
-  const auto resourceDir = File::getSpecialLocation (File::currentExecutableFile)
-    .getParentDirectory().getParentDirectory().getChildFile ("Resources");
-  const auto resourceFile = resourceDir.getChildFile ("gui.zip");
-  
-  static auto stream = resourceFile.createInputStream();
-  
-  if (stream == nullptr)
-    return nullptr;
-  
-  static ZipFile f { stream.get(), false };
+  const auto resourceDir = File::getSpecialLocation(File::currentExecutableFile)
+      .getParentDirectory().getParentDirectory().getChildFile("Resources");
+  const auto resourceFile = resourceDir.getChildFile("gui.zip");
+
+  static std::unique_ptr<InputStream> stream;
+  if (!stream)
+      stream = resourceFile.createInputStream();
+
+  if (!stream)
+      return nullptr;
+
+  static ZipFile f{ stream.get(), false };
   return &f;
 #endif
 }
@@ -69,10 +74,14 @@ static String getExtension (String filename)
 
 static auto streamToVector (InputStream& stream)
 {
-  std::vector<std::byte> result ((size_t) stream.getTotalLength());
-  stream.setPosition (0);
-  [[maybe_unused]] const auto bytesRead = stream.read (result.data(), result.size());
-  jassert (bytesRead == (ssize_t) result.size());
+  const auto len = stream.getTotalLength();
+  if (len <= 0)
+      return std::vector<std::byte>{};
+
+  std::vector<std::byte> result((size_t)len);
+  stream.setPosition(0);
+  const auto bytesRead = stream.read(result.data(), result.size());
+  jassert(bytesRead == (ssize_t)result.size());
   return result;
 }
 
