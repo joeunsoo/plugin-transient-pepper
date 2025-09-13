@@ -144,14 +144,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       })
       .withNativeFunction ("setActivate", [this](auto& var, auto complete) {
         processorRef.licenseManager.setActivate(var[0].toString());
+        processorRef.activated = true;
         complete ("done");
       })
       .withNativeFunction ("setDeactivate", [this](auto& var, auto complete) {
         processorRef.licenseManager.setDeactivate();
+        processorRef.activated = false;
         complete ("done");
       })
       .withNativeFunction ("startTrial", [this](auto& var, auto complete) {
         int64 value = processorRef.licenseManager.startTrial();
+        processorRef.activated = true;
         complete (value);
       })
       .withNativeFunction ("getTrial", [this](auto& var, auto complete) {

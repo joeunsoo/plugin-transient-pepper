@@ -91,6 +91,7 @@ class PluginAudioProcessor  : public AudioProcessor
   int windowScale;
   
   LicenseManager licenseManager;
+  bool activated;
 
   private:
   juce::ApplicationProperties appProperties;

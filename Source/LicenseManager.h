@@ -83,6 +83,18 @@ class LicenseManager
     return timestamp;
   }
   
+  bool isTrialExpired()
+  {
+      int64 startTime = getTrial(); // 복호화된 트라이얼 시작 timestamp
+      if (startTime == 0)
+          return true; // 트라이얼이 시작되지 않았으면 만료로 간주
+
+      int64 now = juce::Time::getCurrentTime().toMilliseconds();
+      const int64 THIRTY_DAYS_MS = int64(30) * 24 * 60 * 60 * 1000; // 30일을 ms로
+
+      return (now - startTime) > THIRTY_DAYS_MS;
+  }
+
   private:
   
   // ---------------- XOR + Base64 ----------------

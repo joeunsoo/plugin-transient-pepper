@@ -42,6 +42,15 @@ state (*this, nullptr, "STATE", std::move (layout))
   
   // 값 불러오기
   windowScale  = props->getIntValue("windowScale", 100);
+  
+  // 라이센스 검사
+  activated = false;
+  if (licenseManager.getActivate().length() > 0) {
+    activated = true;
+  }
+  if (!licenseManager.isTrialExpired()) {
+    activated = true;
+  }
 }
 
 //==============================================================================
@@ -161,7 +170,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   
   inputPeakMeter.push (outBlock);
 
-  if (!parameters.bypass.get()) { // Bypass 아닐때
+  if (!parameters.bypass.get() && activated) { // Bypass 아닐때, 그리고 제품활성화 중일때
     dryWetMixer.pushDrySamples (outBlock); // Dry 신호 저장
     
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
