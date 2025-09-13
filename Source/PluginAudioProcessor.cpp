@@ -30,7 +30,7 @@ state (*this, nullptr, "STATE", std::move (layout))
   juce::PropertiesFile::Options options;
   options.applicationName     = "preferences";
   options.filenameSuffix      = ".xml";
-  options.folderName          = "JoEunsoo/RustyTone"; // macOS: ~/Library/Application Support/JoEunsoo/RustyTone.settings
+  options.folderName          = "JoEunsoo/TransientPepper"; // macOS: ~/Library/Application Support/JoEunsoo/RustyTone.settings
   options.osxLibrarySubFolder = "Application Support";
   options.storageFormat       = juce::PropertiesFile::storeAsXML;
   

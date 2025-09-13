@@ -13,11 +13,13 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import Scale from './Scale';
 import { useAboutStore } from '@/store/AboutStore';
 import { CompanyWebsite } from '@/define';
+import { useActivateStore } from '@/store/ActivateStore';
 
 const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
 export default function Page() {
   const { setOpen: setAboutOpen  } = useAboutStore();
+  const { setOpen: setActivateOpen, activate } = useActivateStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -86,8 +88,8 @@ export default function Page() {
           About
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
-          Deactivate
+        <MenuItem onClick={() => { setActivateOpen(true); handleClose(); }}>
+          {activate ? 'Deactivate' : 'Activate'}
         </MenuItem>
       </Menu>
     </Box>

@@ -14,6 +14,8 @@
       <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
             file="Source/NamespaceParameterId.h"/>
       <FILE id="ogmPq8" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
+      <FILE id="uqbP9c" name="LicenseManager.h" compile="0" resource="0"
+            file="Source/LicenseManager.h"/>
       <FILE id="UafBku" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="Ivb2Pa" name="PluginWrapper.h" compile="0" resource="0" file="Source/PluginWrapper.h"/>
       <FILE id="syddNs" name="PluginParameters.h" compile="0" resource="0"

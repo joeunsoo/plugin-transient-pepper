@@ -5,6 +5,7 @@ import {
 } from '@mui/material/styles';
 
 export const toFixedDigits = 4;
+export const PluginCode = 'transient-pepper';
 export const PluginName = 'Transient Pepper';
 export const PluginVersion = 'v1.0.0';
 export const CompanyName = 'JoEunsoo';

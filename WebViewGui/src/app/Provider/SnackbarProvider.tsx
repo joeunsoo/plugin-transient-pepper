@@ -1,29 +1,30 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useSnackbarStore } from '@/store/SnackbarStore';
+
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import { useSnackbarStore } from '@/store/SnackbarStore';
+import Alert from '@mui/material/Alert';
 
 export default function App() {
-  const { open, onClose, message } = useSnackbarStore();
+  const { refreshCount, open, onClose, message, options } = useSnackbarStore();
+  const [count, setCount] = useState(0);
 
-  const action = (
-    <IconButton
-      size="small"
-      aria-label="close"
-      color="inherit"
-      onClick={onClose}
-    >
-      <CloseIcon fontSize="small" />
-    </IconButton>
-  );
+  useEffect(() => {
+    setCount(refreshCount);
+  }, [refreshCount]);
+
+  if (count !== refreshCount) {
+    return null;
+  }
 
   return (
     <Snackbar
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={3000}
       onClose={(event, reason) => {
         if (reason === 'clickaway') {
           return;
@@ -31,8 +32,24 @@ export default function App() {
 
         onClose();
       }}
-      message={message}
-      action={action}
-    />
+    >
+      <Alert
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        severity={options.variant || 'info'}
+        action={
+        <IconButton
+          size="small"
+          color="inherit"
+          onClick={onClose}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+        }
+      >
+        {message}
+      </Alert>
+
+    </Snackbar>
   );
 }

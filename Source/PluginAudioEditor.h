@@ -134,10 +134,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withNativeFunction ("getWindowScale", [this](auto& var, auto complete) {
         complete (juce::String(processorRef.windowScale));
       })
-      .withNativeFunction ("sayHello", [this](auto& var, auto complete) {
-        juce::String value = juce::String(processorRef.outputGain.getGainDecibels());
-        complete ("outputGain value is " + value);
-        // complete ("Hello " + var[0].toString());
+      .withNativeFunction ("getActivate", [this](auto& var, auto complete) {
+        juce::String value = juce::String(processorRef.licenseManager.getActivate());
+        complete (value);
+      })
+      .withNativeFunction ("setActivate", [this](auto& var, auto complete) {
+        processorRef.licenseManager.setActivate(var[0].toString());
+        complete ("done");
+      })
+      .withNativeFunction ("setDeactivate", [this](auto& var, auto complete) {
+        processorRef.licenseManager.setDeactivate();
+        complete ("done");
       })
       .withNativeFunction ("visitWebsite", [](auto& var, auto complete) {
         const URL newUrl = URL (var[0].toString());

@@ -19,6 +19,7 @@
 #include "TransientNoise.h"
 #include "MidSideMixer.h"
 #include "TiltEQ.h"
+#include "LicenseManager.h"
 
 //==============================================================================
 class PluginAudioProcessor  : public AudioProcessor
@@ -89,10 +90,13 @@ class PluginAudioProcessor  : public AudioProcessor
 
   int windowScale;
   
+  LicenseManager licenseManager;
+
   private:
   juce::ApplicationProperties appProperties;
   juce::PropertiesFile* props = nullptr; // 소유권은 ApplicationProperties가 관리
   
+
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
   

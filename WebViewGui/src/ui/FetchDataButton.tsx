@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { useSnackbarStore } from '@/store/SnackbarStore';
 
 export default function App() {
-  const { setOpen } = useSnackbarStore();
+  const { enqueueSnackbar } = useSnackbarStore();
 
   return (
     <Button
@@ -17,7 +17,7 @@ export default function App() {
         fetch(Juce.getBackendResourceAddress('data.txt'))
           .then((response) => response.text())
           .then((text) => {
-            setOpen('Data fetched: ' + text);
+            enqueueSnackbar('Data fetched: ' + text);
 
             return null;
           }).catch(null);

@@ -60,7 +60,7 @@ export const themeVars = {
     // borderRadius: 4,
   },
   palette: {
-    // mode: 'dark',
+    mode: 'dark',
     background: {
       // default: '#f2f2f2',
       default: palette.secondary.blackest,

@@ -9,7 +9,7 @@ import { useSnackbarStore } from '@/store/SnackbarStore';
 const sayHello = Juce.getNativeFunction('sayHello');
 
 export default function App() {
-  const { setOpen } = useSnackbarStore();
+  const { enqueueSnackbar } = useSnackbarStore();
 
   return (
     <Button
@@ -20,7 +20,7 @@ export default function App() {
         // @ts-ignore
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sayHello('JUCE').then((result: any) => {
-          setOpen(result);
+          enqueueSnackbar(result);
 
           return null;
         }).catch(null);
