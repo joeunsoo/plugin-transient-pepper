@@ -10,6 +10,7 @@ export const PluginName = 'Transient Pepper';
 export const PluginVersion = 'v1.0.0';
 export const CompanyName = 'JoEunsoo';
 export const CompanyWebsite = 'https://joeunsoo.com';
+export const TrialDays = 30;
 
 export const controlParameterIndexAnnotation = 'controlparameterindex';
 export const AnalysisDataReceiverEventId = 'analysisData';

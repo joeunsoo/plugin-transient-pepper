@@ -135,8 +135,12 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
         complete (juce::String(processorRef.windowScale));
       })
       .withNativeFunction ("getActivate", [this](auto& var, auto complete) {
-        juce::String value = juce::String(processorRef.licenseManager.getActivate());
-        complete (value);
+        juce::String activate = juce::String(processorRef.licenseManager.getActivate());
+        int64 trial = processorRef.licenseManager.getTrial();
+        auto obj = new juce::DynamicObject();
+        obj->setProperty("activate", activate);
+        obj->setProperty("trial", trial);
+        complete (obj);
       })
       .withNativeFunction ("setActivate", [this](auto& var, auto complete) {
         processorRef.licenseManager.setActivate(var[0].toString());
@@ -145,6 +149,14 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withNativeFunction ("setDeactivate", [this](auto& var, auto complete) {
         processorRef.licenseManager.setDeactivate();
         complete ("done");
+      })
+      .withNativeFunction ("startTrial", [this](auto& var, auto complete) {
+        int64 value = processorRef.licenseManager.startTrial();
+        complete (value);
+      })
+      .withNativeFunction ("getTrial", [this](auto& var, auto complete) {
+        int64 value = processorRef.licenseManager.getTrial();
+        complete (value);
       })
       .withNativeFunction ("visitWebsite", [](auto& var, auto complete) {
         const URL newUrl = URL (var[0].toString());

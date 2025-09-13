@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import { CompanyWebsite, PluginCode } from '@/define';
 import { useState } from 'react';
 import { useActivateStore } from '@/store/ActivateStore';
+import Trial from './Trial';
 
 type LoginFormValues = {
   userEmail: string;
@@ -147,12 +148,7 @@ export default function LoginForm() {
           Sign in
         </Button>
 
-        <Button
-          variant="outlined"
-          sx={{ width: '100%' }}
-        >
-          Start Trial (3 days remaining)
-        </Button>
+        <Trial />
       </Stack>
     </form>
   );

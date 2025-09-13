@@ -22,7 +22,7 @@ export default function App() {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getActivate().then((result: any) => {
-      setEmail(result);
+      setEmail(result.activate);
 
       return null;
     }).catch(null);

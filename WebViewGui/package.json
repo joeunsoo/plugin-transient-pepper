@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.2",
     "@mui/material": "^7.3.2",
+    "dayjs": "^1.11.18",
     "framer-motion": "^12.23.12",
     "juce-framework-frontend": "file:../../../JUCE/modules/juce_gui_extra/native/javascript",
     "react": "^19.1.1",

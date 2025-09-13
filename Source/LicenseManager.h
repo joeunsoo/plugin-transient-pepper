@@ -32,6 +32,7 @@ class LicenseManager
     
     return value;
   }
+
   void setActivate(String email)
   {
     if (propertiesFile == nullptr) return;
@@ -46,6 +47,27 @@ class LicenseManager
 
     propertiesFile->setValue("TransientPepper", "");
     propertiesFile->saveIfNeeded();
+  }
+  
+  int64 getTrial()
+  {
+    if (propertiesFile == nullptr) return {};
+    int64 value = (int64) propertiesFile->getValue("TransientPepperTrial", "0").getLargeIntValue();
+
+    return value;
+  }
+
+  int64 startTrial()
+  {
+    if (propertiesFile == nullptr)
+      return 0;
+    
+    auto now = juce::Time::getCurrentTime();
+    int64 timestamp = now.toMilliseconds(); // 1970 기준 ms
+
+    propertiesFile->setValue("TransientPepperTrial", (juce::int64) timestamp);
+    propertiesFile->saveIfNeeded();
+    return timestamp;
   }
   
   private:
