@@ -45,7 +45,7 @@
     <GROUP id="A9VZOH" name="Assets">
       <FILE id="SVPm6a" name="DemoUtilities.h" compile="0" resource="0" file="Source/DemoUtilities.h"/>
       <FILE id="lLMVeR" name="gui.zip" compile="0" resource="1" file="Assets/gui.zip"
-            xcodeResource="1"/>
+            xcodeResource="0"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
