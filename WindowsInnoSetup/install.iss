@@ -3,11 +3,11 @@
 ; ======================================
 
 [Setup]
-AppName=TransientPepper
-AppVersion=1.0
+AppName=JoEunsoo TransientPepper
+AppVersion=1.0.0
 DefaultDirName={pf}
-DefaultGroupName=TransientPepper
-OutputBaseFilename=TransientPepperSetup
+DefaultGroupName=JoEunsoo
+OutputBaseFilename=JETransientPepperSetup
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
