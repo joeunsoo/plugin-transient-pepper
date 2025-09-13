@@ -8,6 +8,7 @@ WebViewGUI/build
 /JuceLibraryCode/BinaryData.cpp
 /JuceLibraryCode/BinaryData.h
 
+/WindowsInnoSetup/Output
 # testing
 /coverage
 

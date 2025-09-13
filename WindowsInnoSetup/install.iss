@@ -5,21 +5,48 @@
 [Setup]
 AppName=TransientPepper
 AppVersion=1.0
-DefaultDirName={pf}\TransientPepper
+DefaultDirName={pf}
 DefaultGroupName=TransientPepper
 OutputBaseFilename=TransientPepperSetup
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=admin
+UsePreviousAppDir=no
+DisableDirPage=yes
 
 ; --------------------------------------
 ; 빌드 폴더 경로 설정
 ; (여기에 JUCE Release 빌드 경로를 맞춰주세요)
-#define BUILD_RELEASE_PATH "C:\Path\To\Your\JUCE\Build\Release"
+#define BUILD_RELEASE_PATH "D:\juce\projects\plugin-transient-pepper\Builds\VisualStudio2022\x64\Release\VST3\JETransientPepper.vst3\Contents\x86_64-win"
 
 [Files]
-; VST3 플러그인 복사
-Source: "{#BUILD_RELEASE_PATH}\JETransientPepper.vst3"; DestDir: "{commonfiles}\VST3"; Flags: ignoreversion
+Source: "{#BUILD_RELEASE_PATH}\JETransientPepper.vst3"; DestDir: "{code:GetVST3Dir}"; Flags: ignoreversion
 
-; AAX 플러그인 복사
-Source: "{#BUILD_RELEASE_PATH}\JETransientPepper.aaxplugin"; DestDir: "{commonfiles}\Avid\Audio\Plug-Ins"; Flags: ignoreversion recursesubdirs
+[Code]
+var
+  VST3PathPage: TInputDirWizardPage;
+
+procedure InitializeWizard;
+begin
+  VST3PathPage := CreateInputDirPage(wpWelcome,
+    'VST3 Installation Folder',
+    '',
+    'Choose the folder where the VST3 plugin will be installed.',
+    False, '');
+    
+  // Add a directory selection field to the page
+  VST3PathPage.Add('VST3 Installation Folder:');
+
+  // Set an initial default value for the directory (optional)
+  VST3PathPage.Values[0] := ExpandConstant('{cf64}\VST3');
+end;
+
+// [Files]에서 참조할 함수
+function GetVST3Dir(Value: string): string;
+begin
+  Result := VST3PathPage.Values[0];
+
+  // 폴더가 없으면 생성
+  if not DirExists(Result) then
+    ForceDirectories(Result);
+end;
