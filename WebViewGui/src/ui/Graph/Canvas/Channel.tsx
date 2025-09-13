@@ -1,5 +1,5 @@
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
-import Draw, { type EnvelopeGraphProps } from './draw';
+import Draw, { type EnvelopeGraphProps } from './Draw';
 import { useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
 import applySkew from '@/utils/applySkew';
 import { useRef } from 'react';
