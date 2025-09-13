@@ -63,7 +63,7 @@ export default function LoginForm() {
         startTrial().then((result: number) => {
           setTrial(result);
           setOpen(false);
-          enqueueSnackbar('Trail Start', { variant: 'success' });
+          enqueueSnackbar('Trial Start', { variant: 'success' });
 
           return null;
         }).catch(null);
