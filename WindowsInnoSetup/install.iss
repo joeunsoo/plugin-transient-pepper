@@ -14,6 +14,7 @@ PrivilegesRequired=admin
 UsePreviousAppDir=no
 DisableDirPage=yes
 
+LicenseFile=License.txt
 ; --------------------------------------
 ; 빌드 폴더 경로 설정
 ; (여기에 JUCE Release 빌드 경로를 맞춰주세요)
