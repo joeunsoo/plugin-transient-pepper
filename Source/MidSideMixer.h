@@ -32,7 +32,11 @@ class MidSideMixer : public juce::dsp::ProcessorBase
     
     auto numSamples = inBlock.getNumSamples();
     auto numChannels = inBlock.getNumChannels();
-    
+
+    if (numChannels < 2) { // 모노면 그냥 넘어감
+      return;
+    }
+
     jassert(numChannels >= 2); // 최소 스테레오 필요
     
     for (int i = 0; i < numSamples; ++i)

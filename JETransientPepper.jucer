@@ -6,8 +6,9 @@
               projectType="audioplug" pluginAUIsSandboxSafe="1" pluginManufacturer="JoEunsoo"
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" id="juqXJH" jucerFormatVersion="1"
-              pluginVST3Category="Distortion" companyEmail="info@joeunsoo.com"
-              pluginName="JE Transient Pepper" pluginCode="tspp" pluginManufacturerCode="JOES">
+              companyEmail="info@joeunsoo.com" pluginName="JE Transient Pepper"
+              pluginCode="tspp" pluginManufacturerCode="JOES" pluginVST3Category="Dynamics"
+              pluginAAXCategory="8192">
   <MAINGROUP id="eUJieJ" name="JETransientPepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
       <FILE id="cUdXGx" name="Define.h" compile="0" resource="0" file="Source/Define.h"/>

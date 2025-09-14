@@ -127,7 +127,6 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
   
-  
   transientNoise.setGeneratorType(parameters.generatorType.getIndex());
   transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
   transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
