@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="1">
+    <title>JE Transient Pepper</title>
+    <allowed-os-versions>
+        <os-version min="12.0" />
+    </allowed-os-versions>
+    <license file="LICENSE.txt"/>
+    <options customize="always" rootVolumeOnly="true" hostArchitectures="x86_64,arm64" />
+    <domain enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true" />
+
+    <choices-outline>
+        <line choice="vst3" />
+        <line choice="au" />
+    </choices-outline>
+
+    <choice id="vst3" visible="true" start_selected="true" title="JE Transient Pepper VST3">
+        <pkg-ref id="com.JoEunsoo.JETransientPepper.vst3.pkg" version="1.0.0" onConclusion="none">com.JoEunsoo.JETransientPepper.vst3.pkg</pkg-ref>
+    </choice>
+
+    <choice id="au" visible="true" start_selected="true" title="JE Transient Pepper AU">
+        <pkg-ref id="com.JoEunsoo.JETransientPepper.au.pkg" version="1.0.0" onConclusion="none">com.JoEunsoo.JETransientPepper.au.pkg</pkg-ref>
+    </choice>
+
+</installer-gui-script>
