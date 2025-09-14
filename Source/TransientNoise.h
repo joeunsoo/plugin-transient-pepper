@@ -70,7 +70,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, 0.0f, 18.0f, 0.12f)); // 0.27f
     sidechainBPF.setFrequency(sidechainBPFFreq);
     
-    SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 40.0f, 10.0f, 1.0f);
+    SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 50.0f, 10.0f, 0.23f);
 
     // 사이드체인 적용
     
@@ -91,11 +91,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
       
       // 링크 모드 처리
       if (linkChannels) {
-        // 평균값 링크 (원하면 max() 등 다른 방식 가능)
-        // for (auto v : sampleEnvelopes) linkedEnvelope += v;
-        // linkedEnvelope /= (SampleType)numChannels;
-
-        // 최대값 링크
         linkedDiff = *std::max_element(sampleDiffs.begin(), sampleDiffs.end());
       }
       

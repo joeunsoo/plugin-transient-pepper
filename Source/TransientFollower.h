@@ -21,8 +21,8 @@ class TransientFollower
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
     
-    fastAttack = calcCoeff(0.0020f, sampleRate); // 0.0020
-    fastRelease = calcCoeff(0.0070f, sampleRate); // 0.0050
+    fastAttack = calcCoeff(0.0050f, sampleRate); // 0.0020
+    fastRelease = calcCoeff(0.00170f, sampleRate); // 0.0050
     slowAttack = calcCoeff(0.0200f, sampleRate);
     slowRelease = calcCoeff(0.1200f, sampleRate);
     

@@ -60,7 +60,7 @@ struct Parameters {
   bpfFrequency (addToLayout<AudioParameterFloat> (layout,
                                                   ID::bpfFrequency,
                                                   "BPF Freq",
-                                                  NormalisableRange<float> { 50.0f, 12000.0f, 0.1f, 3.6538f },
+                                                  NormalisableRange<float> { 50.0f, 12000.0f, 0.1f, 0.27375f },
                                                   1000.0f,
                                                   "Hz",
                                                   juce::AudioProcessorParameter::genericParameter,
@@ -127,7 +127,7 @@ struct Parameters {
                                                 ID::fastAttack,
                                                 "Fast Attack",
                                                 NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
-                                                0.0020f,
+                                                0.0050f,
                                                 "",
                                                 juce::AudioProcessorParameter::genericParameter
                                                 )),
@@ -136,7 +136,7 @@ struct Parameters {
                                                  ID::fastRelease,
                                                  "Fast Release",
                                                  NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
-                                                 0.0175f,
+                                                 0.0170f,
                                                  "",
                                                  juce::AudioProcessorParameter::genericParameter
                                                  )),
