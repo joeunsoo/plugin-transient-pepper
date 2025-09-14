@@ -21,7 +21,7 @@ class TransientFollower
     sampleRate = spec.sampleRate;
     numChannels = spec.numChannels;
     
-    fastAttack = calcCoeff(0.0050f, sampleRate); // 0.0020
+    fastAttack = calcCoeff(0.0040f, sampleRate); // 0.0020
     fastRelease = calcCoeff(0.00170f, sampleRate); // 0.0050
     slowAttack = calcCoeff(0.0200f, sampleRate);
     slowRelease = calcCoeff(0.1200f, sampleRate);
@@ -64,19 +64,26 @@ class TransientFollower
       slowEnv[ch] = slowAttack * (slowEnv[ch] - x) + x;
     else
       slowEnv[ch] = slowRelease * (slowEnv[ch] - x) + x;
-    
-    SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 20.0f, 10.0f, 0.23f);
 
+    SampleType commonGain = 3.0f;
     // Transient detection f-s
-    SampleType diff = fastEnv[ch] - slowEnv[ch];
-    diff = processThreshold(diff) * 1.2f;
-    
-    // Transient detection f/s
-    SampleType diffR = fastEnv[ch] / slowEnv[ch];
-    diffR = (diffR - 0.8f) * 0.05f * (1-threshold);
-    diffR = processThreshold(diffR) * threshold;
+    SampleType diffM = fastEnv[ch] - slowEnv[ch];
+    diffM *= 1.0f;
+    diffM = processThreshold(diffM);
+    diffM *= 5.0f + commonGain;
 
-    SampleType result = ((diff * 0.8f)+(diffR * 0.2f)) * thresholdGain;
+    // Transient detection f/s
+    // SampleType diffR = (fastEnv[ch] / slowEnv[ch]) - 0.8f;
+    // diffR = processThreshold(diffR);
+    // diffR *= 5.0f + commonGain;
+
+    // 높을수록 diffM이 많아짐
+    SampleType diff;
+    diff = diffM;
+
+    
+
+    SampleType result = diff;
     return result;
   }
 
@@ -85,8 +92,8 @@ class TransientFollower
   void setSlowAttack(SampleType a) { slowAttack = calcCoeff(a, sampleRate); }
   void setSlowRelease(SampleType r) { slowRelease = calcCoeff(r, sampleRate); }
   
-  SampleType threshold = 0.03f;
-  SampleType ratio = 2.0f;
+  SampleType threshold = 0.3f;
+  SampleType ratio = 1.5f;
   
   private:
   double sampleRate = 44100.0;

@@ -67,13 +67,16 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     sidechainBlock.copyFrom (inputBlock); // 원본 입력을 복사
     juce::dsp::ProcessContextReplacing<SampleType> sidechainContext (sidechainBlock);
 
-    sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, 0.0f, 18.0f, 0.12f)); // 0.27f
     sidechainBPF.setFrequency(sidechainBPFFreq);
     
     // 사이드체인 적용
     
     if (sidechainBPFOn) {
       sidechainBPF.process(sidechainContext);
+      sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, -6.0f, 12.0f, 0.12f)); // 0.27f
+      sidechainBPFGain.process(sidechainContext);
+    } else {
+      sidechainBPFGain.setGainDecibels(10.0f);
       sidechainBPFGain.process(sidechainContext);
     }
     
@@ -138,6 +141,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void setRelease(SampleType r) { release = calcCoeff(r,sampleRate); }
   void setThreshold(SampleType t) { transientFollower.threshold = t; }
   void setThresholdDecibels(SampleType t) { transientFollower.threshold = decibelToLinear(t); }
+  void setDynamicMix(SampleType value) { transientFollower.setDynamicMix(value); }
   void setRatio(SampleType value) { transientFollower.ratio = value; }
   void setGeneratorType(int value) { generatorType = value; }
   
