@@ -76,7 +76,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
       sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, -6.0f, 12.0f, 0.12f)); // 0.27f
       sidechainBPFGain.process(sidechainContext);
     } else {
-      sidechainBPFGain.setGainDecibels(10.0f);
+      sidechainBPFGain.setGainDecibels(6.0f);
       sidechainBPFGain.process(sidechainContext);
     }
     
@@ -109,15 +109,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         envBlock.getChannelPointer(ch)[n] = shapeEnv[ch]; // 보관
 
         SampleType out = inputBlock.getChannelPointer(ch)[n];
-        switch (generatorType)
-        {
-          case 0:
-            out = airLayer.processSample();
-            break;
-          case 1:
-            out = bitCrusher.processSample(static_cast<float>(out));
-            break;
-        }
+        out = airLayer.processSample();
         
 #if CHECK_ENV
           outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch];

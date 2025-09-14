@@ -140,10 +140,11 @@ PluginAudioEditor::PluginAudioEditor (PluginAudioProcessor& p)
 bypassAttachment (*processorRef.state.getParameter (ID::bypass.getParamID()),
                   bypassToggleRelay,
                   processorRef.state.undoManager),
-
+#if ADVANCED
 generatorTypeAttachment (*processorRef.state.getParameter (ID::generatorType.getParamID()),
                   generatorTypeComboRelay,
                   processorRef.state.undoManager),
+#endif
 attackAttachment (*processorRef.state.getParameter (ID::attack.getParamID()),
                   attackSliderRelay,
                   processorRef.state.undoManager),

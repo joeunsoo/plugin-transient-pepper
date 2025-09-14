@@ -74,7 +74,9 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   PluginAudioProcessor& processorRef;
   
   WebToggleButtonRelay bypassToggleRelay      { "bypassToggle" };
+#if ADVANCED
   WebComboBoxRelay     generatorTypeComboRelay { "generatorTypeCombo" };
+#endif
   WebSliderRelay       attackSliderRelay    { "attackSlider" };
   WebSliderRelay       releaseSliderRelay    { "releaseSlider" };
 
@@ -105,7 +107,9 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                                .withUserDataFolder (File::getSpecialLocation (File::SpecialLocationType::tempDirectory)))
       .withNativeIntegrationEnabled()
       .withOptionsFrom (bypassToggleRelay)
+#if ADVANCED
       .withOptionsFrom (generatorTypeComboRelay)
+#endif
       .withOptionsFrom (attackSliderRelay)
       .withOptionsFrom (releaseSliderRelay)
 
@@ -173,8 +177,9 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
                              URL { localDevServerAddress }.getOrigin()) };
   
   WebToggleButtonParameterAttachment bypassAttachment;
-
+#if ADVANCED
   WebComboBoxParameterAttachment       generatorTypeAttachment;
+#endif
   WebSliderParameterAttachment       attackAttachment;
   WebSliderParameterAttachment       releaseAttachment;
 

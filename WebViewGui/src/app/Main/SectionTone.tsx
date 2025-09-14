@@ -1,7 +1,6 @@
 import Stack, { type StackProps } from '@mui/material/Stack';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-import JuceButtonGroup from '@/ui/Control/ComboBox/JuceButtonGroup';
 
 export default function Page({
   ...props
@@ -9,20 +8,10 @@ export default function Page({
   return (
     <Stack
       direction="row"
-      justifyContent="space-between"
+      justifyContent="end"
       spacing="var(--column-spacing)"
       {...props}
     >
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing="var(--column-spacing)"
-      >
-        <JuceButtonGroup
-          identifier="generatorTypeCombo"
-          hideTitle
-        />
-      </Stack>
       <Stack
         direction="row"
         spacing="var(--column-spacing)"

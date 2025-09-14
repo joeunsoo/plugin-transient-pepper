@@ -17,12 +17,13 @@ struct Parameters {
   explicit Parameters (AudioProcessorValueTreeState::ParameterLayout& layout)
   :
   bypass (addToLayout<AudioParameterBool> (layout, ID::bypass, "Bypass", false)),
-  
+#if ADVANCED
   generatorType (addToLayout<AudioParameterChoice> (layout,
                                                  ID::generatorType,
                                                  "Noise type",
                                                  StringArray { "Air", "Bitcrush" },
                                                  0)),
+#endif
   attack (addToLayout<AudioParameterFloat> (layout,
                                             ID::attack,
                                             "Attack",
@@ -167,7 +168,9 @@ struct Parameters {
   }
   
   AudioParameterBool&  bypass;
+#if ADVANCED
   AudioParameterChoice& generatorType;
+#endif
   AudioParameterFloat& attack;
   AudioParameterFloat& release;
   
