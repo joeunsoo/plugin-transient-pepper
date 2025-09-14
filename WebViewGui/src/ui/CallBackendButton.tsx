@@ -23,7 +23,7 @@ export default function App() {
           enqueueSnackbar(result);
 
           return null;
-        }).catch(null);
+        }).catch(console.error);
       }}
     >
       Call

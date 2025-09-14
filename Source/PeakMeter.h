@@ -17,10 +17,11 @@ class PeakMeter
   public:
   PeakMeter () = default; // 크기 모르는 상태로 생성
   
-  void prepare (int numChannels, int numSamples)
+  void prepare (int numChannels, int numSamples, double sampleRate)
   {
     this->numChannels = numChannels;
     this->numSamples  = numSamples;
+    this->sampleRate  = sampleRate;
     
     // 필요한 샘플 공간 확보 (채널 * 샘플)
     data.allocate ((size_t) numChannels * (size_t) numSamples, true);
@@ -36,8 +37,13 @@ class PeakMeter
                                      (size_t) numSamples);
     
     writeIx = 0;
+
+    // envelope 초기화
+    envelope.assign((size_t) numChannels, 0.0f);
+
+    updateCoefficients();
   }
-  
+
   template <typename T>
   void push (dsp::AudioBlock<T> block)
   {
@@ -72,9 +78,9 @@ class PeakMeter
     push (b);
   }
   
-  void computePeak (Span<float> output, int offset) const
+  void computePeak (juce::Span<float> output, int offset)
   {
-    jassert ((size_t) output.size() >= buffer.getNumChannels());
+    jassert ((size_t) output.size() >= buffer.getNumChannels() + (size_t)offset);
 
     for (size_t ch = 0; ch < buffer.getNumChannels(); ++ch)
     {
@@ -82,13 +88,37 @@ class PeakMeter
       auto* channelData = buffer.getChannelPointer (ch);
       
       for (size_t i = 0; i < buffer.getNumSamples(); ++i) {
+        /*
+        float sample = std::fabs(channelData[i]);
+        if (!std::isfinite(sample))
+          sample = 0.0f;
+
+        if (sample > envelope[ch])
+          envelope[ch] = sample;
+        else
+          envelope[ch] += (sample - envelope[ch]) * levelDecayCoeff;
+        
+        // envelope 안정화
+        if (!std::isfinite(envelope[ch]))
+            envelope[ch] = 0.0f;
+         */
         peak = std::max (peak, std::abs (channelData[i]));
       }
-      output[ch + offset] = peak;
+      
+      output[ch + offset] = juce::jlimit(0.0f, 1.0f, peak);
     }
   }
   
   private:
+
+  void updateCoefficients()
+  {
+      if (sampleRate <= 0.0)
+          return;
+
+    levelDecayCoeff = 1.0f - std::exp(-1.0f / (float(sampleRate) * levelDecayTimeMs / 1000.0f));
+  }
+
   HeapBlock<float> data;                  // float 타입으로 직접 할당
   std::vector<float*> channelPtrs;        // 채널별 포인터
   dsp::AudioBlock<float> buffer { nullptr, 0, 0 }; // 나중에 prepare()에서 세팅
@@ -96,4 +126,10 @@ class PeakMeter
   
   int numChannels = 0;
   int numSamples  = 0;
+  double sampleRate = 44100.0;
+
+  std::vector<float> envelope;
+
+  float levelDecayTimeMs = 300.0f;
+  float levelDecayCoeff  = 0.0f;
 };

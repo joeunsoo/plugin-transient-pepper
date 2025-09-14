@@ -20,7 +20,7 @@ export default function App() {
             enqueueSnackbar('Data fetched: ' + text);
 
             return null;
-          }).catch(null);
+          }).catch(console.error);
       }}
     >
       Fetch

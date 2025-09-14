@@ -33,7 +33,7 @@ export default function App() {
       }
 
       return null;
-    }).catch(null);
+    }).catch(console.error);
   }, [setActivate, setOpen, setTrial]);
 
   return (

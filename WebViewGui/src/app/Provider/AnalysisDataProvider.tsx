@@ -13,12 +13,12 @@ export default function App() {
   const [isActive, setIsActive] = useState<boolean>(true);
   let dataReceiver: AnalysisDataReceiver | null = null;
 
-  useAnimationFrame((time) => { // (time, delta)
+  useAnimationFrame(() => { // (time, delta)
     if (isActive) {
       if (dataReceiver) {
         outputNumChannels.set(dataReceiver.getOutputNumChannels());
 
-        const data = dataReceiver.getLevels(time);
+        const data = dataReceiver.getLevels(Date.now());
         if (data) {
           valuesIdxs.map(
             (value, idx) => motionValues[idx].set(data[idx])

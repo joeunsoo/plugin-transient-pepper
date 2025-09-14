@@ -132,6 +132,13 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
     .withOptionsFrom (slowReleaseSliderRelay)
 #endif
       .withOptionsFrom (controlParameterIndexReceiver)
+      .withNativeFunction ("isDebug", [this](auto& var, auto complete) {
+#if DEBUG
+        complete(true);
+#else
+        complete(false);
+#endif
+      })
       .withNativeFunction ("setWindowScale", [this](auto& var, auto complete) {
         setScale(var[0]);
       })

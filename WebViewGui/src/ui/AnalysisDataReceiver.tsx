@@ -1,29 +1,30 @@
 'use client';
 
 import * as Juce from 'juce-framework-frontend';
-
 import { AnalysisDataReceiverEventId } from '@/define';
 
 function interpolate(a: number[], b: number[], s: number) {
   const result = new Array(a.length).fill(0);
-
   for (const [i, val] of a.entries()) result[i] += (1 - s) * val;
-
   for (const [i, val] of b.entries()) result[i] += s * val;
 
   return result;
 }
 
 function mod(dividend: number, divisor: number) {
-  const quotient = Math.floor(dividend / divisor);
+  return dividend - Math.floor(dividend / divisor) * divisor;
+}
 
-  return dividend - divisor * quotient;
+// Frame 타입 정의
+interface FrameData {
+  timeMs: number;
+  values: number[];
 }
 
 export default class AnalysisDataReceiver {
   public bufferLength: number;
 
-  public buffer: number[][];
+  public buffer: FrameData[];
 
   public readIndex: number;
 
@@ -48,6 +49,8 @@ export default class AnalysisDataReceiver {
 
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
+
+    // 이벤트 리스너 등록
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
@@ -63,61 +66,57 @@ export default class AnalysisDataReceiver {
 
             if (self.timeResolutionMs === 0) {
               self.timeResolutionMs = data.timeResolutionMs;
-
-              // We want to stay behind the write index by a full batch plus one
-              // so that we can keep reading buffered frames until we receive the
-              // new batch
-              self.readIndex = -data.frames.length - 1;
-
-              self.buffer.fill(new Array(data.frames[0].length).fill(0));
+              self.readIndex = 0;
+              self.buffer.fill({ timeMs: 0, values: new Array(data.frames[0].values.length).fill(0) });
             }
 
+            // eslint-disable-next-line promise/always-return
             for (const f of data.frames) {
               self.buffer[mod(self.writeIndex++, self.bufferLength)] = f;
             }
-
-            return null;
-          }).catch(null);
+          })
+          .catch(console.error);
       }
     );
-  }
-
-  getBufferItem(index: number) {
-    return this.buffer[mod(index, this.buffer.length)];
   }
 
   getOutputNumChannels() {
     return this.outputNumChannels;
   }
 
-  getLevels(timeStampMs: number) {
-    if (this.timeResolutionMs === 0) return null;
-
-    const previousTimeStampMs = this.lastTimeStampMs;
-    this.lastTimeStampMs = timeStampMs;
-
-    if (previousTimeStampMs === 0) return this.buffer[0];
-
-    const timeAdvance =
-      (timeStampMs - previousTimeStampMs) / this.timeResolutionMs;
-    this.readIndex += timeAdvance;
-
-    const integralPart = Math.floor(this.readIndex);
-    const fractionalPart = this.readIndex - integralPart;
-
-    return interpolate(
-      this.getBufferItem(integralPart),
-      this.getBufferItem(integralPart + 1),
-      fractionalPart
-    );
+  getBufferItem(index: number) {
+    return this.buffer[mod(index, this.buffer.length)];
   }
+
+  // timestamp 기반 보간
+  getLevels(timeStampMs: number) {
+    if (this.writeIndex === 0) return this.buffer[0]?.values;
+
+    const latestWrite = this.writeIndex - 1;
+
+    // prev/next frame 찾기
+    let prevFrame = this.getBufferItem(0);
+    let nextFrame = prevFrame;
+
+    for (let i = 0; i <= latestWrite; i++) {
+        const frame = this.getBufferItem(i);
+        if (frame.timeMs <= timeStampMs) prevFrame = frame;
+        if (frame.timeMs > timeStampMs) {
+            nextFrame = frame;
+            break;
+        }
+    }
+
+    const dt = nextFrame.timeMs - prevFrame.timeMs;
+    const s = dt > 0 ? (timeStampMs - prevFrame.timeMs) / dt : 0;
+
+    return interpolate(prevFrame.values, nextFrame.values, s);
+}
 
   unregister() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
-    window.__JUCE__.backend.removeEventListener(
-      this.analysisDataRegistrationId
-    );
+    window.__JUCE__.backend.removeEventListener(this.analysisDataRegistrationId);
   }
 }

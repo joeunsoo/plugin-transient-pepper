@@ -5,6 +5,7 @@ import type { PeakMeterProps } from '@/types/PeakMeter';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 import { motion, useAnimationFrame, useMotionValue, useTransform } from 'framer-motion';
 import applySkew from '@/utils/applySkew';
+import { useRef } from 'react';
 
 interface PeakMeterLedProps extends PeakMeterProps, StackProps {
   length?: number,
@@ -25,8 +26,21 @@ export default function Page({
   const scaleValue = useTransform(skewValue, [0.0, 1.0], [0, 100]);
   const height = useTransform(scaleValue, (value) => `${value}%`);
 
+  // 이전 값 저장용 ref
+  const prevValueRef = useRef(0);
+  const releaseCoeff = 0.1; // 0~1, 작을수록 느리게 내려감
+
   useAnimationFrame(() => {
-    value.set(motionValues[idx].get());
+    const target = motionValues[idx].get();
+    let newValue = target;
+
+    // 디케이 적용
+    if (target < prevValueRef.current) {
+      newValue = prevValueRef.current + (target - prevValueRef.current) * releaseCoeff;
+    }
+
+    prevValueRef.current = newValue;
+    value.set(newValue);
   });
 
   return (

@@ -105,8 +105,16 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
   {
     Array<var> frames;
     
+    // 현재 시간(ms) 기준으로 시작
+    
     for (const auto& frame : analysisDataFrames)
-      frames.add (frame);
+    {
+      auto* frameObj = new DynamicObject();
+      frameObj->setProperty("timeMs", Time::getCurrentTime().toMilliseconds());
+
+      frameObj->setProperty("values", frame);         // 기존 frame 값
+      frames.add(var(frameObj));  // ← var로 래핑
+    }
     
     DynamicObject::Ptr d (new DynamicObject());
     d->setProperty ("outputNumChannels", processorRef.getTotalNumOutputChannels());

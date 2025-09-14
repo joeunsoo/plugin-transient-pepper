@@ -19,7 +19,8 @@ export default function EnvelopeGraph({
   fill = 'null', // 기본 반투명
   scrollSpeed = 1
 }: EnvelopeGraphProps) {
-  const lastYRef = useRef(height / 2);
+  const lastYRef = useRef(height);
+  const smoothedYRef = useRef(height); // smoothed value
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -31,6 +32,11 @@ export default function EnvelopeGraph({
     function draw() {
       const value = getValue();
       const y = height - value * height;
+
+      // 🟢 smoothing 적용 (alpha: 0~1, 작을수록 부드러움)
+      const alpha = 0.2;
+      smoothedYRef.current = smoothedYRef.current + alpha * (y - smoothedYRef.current);
+      const smoothedY = smoothedYRef.current;
 
       // 1) 기존 그림을 왼쪽으로 scrollSpeed만큼 이동
       const movePixels = Math.floor(scrollSpeed);
@@ -45,9 +51,9 @@ export default function EnvelopeGraph({
       ctx.moveTo(width - movePixels - 1, lastYRef.current);
 
       const cpX = width - movePixels - 0.5;
-      const cpY = (lastYRef.current + y) / 2;
+      const cpY = (lastYRef.current + smoothedY) / 2;
 
-      ctx.quadraticCurveTo(cpX, cpY, width - 1, y);
+      ctx.quadraticCurveTo(cpX, cpY, width - 1, smoothedY);
 
       // 바닥까지 연결 후 경로 닫기
       ctx.lineTo(width - 1, height);
@@ -60,10 +66,10 @@ export default function EnvelopeGraph({
       // 4) 선 그리기
       ctx.beginPath();
       ctx.moveTo(width - movePixels - 1, lastYRef.current);
-      ctx.quadraticCurveTo(cpX, cpY, width - 1, y);
+      ctx.quadraticCurveTo(cpX, cpY, width - 1, smoothedY);
       ctx.stroke();
 
-      lastYRef.current = y;
+      lastYRef.current = smoothedY;
 
       requestAnimationFrame(draw);
     }

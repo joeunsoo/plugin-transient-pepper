@@ -44,7 +44,7 @@ export default function LoginForm() {
       setTrialDays(diffDays);
 
       return null;
-    }).catch(null);
+    }).catch(console.error);
   }, []);
 
   let message = 'Start Trial (30 days)';
@@ -66,7 +66,7 @@ export default function LoginForm() {
           enqueueSnackbar('Trial Start', { variant: 'success' });
 
           return null;
-        }).catch(null);
+        }).catch(console.error);
       }}
       variant="outlined"
       sx={{

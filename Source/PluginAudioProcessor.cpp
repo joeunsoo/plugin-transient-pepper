@@ -95,10 +95,10 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   midSideMixer.prepare(spec);
   midSideMixer.reset();
   
-  noisePeakMeter.prepare(channels, samplesPerBlock);
-  peakMeter.prepare(channels, samplesPerBlock);
-  envPeakMeter.prepare(channels, samplesPerBlock);
-  inputPeakMeter.prepare(channels, samplesPerBlock);
+  noisePeakMeter.prepare(channels, samplesPerBlock, sampleRate);
+  peakMeter.prepare(channels, samplesPerBlock, sampleRate);
+  envPeakMeter.prepare(channels, samplesPerBlock, sampleRate);
+  inputPeakMeter.prepare(channels, samplesPerBlock, sampleRate);
 
   dcBlocker.prepare(spec);
   dcBlocker.reset();

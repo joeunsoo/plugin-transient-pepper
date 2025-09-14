@@ -35,7 +35,7 @@ export default function Page({
       setScale(parseInt(result, 10));
 
       return null;
-    }).catch(null);
+    }).catch(console.error);
   }, []);
 
   return (

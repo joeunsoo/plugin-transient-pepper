@@ -25,7 +25,7 @@ export default function App() {
       setEmail(result.activate);
 
       return null;
-    }).catch(null);
+    }).catch(console.error);
   }, [setActivate]);
 
   return (
