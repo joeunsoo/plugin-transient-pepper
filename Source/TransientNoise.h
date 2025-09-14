@@ -70,8 +70,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, 0.0f, 18.0f, 0.12f)); // 0.27f
     sidechainBPF.setFrequency(sidechainBPFFreq);
     
-    SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 50.0f, 10.0f, 0.23f);
-
     // 사이드체인 적용
     
     if (sidechainBPFOn) {
@@ -97,16 +95,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
       for (size_t ch = 0; ch < numChannels; ++ch)
       {
         SampleType diff = linkChannels ? linkedDiff : sampleDiffs[ch];
-
-        // Threshold, Ratio
-        diff = diff > 0 ? diff : 0.0f; // 0 아래 0.0f
-        if (diff < threshold)
-          diff = 0.0f; // Threshold 아래 0.0f
-        else
-          diff = threshold + ((diff - threshold) / ratio); // 트레숄드 보다 높은건 Ratio 적용
-        diff = juce::jlimit(0.0f, 1.0f, diff); // 안전하게 제한
-        
-        diff *= thresholdGain;
 
         // Transient envelope
         if (diff > shapeEnv[ch])
@@ -148,9 +136,9 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   
   void setAttack(SampleType a) { attack = calcCoeff(a,sampleRate); }
   void setRelease(SampleType r) { release = calcCoeff(r,sampleRate); }
-  void setThreshold(SampleType t) { threshold = t; }
-  void setThresholdDecibels(SampleType t) { threshold = decibelToLinear(t); }
-  void setRatio(SampleType value) { ratio = value; }
+  void setThreshold(SampleType t) { transientFollower.threshold = t; }
+  void setThresholdDecibels(SampleType t) { transientFollower.threshold = decibelToLinear(t); }
+  void setRatio(SampleType value) { transientFollower.ratio = value; }
   void setGeneratorType(int value) { generatorType = value; }
   
   juce::dsp::AudioBlock<SampleType> envBlock { envBuffer };
@@ -173,8 +161,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   
   SampleType attack = 0.0f;
   SampleType release = 0.0f;
-  SampleType threshold = 0.03f;
-  SampleType ratio = 20.0f;
   dsp::Gain<SampleType> thresholdGain;
 
   juce::AudioBuffer<SampleType> envBuffer;

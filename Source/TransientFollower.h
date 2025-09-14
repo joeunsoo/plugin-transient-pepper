@@ -35,34 +35,58 @@ class TransientFollower
     std::fill(fastEnv.begin(), fastEnv.end(), 0.0f);
     std::fill(slowEnv.begin(), slowEnv.end(), 0.0f);
   }
-  
-  SampleType processSample(SampleType inputSample, size_t channel)
-  {
-    SampleType x = std::abs(inputSample);
-    
-    // Fast envelope
-    if (x > fastEnv[channel])
-      fastEnv[channel] = fastAttack * (fastEnv[channel] - x) + x;
+  SampleType processThreshold(SampleType inputSample) {
+    SampleType diff = inputSample;
+    // Threshold, Ratio
+    diff = diff > 0.0f ? diff : 0.0f; // 0 아래 0.0f
+    if (diff < threshold)
+      diff = 0.0f; // Threshold 아래 0.0f
     else
-      fastEnv[channel] = fastRelease * (fastEnv[channel] - x) + x;
+      diff = threshold + ((diff - threshold) / ratio); // 트레숄드 보다 높은건 Ratio 적용
+    diff = juce::jlimit(0.0f, 1.0f, diff); // 안전하게 제한 // 0아래 절삭
+    
+
+    return diff;
+  }
+
+  SampleType processSample(SampleType inputSample, size_t ch)
+  {
+    SampleType x = std::fabs(inputSample);
+
+    // Fast envelope
+    if (x > fastEnv[ch])
+      fastEnv[ch] = fastAttack * (fastEnv[ch] - x) + x;
+    else
+      fastEnv[ch] = fastRelease * (fastEnv[ch] - x) + x;
     
     // Slow envelope
-    if (x > slowEnv[channel])
-      slowEnv[channel] = slowAttack * (slowEnv[channel] - x) + x;
+    if (x > slowEnv[ch])
+      slowEnv[ch] = slowAttack * (slowEnv[ch] - x) + x;
     else
-      slowEnv[channel] = slowRelease * (slowEnv[channel] - x) + x;
+      slowEnv[ch] = slowRelease * (slowEnv[ch] - x) + x;
     
-    // Transient detection
-    SampleType diff = fastEnv[channel] - slowEnv[channel];
+    SampleType thresholdGain = skewedMap(threshold, 0.0f, 1.0f, 20.0f, 10.0f, 0.23f);
+
+    // Transient detection f-s
+    SampleType diff = fastEnv[ch] - slowEnv[ch];
+    diff = processThreshold(diff) * 1.2f;
     
-    return diff;
-    // return transientEnv[channel];
+    // Transient detection f/s
+    SampleType diffR = fastEnv[ch] / slowEnv[ch];
+    diffR = (diffR - 0.8f) * 0.05f * (1-threshold);
+    diffR = processThreshold(diffR) * threshold;
+
+    SampleType result = ((diff * 0.8f)+(diffR * 0.2f)) * thresholdGain;
+    return result;
   }
-  
+
   void setFastAttack(SampleType a) { fastAttack = calcCoeff(a, sampleRate); }
   void setFastRelease(SampleType r) { fastRelease = calcCoeff(r, sampleRate); }
   void setSlowAttack(SampleType a) { slowAttack = calcCoeff(a, sampleRate); }
   void setSlowRelease(SampleType r) { slowRelease = calcCoeff(r, sampleRate); }
+  
+  SampleType threshold = 0.03f;
+  SampleType ratio = 2.0f;
   
   private:
   double sampleRate = 44100.0;
@@ -75,6 +99,5 @@ class TransientFollower
   
   std::vector<SampleType> fastEnv;
   std::vector<SampleType> slowEnv;
-  std::vector<SampleType> lpfState;
   
 };
