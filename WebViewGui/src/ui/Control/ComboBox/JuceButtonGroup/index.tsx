@@ -82,7 +82,7 @@ export default function JuceComboBox({
           textAlign="center"
           sx={{
             ...LabelTypographySx,
-            mt: '0.5em',
+            lineHeight: '1.5em',
             flexShrink:0,
           }}
         >

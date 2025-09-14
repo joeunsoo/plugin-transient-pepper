@@ -15,7 +15,7 @@ export default function EnvelopeGraph({
   const canvasProps = {
     width,
     height,
-    scrollSpeed: 2
+    scrollSpeed: 4
   };
 
   return (

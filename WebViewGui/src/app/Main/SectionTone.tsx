@@ -13,10 +13,16 @@ export default function Page({
       spacing="var(--column-spacing)"
       {...props}
     >
-      <JuceButtonGroup
-        identifier="generatorTypeCombo"
-        hideTitle
-      />
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing="var(--column-spacing)"
+      >
+        <JuceButtonGroup
+          identifier="generatorTypeCombo"
+          hideTitle
+        />
+      </Stack>
       <Stack
         direction="row"
         spacing="var(--column-spacing)"

@@ -36,7 +36,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     
     transientFollower.prepare(spec);
     
-    hfClick.prepare(spec);
     bitCrusher.prepare(spec);
     airLayer.prepare(spec);
 
@@ -130,10 +129,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
             out = airLayer.processSample();
             break;
           case 1:
-            out = bitCrusher.processSample(static_cast<float>(out));;
-            break;
-          case 2:
-            out = hfClick.processSample(shapeEnv[ch] > 0.001f ? shapeEnv[ch] : 0.0f );
+            out = bitCrusher.processSample(static_cast<float>(out));
             break;
         }
         
@@ -170,7 +166,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   bool linkChannels = true;
   
   int generatorType = 0;
-  HFClick hfClick;
   BitCrusher bitCrusher;
   AirLayer airLayer;
   
