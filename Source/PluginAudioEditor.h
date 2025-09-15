@@ -10,6 +10,12 @@
 
 #pragma once
 
+#if JUCE_WINDOWS
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <Windows.h>  // HWND, SendMessage 등 정의
+#endif
+
 #include <JuceHeader.h>
 #include "DemoUtilities.h"
 #include "PluginAudioProcessor.h"
@@ -30,12 +36,12 @@ struct SinglePageBrowser : WebBrowserComponent
   bool keyPressed(const KeyPress& kp) override
   {
       // 상위 플러그인 윈도우에 전달
-      if (HWND hwnd = (HWND) getTopLevelComponent()->getWindowHandle())
+      if (HWND hwnd = (HWND)getTopLevelComponent()->getWindowHandle())
       {
           MSG msg = {};
           msg.message = WM_KEYDOWN;
           msg.hwnd = hwnd;
-          msg.wParam = (WPARAM) kp.getKeyCode();
+          msg.wParam = (WPARAM)kp.getKeyCode();
           msg.lParam = 0;
           ::SendMessage(hwnd, msg.message, msg.wParam, msg.lParam);
       }

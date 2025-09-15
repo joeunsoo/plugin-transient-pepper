@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="JETransientPepper" companyName="JoEunsoo" version="1.0.0"
-              userNotes="Saturation Plugin" companyWebsite="http://joeunsoo.com"
-              defines="PIP_JUCE_EXAMPLES_DIRECTORY=L1VzZXJzL2pvZXVuc29vL0pVQ0UvZXhhbXBsZXM="
+              companyWebsite="http://joeunsoo.com" defines="PIP_JUCE_EXAMPLES_DIRECTORY=L1VzZXJzL2pvZXVuc29vL0pVQ0UvZXhhbXBsZXM="
               projectType="audioplug" pluginAUIsSandboxSafe="1" pluginManufacturer="JoEunsoo"
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" id="juqXJH" jucerFormatVersion="1"
@@ -89,10 +88,14 @@
         <MODULEPATH id="juce_gui_extra" path=""/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <VS2022 targetFolder="Builds/VisualStudio2022" extraCompilerFlags="/bigobj">
+    <VS2022 targetFolder="Builds/VisualStudio2022" extraCompilerFlags="/bigobj&#10;/I &quot;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&quot;&#10;">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1"/>
-        <CONFIGURATION name="Release" isDebug="0" optimisation="3"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"
+                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"
+                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"
+                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"
+                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path=""/>
