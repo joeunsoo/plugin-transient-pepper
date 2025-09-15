@@ -29,8 +29,9 @@ export default function EnvelopeGraph({
           position: 'absolute',
           top: 0,
           left: 0,
-          widnt: '100%',
-          height: '100%'
+          maxWidth: '100%',
+          maxHeight: '100%',
+          aspectRatio: 'unset'
         }
       }}
     >

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useMotionValue, useTransform, useMotionValueEvent } from 'framer-motion';
 import Box, { type BoxProps } from '@mui/material/Box';
 import { type SliderProps } from '@mui/material/Slider';
@@ -8,6 +8,7 @@ import { type SliderProps } from '@mui/material/Slider';
 import KnobRail from './KnobRail';
 import KnobThumb from './KnobThumb';
 import KnobOuter from './KnobOuter';
+import { useDrag } from './useDrag';
 
 export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDragStart'> {
   value: number;
@@ -19,7 +20,7 @@ export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDrag
   shiftSensitivity?: number; // Shift 눌렀을 때 감도
 }
 
-export type InKnobProps = Omit<KnobProps, 'setIsDrag'>;
+export type InKnobProps = Omit<KnobProps, 'setIsDrag'| 'value'>;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function sliderToBox({ defaultValue, onMouseDown, onChange, onDragStart, onChangeCommitted, scale, ...props }: InKnobProps): BoxProps {
@@ -27,6 +28,10 @@ function sliderToBox({ defaultValue, onMouseDown, onChange, onDragStart, onChang
 }
 
 export default function JuceSlider({
+  value,
+  onChange,
+  onDragStart,
+  onChangeCommitted,
   dragRange = 150,
   setIsDrag: setIsDragParent,
   color = 'primary',
@@ -34,76 +39,42 @@ export default function JuceSlider({
   shiftSensitivity = 0.1,
   ...props
 }: KnobProps) {
-  const [isDrag, setIsDrag] = useState(false);
-  const handleValue = useMotionValue(props.value * (1 - dragRange));
+  // const [isDrag, setIsDrag] = useState(false);
+  const handleValue = useMotionValue(value * (1 - dragRange));
   const progressScaleValue = useTransform(handleValue, [0, -dragRange], [0, 1]);
 
+  const { isDrag, onMouseDown } = useDrag({
+    handleValue,
+    progressScaleValue,
+    dragRange,
+    shiftSensitivity,
+    onDragStart,
+    onChangeCommitted,
+    setIsDragParent,
+  });
+
   useMotionValueEvent(progressScaleValue, 'change', (latest) => {
-    if (isDrag && props.onChange) {
-      props.onChange(new Event('change'), latest, 0);
-    }
+    if (isDrag) onChange?.(new Event('change'), latest, 0);
   });
 
   useEffect(() => {
-    if (!isDrag) {
-      handleValue.set(props.value * (1 - dragRange));
-    }
-  }, [dragRange, handleValue, isDrag, props.value]);
-
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (e.button !== 0) return;
-
-    setIsDrag(true);
-    setIsDragParent(true);
-    if (props.onDragStart) props.onDragStart();
-
-    let lastY = e.clientY;
-
-    function onMouseMove(ev: MouseEvent) {
-      const dy = ev.clientY - lastY;
-      const sensitivity = ev.shiftKey ? shiftSensitivity : 1;
-
-      let newValue = handleValue.get() + dy * sensitivity;
-
-      // dragConstraints 적용
-      if (newValue < -dragRange) newValue = -dragRange;
-      if (newValue > 0) newValue = 0;
-
-      handleValue.set(newValue);
-      lastY = ev.clientY; // 이전 기준 갱신
-    }
-
-    function onMouseUp() {
-      if (props.onChangeCommitted) {
-        props.onChangeCommitted(new Event('change'), progressScaleValue.get());
-      }
-      setIsDrag(false);
-      setIsDragParent(false);
-
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-    }
-
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-  }, [dragRange, handleValue, progressScaleValue, props, setIsDragParent, shiftSensitivity]);
+    if (!isDrag) handleValue.set(value * (1 - dragRange));
+  }, [value, dragRange, handleValue, isDrag]);
 
   const knobOuter = useMemo(() => <KnobOuter color={color} />, [color]);
   const knobRail = useMemo(() => <KnobRail color={color} ringColor={ringColor} />, [color, ringColor]);
 
   return (
-    <Box {...sliderToBox(props)}>
-      <Box
-        sx={{ position: 'relative', width: '100%' }}
-        onMouseDown={handleMouseDown}
-      >
-        <svg viewBox="20 20 160 165">
-          {knobOuter}
-          {knobRail}
-          <KnobThumb value={props.value} />
-        </svg>
-      </Box>
-
+    <Box
+      {...sliderToBox(props)}
+      sx={{ position: 'relative', width: '100%' }}
+      onMouseDown={onMouseDown}
+    >
+      <svg viewBox="20 20 160 165">
+        {knobOuter}
+        {knobRail}
+        <KnobThumb value={value} />
+      </svg>
     </Box>
   );
 }

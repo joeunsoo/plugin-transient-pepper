@@ -14,7 +14,7 @@ export const TrialDays = 30;
 
 export const controlParameterIndexAnnotation = 'controlparameterindex';
 export const AnalysisDataReceiverEventId = 'analysisData';
-export const AnalysisDataReceiverLength = 16;
+export const AnalysisDataReceiverLength = 8;
 
 export function generatePalette(color: string) {
   return {

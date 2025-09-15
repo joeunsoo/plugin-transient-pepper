@@ -78,7 +78,7 @@ class PluginAudioProcessor  : public AudioProcessor
    0, 1 = L,R 출력 피크 레벨
    2, 3 = L,R 노이즈 레벨
   */
-  std::vector<float> analysisData = [] { return std::vector<float> (16, 0.0f); }();
+  std::vector<float> analysisData = [] { return std::vector<float> (8, 0.0f); }();
 
   SpinLock peakDataLock;
   PeakMeter peakMeter;

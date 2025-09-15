@@ -6,7 +6,7 @@ import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 
 import Stack, { type StackProps } from '@mui/material/Stack';
 
-import PeakMeterBar from '@/ui/Meter/PeakMeterBar';
+import PeakMeterBar from '@/ui/Meter/PeakMeterBarCanvas';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 
 export default function Page({
