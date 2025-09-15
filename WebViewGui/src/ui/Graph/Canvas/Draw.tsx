@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useAnimationFrame } from 'framer-motion';
+import { useRef } from 'react';
 
 export type EnvelopeGraphProps = {
   width?: number;
@@ -22,60 +23,54 @@ export default function EnvelopeGraph({
   const lastYRef = useRef(height);
   const smoothedYRef = useRef(height); // smoothed value
 
-  useEffect(() => {
+  useAnimationFrame((time, delta) => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
 
     ctx.lineWidth = 2;
     ctx.strokeStyle = stroke;
 
-    function draw() {
-      const value = getValue();
-      const y = height - value * height;
+    const value = getValue();
+    const y = height - value * height;
 
-      // 🟢 smoothing 적용 (alpha: 0~1, 작을수록 부드러움)
-      const alpha = 0.2;
-      smoothedYRef.current = smoothedYRef.current + alpha * (y - smoothedYRef.current);
-      const smoothedY = smoothedYRef.current;
+    // 🟢 smoothing 적용 (alpha: 0~1, 작을수록 부드러움)
+    const alpha = 0.2;
+    smoothedYRef.current = smoothedYRef.current + alpha * (y - smoothedYRef.current);
+    const smoothedY = smoothedYRef.current;
 
-      // 1) 기존 그림을 왼쪽으로 scrollSpeed만큼 이동
-      const movePixels = Math.floor(scrollSpeed);
-      const imageData = ctx.getImageData(movePixels, 0, width - movePixels, height);
-      ctx.putImageData(imageData, 0, 0);
+    // 1) 기존 그림을 왼쪽으로 scrollSpeed만큼 이동
+    const movePixels = Math.floor(scrollSpeed * (delta/10));
+    const imageData = ctx.getImageData(movePixels, 0, width - movePixels, height);
+    ctx.putImageData(imageData, 0, 0);
 
-      // 2) 오른쪽 끝 영역 지우기
-      ctx.clearRect(width - movePixels, 0, movePixels, height);
+    // 2) 오른쪽 끝 영역 지우기
+    ctx.clearRect(width - movePixels, 0, movePixels, height);
 
-      // 3) 선 아래 영역 채우기
-      ctx.beginPath();
-      ctx.moveTo(width - movePixels - 1, lastYRef.current);
+    // 3) 선 아래 영역 채우기
+    ctx.beginPath();
+    ctx.moveTo(width - movePixels - 1, lastYRef.current);
 
-      const cpX = width - movePixels - 0.5;
-      const cpY = (lastYRef.current + smoothedY) / 2;
+    const cpX = width - movePixels - 0.5;
+    const cpY = (lastYRef.current + smoothedY) / 2;
 
-      ctx.quadraticCurveTo(cpX, cpY, width - 1, smoothedY);
+    ctx.quadraticCurveTo(cpX, cpY, width - 1, smoothedY);
 
-      // 바닥까지 연결 후 경로 닫기
-      ctx.lineTo(width - 1, height);
-      ctx.lineTo(width - movePixels - 1, height);
-      ctx.closePath();
+    // 바닥까지 연결 후 경로 닫기
+    ctx.lineTo(width - 1, height);
+    ctx.lineTo(width - movePixels - 1, height);
+    ctx.closePath();
 
-      ctx.fillStyle = fill;
-      ctx.fill();
+    ctx.fillStyle = fill;
+    ctx.fill();
 
-      // 4) 선 그리기
-      ctx.beginPath();
-      ctx.moveTo(width - movePixels - 1, lastYRef.current);
-      ctx.quadraticCurveTo(cpX, cpY, width - 1, smoothedY);
-      ctx.stroke();
+    // 4) 선 그리기
+    ctx.beginPath();
+    ctx.moveTo(width - movePixels - 1, lastYRef.current);
+    ctx.quadraticCurveTo(cpX, cpY, width - 1, smoothedY);
+    ctx.stroke();
 
-      lastYRef.current = smoothedY;
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-  }, [width, height, getValue, canvasRef, stroke, fill, scrollSpeed]);
+    lastYRef.current = smoothedY;
+  });
 
   return null;
 }

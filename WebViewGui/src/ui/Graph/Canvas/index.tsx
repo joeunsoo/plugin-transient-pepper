@@ -9,13 +9,13 @@ type EnvelopeGraphProps = {
 };
 
 export default function EnvelopeGraph({
-  width = 383 * 2,
-  height = 293 * 2,
+  width = 383,
+  height = 293,
 }: EnvelopeGraphProps) {
   const canvasProps = {
     width,
     height,
-    scrollSpeed: 4
+    scrollSpeed: 2
   };
 
   return (
