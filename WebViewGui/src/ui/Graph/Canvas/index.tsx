@@ -9,14 +9,14 @@ type EnvelopeGraphProps = {
 };
 
 export default function EnvelopeGraph({
-  width = 383,
-  height = 293,
+  width = 300,
+  height = 300,
 }: EnvelopeGraphProps) {
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = 1;
   const canvasProps = {
     width: width * dpr,
     height: height * dpr,
-    scrollSpeed: 2
+    scrollSpeed: width / 100 * dpr
   };
 
   return (
@@ -29,6 +29,10 @@ export default function EnvelopeGraph({
           position: 'absolute',
           top: 0,
           left: 0,
+          right:0,
+          bottom:0,
+          width: '100%',
+          height: '100%',
           maxWidth: '100%',
           maxHeight: '100%',
           aspectRatio: 'unset'

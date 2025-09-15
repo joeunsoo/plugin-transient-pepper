@@ -4,7 +4,7 @@ import applySkew from '@/utils/applySkew';
 import { useEffect, useRef } from 'react';
 
 interface EnvelopeGraphProps {
-  idx: number
+  idx: number;
   width?: number;
   height?: number;
   fill?: string;       // 밑부분 색
@@ -12,46 +12,46 @@ interface EnvelopeGraphProps {
 
 export default function EnvelopeGraph({
   idx,
-  width = 15,
-  height = 100,
-  fill = 'null', // 기본 반투명
+  width = 1,
+  height = 10,
+  fill,
 }: EnvelopeGraphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const bufferRef = useRef<HTMLCanvasElement>(null);
+  const bufferRef = useRef<HTMLCanvasElement | null>(null);
   const { motionValues } = useAnalysisDataStore();
-  const lastYRef = useRef(height);
   const smoothedYRef = useRef(height); // smoothed value
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
-useEffect(() => {
-  if (canvasRef.current) {
-    ctxRef.current = canvasRef.current.getContext('2d');
+  // 초기화
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const ctx = canvasRef.current.getContext('2d');
+    if (!ctx) return;
 
-    if (!ctxRef.current) { return; }
-    ctxRef.current.lineWidth = 2;
+    ctx.lineWidth = 2;
+    ctxRef.current = ctx;
 
-    bufferRef.current = document.createElement('canvas');
-    bufferRef.current.width = width;
-    bufferRef.current.height = height;
-  }
-}, [height, width]);
+    // 버퍼 캔버스 초기화
+    const buffer = document.createElement('canvas');
+    buffer.width = width;
+    buffer.height = height;
+    bufferRef.current = buffer;
+  }, [width, height]);
 
   useAnimationFrame(() => {
-    const canvas = canvasRef.current;
     const ctx = ctxRef.current;
-    const buffer = bufferRef.current;
-    if (!canvas || !ctx || !buffer) { return; }
+    if (!ctx) return;
 
-    const newValue = motionValues[idx].get();
+    const newValue = motionValues[idx]?.get() ?? 0;
     const skewValue = applySkew(newValue, 0.0, 1.0, 0.15);
+    const y = height - skewValue * height;
 
-    const value = skewValue;
-    const y = height - value * height;
-
+    // smoothing
     const alpha = 0.2;
-    smoothedYRef.current = smoothedYRef.current + alpha * (y - smoothedYRef.current);
+    smoothedYRef.current += alpha * (y - smoothedYRef.current);
     const smoothedY = smoothedYRef.current;
 
+    // Canvas 업데이트
     ctx.clearRect(0, 0, width, height);
     ctx.beginPath();
     ctx.moveTo(0, smoothedY);
@@ -64,11 +64,7 @@ useEffect(() => {
       ctx.fillStyle = fill;
       ctx.fill();
     }
-
-    lastYRef.current = smoothedY;
   });
 
-  return (
-    <canvas ref={canvasRef} width={width} height={height} />
-  );
+  return <canvas ref={canvasRef} width={width} height={height} />;
 }
