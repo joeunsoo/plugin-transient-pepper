@@ -1,5 +1,6 @@
 import Typography from '@mui/material/Typography';
-import ToggleButton, { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
+import { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
+import ToggleButton from '@/ui/BlurToggleButton';
 import { GlassSx, LabelTypographySx } from '@/define';
 
 export interface ToggleButtonProps
@@ -9,6 +10,7 @@ export interface ToggleButtonProps
 
 export default function JuceComboBox({
   label,
+  onMouseDown,
   ...props
 }: ToggleButtonProps) {
 
@@ -27,6 +29,12 @@ export default function JuceComboBox({
           background: 'linear-gradient(135deg, var(--mui-palette-secondary-main), var(--mui-palette-secondary-dark))',
         },
       }}
+
+      onMouseDown={(e) => {
+        onMouseDown?.(e);
+        e.preventDefault();
+      }}
+
       {...props}
     >
       <Typography

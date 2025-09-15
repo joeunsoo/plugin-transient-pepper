@@ -1,7 +1,7 @@
   'use client';
 
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
-import IconButton from '@mui/material/IconButton';
+import IconButton from '@/ui/BlurIconButton';
 
 type JuceCheckboxProps = {
   value: boolean,
@@ -20,7 +20,9 @@ export default function JuceCheckbox({
   return (
     <IconButton
       className={value ? 'Mui-selected' : ''}
-      onMouseDown={handleMouseDown}
+      onMouseDown={() => {
+        handleMouseDown();
+      }}
       sx={{
         p:0,
         '& .MuiSvgIcon-root': {

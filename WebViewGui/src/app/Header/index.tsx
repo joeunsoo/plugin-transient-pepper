@@ -4,7 +4,7 @@ import { PluginName, CompanyName } from '@/define';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import Button from '@/ui/BlurButton';
 
 import JuceToggleBypass from '@/ui/Control/ToggleButton/JuceToggleBypass';
 import { uesControlStore } from '@/store/ControlStore';
