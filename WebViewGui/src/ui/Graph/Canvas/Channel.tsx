@@ -1,7 +1,7 @@
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 import { useAnimationFrame } from 'framer-motion';
 import applySkew from '@/utils/applySkew';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface EnvelopeGraphProps {
   idx: number
@@ -21,19 +21,36 @@ export default function EnvelopeGraph({
   scrollSpeed = 1
 }: EnvelopeGraphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const bufferRef = useRef<HTMLCanvasElement>(null);
   const { motionValues } = useAnalysisDataStore();
   const lastYRef = useRef(height);
   const smoothedYRef = useRef(height); // smoothed value
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+
+useEffect(() => {
+  if (canvasRef.current) {
+    ctxRef.current = canvasRef.current.getContext('2d');
+
+    if (!ctxRef.current) { return; }
+    ctxRef.current.lineWidth = 2;
+    ctxRef.current.strokeStyle = stroke;
+
+    bufferRef.current = document.createElement('canvas');
+    bufferRef.current.width = width;
+    bufferRef.current.height = height;
+  }
+}, [height, stroke, width]);
 
   useAnimationFrame((time, delta) => {
+    const canvas = canvasRef.current;
+    const ctx = ctxRef.current;
+    const buffer = bufferRef.current;
+    if (!canvas || !ctx || !buffer) { return; }
+
+    const bufCtx = buffer.getContext('2d')!;
+
     const newValue = (motionValues[idx].get() + motionValues[idx + 1].get()) / 2;
     const skewValue = applySkew(newValue, 0.0, 1.0, 0.15);
-
-    const canvas = canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
-
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = stroke;
 
     const value = skewValue;
     const y = height - value * height;
@@ -44,11 +61,17 @@ export default function EnvelopeGraph({
     const smoothedY = smoothedYRef.current;
 
     // 1) 기존 그림을 왼쪽으로 scrollSpeed만큼 이동
-    const movePixels = Math.floor(scrollSpeed * (delta/10));
-    const imageData = ctx.getImageData(movePixels, 0, width - movePixels, height);
-    ctx.putImageData(imageData, 0, 0);
+    const movePixels = Math.floor(scrollSpeed * (delta / 10));
 
-    // 2) 오른쪽 끝 영역 지우기
+    // 1) 버퍼에 기존 그림 복사
+    bufCtx.clearRect(0, 0, width, height);
+    bufCtx.drawImage(canvasRef.current!, 0, 0, width, height, 0, 0, width, height);
+
+    // 2) 캔버스를 왼쪽으로 이동
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(buffer, movePixels, 0, width - movePixels, height, 0, 0, width - movePixels, height);
+
+    // 3) 오른쪽 끝 영역 지우기
     ctx.clearRect(width - movePixels, 0, movePixels, height);
 
     // 3) 선 아래 영역 채우기
@@ -65,8 +88,10 @@ export default function EnvelopeGraph({
     ctx.lineTo(width - movePixels - 1, height);
     ctx.closePath();
 
-    ctx.fillStyle = fill;
-    ctx.fill();
+    if (fill) {
+      ctx.fillStyle = fill;
+      ctx.fill();
+    }
 
     // 4) 선 그리기
     ctx.beginPath();

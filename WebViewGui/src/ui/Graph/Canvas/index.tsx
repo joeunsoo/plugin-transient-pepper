@@ -12,9 +12,10 @@ export default function EnvelopeGraph({
   width = 383,
   height = 293,
 }: EnvelopeGraphProps) {
+  const dpr = window.devicePixelRatio || 1;
   const canvasProps = {
-    width,
-    height,
+    width: width * dpr,
+    height: height * dpr,
     scrollSpeed: 2
   };
 
