@@ -48,7 +48,7 @@ export default function JuceSlider({
       sliderState.valueChangedEvent.removeListener(valueListenerId);
       sliderState.propertiesChangedEvent.removeListener(propertiesListenerId);
     };
-  });
+  }, [sliderState]);
 
   function calculateValue() {
     return sliderState.getScaledValue();

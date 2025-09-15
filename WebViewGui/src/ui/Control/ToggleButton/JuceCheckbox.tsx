@@ -38,7 +38,7 @@ export default function JuceCheckbox({
       checkboxState.valueChangedEvent.removeListener(valueListenerId);
       checkboxState.propertiesChangedEvent.removeListener(propertiesListenerId);
     };
-  });
+  }, [checkboxState]);
 
   const cb = <Checkbox checked={value} onChange={handleChange} />;
 

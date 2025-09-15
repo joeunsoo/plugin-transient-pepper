@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
 import Box, { type BoxProps } from '@mui/material/Box';
@@ -93,10 +93,10 @@ export default function JuceSlider({
     }
   };
 
-  const changeCommitted = (event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => {
+  const changeCommitted = useCallback((event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => {
     sliderState.setNormalisedValue(newValue);
     sliderState.sliderDragEnded();
-  };
+  }, [sliderState]);
 
   useEffect(() => {
     const valueListenerId = sliderState.valueChangedEvent.addListener(() => {
@@ -110,7 +110,7 @@ export default function JuceSlider({
       sliderState.valueChangedEvent.removeListener(valueListenerId);
       sliderState.propertiesChangedEvent.removeListener(propertiesListenerId);
     };
-  });
+  }, [sliderState]);
 
   useEffect(() => {
     setAnchor(ref.current, isDrag);

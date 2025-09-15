@@ -41,7 +41,7 @@ export default function JuceComboBox({
       comboBoxState.valueChangedEvent.removeListener(valueListenerId);
       comboBoxState.propertiesChangedEvent.removeListener(propertiesListenerId);
     };
-  });
+  }, [comboBoxState]);
 
   return (
     <Box

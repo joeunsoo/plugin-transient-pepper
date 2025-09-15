@@ -59,7 +59,7 @@ export default function FreqBandInfo() {
       setIsActive(false);
       dataReceiver?.unregister();
     };
-  });
+  }, []);
 
   const canvasStyle = {
     marginLeft: '0',

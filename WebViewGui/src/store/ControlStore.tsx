@@ -7,6 +7,9 @@ interface ControlState {
   threshold: number,
   setThreshold: (value: number) => void;
 
+  outputNumChannels: number,
+  setOutputNumChannels: (value: number) => void;
+
   // 툴팁 포커스 엘리멘트
   focusAnchor?: HTMLElement | null;
   setAnchor: (el: HTMLElement | null, open: boolean) => void;
@@ -21,6 +24,11 @@ export const uesControlStore = create<ControlState>((set) => ({
   threshold: 0,
   setThreshold: (value: number) => set(() => ({
     threshold: value,
+  })),
+
+  outputNumChannels: 0,
+  setOutputNumChannels: (value: number) => set(() => ({
+    outputNumChannels: value,
   })),
 
   focusAnchor: undefined,
