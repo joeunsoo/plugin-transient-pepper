@@ -32,13 +32,6 @@ struct SinglePageBrowser : WebBrowserComponent
   // Prevent page loads from navigating away from our single page web app
   bool pageAboutToLoad (const String& newURL) override;
   
-#if JUCE_WINDOWS
-  bool keyPressed(const KeyPress& key) override
-  {
-      DBG(key);
-      return false;
-  }
-#endif
 };
 
 //==============================================================================
@@ -52,7 +45,15 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   //==============================================================================
   void paint (Graphics&) override;
   void resized() override;
-  
+
+#if JUCE_WINDOWS
+  bool keyPressed(const KeyPress& key) override
+  {
+      DBG(key.getTextDescription());
+      return false;
+  }
+#endif
+
   int getControlParameterIndex (Component&) override
   {
     return controlParameterIndexReceiver.getControlParameterIndex();

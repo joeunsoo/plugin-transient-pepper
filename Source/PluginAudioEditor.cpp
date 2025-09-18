@@ -214,8 +214,10 @@ linkChannelsAttachment (*processorRef.state.getParameter (ID::linkChannels.getPa
   setScale(processorRef.windowScale);
   startTimerHz (20);
 
-  // 키보드 포커스를 받지 않도록 설정
-  setWantsKeyboardFocus(false);  // <- 핵심
+  setWantsKeyboardFocus(false);
+  // 키보드 포커스를 받지 않도록 설정 ->  받게 설정
+  // setWantsKeyboardFocus(true);
+  // grabKeyboardFocus();
 }
 
 //==============================================================================
