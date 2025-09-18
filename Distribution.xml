@@ -14,11 +14,11 @@
     </choices-outline>
 
     <choice id="vst3" visible="true" start_selected="true" title="JE Transient Pepper VST3">
-        <pkg-ref id="com.JoEunsoo.JETransientPepper.vst3.pkg" version="1.0.0" onConclusion="none">com.JoEunsoo.JETransientPepper.vst3.pkg</pkg-ref>
+        <pkg-ref id="com.JoEunsoo.JETransientPepper.vst3.pkg" version="1.0.1" onConclusion="none">com.JoEunsoo.JETransientPepper.vst3.pkg</pkg-ref>
     </choice>
 
     <choice id="au" visible="true" start_selected="true" title="JE Transient Pepper AU">
-        <pkg-ref id="com.JoEunsoo.JETransientPepper.au.pkg" version="1.0.0" onConclusion="none">com.JoEunsoo.JETransientPepper.au.pkg</pkg-ref>
+        <pkg-ref id="com.JoEunsoo.JETransientPepper.au.pkg" version="1.0.1" onConclusion="none">com.JoEunsoo.JETransientPepper.au.pkg</pkg-ref>
     </choice>
 
 </installer-gui-script>
