@@ -33,20 +33,10 @@ struct SinglePageBrowser : WebBrowserComponent
   bool pageAboutToLoad (const String& newURL) override;
   
 #if JUCE_WINDOWS
-  bool keyPressed(const KeyPress& kp) override
+  bool keyPressed(const KeyPress& key) override
   {
-      // 상위 플러그인 윈도우에 전달
-      if (HWND hwnd = (HWND)getTopLevelComponent()->getWindowHandle())
-      {
-          MSG msg = {};
-          msg.message = WM_KEYDOWN;
-          msg.hwnd = hwnd;
-          msg.wParam = (WPARAM)kp.getKeyCode();
-          msg.lParam = 0;
-          ::SendMessage(hwnd, msg.message, msg.wParam, msg.lParam);
-      }
-
-      return false; // WebBrowser가 자체 처리 안함
+      DBG(key);
+      return false;
   }
 #endif
 };
