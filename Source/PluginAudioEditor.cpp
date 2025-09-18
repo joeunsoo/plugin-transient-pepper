@@ -13,20 +13,10 @@
 
 static ZipFile* getZipFile()
 {
-#if DEBUG
-  static auto stream = createAssetInputStream ("webviewplugin-gui_1.0.0.zip", AssertAssetExists::no);
-  
-  if (stream == nullptr)
-    return nullptr;
-  
-  static ZipFile f { stream.get(), false };
-  return &f;
-#else
   static MemoryInputStream stream { BinaryData::gui_zip, BinaryData::gui_zipSize, false };
 
   static ZipFile f { &stream, false };
   return &f;
-#endif
 }
 
 static const char* getMimeForExtension (const String& extension)
@@ -73,7 +63,7 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
 {
   const auto urlToRetrive = url == "/" ? String { "index.html" }
   : url.fromFirstOccurrenceOf ("/", false, false);
-  
+#if !DEBUG  
   if (auto* archive = getZipFile())
   {
     if (auto* entry = archive->getEntry (urlToRetrive))
@@ -85,7 +75,7 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
         std::move (mime) };
     }
   }
-  
+#endif
   if (urlToRetrive == "index.html")
   {
     auto fallbackIndexHtml = createAssetInputStream ("webviewplugin-gui-fallback.html");
