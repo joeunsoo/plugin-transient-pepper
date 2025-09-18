@@ -202,6 +202,9 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
           newUrl.launchInDefaultBrowser();
         complete ("done");
       })
+      .withNativeFunction ("pressSpace", [this](auto& var, auto complete) {
+          DBG('test');
+      })
       .withResourceProvider ([this] (const auto& url) {
         return getResource (url);
       },
