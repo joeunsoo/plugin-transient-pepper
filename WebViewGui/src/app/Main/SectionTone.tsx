@@ -8,25 +8,20 @@ export default function Page({
   return (
     <Stack
       direction="row"
-      justifyContent="end"
+      justifyContent="flex-end"
       spacing="var(--column-spacing)"
       {...props}
     >
-      <Stack
-        direction="row"
-        spacing="var(--column-spacing)"
-      >
-        <JuceKnob
-          identifier="tiltSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
-        <JuceKnob
-          identifier="midSideSlider"
-          defaultValue={0.5}
-          subDigit={1}
-        />
-      </Stack>
+      <JuceKnob
+        identifier="tiltSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
+      <JuceKnob
+        identifier="midSideSlider"
+        defaultValue={0.5}
+        subDigit={1}
+      />
     </Stack>
   );
 }

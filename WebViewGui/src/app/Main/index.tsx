@@ -42,7 +42,7 @@ export default function App() {
         }}
       >
         <SectionGraph />
-        <SectionTone />
+        <SectionTone sx={{ width: '100%' }}/>
       </Stack>
       <Stack direction="row">
         <SectionMix />
