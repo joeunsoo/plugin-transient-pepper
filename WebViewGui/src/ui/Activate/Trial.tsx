@@ -58,15 +58,19 @@ export default function LoginForm() {
     <Button
       disabled={isEnded}
       onClick={() => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        startTrial().then((result: number) => {
-          setTrial(result);
+        if (isTrial) {
           setOpen(false);
-          enqueueSnackbar('Trial Start', { variant: 'success' });
+        } else {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          startTrial().then((result: number) => {
+            setTrial(result);
+            setOpen(false);
+            enqueueSnackbar('Trial Start', { variant: 'success' });
 
-          return null;
-        }).catch(console.error);
+            return null;
+          }).catch(console.error);
+        }
       }}
       variant="outlined"
       sx={{
