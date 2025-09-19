@@ -245,10 +245,16 @@ void PluginAudioEditor::setScale(int scale)
       setSize(width, height);
       break;
     case 150:
-      setSize(width*1.5f, height*1.5f);
+      setSize(
+              static_cast<int>(std::round(width * 1.5f)),
+              static_cast<int>(std::round(height * 1.5f))
+              );
       break;
     case 200:
-      setSize(width*2.0f, height*2.0f);
+      setSize(
+              static_cast<int>(std::round(width * 2.0f)),
+              static_cast<int>(std::round(height * 2.0f))
+              );
       break;
     default:
       setSize(width, height);

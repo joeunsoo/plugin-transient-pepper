@@ -39,7 +39,9 @@ class MidSideMixer : public juce::dsp::ProcessorBase
 
     jassert(numChannels >= 2); // 최소 스테레오 필요
     
-    for (int i = 0; i < numSamples; ++i)
+    int numSamplesInt = static_cast<int>(numSamples);
+
+    for (int i = 0; i < numSamplesInt; ++i)
     {
       SampleType L = inBlock.getSample(0, i);
       SampleType R = inBlock.getSample(1, i);

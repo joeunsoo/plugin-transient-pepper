@@ -17,11 +17,11 @@ class PeakMeter
   public:
   PeakMeter () = default; // 크기 모르는 상태로 생성
   
-  void prepare (int numChannels, int numSamples, double sampleRate)
+  void prepare (const juce::dsp::ProcessSpec& spec)
   {
-    this->numChannels = numChannels;
-    this->numSamples  = numSamples;
-    this->sampleRate  = sampleRate;
+    this->numChannels = static_cast<int>(spec.numChannels);
+    this->numSamples  = static_cast<int>(spec.maximumBlockSize);
+    this->sampleRate  = spec.sampleRate;
     
     // 필요한 샘플 공간 확보 (채널 * 샘플)
     data.allocate ((size_t) numChannels * (size_t) numSamples, true);
@@ -78,7 +78,7 @@ class PeakMeter
     push (b);
   }
   
-  void computePeak (juce::Span<float> output, int offset)
+  void computePeak (juce::Span<float> output, size_t offset)
   {
     jassert ((size_t) output.size() >= buffer.getNumChannels() + (size_t)offset);
 

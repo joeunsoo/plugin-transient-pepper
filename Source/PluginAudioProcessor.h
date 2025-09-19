@@ -56,10 +56,8 @@ class PluginAudioProcessor  : public AudioProcessor
   //==============================================================================
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
-  
-  
-  double sampleRate = 44100.0;
-  
+
+
   Parameters parameters;
   AudioProcessorValueTreeState state;
   

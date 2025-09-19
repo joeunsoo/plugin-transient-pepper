@@ -19,15 +19,14 @@ class TransientFollower
   void prepare(const juce::dsp::ProcessSpec& spec)
   {
     sampleRate = spec.sampleRate;
-    numChannels = spec.numChannels;
     
     fastAttack = calcCoeff(0.0040f, sampleRate); // 0.0020
     fastRelease = calcCoeff(0.00170f, sampleRate); // 0.0050
     slowAttack = calcCoeff(0.0200f, sampleRate);
     slowRelease = calcCoeff(0.1200f, sampleRate);
     
-    fastEnv.resize(numChannels, 0.0f);
-    slowEnv.resize(numChannels, 0.0f);
+    fastEnv.resize(spec.numChannels, 0.0f);
+    slowEnv.resize(spec.numChannels, 0.0f);
   }
   
   void reset()
@@ -97,7 +96,6 @@ class TransientFollower
   
   private:
   double sampleRate = 44100.0;
-  int numChannels = 2;
   
   SampleType fastAttack = 0.0f;
   SampleType fastRelease = 0.0f;

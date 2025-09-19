@@ -22,7 +22,7 @@ inline float decibelToLinear(float db)
   return linear;
 }
 
-inline float calcCoeff(float timeInSeconds, float sampleRate)
+inline float calcCoeff(float timeInSeconds, double sampleRate)
 {
   return static_cast<float>(std::exp(-1.0f / (timeInSeconds * (float)sampleRate)));
 }

@@ -102,8 +102,12 @@ class LicenseManager
   {
       juce::MemoryBlock mb(text.getNumBytesAsUTF8());
       const char* src = text.toRawUTF8();
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"  // 경고 종류
       for (int i = 0; i < mb.getSize(); ++i)
           mb[i] = src[i] ^ secretKey[i % secretKey.length()];
+#pragma clang diagnostic pop
 
       return juce::Base64::toBase64(mb.getData(), mb.getSize());
   }
@@ -120,8 +124,11 @@ class LicenseManager
       juce::MemoryBlock block = base64Decode(base64Text);
       juce::MemoryBlock out(block.getSize());
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"  // 경고 종류
       for (int i = 0; i < block.getSize(); ++i)
           out[i] = block[i] ^ secretKey[i % secretKey.length()];
+#pragma clang diagnostic pop
 
       return juce::String::fromUTF8((const char*)out.getData(), (int)out.getSize());
   }

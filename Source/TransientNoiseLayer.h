@@ -16,7 +16,7 @@
 class AirLayer
 {
   public:
-  void prepare(const juce::dsp::ProcessSpec& spec)
+  void prepare()
   {
     //rng.setSeedRandomly();
     rng.setSeed(seedValue);
@@ -42,7 +42,7 @@ class AirLayer
 class BitCrusher
 {
   public:
-  void prepare(const juce::dsp::ProcessSpec& spec)
+  void prepare()
   {
     step = 1.0f / 2.0f;
   }

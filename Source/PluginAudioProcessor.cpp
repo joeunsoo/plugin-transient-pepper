@@ -73,9 +73,6 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   const juce::dsp::ProcessSpec spec =
   { sampleRate, (uint32_t) samplesPerBlock, (uint32_t) channels };
   
-  sampleRate = spec.sampleRate;
-  
-  
   noiseLevelGain.setGainDecibels(0.0f);
   noiseLevelGain.reset();
   outputGain.setGainDecibels(0.0f);
@@ -95,10 +92,10 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   midSideMixer.prepare(spec);
   midSideMixer.reset();
   
-  noisePeakMeter.prepare(channels, samplesPerBlock, sampleRate);
-  peakMeter.prepare(channels, samplesPerBlock, sampleRate);
-  envPeakMeter.prepare(channels, samplesPerBlock, sampleRate);
-  inputPeakMeter.prepare(channels, samplesPerBlock, sampleRate);
+  noisePeakMeter.prepare(spec);
+  peakMeter.prepare(spec);
+  envPeakMeter.prepare(spec);
+  inputPeakMeter.prepare(spec);
 
   dcBlocker.prepare(spec);
   dcBlocker.reset();
@@ -192,10 +189,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     
     outputGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 출력 게인
   } else { // Bypass 중
-    juce::AudioBuffer<float> buffer((int)numChannels, (int)numSamples);
-    buffer.clear(); // 완전히 0으로 초기화
+    juce::AudioBuffer<float> bypassBuffer((int)numChannels, (int)numSamples);
+    bypassBuffer.clear(); // 완전히 0으로 초기화
 
-    juce::dsp::AudioBlock<float> emptyBlock(buffer);
+    juce::dsp::AudioBlock<float> emptyBlock(bypassBuffer);
 
     envPeakMeter.push (emptyBlock); // Ouput 피크미터 저장
     noisePeakMeter.push (emptyBlock); // 노이즈 레벨 미터 저장

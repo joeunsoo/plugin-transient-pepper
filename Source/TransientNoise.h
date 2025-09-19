@@ -26,7 +26,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   void prepare(const juce::dsp::ProcessSpec& spec) override
   {
     sampleRate = spec.sampleRate;
-    numChannels = spec.numChannels;
+    const auto numChannels = spec.numChannels;
     
     sidechainBPF.prepare(spec);
     sidechainBPF.reset();
@@ -36,8 +36,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     
     transientFollower.prepare(spec);
     
-    bitCrusher.prepare(spec);
-    airLayer.prepare(spec);
+    bitCrusher.prepare();
+    airLayer.prepare();
 
     attack = calcCoeff(0.01f, sampleRate);
     release = calcCoeff(0.01f, sampleRate);
@@ -141,7 +141,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 
   private:
   double sampleRate = 44100.0;
-  int numChannels = 2;
+  // int numChannels = 2;
   bool linkChannels = true;
   
   int generatorType = 0;

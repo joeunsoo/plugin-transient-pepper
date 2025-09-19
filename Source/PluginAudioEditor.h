@@ -147,20 +147,20 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
     .withOptionsFrom (slowReleaseSliderRelay)
 #endif
       .withOptionsFrom (controlParameterIndexReceiver)
-      .withNativeFunction ("isDebug", [this](auto& var, auto complete) {
+      .withNativeFunction ("isDebug", [](auto& var [[maybe_unused]], auto complete) {
 #if DEBUG
         complete(true);
 #else
         complete(false);
 #endif
       })
-      .withNativeFunction ("setWindowScale", [this](auto& var, auto complete) {
+      .withNativeFunction ("setWindowScale", [this](auto& var, auto complete [[maybe_unused]]) {
         setScale(var[0]);
       })
-      .withNativeFunction ("getWindowScale", [this](auto& var, auto complete) {
+      .withNativeFunction ("getWindowScale", [this](auto& var [[maybe_unused]], auto complete) {
         complete (juce::String(processorRef.windowScale));
       })
-      .withNativeFunction ("getActivate", [this](auto& var, auto complete) {
+      .withNativeFunction ("getActivate", [this](auto& var [[maybe_unused]], auto complete) {
         juce::String activate = juce::String(processorRef.licenseManager.getActivate());
         int64 trial = processorRef.licenseManager.getTrial();
         auto obj = new juce::DynamicObject();
@@ -173,17 +173,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
         processorRef.activated = true;
         complete ("done");
       })
-      .withNativeFunction ("setDeactivate", [this](auto& var, auto complete) {
+      .withNativeFunction ("setDeactivate", [this](auto& var [[maybe_unused]], auto complete) {
         processorRef.licenseManager.setDeactivate();
         processorRef.activated = false;
         complete ("done");
       })
-      .withNativeFunction ("startTrial", [this](auto& var, auto complete) {
+      .withNativeFunction ("startTrial", [this](auto& var [[maybe_unused]], auto complete) {
         int64 value = processorRef.licenseManager.startTrial();
         processorRef.activated = true;
         complete (value);
       })
-      .withNativeFunction ("getTrial", [this](auto& var, auto complete) {
+      .withNativeFunction ("getTrial", [this](auto& var [[maybe_unused]], auto complete) {
         int64 value = processorRef.licenseManager.getTrial();
         complete (value);
       })
@@ -193,7 +193,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
           newUrl.launchInDefaultBrowser();
         complete ("done");
       })
-      .withNativeFunction ("pressSpace", [this](auto& var, auto complete) {
+      .withNativeFunction ("pressSpace", [](auto& var [[maybe_unused]], auto complete [[maybe_unused]]) {
          // DBG(1);
       })
       .withResourceProvider ([this] (const auto& url) {
