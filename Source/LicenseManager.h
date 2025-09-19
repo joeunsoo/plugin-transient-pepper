@@ -105,6 +105,8 @@ class LicenseManager
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"  // 경고 종류
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wsign-compare"
       for (int i = 0; i < mb.getSize(); ++i)
           mb[i] = src[i] ^ secretKey[i % secretKey.length()];
 #pragma clang diagnostic pop
@@ -126,6 +128,8 @@ class LicenseManager
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"  // 경고 종류
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wsign-compare"
       for (int i = 0; i < block.getSize(); ++i)
           out[i] = block[i] ^ secretKey[i % secretKey.length()];
 #pragma clang diagnostic pop
