@@ -109,7 +109,7 @@ class LicenseManager
 #pragma clang diagnostic ignored "-Wsign-compare"
       for (int i = 0; i < mb.getSize(); ++i)
           mb[i] = src[i] ^ secretKey[i % secretKey.length()];
-#pragma clang diagnostic pop
+#pragma clang diagnostic  pop
 
       return juce::Base64::toBase64(mb.getData(), mb.getSize());
   }

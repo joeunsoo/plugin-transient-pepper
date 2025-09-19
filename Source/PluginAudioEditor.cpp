@@ -11,6 +11,7 @@
 #include "PluginAudioEditor.h"
 #include "Define.h"
 
+#if !DEBUG
 static ZipFile* getZipFile()
 {
   static MemoryInputStream stream { BinaryData::gui_zip, BinaryData::gui_zipSize, false };
@@ -49,6 +50,7 @@ static String getExtension (String filename)
 {
   return filename.fromLastOccurrenceOf (".", false, false);
 }
+#endif
 
 static auto streamToVector (InputStream& stream)
 {
@@ -63,7 +65,7 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
 {
   const auto urlToRetrive = url == "/" ? String { "index.html" }
   : url.fromFirstOccurrenceOf ("/", false, false);
-#if !DEBUG  
+#if !DEBUG
   if (auto* archive = getZipFile())
   {
     if (auto* entry = archive->getEntry (urlToRetrive))
