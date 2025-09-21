@@ -233,11 +233,31 @@ linkChannelsAttachment (*processorRef.state.getParameter (ID::linkChannels.getPa
   setScale(processorRef.windowScale);
   startTimerHz (20);
 
-  setWantsKeyboardFocus(false);
-  // 키보드 포커스를 받지 않도록 설정 ->  받게 설정
-  // setWantsKeyboardFocus(true);
+  // setWantsKeyboardFocus(false);
+  // addKeyListener(this);
+  setWantsKeyboardFocus(true);
+#if JUCE_MAC
+  webComponent.setWantsKeyboardFocus(true);
+#endif
   // grabKeyboardFocus();
 }
+//==============================================================================
+bool PluginAudioEditor::keyPressed(const juce::KeyPress& key)
+{
+  // 스페이스바 / 엔터 / 기타 DAW 단축키
+  if (key == juce::KeyPress::spaceKey || key == juce::KeyPress::returnKey)
+  {
+    // 항상 DAW로 전달
+#if JUCE_WINDOWS
+    // Windows: PostMessage로 호스트 윈도우에 전달 가능 (선택 사항)
+#endif
+    return false;
+  }
+  
+  // 나머지 키는 웹뷰가 처리
+  return true;
+}
+
 
 //==============================================================================
 void PluginAudioEditor::paint (Graphics& g)

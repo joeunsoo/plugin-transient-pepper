@@ -33,10 +33,6 @@ struct SinglePageBrowser : WebBrowserComponent
   {
       setWantsKeyboardFocus(false); // 포커스 받지 않음
   }
-  bool keyPressed(const KeyPress& key) override
-  {
-      return false; // 항상 무시
-  }
 
   // Prevent page loads from navigating away from our single page web app
   bool pageAboutToLoad (const String& newURL) override;
@@ -54,11 +50,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   //==============================================================================
   void paint (Graphics&) override;
   void resized() override;
-
-  bool keyPressed(const KeyPress& key) override
-  {
-      return false; // 항상 무시
-  }
+  bool keyPressed(const juce::KeyPress& key) override;
 
   int getControlParameterIndex (Component&) override
   {
