@@ -2,15 +2,14 @@
 
 import { useEffect, useMemo } from 'react';
 import { useMotionValue, useTransform, useMotionValueEvent } from 'framer-motion';
-import { type SliderProps } from '@mui/material/Slider';
 
 import KnobRail from './KnobRail';
 import KnobThumb from './KnobThumb';
 import KnobOuter from './KnobOuter';
 import { useDrag } from './useDrag';
-import { Box, type BoxProps } from '@mantine/core';
+import { Box, type BoxProps, type SliderProps } from '@mantine/core';
 
-export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDragStart'> {
+export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDragStart' | 'onChange'> {
   value: number;
   dragRange?: number;
   setIsDrag: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +17,9 @@ export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDrag
   color?: string;
   ringColor?: string;
   shiftSensitivity?: number; // Shift 눌렀을 때 감도
+
+  onChange?: (event: Event, value: number, activeThumb: number) => void;
+  onChangeCommitted?: (event: React.SyntheticEvent | Event, value: number) => void;
 }
 
 export type InKnobProps = Omit<KnobProps, 'setIsDrag'| 'value'>;

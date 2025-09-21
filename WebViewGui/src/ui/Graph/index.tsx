@@ -2,8 +2,8 @@
 
 import { palette } from '@/define';
 import Path from './Path';
-import { alpha } from '@mui/material/styles';
 import Threshold from './Threshold';
+import { alpha } from '@mantine/core';
 
 export default function Page({
   ...props
@@ -18,7 +18,7 @@ export default function Page({
     <svg viewBox="0 0 383 293" {...props}>
       <Path
         idx={4}
-        fill={alpha(palette.primary.darkest, 1.0)}
+        fill={palette.primary.darkest}
         stroke={palette.primary.light}
         strokeWidth={2}
         {...pathProps}

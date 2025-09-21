@@ -36,7 +36,7 @@ export default function App() {
               h="100%"
               sx={{
                 display: 'flex',
-                borderRadius: rem(mantineSpace * 5),
+                borderRadius: rem(mantineSpace * 4),
                 background: `
                   linear-gradient(
                     to bottom,

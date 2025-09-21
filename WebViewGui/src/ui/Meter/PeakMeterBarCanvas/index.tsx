@@ -1,8 +1,8 @@
-import Stack, { type StackProps } from '@mui/material/Stack';
 import { uesControlStore } from '@/store/ControlStore';
-import { testOpacity, GlassSx, palette } from '@/define';
+import { testOpacity, GlassSx, palette, mantineSpace } from '@/define';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import Canvas from './Canvas';
+import { rem, Stack, type StackProps } from '@mantine/core';
 
 interface PeakMeterLedProps extends PeakMeterProps, StackProps {
   length?: number,
@@ -10,18 +10,18 @@ interface PeakMeterLedProps extends PeakMeterProps, StackProps {
 
 export default function Page({
   idx,
-  sx,
+  style,
   ignoreBypass = false,
-  addTest=[],
+  addTest = [],
   ...props
 }: PeakMeterLedProps) {
   const { bypassed } = uesControlStore();
 
   return (
     <Stack
-      spacing={0.7}
-      justifyContent="end"
-      sx={{
+      gap={rem(mantineSpace * 0.7)}
+      justify="end"
+      style={{
         position: 'relative',
         width: '100%',
         height: '100%',
@@ -33,6 +33,9 @@ export default function Page({
         backgroundColor: 'var(--mui-palette-secondary-blackest)',
         borderRadius: '0.2em',
         overflow: 'hidden',
+        ...style
+      }}
+      sx={{
         ...GlassSx,
         '& > canvas': {
           position: 'absolute',
@@ -40,10 +43,9 @@ export default function Page({
           left: 0,
           width: '100%',
           height: '100%',
-          flexGrow:1,
-          aspectRatio:'unset'
+          flexGrow: 1,
+          aspectRatio: 'unset'
         },
-        ...sx
       }}
       {...props}
     >

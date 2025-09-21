@@ -50,6 +50,7 @@ export default tseslint.config([
 
       'semi': ['warn', 'always'],
       'quotes': ['warn', 'single'],
+      'jsx-quotes': ['warn', 'prefer-double'],
       'no-multiple-empty-lines': ['warn', { 'max': 1, 'maxEOF': 0 }], // 빈줄 최대 1개
       'max-len': ['warn', { 'code': 400 }],
       'no-underscore-dangle': 'warn',

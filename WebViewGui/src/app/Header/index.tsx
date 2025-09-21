@@ -1,6 +1,6 @@
 'use client';
 
-import { PluginName, CompanyName, mantineSpace } from '@/define';
+import { PluginName, CompanyName, mantineSpace, secondaryMain } from '@/define';
 
 import { Box, Group, rem } from '@mantine/core';
 import Button from '@/ui/BlurButton';
@@ -38,7 +38,7 @@ export default function App() {
           />
           <Button
             variant="text"
-            color="secondary.6"
+            color={secondaryMain}
             fw={'var(--mui-fontWeight-xl)'}
           >
             {PluginName}
@@ -48,7 +48,7 @@ export default function App() {
         <Group
           align="center"
           justify="end"
-          gap={rem(mantineSpace * 2)}
+          gap={rem(mantineSpace * 3)}
         >
           <Button
             color="white"

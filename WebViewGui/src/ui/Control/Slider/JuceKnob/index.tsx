@@ -8,15 +8,14 @@ import {
   toFixedDigits,
   LabelTypographySx,
   testOpacity,
-  mantineSpace
+  mantineSpace,
 } from '@/define';
 
 import Knob from './Knob';
 import type { ValueToString } from '@/utils/valueToString';
-import Tooltip from '@mui/material/Tooltip';
 import { uesControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
-import { Box, Group, rem, Text, type BoxProps } from '@mantine/core';
+import { Box, Group, rem, Text, Tooltip, type BoxProps } from '@mantine/core';
 
 interface JuceSliderProps extends UIProps, Omit<BoxProps,'onChange'> {
   identifier: string,
@@ -172,18 +171,19 @@ export default function JuceSlider({
         >
           {lowIcon}
           <Tooltip
-            open={
+            opened={
               (focusAnchor === ref.current)
               || (!focusAnchor) && isOver
             }
-            title={printValue()}
-            enterDelay={10}
-            slotProps={{
-              tooltip: {
-                sx: {
-                  mt: '0.5em !important',
-                }
-              }
+            label={printValue()}
+            position="bottom"
+            openDelay={10}
+            bg="secondary.9"
+            c="white"
+            px="0.4rem"
+            py="0.2rem"
+            style={{
+              fontSize: '0.7em',
             }}
           >
             <Text

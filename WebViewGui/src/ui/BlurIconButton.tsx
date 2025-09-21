@@ -1,6 +1,6 @@
 import { ActionIcon, type ActionIconProps } from '@mantine/core';
 
-interface ExtendedButtonProps
+export interface ExtendedButtonProps
   extends ActionIconProps,
   Omit<
     React.ButtonHTMLAttributes<HTMLButtonElement>,

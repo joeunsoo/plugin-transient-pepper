@@ -19,13 +19,13 @@ export default function Page() {
     <Menu>
       <MenuTarget>
         <ActionIcon
-          size="sm"
+          size="1.5em"
           variant="transparent"
           sx={{
             color: 'var(--mui-palette-common-white)',
           }}
         >
-          <GearSixIcon weight="fill" />
+          <GearSixIcon size="1.15em" weight="fill" />
         </ActionIcon>
       </MenuTarget>
       <MenuDropdown

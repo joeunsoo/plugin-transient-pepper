@@ -1,8 +1,7 @@
 import { palette } from '@/define';
 import Channel from './Channel';
 
-import { Box } from '@mantine/core';
-import { alpha } from '@mui/material/styles';
+import { Box, alpha } from '@mantine/core';
 
 type EnvelopeGraphProps = {
   width?: number;
@@ -43,7 +42,7 @@ export default function EnvelopeGraph({
       <Channel
         idx={4}
         {...canvasProps}
-        fill={alpha(palette.primary.darkest, 1.0)}
+        fill={palette.primary.darkest}
         stroke={palette.primary.light}
       />
       <Channel

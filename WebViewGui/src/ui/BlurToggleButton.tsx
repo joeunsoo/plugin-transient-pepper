@@ -1,22 +1,48 @@
-import ToggleButton, { type ToggleButtonProps } from '@mui/material/ToggleButton';
+'use client';
 
-export default function BlurToggleButton(props: ToggleButtonProps) {
-  const { onMouseDown, onClick, ...rest } = props;
+import { Button, type ButtonProps } from '@mantine/core';
+import { useUncontrolled } from '@mantine/hooks';
+import type { MouseEvent } from 'react';
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
-    onMouseDown?.(e);
-    e.preventDefault();
-  };
+export interface BlurToggleButtonProps
+  extends ButtonProps,
+    Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    keyof ButtonProps | 'onChange'
+  > {
+  checked?: boolean;
+  defaultChecked?: boolean;
+  onChange?: (checked: boolean) => void;
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, value: any) => {
+export default function BlurToggleButton(props: BlurToggleButtonProps) {
+  const {
+    checked,
+    defaultChecked,
+    onChange,
+    ...rest
+  } = props;
+
+  // Mantine이 내부적으로 Checkbox 등에 쓰는 훅 (controlled/uncontrolled 패턴)
+  const [value, setValue] = useUncontrolled({
+    value: checked,
+    defaultValue: defaultChecked,
+    finalValue: false,
+    onChange,
+  });
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     (e.currentTarget as HTMLElement).blur(); // 클릭 후 포커스 제거
-    if (onClick) onClick(e, value);
+    setValue(!value);
   };
 
-  return <ToggleButton
-    {...rest}
-    onMouseDown={handleMouseDown}
-    onClick={handleClick}
-  />;
+  return (
+    <Button
+      {...rest}
+      variant={value ? 'filled' : 'light'}
+      onClick={handleClick}
+      data-value={value.valueOf()}
+      h="2.35em"
+    />
+  );
 }

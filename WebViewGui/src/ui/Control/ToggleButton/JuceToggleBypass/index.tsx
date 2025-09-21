@@ -8,7 +8,7 @@ import { testOpacity, controlParameterIndexAnnotation } from '@/define';
 import Button from './Button';
 import { uesControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
-import { Box, type BoxProps } from '@mantine/core';
+import { Center, type BoxProps } from '@mantine/core';
 
 interface JuceCheckboxProps
   extends UIProps, Omit<BoxProps, 'title' | 'onChange'> {
@@ -62,7 +62,7 @@ export default function JuceCheckbox({
   }, []);
 
   return (
-    <Box
+    <Center
       {...{
         [controlParameterIndexAnnotation]:
           checkboxState.properties.parameterIndex,
@@ -80,6 +80,6 @@ export default function JuceCheckbox({
         value={invertValue ? !value : value}
         handleChange={handleChange}
       />
-    </Box>
+    </Center>
   );
 }

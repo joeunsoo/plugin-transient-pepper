@@ -1,16 +1,16 @@
 'use client';
 
 import { PowerIcon } from '@phosphor-icons/react';
-import IconButton from '@/ui/BlurIconButton';
+import IconButton, { type ExtendedButtonProps } from '@/ui/BlurIconButton';
 
-type JuceCheckboxProps = {
-  value: boolean,
+interface JuceCheckboxProps extends ExtendedButtonProps {
   handleChange: (value: boolean) => void
 }
 
 export default function JuceCheckbox({
   value,
   handleChange,
+  size='1.5em',
 }: JuceCheckboxProps) {
 
   const handleMouseDown = () => {
@@ -23,12 +23,12 @@ export default function JuceCheckbox({
       onMouseDown={() => {
         handleMouseDown();
       }}
-      sx={{
-        p: 0,
-      }}
+      w={size}
+      h={size}
     >
       <PowerIcon
         weight="bold"
+        size={size}
         color={value ? 'var(--mui-palette-secondary-main)' : 'var(--mui-palette-primary-darken)'}
       />
     </IconButton>
