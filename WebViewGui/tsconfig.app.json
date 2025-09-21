@@ -43,6 +43,7 @@
     "typeRoots":["./node_modules/@types", "./@types"],
     "paths": {
       // "@/src/*": ["src/*"],
+      "@/types/*": ["./src/@types/*"],
       "@/*": ["src/*"],
     },
   },
