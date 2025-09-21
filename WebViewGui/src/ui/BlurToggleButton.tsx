@@ -8,8 +8,9 @@ export interface BlurToggleButtonProps
   extends ButtonProps,
     Omit<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
-    keyof ButtonProps | 'onChange'
+    keyof ButtonProps | 'onChange' | 'value'
   > {
+  value: boolean;
   checked?: boolean;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
@@ -17,6 +18,8 @@ export interface BlurToggleButtonProps
 
 export default function BlurToggleButton(props: BlurToggleButtonProps) {
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    value:_value,
     checked,
     defaultChecked,
     onChange,

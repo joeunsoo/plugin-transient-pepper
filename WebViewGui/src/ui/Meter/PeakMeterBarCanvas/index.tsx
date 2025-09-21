@@ -1,5 +1,5 @@
 import { uesControlStore } from '@/store/ControlStore';
-import { testOpacity, GlassSx, palette, mantineSpace } from '@/define';
+import { testOpacity, GlassSx, mantineSpace, secondaryMain } from '@/define';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import Canvas from './Canvas';
 import { rem, Stack, type StackProps } from '@mantine/core';
@@ -30,7 +30,7 @@ export default function Page({
           bypassed && !ignoreBypass,
           ...addTest
         ]),
-        backgroundColor: 'var(--mui-palette-secondary-blackest)',
+        backgroundColor: 'var(--mantine-color-secondaryDark-9)',
         borderRadius: '0.2em',
         overflow: 'hidden',
         ...style
@@ -52,7 +52,7 @@ export default function Page({
       <Canvas
         idx={idx}
         height={100}
-        fill={palette.secondary.main}
+        fill={secondaryMain}
       />
     </Stack>
   );

@@ -1,4 +1,3 @@
-import MuiProvider from './MuiProvider';
 import MantineProvider from './MantineProvider';
 import AboutProvider from './AboutProvider';
 import AnalysisDataProvider from './AnalysisDataProvider';
@@ -17,7 +16,6 @@ export default function Provider({
   children
 }: ProviderProps) {
   return (
-    <MuiProvider>
       <MantineProvider>
         {children}
         <GlobalSpaceListener />
@@ -28,6 +26,5 @@ export default function Provider({
         <Snackbar />
         <ControlParameterProvider />
       </MantineProvider>
-    </MuiProvider>
   );
 }

@@ -23,7 +23,6 @@ export default function JuceCheckbox({
       value={value}
       label={label}
       onMouseDown={handleMouseDown}
-      className={value ? 'Mui-selected' : ''}
     />
   );
 }

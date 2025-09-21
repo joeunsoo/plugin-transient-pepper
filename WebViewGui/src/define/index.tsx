@@ -7,9 +7,14 @@ import {
 export {
   themeColor,
   paletteMantine,
+  primaryMain,
+  secondaryMain,
+  infoMain,
 } from './Color';
 
 export const mantineSpace = 4;
+
+import { infoMain, primaryMain, secondaryMain } from './Color';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export * from './Plugin';
@@ -36,10 +41,6 @@ export function generatePalette(color: string) {
     contrastText: getContrastRatio(color, '#fff') > 2.5 ? '#fff' : '#111',
   };
 }
-
-export const primaryMain = '#535355';
-export const secondaryMain = '#DF2926'; // #E53935 #FF4C4C
-export const infoMain = '#6b3058';
 
 interface PaletteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

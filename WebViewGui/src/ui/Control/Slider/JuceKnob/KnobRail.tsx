@@ -23,13 +23,13 @@ export default function Page({
       </defs>
       <g transform="translate(100,100)">
         <circle r={65}
-          fill={`var(--mui-palette-${ringColor}-darker)`}
+          fill={`var(--mantine-color-${ringColor}Dark-6)`}
           stroke="#000000"
           strokeWidth="1"
         />
 
         <g filter="url(#dropshadow)">
-          <circle r={50} fill={`var(--mui-palette-${color}-main)`} />
+          <circle r={50} fill={`var(--mantine-color-${color}-6)`} />
         </g>
 
         <linearGradient id="lightGradient" x1="0" x2="0" y1="0" y2="1">
@@ -41,7 +41,7 @@ export default function Page({
           <circle
             r={50}
             fill="url(#lightGradient)"
-            stroke={`var(--mui-palette-${color}-darker)`}
+            stroke={`var(--mantine-color-${color}Dark-6)`}
             strokeWidth="2"
           />
         </g>

@@ -21,13 +21,13 @@ export default function StyledToggleButton({
         width: '100%',
         border: '0.1em solid var(--mantine-color-primary-9)',
         borderRadius: '0.3em',
-        background: 'linear-gradient(135deg, var(--mui-palette-secondary-darker), var(--mui-palette-secondary-blackest))',
+        background: 'linear-gradient(135deg, var(--mantine-color-secondaryDark-6), var(--mantine-color-secondaryDark-9))',
       }}
 
       sx={{
         ...GlassSx,
         '&[data-value="true"]': {
-          background: 'linear-gradient(135deg, var(--mui-palette-secondary-main), var(--mui-palette-secondary-dark)) !important',
+          background: 'linear-gradient(135deg, var(--mantine-color-secondaryDark-0), var(--mantine-color-secondaryDark-2)) !important',
         },
       }}
 
@@ -39,6 +39,7 @@ export default function StyledToggleButton({
       {...props}
     >
       <Text
+        fw={500}
         sx={{
           ...LabelTypographySx,
         }}

@@ -10,7 +10,7 @@ export default function Page({
       style={{
         flexGrow: 1,
         width: '100%',
-        backgroundColor: 'var(--mui-palette-secondary-blackest)',
+        backgroundColor: 'var(--mantine-color-secondaryDark-9)',
         borderRadius: rem(mantineSpace * 3),
         ...style,
       }}

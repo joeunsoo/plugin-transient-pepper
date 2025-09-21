@@ -20,7 +20,6 @@ export default function JuceCheckbox({
 
   return (
     <IconButton
-      className={value ? 'Mui-selected' : ''}
       onMouseDown={() => {
         handleMouseDown();
       }}

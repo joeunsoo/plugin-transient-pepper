@@ -9,7 +9,7 @@ function Dot({
   return (
     <circle
       r={4}
-      fill={`var(--mui-palette-${color}-darken)`}
+      fill={`var(--mantine-color-${color}Dark-3)`}
       {...props}
     />
   );
@@ -46,7 +46,7 @@ export default function PageProps({
           A ${distance} ${distance} 0 ${angle1 < 0 ? 0 : 1} 1 ${x1} ${y1}
         `}
         fill="none"
-        stroke={`var(--mui-palette-${color}-dark)`}
+        stroke={`var(--mantine-color-${color}Dark-2)`}
         strokeWidth={2}
         style={{
           opacity: 0.2

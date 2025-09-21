@@ -1,4 +1,4 @@
-import { palette } from '@/define';
+import { palette, paletteMantine } from '@/define';
 import Channel from './Channel';
 
 import { Box, alpha } from '@mantine/core';
@@ -42,14 +42,14 @@ export default function EnvelopeGraph({
       <Channel
         idx={4}
         {...canvasProps}
-        fill={palette.primary.darkest}
-        stroke={palette.primary.light}
+        fill={paletteMantine.primaryDark[9]}
+        stroke={paletteMantine.primaryLight[7]}
       />
       <Channel
         idx={6}
         {...canvasProps}
-        fill={alpha(palette.secondary.dark, 0.3)}
-        stroke={palette.secondary.light}
+        fill={alpha(paletteMantine.secondaryDark[2], 0.3)}
+        stroke={paletteMantine.secondaryLight[7]}
       />
     </Box>
   );

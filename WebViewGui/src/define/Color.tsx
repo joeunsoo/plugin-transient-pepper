@@ -19,7 +19,8 @@ export function generatePaletteMantine(
   deep: string = '#000000',
   centerIdx: number = 6,
 ): MantineColorsTuple {
-  const forWhite = chroma.scale(['#fff', color]).mode('lab').colors(centerIdx + 1);
+  const zero = centerIdx > 0 ? '#fff' : color;
+  const forWhite = chroma.scale([zero, color]).mode('lab').colors(centerIdx + 1);
   const forDeep = chroma.scale([color, deep]).mode('lab').colors(10 - centerIdx).slice(1);
   const array = [
     ...forWhite,
@@ -50,6 +51,11 @@ export function generatePaletteAlpha(color: string): MantineColorsTuple {
 
 export const paletteMantine: PaletteProps = {
   primary: generatePaletteMantine(primaryMain),
-  secondary: generatePaletteMantine(secondaryMain, secondaryDeep, 6),
+  primaryLight: generatePaletteMantineOne(primaryMain),
+  primaryDark: generatePaletteMantine(primaryMain, '#080808', 0),
+
+  secondary: generatePaletteMantine(secondaryMain, secondaryDeep),
+  secondaryLight: generatePaletteMantineOne(secondaryMain),
+  secondaryDark: generatePaletteMantine(secondaryMain, '#160403', 0),
   info: generatePaletteMantine(infoMain),
 };
