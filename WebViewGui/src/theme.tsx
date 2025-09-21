@@ -16,32 +16,25 @@ export const themeVars = {
   typography: {
     fontFamily: '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif',
     h1: {
-      fontSize: 'var(--mui-fontSize-xl4, 2.25rem)',
+      fontSize: 'var(--mantine-font-size-xl4, 2.25rem)',
       fontWeight: 'var(--mui-fontWeight-xl, 700)'
     },
     h2: {
-      fontSize: 'var(--mui-fontSize-xl3, 1.875rem)',
+      fontSize: 'var(--mantine-font-size-xl3, 1.875rem)',
       fontWeight: 'var(--mui-fontWeight-xl, 700)'
     },
     h3: {
-      fontSize: 'var(--mui-fontSize-xl2, 1.5rem)',
+      fontSize: 'var(--mantine-font-size-xl2, 1.5rem)',
       fontWeight: 'var(--mui-t-lg, 600)'
     },
     h4: {
-      fontSize: 'var(--mui-fontSize-xl, 1.25rem)',
+      fontSize: 'var(--mantine-font-size-xl, 1.25rem)',
       fontWeight: 'var(--mui-fontWeight-lg, 600)'
     },
     h5: {
-      fontSize: 'var(--mui-fontSize-md, 1rem)',
+      fontSize: 'var(--mantine-font-size-md, 1rem)',
       fontWeight: 'var(--mui-fontWeight-lg, 600)'
     },
-  },
-
-  fontWeight: {
-    sm: 400,
-    md: 500,
-    lg: 600,
-    xl: 700,
   },
 
   fontSize: {
@@ -50,10 +43,6 @@ export const themeVars = {
     md: '1rem',
     lg: '1.125rem',
     xl: '1.25rem',
-    xl2: '1.5rem',
-    xl3: '1.875rem',
-    xl4: '2.25rem',
-    xl5: '2.55rem',
   },
   shape: {
     // borderRadius: 4,

@@ -118,7 +118,7 @@ export default function LoginForm() {
               visitWebsite(`${CompanyWebsite}/reset-password`);
             }}
             sx={{
-              fontSize: 'var(--mui-fontSize-xs)'
+              fontSize: 'var(--mantine-font-size-xs)'
             }}
           >
             Forgot password?

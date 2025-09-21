@@ -39,7 +39,7 @@ export default function Page() {
             '& .MuiMenuItem-root': {
               py: 0,
               minHeight: '2.4em',
-              fontSize: 'var(--mui-fontSize-sm)',
+              fontSize: 'var(--mantine-font-size-sm)',
             },
             '& .MuiMenuItem-root:hover': {
               backgroundColor: 'var(--mui-palette-primary-darken)',
@@ -49,7 +49,7 @@ export default function Page() {
             },
             '& .MuiListSubheader-root': {
               color: 'var(--mui-palette-text-disabled)',
-              fontSize: 'var(--mui-fontSize-xs)',
+              fontSize: 'var(--mantine-font-size-xs)',
               pt: 2,
               backgroundColor: 'transparent',
               lineHeight: 1.5,

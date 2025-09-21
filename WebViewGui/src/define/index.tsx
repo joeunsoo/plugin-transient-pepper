@@ -57,7 +57,7 @@ export const meterEndColor = '#E53935';
 
 export const LabelTypographySxWithoutColor = {
   fontSize: 'calc(var(--knob-width) * 0.15)',
-  // fontSize: 'var(--mui-fontSize-sm)',
+  // fontSize: 'var(--mantine-font-size-sm)',
 };
 
 export const LabelTypographySx = {

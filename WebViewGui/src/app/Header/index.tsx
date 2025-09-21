@@ -39,7 +39,7 @@ export default function App() {
           <Button
             variant="text"
             color={secondaryMain}
-            fw={'var(--mui-fontWeight-xl)'}
+            fw={700}
           >
             {PluginName}
           </Button>
@@ -52,9 +52,9 @@ export default function App() {
         >
           <Button
             color="white"
-            fw={'var(--mui-fontWeight-xl)'}
+            fw={700}
             sx={{
-              fontSize: 'var(--mui-fontSize-xs)',
+              fontSize: 'var(--mantine-font-size-xs)',
             }}
           >
             {CompanyName}

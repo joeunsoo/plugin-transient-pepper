@@ -23,8 +23,8 @@ export default function Component({
   return (
     <Box
       style={{
-        fontWeight: 'var(--mui-fontWeight-lg)',
-        fontSize: 'var(--mui-fontSize-sm)',
+        fontWeight: 600,
+        fontSize: 'var(--mantine-font-size-sm)',
         color: 'var(--mui-palette-common-white)',
         opacity: testOpacity([
           bypassed && !ignoreBypass,
