@@ -7,12 +7,14 @@ import SectionTitle from './SectionTitle';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 import { useControlStore } from '@/store/ControlStore';
 import { HeadphonesIcon } from '@phosphor-icons/react';
+import { usePluginStore } from '@/store/PluginStore';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
   const [bpfOn, setBpfOn] = useState<boolean>(true);
   const { sidechainListen, setThreshold, setSidechainListen } = useControlStore();
+  const { numChannels } = usePluginStore();
 
   return (
     <Stack
@@ -32,7 +34,8 @@ export default function Page({
       >
         <JuceToggleButton
           identifier="linkChannelsToggle"
-          title="L/R Link"
+          title={numChannels < 2 ? 'Mono' : 'L/R Link'}
+          addTest={[numChannels < 2]}
         />
         <JuceToggleButton
           identifier="bpfPowerToggle"
