@@ -28,7 +28,16 @@ std::optional<WebBrowserComponent::Resource> getResource (const String& url);
 struct SinglePageBrowser : WebBrowserComponent
 {
   using WebBrowserComponent::WebBrowserComponent;
-  
+
+  SinglePageBrowser()
+  {
+      setWantsKeyboardFocus(false); // 포커스 받지 않음
+  }
+  bool keyPressed(const KeyPress& key) override
+  {
+      return false; // 항상 무시
+  }
+
   // Prevent page loads from navigating away from our single page web app
   bool pageAboutToLoad (const String& newURL) override;
   
@@ -46,13 +55,10 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   void paint (Graphics&) override;
   void resized() override;
 
-#if JUCE_WINDOWS
   bool keyPressed(const KeyPress& key) override
   {
-      DBG(key.getTextDescription());
-      return false;
+      return false; // 항상 무시
   }
-#endif
 
   int getControlParameterIndex (Component&) override
   {
@@ -149,20 +155,20 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
     .withOptionsFrom (slowReleaseSliderRelay)
 #endif
       .withOptionsFrom (controlParameterIndexReceiver)
-      .withNativeFunction ("isDebug", [](auto& var [[maybe_unused]], auto complete) {
+      .withNativeFunction ("isDebug", [](auto& var /*unused*/, auto complete) {
 #if DEBUG
         complete(true);
 #else
         complete(false);
 #endif
       })
-      .withNativeFunction ("setWindowScale", [this](auto& var, auto complete [[maybe_unused]]) {
+      .withNativeFunction ("setWindowScale", [this](auto& var, auto complete /*unused*/) {
         setScale(var[0]);
       })
-      .withNativeFunction ("getWindowScale", [this](auto& var [[maybe_unused]], auto complete) {
+      .withNativeFunction ("getWindowScale", [this](auto& var /*unused*/, auto complete) {
         complete (juce::String(processorRef.windowScale));
       })
-      .withNativeFunction ("getActivate", [this](auto& var [[maybe_unused]], auto complete) {
+      .withNativeFunction ("getActivate", [this](auto& var /*unused*/, auto complete) {
         juce::String activate = juce::String(processorRef.licenseManager.getActivate());
         int64 trial = processorRef.licenseManager.getTrial();
         auto obj = new juce::DynamicObject();
@@ -175,17 +181,17 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
         processorRef.activated = true;
         complete ("done");
       })
-      .withNativeFunction ("setDeactivate", [this](auto& var [[maybe_unused]], auto complete) {
+      .withNativeFunction ("setDeactivate", [this](auto& var /*unused*/, auto complete) {
         processorRef.licenseManager.setDeactivate();
         processorRef.activated = false;
         complete ("done");
       })
-      .withNativeFunction ("startTrial", [this](auto& var [[maybe_unused]], auto complete) {
+      .withNativeFunction ("startTrial", [this](auto& var /*unused*/, auto complete) {
         int64 value = processorRef.licenseManager.startTrial();
         processorRef.activated = true;
         complete (value);
       })
-      .withNativeFunction ("getTrial", [this](auto& var [[maybe_unused]], auto complete) {
+      .withNativeFunction ("getTrial", [this](auto& var /*unused*/, auto complete) {
         int64 value = processorRef.licenseManager.getTrial();
         complete (value);
       })
@@ -195,7 +201,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
           newUrl.launchInDefaultBrowser();
         complete ("done");
       })
-      .withNativeFunction ("pressSpace", [](auto& var [[maybe_unused]], auto complete [[maybe_unused]]) {
+      .withNativeFunction ("pressSpace", [](auto& var /*unused*/, auto complete /*unused*/) {
          // DBG(1);
       })
       .withResourceProvider ([this] (const auto& url) {
