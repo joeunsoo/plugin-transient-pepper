@@ -14,12 +14,15 @@ export default function Demo() {
   useEffect(() => {
     if (open) {
       let color = 'primary.4';
-      let icon = <InfoIcon size="var(--icon-size-sm)" />;
+      let icon = <InfoIcon size="var(--icon-size-sm)" color="white" />;
       if (options.variant === 'success') {
         color = 'green';
       } else if (options.variant === 'error') {
         color = 'red';
-        icon = <WarningIcon size="var(--icon-size-sm)" weight="bold" />;
+        icon = <WarningIcon
+          size="var(--icon-size-sm)"
+          weight="bold"
+        />;
       }
 
       notifications.show({
@@ -30,6 +33,17 @@ export default function Demo() {
         autoClose: 3000,
         onClose,
         classNames: classes,
+        w:'fit-content',
+        styles: {
+          root: {
+            padding:'0.2em',
+            paddingLeft:'0.5em',
+            paddingRight:'0.5em',
+          },
+          icon: {
+            margin: 0
+          }
+        }
       });
     }
   }, [refreshCount, open, message, options, onClose]);

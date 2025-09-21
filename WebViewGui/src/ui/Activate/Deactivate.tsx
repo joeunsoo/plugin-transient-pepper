@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <Stack
-      px={rem(mantineSpace * 4)}
+      gap={rem(mantineSpace * 4)}
     >
       <Text>{email}</Text>
       <Button
