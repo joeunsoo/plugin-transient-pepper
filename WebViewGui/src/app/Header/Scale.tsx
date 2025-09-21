@@ -46,12 +46,12 @@ export default function Page() {
             <Box>
               {value}%
             </Box>
-            {value === scale &&
+            {value !== scale &&
               <Box
                 style={{
                   width: '0.6em',
                   height: '0.6em',
-                  backgroundColor: 'var(--mui-palette-primary-light)'
+                  backgroundColor: 'var(--mantine-color-primary-5)'
                 }}
               />
             }

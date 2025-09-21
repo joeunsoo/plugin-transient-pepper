@@ -48,7 +48,7 @@ export default function Page({
 
         <linearGradient id="stroke" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="var(--mantine-color-white)" stopOpacity="1.0" />
-          <stop offset="20%" stopColor="var(--mui-palette-primary-main)" stopOpacity="0" />
+          <stop offset="20%" stopColor="var(--mantine-color-primary-6)" stopOpacity="0" />
         </linearGradient>
         <g transform="rotate(-35)">
           <circle r={50} fill="none" stroke="url(#stroke)" strokeWidth="2" />

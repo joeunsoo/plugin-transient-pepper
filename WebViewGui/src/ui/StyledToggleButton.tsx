@@ -19,7 +19,7 @@ export default function StyledToggleButton({
       py="0.5em"
       style={{
         width: '100%',
-        border: '0.1em solid var(--mui-palette-primary-darkest)',
+        border: '0.1em solid var(--mantine-color-primary-9)',
         borderRadius: '0.3em',
         background: 'linear-gradient(135deg, var(--mui-palette-secondary-darker), var(--mui-palette-secondary-blackest))',
       }}

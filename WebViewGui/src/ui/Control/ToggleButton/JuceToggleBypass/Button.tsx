@@ -2,6 +2,7 @@
 
 import { PowerIcon } from '@phosphor-icons/react';
 import IconButton, { type ExtendedButtonProps } from '@/ui/BlurIconButton';
+import { secondaryMain } from '@/define';
 
 interface JuceCheckboxProps extends ExtendedButtonProps {
   handleChange: (value: boolean) => void
@@ -29,7 +30,7 @@ export default function JuceCheckbox({
       <PowerIcon
         weight="bold"
         size={size}
-        color={value ? 'var(--mui-palette-secondary-main)' : 'var(--mui-palette-primary-darken)'}
+        color={value ? secondaryMain : 'var(--mantine-color-primary-7)'}
       />
     </IconButton>
   );

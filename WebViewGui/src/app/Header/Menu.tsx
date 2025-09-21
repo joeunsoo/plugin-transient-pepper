@@ -28,35 +28,7 @@ export default function Page() {
           <GearSixIcon size="1.15em" weight="fill" />
         </ActionIcon>
       </MenuTarget>
-      <MenuDropdown
-        sx={{
-          '& .MuiPaper-root': {
-            backgroundColor: 'var(--mui-palette-primary-darker)',
-            color: 'var(--mantine-color-white)',
-            '& .MuiList-root': {
-              py: 0,
-            },
-            '& .MuiMenuItem-root': {
-              py: 0,
-              minHeight: '2.4em',
-              fontSize: 'var(--mantine-font-size-sm)',
-            },
-            '& .MuiMenuItem-root:hover': {
-              backgroundColor: 'var(--mui-palette-primary-darken)',
-            },
-            '& .MuiDivider-root': {
-              borderColor: 'var(--mui-palette-primary-main)',
-            },
-            '& .MuiListSubheader-root': {
-              color: 'var(--mui-palette-text-disabled)',
-              fontSize: 'var(--mantine-font-size-xs)',
-              pt: 2,
-              backgroundColor: 'transparent',
-              lineHeight: 1.5,
-            },
-          }
-        }}
-      >
+      <MenuDropdown>
         <Scale />
         <MenuDivider />
         <MenuItem onClick={() => { visitWebsite(CompanyWebsite); }}>

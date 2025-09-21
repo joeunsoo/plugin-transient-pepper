@@ -74,7 +74,7 @@ export default function LoginForm() {
       variant="outline"
       sx={{
         width: '100%',
-        color: !isEnded ? 'var(--mui-palette-primary-lighter)' : 'var(--mui-palette-primary-light)'
+        color: !isEnded ? 'var(--mantine-color-primary-2)' : 'var(--mantine-color-primary-5)'
       }}
     >
       {message}
