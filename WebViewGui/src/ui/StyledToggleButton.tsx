@@ -1,7 +1,7 @@
-import Typography from '@mui/material/Typography';
 import { type ToggleButtonProps as MuiToggleButtonProps } from '@mui/material/ToggleButton';
 import ToggleButton from '@/ui/BlurToggleButton';
 import { GlassSx, LabelTypographySx } from '@/define';
+import { Text } from '@mantine/core';
 
 export interface ToggleButtonProps
   extends MuiToggleButtonProps {
@@ -37,13 +37,13 @@ export default function StyledToggleButton({
 
       {...props}
     >
-      <Typography
+      <Text
         sx={{
           ...LabelTypographySx,
         }}
       >
         {label}
-      </Typography>
+      </Text>
     </ToggleButton>
   );
 }

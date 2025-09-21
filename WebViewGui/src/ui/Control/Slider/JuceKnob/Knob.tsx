@@ -2,13 +2,13 @@
 
 import { useEffect, useMemo } from 'react';
 import { useMotionValue, useTransform, useMotionValueEvent } from 'framer-motion';
-import Box, { type BoxProps } from '@mui/material/Box';
 import { type SliderProps } from '@mui/material/Slider';
 
 import KnobRail from './KnobRail';
 import KnobThumb from './KnobThumb';
 import KnobOuter from './KnobOuter';
 import { useDrag } from './useDrag';
+import { Box, type BoxProps } from '@mantine/core';
 
 export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDragStart'> {
   value: number;
@@ -23,7 +23,7 @@ export interface KnobProps extends Omit<SliderProps, 'value' | 'color' | 'onDrag
 export type InKnobProps = Omit<KnobProps, 'setIsDrag'| 'value'>;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function sliderToBox({ defaultValue, onMouseDown, onChange, onDragStart, onChangeCommitted, scale, ...props }: InKnobProps): BoxProps {
+function sliderToBox({ defaultValue, onMouseDown, onChange, onDragStart, onChangeCommitted, scale, ...props }: InKnobProps): Omit<BoxProps, 'sx'> {
   return { ...props };
 }
 
@@ -67,7 +67,7 @@ export default function JuceSlider({
   return (
     <Box
       {...sliderToBox(props)}
-      sx={{ position: 'relative', width: '100%' }}
+      style={{ position: 'relative', width: '100%' }}
       onMouseDown={onMouseDown}
     >
       <svg viewBox="20 20 160 165">

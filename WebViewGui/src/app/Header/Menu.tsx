@@ -1,56 +1,34 @@
 'use client';
 
-import { useState } from 'react';
 import * as Juce from 'juce-framework-frontend';
-
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 
 import Scale from './Scale';
 import { useAboutStore } from '@/store/AboutStore';
 import { CompanyWebsite } from '@/define';
 import { useActivateStore } from '@/store/ActivateStore';
 import { GearSixIcon } from '@phosphor-icons/react';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, Menu, MenuDivider, MenuDropdown, MenuItem, MenuTarget } from '@mantine/core';
 
 const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
 export default function Page() {
-  const { setOpen: setAboutOpen  } = useAboutStore();
+  const { setOpen: setAboutOpen } = useAboutStore();
   const { setOpen: setActivateOpen, activate } = useActivateStore();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
-    <Box>
-      <ActionIcon
-        onClick={handleClick}
-        size="sm"
-        variant="transparent"
-        sx={{
-          color: 'var(--mui-palette-common-white)',
-        }}
-      >
-        <GearSixIcon weight="fill" />
-      </ActionIcon>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        slotProps={{
-          list: {
-            sx: {
-            }
-          }
-        }}
+    <Menu>
+      <MenuTarget>
+        <ActionIcon
+          size="sm"
+          variant="transparent"
+          sx={{
+            color: 'var(--mui-palette-common-white)',
+          }}
+        >
+          <GearSixIcon weight="fill" />
+        </ActionIcon>
+      </MenuTarget>
+      <MenuDropdown
         sx={{
           '& .MuiPaper-root': {
             backgroundColor: 'var(--mui-palette-primary-darker)',
@@ -79,19 +57,19 @@ export default function Page() {
           }
         }}
       >
-        <Scale onClick={handleClose} />
-        <Divider />
-        <MenuItem onClick={() => { visitWebsite(CompanyWebsite); handleClose(); }}>
+        <Scale />
+        <MenuDivider />
+        <MenuItem onClick={() => { visitWebsite(CompanyWebsite); }}>
           Visit JoEunsoo.com
         </MenuItem>
-        <MenuItem onClick={() => { setAboutOpen(true); handleClose(); }}>
+        <MenuItem onClick={() => { setAboutOpen(true); }}>
           About
         </MenuItem>
-        <Divider />
-        <MenuItem onClick={() => { setActivateOpen(true); handleClose(); }}>
+        <MenuDivider />
+        <MenuItem onClick={() => { setActivateOpen(true); }}>
           {activate ? 'Deactivate' : 'Activate'}
         </MenuItem>
-      </Menu>
-    </Box>
+      </MenuDropdown>
+    </Menu>
   );
 }

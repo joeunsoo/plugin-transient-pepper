@@ -3,13 +3,12 @@
 import { useState, useEffect } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
-import Box, { type BoxProps } from '@mui/material/Box';
-
 import { testOpacity, controlParameterIndexAnnotation } from '@/define';
 
 import Button from './Button';
 import { uesControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
+import { Box, type BoxProps } from '@mantine/core';
 
 interface JuceCheckboxProps
   extends UIProps, Omit<BoxProps, 'title' | 'onChange'> {
@@ -21,7 +20,7 @@ interface JuceCheckboxProps
 export default function JuceCheckbox({
   identifier,
   invertValue = false,
-  sx,
+  style,
   onChange,
   ignoreBypass = false,
   addTest=[],
@@ -68,12 +67,12 @@ export default function JuceCheckbox({
         [controlParameterIndexAnnotation]:
           checkboxState.properties.parameterIndex,
       }}
-      sx={{
+      style={{
         opacity: testOpacity([
           bypassed && !ignoreBypass,
           ...addTest
         ]),
-        ...sx
+        ...style
       }}
       {...props}
     >

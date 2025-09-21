@@ -1,22 +1,24 @@
-import { GlassSx,  } from '@/define';
+import { GlassSx, mantineSpace, } from '@/define';
 import Graph from '@/ui/Graph/Canvas';
-import Box, { type BoxProps } from '@mui/material/Box';
+import { Box, rem, type BoxProps } from '@mantine/core';
 
 export default function Page({
-  sx, ...props
+  style, ...props
 }: BoxProps) {
   return (
     <Box
-      sx={{
+      style={{
         flexGrow: 1,
-        width:'100%',
+        width: '100%',
         backgroundColor: 'var(--mui-palette-secondary-blackest)',
-        borderRadius: 3,
+        borderRadius: rem(mantineSpace * 3),
+        ...style,
+      }}
+      sx={{
         ...GlassSx,
         '& > svg, canvas': {
-          borderRadius: 3,
+          borderRadius: rem(mantineSpace * 3),
         },
-        ...sx,
       }}
       {...props}
     >

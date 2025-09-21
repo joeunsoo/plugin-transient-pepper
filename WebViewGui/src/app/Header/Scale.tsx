@@ -2,28 +2,16 @@
 
 import * as Juce from 'juce-framework-frontend';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import MenuItem from '@mui/material/MenuItem';
-import ListSubheader from '@mui/material/ListSubheader';
 import { useEffect, useState } from 'react';
+import { Box, Group, MenuItem, MenuLabel } from '@mantine/core';
 
 const getWindowScale = Juce.getNativeFunction('getWindowScale');
 const setWindowScale = Juce.getNativeFunction('setWindowScale');
 
-type PageProps = {
-  onClick?: React.MouseEventHandler<HTMLLIElement>
-}
-
-export default function Page({
-  onClick
-}: PageProps) {
+export default function Page() {
   const [scale, setScale] = useState<number>(0);
 
-  const handleClick = (e: React.MouseEvent<HTMLLIElement>, value: number) => {
-    if (onClick) {
-      onClick(e);
-    }
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>, value: number) => {
     setScale(value);
     setWindowScale(value);
   };
@@ -40,18 +28,17 @@ export default function Page({
 
   return (
     <>
-      <ListSubheader>
+      <MenuLabel>
         Scale
-      </ListSubheader>
+      </MenuLabel>
       {[100, 150, 200].map((value) => (
         <MenuItem
           key={value}
           onClick={(e) => handleClick(e, value)}
         >
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="space-between"
+          <Group
+            align="center"
+            justify="space-between"
             sx={{
               flexGrow:1
             }}
@@ -61,14 +48,14 @@ export default function Page({
             </Box>
             {value === scale &&
               <Box
-                sx={{
+                style={{
                   width: '0.6em',
                   height: '0.6em',
                   backgroundColor: 'var(--mui-palette-primary-light)'
                 }}
               />
             }
-          </Stack>
+          </Group>
         </MenuItem>
       ))}
     </>

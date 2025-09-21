@@ -1,6 +1,7 @@
 import { palette } from '@/define';
 import Channel from './Channel';
-import Box from '@mui/material/Box';
+
+import { Box } from '@mantine/core';
 import { alpha } from '@mui/material/styles';
 
 type EnvelopeGraphProps = {

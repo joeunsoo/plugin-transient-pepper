@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
-import Box, { type BoxProps } from '@mui/material/Box';
+import { Box, type BoxProps } from '@mantine/core';
 
 import { testOpacity, controlParameterIndexAnnotation } from '@/define';
 
@@ -23,7 +23,7 @@ export default function JuceCheckbox({
   identifier,
   title,
   invertValue = false,
-  sx,
+  style,
   onChange,
   ignoreBypass = false,
   addTest=[],
@@ -74,13 +74,13 @@ export default function JuceCheckbox({
         [controlParameterIndexAnnotation]:
           checkboxState.properties.parameterIndex,
       }}
-      sx={{
+      style={{
         width: 'var(--knob-width)',
         opacity: testOpacity([
           bypassed && !ignoreBypass,
           ...addTest
         ]),
-        ...sx
+        ...style
       }}
       {...props}
     >

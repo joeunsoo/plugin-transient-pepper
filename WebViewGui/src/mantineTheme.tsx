@@ -1,8 +1,8 @@
 'use client';
 
-import { AppShell, Button, Container, createTheme, Group, rem, Stack } from '@mantine/core';
+import { AppShell, Button, Container, createTheme, Group, Menu, rem, Stack } from '@mantine/core';
 
-import { paletteMantine, primaryMain } from './define';
+import { mantineSpace, paletteMantine, primaryMain } from './define';
 
 // console.log(DEFAULT_THEME);
 
@@ -87,7 +87,7 @@ export const theme = createTheme({
     Group: Group.extend({
       defaultProps: {
         gap: 0,
-        wrap:'nowrap'
+        wrap: 'nowrap'
       },
     }),
 
@@ -124,6 +124,26 @@ export const theme = createTheme({
             '--container-size': containerSize
           },
         });
+      },
+    }),
+
+    Menu: Menu.extend({
+      styles: {
+        dropdown: {
+          backgroundColor: paletteMantine.primary[7],
+          borderColor: paletteMantine.primary[9],
+        },
+        divider: {
+          borderColor: paletteMantine.primary[6],
+        },
+        item: {
+          color: paletteMantine.primary[0],
+          paddingTop: rem(mantineSpace * 1.5),
+          paddingBottom: rem(mantineSpace * 1.5),
+          '&:hover': {
+            backgroundColor: paletteMantine.primary[8],
+          },
+        },
       },
     }),
   },

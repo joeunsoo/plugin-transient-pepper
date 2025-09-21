@@ -1,11 +1,9 @@
-import { Box } from '@mantine/core';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
+import { Box, rem, Stack } from '@mantine/core';
 
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
-import { GlassSx } from '@/define';
+import { GlassSx, mantineSpace } from '@/define';
 
 export default function App() {
   return (
@@ -19,27 +17,26 @@ export default function App() {
         }}
       >
         <Stack
+          px={rem(mantineSpace * 3)}
+          pb={rem(mantineSpace * 2)}
           sx={{
             flexGrow: 1,
-            px: 3,
-            pt: 0,
-            pb: 2,
           }}
         >
           <Header />
           <Stack
-            alignItems="center"
-            justifyContent="center"
+            align="center"
+            justify="center"
             sx={{
               height: '100%',
             }}
           >
-            <Paper
+            <Box
+              w="100%"
+              h="100%"
               sx={{
-                width: '100%',
-                height: '100%',
                 display: 'flex',
-                borderRadius: 5,
+                borderRadius: rem(mantineSpace * 5),
                 background: `
                   linear-gradient(
                     to bottom,
@@ -51,7 +48,7 @@ export default function App() {
               }}
             >
               <Main />
-            </Paper>
+            </Box>
           </Stack>
         </Stack>
       </Box>

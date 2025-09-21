@@ -3,22 +3,20 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import * as Juce from 'juce-framework-frontend';
 
-import Box, { type BoxProps } from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-
 import {
   controlParameterIndexAnnotation,
   toFixedDigits,
   LabelTypographySx,
-  testOpacity
+  testOpacity,
+  mantineSpace
 } from '@/define';
 
 import Knob from './Knob';
 import type { ValueToString } from '@/utils/valueToString';
 import Tooltip from '@mui/material/Tooltip';
 import { uesControlStore } from '@/store/ControlStore';
-import Stack from '@mui/material/Stack';
 import type { UIProps } from '@/types/UI';
+import { Box, Group, rem, Text, type BoxProps } from '@mantine/core';
 
 interface JuceSliderProps extends UIProps, Omit<BoxProps,'onChange'> {
   identifier: string,
@@ -47,7 +45,7 @@ export default function JuceSlider({
   addTest = [],
   lowIcon,
   highIcon,
-  sx,
+  style,
   onChange,
   ...props
 }: JuceSliderProps) {
@@ -134,14 +132,14 @@ export default function JuceSlider({
         [controlParameterIndexAnnotation]:
           sliderState.properties.parameterIndex,
       }}
-      sx={{
+      style={{
         width: 'var(--knob-width)',
         flexShrink: 0,
         opacity: testOpacity([
           bypassed && !ignoreBypass,
           ...addTest
         ]),
-        ...sx
+        ...style
       }}
       {...props}
     >
@@ -164,12 +162,11 @@ export default function JuceSlider({
         onMouseLeave={() => setOver(false)}
       />
       {!hideTitle &&
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={1}
-          sx={{
+        <Group
+          align="center"
+          justify="center"
+          gap={rem(mantineSpace * 1)}
+          style={{
             transform: 'translateY(-0.5em)'
           }}
         >
@@ -189,18 +186,18 @@ export default function JuceSlider({
               }
             }}
           >
-            <Typography
-              textAlign="center"
+            <Text
+              ta="center"
               sx={{
                 ...LabelTypographySx,
                 lineHeight: '1.5em',
               }}
             >
               {title || properties.name}
-            </Typography>
+            </Text>
           </Tooltip>
           {highIcon}
-        </Stack>
+        </Group>
       }
     </Box>
   );

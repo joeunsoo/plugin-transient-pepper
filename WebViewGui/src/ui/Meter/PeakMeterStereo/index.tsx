@@ -4,17 +4,18 @@ import { useState } from 'react';
 import { useAnimationFrame } from 'framer-motion';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 
-import Stack, { type StackProps } from '@mui/material/Stack';
+import { Group, rem, type GroupProps } from '@mantine/core';
 
 import PeakMeterBarCanvas from '@/ui/Meter/PeakMeterBarCanvas';
 import type { PeakMeterProps } from '@/types/PeakMeter';
+import { mantineSpace } from '@/define';
 
 export default function Page({
   idx,
-  sx,
+  style,
   ignoreBypass=false,
   ...props
-}: PeakMeterProps & StackProps) {
+}: PeakMeterProps & GroupProps) {
   const { outputNumChannels } = useAnalysisDataStore();
   const [numChannels, setNumChannels] = useState<number>(0);
 
@@ -23,15 +24,14 @@ export default function Page({
   });
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={1.5}
-      sx={{
+    <Group
+      align="center"
+      gap={rem(mantineSpace * 1.5)}
+      style={{
         flexGrow: 1,
         width: '100%',
         maxWidth: '2.8em',
-        ...sx
+        ...style
       }}
       {...props}
     >
@@ -45,6 +45,6 @@ export default function Page({
           ignoreBypass={ignoreBypass}
         />
       }
-    </Stack>
+    </Group>
   );
 }
