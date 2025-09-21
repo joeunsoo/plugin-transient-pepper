@@ -4,7 +4,7 @@
 
 [Setup]
 AppName=JoEunsoo TransientPepper
-AppVersion=1.0.0
+AppVersion=1.0.2
 DefaultDirName={pf}
 DefaultGroupName=JoEunsoo
 OutputBaseFilename=JETransientPepperSetup

@@ -8,11 +8,11 @@
   font-size: 3.2vh;
   letter-spacing: -0.007em;
   
-  --icon-size-xs: 14px;
-  --icon-size-sm: 16px;
-  --icon-size-md: 18px;
-  --icon-size-lg: 20px;
-  --icon-size-xl: 24px;
+  --icon-size-xs: 1.3em;
+  --icon-size-sm: 1.5em;
+  --icon-size-md: 1.7em;
+  --icon-size-lg: 1.9em;
+  --icon-size-xl: 2.1em;
 }
 
 body, #root {
