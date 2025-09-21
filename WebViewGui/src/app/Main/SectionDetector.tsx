@@ -48,7 +48,7 @@ export default function Page({
           identifier="sidechainListenToggle"
           title={
             <Box lh={0}>
-              <HeadphonesIcon size="var(--icon-size-xs)" />
+              <HeadphonesIcon size="0.9rem" />
             </Box>
           }
           onChange={(e, value) => setSidechainListen(!value)}

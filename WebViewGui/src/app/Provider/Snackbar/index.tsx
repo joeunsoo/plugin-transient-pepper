@@ -14,13 +14,13 @@ export default function Demo() {
   useEffect(() => {
     if (open) {
       let color = 'primary.4';
-      let icon = <InfoIcon size="var(--icon-size-sm)" color="white" />;
+      let icon = <InfoIcon size="1.0rem" color="white" />;
       if (options.variant === 'success') {
         color = 'green';
       } else if (options.variant === 'error') {
         color = 'red';
         icon = <WarningIcon
-          size="var(--icon-size-sm)"
+          size="1.0rem"
           weight="bold"
         />;
       }
