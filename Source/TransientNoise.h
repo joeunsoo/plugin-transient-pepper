@@ -112,7 +112,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         out = airLayer.processSample();
         
         if (sidechainListen) {
-          outputBlock.getChannelPointer(ch)[n] = sidechainBlock.getChannelPointer(ch)[n] * 1.5f; // 사이드체인
+          outputBlock.getChannelPointer(ch)[n] = sidechainBlock.getChannelPointer(ch)[n]; // 사이드체인
         } else {
 #if CHECK_ENV
           outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch];
