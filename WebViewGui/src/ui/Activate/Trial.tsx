@@ -5,10 +5,9 @@ import * as Juce from 'juce-framework-frontend';
 
 import dayjs from 'dayjs';
 
-import Button from '@mui/material/Button';
-
 import { useActivateStore } from '@/store/ActivateStore';
 import { useEffect, useState } from 'react';
+import { Button } from '@mantine/core';
 
 const startTrial = Juce.getNativeFunction('startTrial');
 const getTrial = Juce.getNativeFunction('getTrial');
@@ -72,7 +71,7 @@ export default function LoginForm() {
           }).catch(console.error);
         }
       }}
-      variant="outlined"
+      variant="outline"
       sx={{
         width: '100%',
         color: !isEnded ? 'var(--mui-palette-primary-lighter)' : 'var(--mui-palette-primary-light)'
