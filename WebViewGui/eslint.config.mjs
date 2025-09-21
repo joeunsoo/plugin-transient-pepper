@@ -7,6 +7,7 @@ import pluginPromise from 'eslint-plugin-promise';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
 // import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 import tseslint from 'typescript-eslint';
+import tsParser from '@typescript-eslint/parser';
 import { globalIgnores } from 'eslint/config';
 
 export default tseslint.config([
@@ -25,8 +26,12 @@ export default tseslint.config([
       // prettierPluginRecommended,
     ],
     languageOptions: {
-      ecmaVersion: 2020,
+      parser: tsParser,
       globals: globals.browser,
+      parserOptions: {
+        tsconfigRootDir: process.cwd(),
+        project: './tsconfig.app.json', // 타입 기반 룰 적용 시 필수
+      },
     },
     settings: {
       react: {

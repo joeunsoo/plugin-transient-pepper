@@ -8,7 +8,7 @@ export interface ToggleButtonProps
   label: string | number
 }
 
-export default function JuceComboBox({
+export default function StyledToggleButton({
   label,
   onMouseDown,
   ...props

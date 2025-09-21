@@ -47,7 +47,14 @@
       "@/*": ["src/*"],
     },
   },
-  "include": ["src"],
+  "include": [
+    "vite.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*",
+    "eslint.config.mjs",
+    ".prettierrc.mjs",
+  ],
   "exclude": [
     "node_modules",
     "**/node_modules",

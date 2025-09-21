@@ -1,6 +1,14 @@
-import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
+import { ActionIcon, type ActionIconProps } from '@mantine/core';
 
-export default function BlurButton(props: IconButtonProps) {
+interface ExtendedButtonProps
+  extends ActionIconProps,
+  Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    keyof ActionIconProps
+  > {
+}
+
+export default function BlurIconButton(props: ExtendedButtonProps) {
   const { onMouseDown, onClick, ...rest } = props;
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -13,5 +21,13 @@ export default function BlurButton(props: IconButtonProps) {
     if (onClick) onClick(e);
   };
 
-  return <IconButton {...rest} onMouseDown={handleMouseDown} onClick={handleClick} />;
+  return (
+    <ActionIcon
+      {...rest}
+      onMouseDown={handleMouseDown}
+      onClick={handleClick}
+      variant="transparent"
+      p={0}
+    />
+  );
 }

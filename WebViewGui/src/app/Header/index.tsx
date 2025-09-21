@@ -38,11 +38,8 @@ export default function App() {
           />
           <Button
             variant="text"
-            sx={{
-              color: 'var(--mui-palette-secondary-main)',
-              fontWeight: 'var(--mui-fontWeight-xl)',
-            }}
-            disableRipple
+            color="secondary"
+            fw={'var(--mui-fontWeight-xl)'}
           >
             {PluginName}
           </Button>
@@ -54,12 +51,11 @@ export default function App() {
           gap={rem(mantineSpace * 2)}
         >
           <Button
+            color="white"
+            fw={'var(--mui-fontWeight-xl)'}
             sx={{
-              color: 'var(--mui-palette-common-white)',
               fontSize: 'var(--mui-fontSize-xs)',
-              fontWeight: 'var(--mui-fontWeight-xl)',
             }}
-            disableRipple
           >
             {CompanyName}
           </Button>

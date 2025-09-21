@@ -86,13 +86,14 @@ export const theme = createTheme({
   components: {
     Group: Group.extend({
       defaultProps: {
-        gap: 'md',
+        gap: 0,
+        wrap:'nowrap'
       },
     }),
 
     Stack: Stack.extend({
       defaultProps: {
-        gap: 'md',
+        gap: 0,
       },
     }),
 

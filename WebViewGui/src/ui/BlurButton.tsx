@@ -1,6 +1,14 @@
-import Button, { type ButtonProps } from '@mui/material/Button';
+import { Button, type ButtonProps } from '@mantine/core';
 
-export default function BlurButton(props: ButtonProps) {
+interface ExtendedButtonProps
+  extends ButtonProps,
+  Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    keyof ButtonProps
+  > {
+}
+
+export default function BlurButton(props: ExtendedButtonProps) {
   const { onMouseDown, onClick, ...rest } = props;
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -13,5 +21,13 @@ export default function BlurButton(props: ButtonProps) {
     if (onClick) onClick(e);
   };
 
-  return <Button {...rest} onMouseDown={handleMouseDown} onClick={handleClick} />;
+  return (
+    <Button
+      {...rest}
+      onMouseDown={handleMouseDown}
+      onClick={handleClick}
+      variant="transparent"
+      p={0}
+    />
+  );
 }

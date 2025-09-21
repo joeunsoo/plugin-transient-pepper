@@ -5,7 +5,6 @@ import * as Juce from 'juce-framework-frontend';
 
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -14,6 +13,7 @@ import { useAboutStore } from '@/store/AboutStore';
 import { CompanyWebsite } from '@/define';
 import { useActivateStore } from '@/store/ActivateStore';
 import { GearSixIcon } from '@phosphor-icons/react';
+import { ActionIcon } from '@mantine/core';
 
 const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
@@ -31,16 +31,15 @@ export default function Page() {
 
   return (
     <Box>
-      <IconButton
+      <ActionIcon
         onClick={handleClick}
         size="small"
         sx={{
           color: 'var(--mui-palette-common-white)',
         }}
-        disableRipple
       >
         <GearSixIcon weight="fill" />
-      </IconButton>
+      </ActionIcon>
       <Menu
         anchorEl={anchorEl}
         open={open}

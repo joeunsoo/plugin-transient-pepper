@@ -1,6 +1,6 @@
 import ToggleButton, { type ToggleButtonProps } from '@mui/material/ToggleButton';
 
-export default function BlurButton(props: ToggleButtonProps) {
+export default function BlurToggleButton(props: ToggleButtonProps) {
   const { onMouseDown, onClick, ...rest } = props;
 
   const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
