@@ -1,6 +1,6 @@
-  'use client';
+'use client';
 
-import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import { PowerIcon } from '@phosphor-icons/react';
 import IconButton from '@/ui/BlurIconButton';
 
 type JuceCheckboxProps = {
@@ -24,13 +24,13 @@ export default function JuceCheckbox({
         handleMouseDown();
       }}
       sx={{
-        p:0,
-        '& .MuiSvgIcon-root': {
-        fill: value ? 'var(--mui-palette-secondary-main)' : 'var(--mui-palette-primary-darken)'
-        }
+        p: 0,
       }}
     >
-      <PowerSettingsNewIcon />
+      <PowerIcon
+        weight="bold"
+        color={value ? 'var(--mui-palette-secondary-main)' : 'var(--mui-palette-primary-darken)'}
+      />
     </IconButton>
   );
 }

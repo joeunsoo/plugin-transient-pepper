@@ -4,17 +4,13 @@ import {
   lighten,
 } from '@mui/material/styles';
 
-export const toFixedDigits = 4;
-export const PluginCode = 'transient-pepper';
-export const PluginName = 'Transient Pepper';
-export const PluginVersion = 'v1.0.1';
-export const CompanyName = 'JoEunsoo';
-export const CompanyWebsite = 'https://joeunsoo.com';
-export const TrialDays = 30;
+export {
+  themeColor,
+  paletteMantine,
+} from './Color';
 
-export const controlParameterIndexAnnotation = 'controlparameterindex';
-export const AnalysisDataReceiverEventId = 'analysisData';
-export const AnalysisDataReceiverLength = 8;
+// eslint-disable-next-line react-refresh/only-export-components
+export * from './Plugin';
 
 export function generatePalette(color: string) {
   return {

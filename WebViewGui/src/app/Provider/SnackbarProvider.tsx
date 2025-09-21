@@ -5,9 +5,9 @@ import { useSnackbarStore } from '@/store/SnackbarStore';
 
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 
 import Alert from '@mui/material/Alert';
+import { XIcon } from '@phosphor-icons/react';
 
 export default function App() {
   const { refreshCount, open, onClose, message, options } = useSnackbarStore();
@@ -38,13 +38,13 @@ export default function App() {
         // @ts-ignore
         severity={options.variant || 'info'}
         action={
-        <IconButton
-          size="small"
-          color="inherit"
-          onClick={onClose}
-        >
-          <CloseIcon fontSize="small" />
-        </IconButton>
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={onClose}
+          >
+            <XIcon />
+          </IconButton>
         }
       >
         {message}

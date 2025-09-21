@@ -6,9 +6,6 @@ import * as Juce from 'juce-framework-frontend';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import MailOutlinedIcon from '@mui/icons-material/MailOutlined';
-
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 
@@ -18,6 +15,7 @@ import { CompanyWebsite, PluginCode } from '@/define';
 import { useState } from 'react';
 import { useActivateStore } from '@/store/ActivateStore';
 import Trial from './Trial';
+import { EnvelopeSimpleIcon, LockSimpleIcon } from '@phosphor-icons/react';
 
 type LoginFormValues = {
   userEmail: string;
@@ -98,7 +96,7 @@ export default function LoginForm() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <MailOutlinedIcon fontSize="small" />
+                      <EnvelopeSimpleIcon size="1.0em" weight="bold" />
                     </InputAdornment>
                   )
                 }
@@ -119,7 +117,7 @@ export default function LoginForm() {
                 input: {
                   startAdornment: (
                     <InputAdornment position="start">
-                      <LockOutlinedIcon fontSize="small" />
+                      <LockSimpleIcon size="1.0em" weight="bold" />
                     </InputAdornment>
                   )
                 }
