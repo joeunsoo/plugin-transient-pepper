@@ -93,6 +93,20 @@ std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (con
     return WebBrowserComponent::Resource { streamToVector (stream), String { "text/html" } };
   }
   
+  if (urlToRetrive == "plugin.json")
+  {
+    DynamicObject::Ptr d (new DynamicObject());
+    d->setProperty ("pluginVersion", JucePlugin_VersionString);
+    d->setProperty ("pluginName", JucePlugin_Name);
+    d->setProperty ("companyName", JucePlugin_Manufacturer);
+    
+    d->setProperty ("outputNumChannels", processorRef.getTotalNumOutputChannels());
+
+    const auto s = JSON::toString (d.get());
+    MemoryInputStream stream { s.getCharPointer(), s.getNumBytesAsUTF8(), false };
+    return WebBrowserComponent::Resource { streamToVector (stream), String { "application/json" } };
+  }
+  
   if (urlToRetrive == "analysisData.json")
   {
     Array<var> frames;

@@ -1,5 +1,5 @@
 import { testOpacity } from '@/define';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
 import { Box, type BoxProps } from '@mantine/core';
 
@@ -18,7 +18,7 @@ export default function Component({
   addTest=[],
   ...props
 }: PageProps) {
-  const { bypassed } = uesControlStore();
+  const { bypassed } = useControlStore();
 
   return (
     <Box

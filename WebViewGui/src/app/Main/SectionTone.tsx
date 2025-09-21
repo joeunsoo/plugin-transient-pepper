@@ -1,12 +1,14 @@
 import { Group, type GroupProps } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
+import { usePluginStore } from '@/store/PluginStore';
 
 export default function Page({
   ...props
 }: GroupProps) {
-  const { sidechainListen } = uesControlStore();
+  const { sidechainListen } = useControlStore();
+  const { numChannels } = usePluginStore();
 
   return (
     <Group
@@ -24,7 +26,7 @@ export default function Page({
         identifier="midSideSlider"
         defaultValue={0.5}
         subDigit={1}
-        addTest={[!sidechainListen]}
+        addTest={[!sidechainListen, numChannels < 2]}
       />
     </Group>
   );

@@ -1,14 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { useAnimationFrame } from 'framer-motion';
-import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
-
 import { Group, rem, type GroupProps } from '@mantine/core';
 
 import PeakMeterBarCanvas from '@/ui/Meter/PeakMeterBarCanvas';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import { mantineSpace } from '@/define';
+import { usePluginStore } from '@/store/PluginStore';
 
 export default function Page({
   idx,
@@ -16,12 +13,7 @@ export default function Page({
   ignoreBypass=false,
   ...props
 }: PeakMeterProps & GroupProps) {
-  const { outputNumChannels } = useAnalysisDataStore();
-  const [numChannels, setNumChannels] = useState<number>(0);
-
-  useAnimationFrame(() => {
-    setNumChannels(outputNumChannels.get());
-  });
+  const { numChannels } = usePluginStore();
 
   return (
     <Group

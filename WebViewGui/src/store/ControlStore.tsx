@@ -18,7 +18,7 @@ interface ControlState {
   setAnchor: (el: HTMLElement | null, open: boolean) => void;
 }
 
-export const uesControlStore = create<ControlState>((set) => ({
+export const useControlStore = create<ControlState>((set) => ({
   bypassed: false,
   setBypass: (value: boolean) => set(() => ({
     bypassed: value,

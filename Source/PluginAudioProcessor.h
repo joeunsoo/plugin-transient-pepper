@@ -91,6 +91,8 @@ class PluginAudioProcessor  : public AudioProcessor
   LicenseManager licenseManager;
   bool activated;
 
+  juce::dsp::ProcessSpec spec;
+
   private:
   juce::ApplicationProperties appProperties;
   juce::PropertiesFile* props = nullptr; // 소유권은 ApplicationProperties가 관리

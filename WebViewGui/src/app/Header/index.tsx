@@ -1,17 +1,17 @@
 'use client';
 
-import { PluginName, CompanyName, mantineSpace, secondaryMain } from '@/define';
+import { CompanyName, mantineSpace, PluginName, secondaryMain } from '@/define';
 
 import { Box, Group, rem } from '@mantine/core';
 import Button from '@/ui/BlurButton';
 
 import JuceToggleBypass from '@/ui/Control/ToggleButton/JuceToggleBypass';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 
 import Menu from './Menu';
 
 export default function App() {
-  const { setBypass } = uesControlStore();
+  const { setBypass } = useControlStore();
 
   return (
     <Box

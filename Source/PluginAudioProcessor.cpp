@@ -70,8 +70,7 @@ void PluginAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock
   if (channels == 0)
     return;
   
-  const juce::dsp::ProcessSpec spec =
-  { sampleRate, (uint32_t) samplesPerBlock, (uint32_t) channels };
+  spec = { sampleRate, (uint32_t) samplesPerBlock, (uint32_t) channels };
   
   noiseLevelGain.setGainDecibels(0.0f);
   noiseLevelGain.reset();

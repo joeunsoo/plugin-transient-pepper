@@ -13,7 +13,7 @@ import {
 
 import Knob from './Knob';
 import type { ValueToString } from '@/utils/valueToString';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
 import { Box, Group, rem, Text, Tooltip, type BoxProps } from '@mantine/core';
 
@@ -49,7 +49,7 @@ export default function JuceSlider({
   ...props
 }: JuceSliderProps) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const { focusAnchor, setAnchor, bypassed } = uesControlStore();
+  const { focusAnchor, setAnchor, bypassed } = useControlStore();
   const sliderState = Juce.getSliderState(identifier);
   const [isDrag, setDrag] = useState<boolean>(false);
   const [isOver, setOver] = useState<boolean>(false);

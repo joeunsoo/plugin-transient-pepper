@@ -40,6 +40,7 @@ export default function StyledToggleButton({
       {...props}
     >
       <Text
+        component="span"
         fw={500}
         sx={{
           ...LabelTypographySx,

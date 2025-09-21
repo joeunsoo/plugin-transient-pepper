@@ -5,6 +5,7 @@ import ControlParameterProvider from './ControlParameterProvider';
 import ActivateProvider from './ActivateProvider';
 import IsDebug from './IsDebug';
 import Snackbar from './Snackbar';
+import PluginProvider from './PluginProvider';
 
 type ProviderProps = {
   children: React.ReactNode
@@ -18,6 +19,7 @@ export default function Provider({
         {children}
         <IsDebug />
         <ActivateProvider />
+        <PluginProvider />
         <AboutProvider />
         <AnalysisDataProvider />
         <Snackbar />

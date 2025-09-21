@@ -8,7 +8,7 @@ import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import NoiseGain from './NoiseGain';
 import OutputGain from './OutputGain';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 
 type PageProps = Omit<GroupProps, 'gap'>
 
@@ -16,7 +16,7 @@ export default function Page({
   ...props
 }: PageProps) {
   const [wetSolo, setWetSolo] = useState<boolean>(false);
-  const { sidechainListen } = uesControlStore();
+  const { sidechainListen } = useControlStore();
 
   return (
     <Group

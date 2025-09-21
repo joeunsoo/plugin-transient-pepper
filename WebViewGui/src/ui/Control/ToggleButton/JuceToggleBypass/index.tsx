@@ -6,7 +6,7 @@ import * as Juce from 'juce-framework-frontend';
 import { testOpacity, controlParameterIndexAnnotation } from '@/define';
 
 import Button from './Button';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
 import { Center, type BoxProps } from '@mantine/core';
 
@@ -26,7 +26,7 @@ export default function JuceCheckbox({
   addTest=[],
   ...props
 }: JuceCheckboxProps) {
-  const { bypassed } = uesControlStore();
+  const { bypassed } = useControlStore();
   const checkboxState = Juce.getToggleState(identifier);
 
   const [value, setValue] = useState(checkboxState.getValue());

@@ -1,4 +1,4 @@
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 import { testOpacity, GlassSx, mantineSpace, secondaryMain } from '@/define';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import Canvas from './Canvas';
@@ -15,7 +15,7 @@ export default function Page({
   addTest = [],
   ...props
 }: PeakMeterLedProps) {
-  const { bypassed } = uesControlStore();
+  const { bypassed } = useControlStore();
 
   return (
     <Stack

@@ -7,12 +7,12 @@ import AttackHigh from '@/ui/Icon/AttackHigh';
 import AttackLow from '@/ui/Icon/AttackLow';
 import ReleaseLow from '@/ui/Icon/ReleaseLow';
 import ReleaseHigh from '@/ui/Icon/ReleaseHigh';
-import { uesControlStore } from '@/store/ControlStore';
+import { useControlStore } from '@/store/ControlStore';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
-  const { sidechainListen } = uesControlStore();
+  const { sidechainListen } = useControlStore();
   return (
     <Stack
       gap="var(--row-spacing)"
