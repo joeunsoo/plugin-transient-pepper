@@ -7,12 +7,6 @@
   
   font-size: 3.2vh;
   letter-spacing: -0.007em;
-  
-  --icon-size-xs: 0.9rem;
-  --icon-size-sm: 1.0rem;
-  --icon-size-md: 1.1rem;
-  --icon-size-lg: 1.2rem;
-  --icon-size-xl: 1.3rem;
 }
 
 body, #root {
