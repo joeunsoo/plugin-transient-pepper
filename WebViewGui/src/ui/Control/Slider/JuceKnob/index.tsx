@@ -48,7 +48,7 @@ export default function JuceSlider({
   onChange,
   ...props
 }: JuceSliderProps) {
-  const ref = useRef<HTMLSpanElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const { focusAnchor, setAnchor, bypassed } = uesControlStore();
   const sliderState = Juce.getSliderState(identifier);
   const [isDrag, setDrag] = useState<boolean>(false);

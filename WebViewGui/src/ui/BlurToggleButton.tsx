@@ -32,7 +32,7 @@ export default function BlurToggleButton(props: BlurToggleButtonProps) {
     (e.currentTarget as HTMLElement).blur(); // 클릭 후 포커스 제거
     setValue(!value);
   };
-console.log(value);
+
   return (
     <Button
       {...rest}

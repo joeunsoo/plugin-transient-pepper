@@ -23,6 +23,7 @@ body, #root {
 }
 
 html, body {
+  /* stylelint-disable-next-line */
   -webkit-user-select: none; /* 텍스트 선택 금지 */
   -webkit-touch-callout: none; /* 길게 누를 때 메뉴 금지 */
 }
