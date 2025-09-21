@@ -7,9 +7,10 @@ interface ActivateState {
   trial: number;
   setTrial: (value: number) => void;
 
-  open: boolean; // 열기 여부
-  setOpen: (value: boolean) => void; // 열기 여부 설정
-  handleClose: () => void; // 닫기
+  opened: boolean;
+  open: () => void;
+  close: () => void;
+  toggle: () => void;
 }
 
 export const useActivateStore = create<ActivateState>((set) => ({
@@ -23,9 +24,8 @@ export const useActivateStore = create<ActivateState>((set) => ({
     trial: value,
   })),
 
-  open: false,
-  setOpen: (value: boolean) => set(() => ({
-    open: value,
-  })),
-  handleClose: () => set(() => ({ open: false })),
+  opened: false,
+  open: () => set({ opened: true }),
+  close: () => set({ opened: false }),
+  toggle: () => set((state) => ({ opened: !state.opened })),
 }));

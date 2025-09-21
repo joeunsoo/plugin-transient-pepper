@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 const getActivate = Juce.getNativeFunction('getActivate');
 
 export default function App() {
-  const { setOpen, setActivate, setTrial } = useActivateStore();
+  const { open, setActivate, setTrial } = useActivateStore();
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -29,12 +29,12 @@ export default function App() {
       const trialEnded = now.isAfter(end); // true = 트라이얼 만료
 
       if (!activate && (!trial || trialEnded)) {
-        setOpen(true);
+        open();
       }
 
       return null;
     }).catch(console.error);
-  }, [setActivate, setOpen, setTrial]);
+  }, [open, setActivate, setTrial]);
 
   return (
     <Activate />

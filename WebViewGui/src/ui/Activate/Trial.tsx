@@ -13,7 +13,7 @@ const startTrial = Juce.getNativeFunction('startTrial');
 const getTrial = Juce.getNativeFunction('getTrial');
 
 export default function LoginForm() {
-  const { setTrial, setOpen } = useActivateStore();
+  const { setTrial, close } = useActivateStore();
   const { enqueueSnackbar } = useSnackbarStore();
   const [isTrial, setIsTrial] = useState<boolean>(false);
   const [trialDays, setTrialDays] = useState<number>(0);
@@ -58,13 +58,13 @@ export default function LoginForm() {
       disabled={isEnded}
       onClick={() => {
         if (isTrial) {
-          setOpen(false);
+          close();
         } else {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           startTrial().then((result: number) => {
             setTrial(result);
-            setOpen(false);
+            close();
             enqueueSnackbar('Trial Start', { variant: 'success' });
 
             return null;

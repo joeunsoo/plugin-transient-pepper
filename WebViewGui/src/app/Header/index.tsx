@@ -38,7 +38,7 @@ export default function App() {
           />
           <Button
             variant="text"
-            color="secondary"
+            color="secondary.6"
             fw={'var(--mui-fontWeight-xl)'}
           >
             {PluginName}

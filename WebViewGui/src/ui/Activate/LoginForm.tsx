@@ -3,15 +3,11 @@
 import { useSnackbarStore } from '@/store/SnackbarStore';
 import * as Juce from 'juce-framework-frontend';
 
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Button, rem, Stack, Text, TextInput } from '@mantine/core';
 
 import { useForm, Controller } from 'react-hook-form';
-import Typography from '@mui/material/Typography';
-import { CompanyWebsite, PluginCode } from '@/define';
+
+import { CompanyWebsite, mantineSpace, PluginCode } from '@/define';
 import { useState } from 'react';
 import { useActivateStore } from '@/store/ActivateStore';
 import Trial from './Trial';
@@ -26,7 +22,7 @@ const visitWebsite = Juce.getNativeFunction('visitWebsite');
 const setActivateJuce = Juce.getNativeFunction('setActivate');
 
 export default function LoginForm() {
-  const { setActivate, setOpen } = useActivateStore();
+  const { setActivate, close } = useActivateStore();
   const { enqueueSnackbar } = useSnackbarStore();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -69,7 +65,7 @@ export default function LoginForm() {
       if (res?.ok) {
         setActivateJuce(values.userEmail);
         setActivate(true);
-        setOpen(false);
+        close();
         enqueueSnackbar('Activate successful', { variant: 'success' });
       } else {
         enqueueSnackbar(res?.body.message, { variant: 'error' });
@@ -83,24 +79,18 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={4}
-      >
+      <Stack gap={rem(mantineSpace * 3)}>
         <Controller
           name="userEmail"
           control={control}
           render={({ field }) => (
-            <TextField
+            <TextInput
               {...field}
               label="Email"
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EnvelopeSimpleIcon size="1.0em" weight="bold" />
-                    </InputAdornment>
-                  )
-                }
-              }}
+              ta="left"
+              leftSection={
+                <EnvelopeSimpleIcon size="1.0em" weight="bold" />
+              }
             />
           )}
         />
@@ -109,26 +99,21 @@ export default function LoginForm() {
           name="userPassword"
           control={control}
           render={({ field }) => (
-            <TextField
+            <TextInput
               {...field}
               type="password"
               label="Password"
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockSimpleIcon size="1.0em" weight="bold" />
-                    </InputAdornment>
-                  )
-                }
-              }}
+              ta="left"
+              leftSection={
+                <LockSimpleIcon size="1.0em" weight="bold" />
+              }
             />
           )}
         />
 
-        <Stack alignItems="end">
-          <Typography
-            textAlign="right"
+        <Stack align="end">
+          <Text
+            ta="right"
             onClick={() => {
               visitWebsite(`${CompanyWebsite}/reset-password`);
             }}
@@ -137,7 +122,7 @@ export default function LoginForm() {
             }}
           >
             Forgot password?
-          </Typography>
+          </Text>
         </Stack>
         <Button
           loading={loading}

@@ -129,20 +129,9 @@ export const theme = createTheme({
 
     Menu: Menu.extend({
       styles: {
-        dropdown: {
-          backgroundColor: paletteMantine.primary[7],
-          borderColor: paletteMantine.primary[9],
-        },
-        divider: {
-          borderColor: paletteMantine.primary[6],
-        },
         item: {
-          color: paletteMantine.primary[0],
           paddingTop: rem(mantineSpace * 1.5),
           paddingBottom: rem(mantineSpace * 1.5),
-          '&:hover': {
-            backgroundColor: paletteMantine.primary[8],
-          },
         },
       },
     }),

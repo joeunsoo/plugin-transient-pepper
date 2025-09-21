@@ -2,58 +2,48 @@
 
 import {
   PluginName,
-  GlassSx
+  GlassSx,
+  mantineSpace
 } from '@/define';
 
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Modal from '@mui/material/Modal';
+import { Modal, rem, Stack, Title } from '@mantine/core';
 
 import { useActivateStore } from '@/store/ActivateStore';
 import LoginForm from './LoginForm';
-import Typography from '@mui/material/Typography';
 import Deactivate from './Deactivate';
 
 export default function App() {
-  const { open, handleClose, activate } = useActivateStore();
+  const { opened, close, activate } = useActivateStore();
 
   return (
     <Modal
-      open={open}
-      onClose={activate ? handleClose : undefined}
-    >
-      <Paper
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          width: '50%',
-          boxSizing: 'border-box',
-          transform: 'translate(-50%, -50%)',
+      opened={opened}
+      centered
+      withCloseButton={false}
+      onClose={() => { if (activate) close(); }}
+      p={rem(mantineSpace * 4)}
+      styles={{
+        content: {
           ...GlassSx,
-          p: 4
+        }
+      }}
+
+    >
+      <Stack
+        align="center"
+        gap={rem(mantineSpace * 4)}
+        sx={{
+          textAlign: 'center'
         }}
       >
-        <Stack
-          direction="column"
-          alignItems="center"
-          spacing={4}
-          sx={{
-            textAlign: 'center'
-          }}
+        <Title
+          order={3}
+          component="h2"
         >
-          <Typography
-            variant="h6"
-            component="h2"
-            sx={{
-              fontWeight: 'var(--mui-fontWeight-xl)'
-            }}
-          >
-            {PluginName}
-          </Typography>
-          {!activate ? <LoginForm /> : <Deactivate />}
-        </Stack>
-      </Paper>
+          {PluginName}
+        </Title>
+        {!activate ? <LoginForm /> : <Deactivate />}
+      </Stack>
     </Modal>
   );
 }

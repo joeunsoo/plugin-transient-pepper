@@ -2,11 +2,12 @@ import MuiProvider from './MuiProvider';
 import MantineProvider from './MantineProvider';
 import AboutProvider from './AboutProvider';
 import AnalysisDataProvider from './AnalysisDataProvider';
-import SnackbarProvider from './SnackbarProvider';
+// import SnackbarProvider from './SnackbarProvider';
 import ControlParameterProvider from './ControlParameterProvider';
 import ActivateProvider from './ActivateProvider';
 import IsDebug from './IsDebug';
 import GlobalSpaceListener from './GlobalSpaceListener';
+import Snackbar from './Snackbar';
 
 type ProviderProps = {
   children: React.ReactNode
@@ -24,7 +25,7 @@ export default function Provider({
         <ActivateProvider />
         <AboutProvider />
         <AnalysisDataProvider />
-        <SnackbarProvider />
+        <Snackbar />
         <ControlParameterProvider />
       </MantineProvider>
     </MuiProvider>

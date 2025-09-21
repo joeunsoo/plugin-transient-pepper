@@ -30,7 +30,7 @@ export default function Layout({
     <MantineEmotionProvider>
       <MantineProvider
         theme={theme}
-        forceColorScheme="light"
+        forceColorScheme="dark"
         stylesTransform={emotionTransform}
       >
         <Notifications />

@@ -12,8 +12,8 @@ import { ActionIcon, Menu, MenuDivider, MenuDropdown, MenuItem, MenuTarget } fro
 const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
 export default function Page() {
-  const { setOpen: setAboutOpen } = useAboutStore();
-  const { setOpen: setActivateOpen, activate } = useActivateStore();
+  const { open: setAboutOpen } = useAboutStore();
+  const { open: setActivateOpen, activate } = useActivateStore();
 
   return (
     <Menu>
@@ -62,11 +62,11 @@ export default function Page() {
         <MenuItem onClick={() => { visitWebsite(CompanyWebsite); }}>
           Visit JoEunsoo.com
         </MenuItem>
-        <MenuItem onClick={() => { setAboutOpen(true); }}>
+        <MenuItem onClick={() => { setAboutOpen(); }}>
           About
         </MenuItem>
         <MenuDivider />
-        <MenuItem onClick={() => { setActivateOpen(true); }}>
+        <MenuItem onClick={() => { setActivateOpen(); }}>
           {activate ? 'Deactivate' : 'Activate'}
         </MenuItem>
       </MenuDropdown>

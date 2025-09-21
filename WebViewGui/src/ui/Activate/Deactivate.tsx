@@ -1,13 +1,12 @@
 'use client';
 
-import Stack from '@mui/material/Stack';
 import * as Juce from 'juce-framework-frontend';
 
 import { useActivateStore } from '@/store/ActivateStore';
-import Button from '@mui/material/Button';
 import { useSnackbarStore } from '@/store/SnackbarStore';
 import { useEffect, useState } from 'react';
-import { Typography } from '@mui/material';
+import { Button, rem, Stack, Text } from '@mantine/core';
+import { mantineSpace } from '@/define';
 
 const getActivate = Juce.getNativeFunction('getActivate');
 const setDeactivate = Juce.getNativeFunction('setActivate');
@@ -30,9 +29,9 @@ export default function App() {
 
   return (
     <Stack
-      spacing={4}
+      px={rem(mantineSpace * 4)}
     >
-      <Typography>{email}</Typography>
+      <Text>{email}</Text>
       <Button
         onClick={() => {
           setActivate(false);
