@@ -67,7 +67,10 @@ export default class AnalysisDataReceiver {
             if (self.timeResolutionMs === 0) {
               self.timeResolutionMs = data.timeResolutionMs;
               self.readIndex = 0;
-              self.buffer.fill({ timeMs: 0, values: new Array(data.frames[0].values.length).fill(0) });
+              self.buffer.fill({
+                timeMs: 0,
+                values: new Array(data.frames[0].values.length).fill(0),
+              });
             }
 
             // eslint-disable-next-line promise/always-return
@@ -75,6 +78,7 @@ export default class AnalysisDataReceiver {
               self.buffer[mod(self.writeIndex++, self.bufferLength)] = f;
             }
           })
+          // eslint-disable-next-line no-console
           .catch(console.error);
       }
     );
@@ -99,19 +103,19 @@ export default class AnalysisDataReceiver {
     let nextFrame = prevFrame;
 
     for (let i = 0; i <= latestWrite; i++) {
-        const frame = this.getBufferItem(i);
-        if (frame.timeMs <= timeStampMs) prevFrame = frame;
-        if (frame.timeMs > timeStampMs) {
-            nextFrame = frame;
-            break;
-        }
+      const frame = this.getBufferItem(i);
+      if (frame.timeMs <= timeStampMs) prevFrame = frame;
+      if (frame.timeMs > timeStampMs) {
+        nextFrame = frame;
+        break;
+      }
     }
 
     const dt = nextFrame.timeMs - prevFrame.timeMs;
     const s = dt > 0 ? (timeStampMs - prevFrame.timeMs) / dt : 0;
 
     return interpolate(prevFrame.values, nextFrame.values, s);
-}
+  }
 
   unregister() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

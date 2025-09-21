@@ -1,12 +1,10 @@
 'use client';
 
-import { notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
-
-import { useSnackbarStore } from '@/store/SnackbarStore';
-
-import classes from './Snackbar.module.css';
 import { InfoIcon, WarningIcon } from '@phosphor-icons/react';
+import { notifications } from '@mantine/notifications';
+import { useSnackbarStore } from '@/store/SnackbarStore';
+import classes from './Snackbar.module.css';
 
 export default function Demo() {
   const { refreshCount, open, onClose, message, options } = useSnackbarStore();
@@ -19,10 +17,7 @@ export default function Demo() {
         color = 'green';
       } else if (options.variant === 'error') {
         color = 'red';
-        icon = <WarningIcon
-          size="1.0rem"
-          weight="bold"
-        />;
+        icon = <WarningIcon size="1.0rem" weight="bold" />;
       }
 
       notifications.show({
@@ -33,17 +28,17 @@ export default function Demo() {
         autoClose: 3000,
         onClose,
         classNames: classes,
-        w:'fit-content',
+        w: 'fit-content',
         styles: {
           root: {
-            padding:'0.2em',
-            paddingLeft:'0.5em',
-            paddingRight:'0.5em',
+            padding: '0.2em',
+            paddingLeft: '0.5em',
+            paddingRight: '0.5em',
           },
           icon: {
-            margin: 0
-          }
-        }
+            margin: 0,
+          },
+        },
       });
     }
   }, [refreshCount, open, message, options, onClose]);

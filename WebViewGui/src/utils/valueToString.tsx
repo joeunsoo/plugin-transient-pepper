@@ -1,9 +1,9 @@
 export interface ValueToString {
-  (value: number, subDigit?: number): string
+  (value: number, subDigit?: number): string;
 }
 
 export function msToString(value: number, subDigit?: number) {
-  return `${(value*1000).toFixed(subDigit || 0)} ms`;
+  return `${(value * 1000).toFixed(subDigit || 0)} ms`;
 }
 
 export function percentToString(value: number) {

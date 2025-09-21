@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, forwardRef } from 'react';
-import { useMotionValue, useTransform, useMotionValueEvent } from 'framer-motion';
-
+import { forwardRef, useEffect, useMemo } from 'react';
+import { useMotionValue, useMotionValueEvent, useTransform } from 'framer-motion';
+import { Box, type BoxProps, type SliderProps } from '@mantine/core';
+import KnobOuter from './KnobOuter';
 import KnobRail from './KnobRail';
 import KnobThumb from './KnobThumb';
-import KnobOuter from './KnobOuter';
 import { useDrag } from './useDrag';
-import { Box, type BoxProps, type SliderProps } from '@mantine/core';
 
 export interface KnobProps
   extends BoxProps,
@@ -27,14 +26,12 @@ export interface KnobProps
 export type InKnobProps = Omit<KnobProps, 'setIsDrag' | 'value'>;
 
 function sliderToBox({
-  /* eslint-disable @typescript-eslint/no-unused-vars */
   defaultValue,
   onMouseDown,
   onChange,
   onDragStart,
   onChangeCommitted,
   scale,
-  /* eslint-enable @typescript-eslint/no-unused-vars */
   ...props
 }: InKnobProps): Omit<BoxProps, 'sx'> {
   return { ...props };
@@ -78,7 +75,10 @@ const Knob = forwardRef<HTMLDivElement, KnobProps>(
     }, [value, dragRange, handleValue, isDrag]);
 
     const knobOuter = useMemo(() => <KnobOuter color={color} />, [color]);
-    const knobRail = useMemo(() => <KnobRail color={color} ringColor={ringColor} />, [color, ringColor]);
+    const knobRail = useMemo(
+      () => <KnobRail color={color} ringColor={ringColor} />,
+      [color, ringColor]
+    );
 
     return (
       <Box

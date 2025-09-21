@@ -25,9 +25,13 @@
     "dev": "vite --port 3000",
     "start": "vite preview",
     "build": "tsc -b && vite build",
-    "lint": "eslint . && tsc --noEmit",
     "preview": "vite preview",
-    "zip": "npm-build-zip --name=gui --name_only=true --destination=../Assets"
+    "zip": "npm-build-zip --name=gui --name_only=true --destination=../Assets",
+    "lint": "npm run eslint && npm run prettier:check && npm run stylelint && tsc --noEmit",
+    "eslint": "eslint .",
+    "stylelint": "stylelint '**/*.css' --cache",
+    "prettier:check": "prettier --check \"**/*.{ts,tsx}\"",
+    "prettier:write": "prettier --write \"**/*.{ts,tsx}\""
   },
   "browserslist": {
     "production": [
@@ -43,6 +47,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@types/chroma-js": "^3.1.1",
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
@@ -52,9 +57,11 @@
     "@vitejs/plugin-react": "^5.0.3",
     "@vitejs/plugin-react-swc": "^4.1.0",
     "eslint": "^9.36.0",
+    "eslint-config-mantine": "^4.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",

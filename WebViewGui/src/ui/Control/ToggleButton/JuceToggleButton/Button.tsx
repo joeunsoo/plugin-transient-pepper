@@ -3,26 +3,15 @@
 import StyledToggleButton from '@/ui/StyledToggleButton';
 
 type JuceCheckboxProps = {
-  value: boolean,
-  handleChange: (value: boolean) => void
-  label: string
-}
+  value: boolean;
+  handleChange: (value: boolean) => void;
+  label: string;
+};
 
-export default function JuceCheckbox({
-  value,
-  handleChange,
-  label
-}: JuceCheckboxProps) {
-
+export default function JuceCheckbox({ value, handleChange, label }: JuceCheckboxProps) {
   const handleMouseDown = () => {
     handleChange(!value);
   };
 
-  return (
-    <StyledToggleButton
-      value={value}
-      label={label}
-      onMouseDown={handleMouseDown}
-    />
-  );
+  return <StyledToggleButton value={value} label={label} onMouseDown={handleMouseDown} />;
 }

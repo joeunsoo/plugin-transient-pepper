@@ -1,21 +1,18 @@
+import { Box, type BoxProps } from '@mantine/core';
 import { testOpacity } from '@/define';
 import { useControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
-import { Box, type BoxProps } from '@mantine/core';
 
 interface PageProps
-  extends UIProps, BoxProps,
-  Omit<
-    React.ButtonHTMLAttributes<HTMLDivElement>,
-    keyof BoxProps
-  > {
-}
+  extends UIProps,
+    BoxProps,
+    Omit<React.ButtonHTMLAttributes<HTMLDivElement>, keyof BoxProps> {}
 
 export default function Component({
   children,
   style,
-  ignoreBypass=false,
-  addTest=[],
+  ignoreBypass = false,
+  addTest = [],
   ...props
 }: PageProps) {
   const { bypassed } = useControlStore();
@@ -26,10 +23,7 @@ export default function Component({
         fontWeight: 600,
         fontSize: 'var(--mantine-font-size-sm)',
         color: 'var(--mantine-color-white)',
-        opacity: testOpacity([
-          bypassed && !ignoreBypass,
-          ...addTest
-        ]),
+        opacity: testOpacity([bypassed && !ignoreBypass, ...addTest]),
         ...style,
       }}
       {...props}

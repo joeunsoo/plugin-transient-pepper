@@ -1,19 +1,14 @@
 'use client';
 
 import { PowerIcon } from '@phosphor-icons/react';
-import IconButton, { type ExtendedButtonProps } from '@/ui/BlurIconButton';
 import { secondaryMain } from '@/define';
+import IconButton, { type ExtendedButtonProps } from '@/ui/BlurIconButton';
 
 interface JuceCheckboxProps extends ExtendedButtonProps {
-  handleChange: (value: boolean) => void
+  handleChange: (value: boolean) => void;
 }
 
-export default function JuceCheckbox({
-  value,
-  handleChange,
-  size='1.5em',
-}: JuceCheckboxProps) {
-
+export default function JuceCheckbox({ value, handleChange, size = '1.5em' }: JuceCheckboxProps) {
   const handleMouseDown = () => {
     handleChange(!value);
   };

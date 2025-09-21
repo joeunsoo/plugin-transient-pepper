@@ -1,14 +1,14 @@
-import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
-import { useAnimationFrame } from 'framer-motion';
-import applySkew from '@/utils/applySkew';
 import { useEffect, useRef } from 'react';
+import { useAnimationFrame } from 'framer-motion';
+import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
+import applySkew from '@/utils/applySkew';
 
 interface EnvelopeGraphProps {
-  idx: number
+  idx: number;
   width?: number;
   height?: number;
   stroke: string;
-  fill?: string;       // 밑부분 색
+  fill?: string; // 밑부분 색
   scrollSpeed?: number; // 픽셀 이동 속도
 }
 
@@ -18,7 +18,7 @@ export default function EnvelopeGraph({
   height = 293,
   stroke,
   fill = 'null', // 기본 반투명
-  scrollSpeed = 1
+  scrollSpeed = 1,
 }: EnvelopeGraphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bufferRef = useRef<HTMLCanvasElement>(null);
@@ -27,25 +27,29 @@ export default function EnvelopeGraph({
   const smoothedYRef = useRef(height); // smoothed value
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
 
-useEffect(() => {
-  if (canvasRef.current) {
-    ctxRef.current = canvasRef.current.getContext('2d');
+  useEffect(() => {
+    if (canvasRef.current) {
+      ctxRef.current = canvasRef.current.getContext('2d');
 
-    if (!ctxRef.current) { return; }
-    ctxRef.current.lineWidth = 2;
-    ctxRef.current.strokeStyle = stroke;
+      if (!ctxRef.current) {
+        return;
+      }
+      ctxRef.current.lineWidth = 2;
+      ctxRef.current.strokeStyle = stroke;
 
-    bufferRef.current = document.createElement('canvas');
-    bufferRef.current.width = width;
-    bufferRef.current.height = height;
-  }
-}, [height, stroke, width]);
+      bufferRef.current = document.createElement('canvas');
+      bufferRef.current.width = width;
+      bufferRef.current.height = height;
+    }
+  }, [height, stroke, width]);
 
-  useAnimationFrame((time, delta) => {
+  useAnimationFrame((_time, delta) => {
     const canvas = canvasRef.current;
     const ctx = ctxRef.current;
     const buffer = bufferRef.current;
-    if (!canvas || !ctx || !buffer) { return; }
+    if (!canvas || !ctx || !buffer) {
+      return;
+    }
 
     const bufCtx = buffer.getContext('2d')!;
 
@@ -57,7 +61,7 @@ useEffect(() => {
 
     // 🟢 smoothing 적용 (alpha: 0~1, 작을수록 부드러움)
     const alpha = 0.2;
-    smoothedYRef.current = smoothedYRef.current + alpha * (y - smoothedYRef.current);
+    smoothedYRef.current += alpha * (y - smoothedYRef.current);
     const smoothedY = smoothedYRef.current;
 
     // 1) 기존 그림을 왼쪽으로 scrollSpeed만큼 이동
@@ -69,7 +73,17 @@ useEffect(() => {
 
     // 2) 캔버스를 왼쪽으로 이동
     ctx.clearRect(0, 0, width, height);
-    ctx.drawImage(buffer, movePixels, 0, width - movePixels, height, 0, 0, width - movePixels, height);
+    ctx.drawImage(
+      buffer,
+      movePixels,
+      0,
+      width - movePixels,
+      height,
+      0,
+      0,
+      width - movePixels,
+      height
+    );
 
     // 3) 오른쪽 끝 영역 지우기
     ctx.clearRect(width - movePixels, 0, movePixels, height);
@@ -102,7 +116,5 @@ useEffect(() => {
     lastYRef.current = smoothedY;
   });
 
-  return (
-    <canvas ref={canvasRef} width={width} height={height} />
-  );
+  return <canvas ref={canvasRef} width={width} height={height} />;
 }

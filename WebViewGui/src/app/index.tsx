@@ -1,9 +1,8 @@
 import { Box, rem, Stack } from '@mantine/core';
-
-import Main from './Main';
-import Header from './Header';
-import Provider from './Provider';
 import { GlassSx, mantineSpace } from '@/define';
+import Header from './Header';
+import Main from './Main';
+import Provider from './Provider';
 
 export default function App() {
   return (
@@ -44,7 +43,7 @@ export default function App() {
                     rgba(255,255,255,0) 100%
                   )
                 `,
-                ...GlassSx
+                ...GlassSx,
               }}
             >
               <Main />

@@ -1,10 +1,8 @@
-import { GlassSx, mantineSpace, } from '@/define';
-import Graph from '@/ui/Graph/Canvas';
 import { Box, rem, type BoxProps } from '@mantine/core';
+import { GlassSx, mantineSpace } from '@/define';
+import Graph from '@/ui/Graph/Canvas';
 
-export default function Page({
-  style, ...props
-}: BoxProps) {
+export default function Page({ style, ...props }: BoxProps) {
   return (
     <Box
       style={{

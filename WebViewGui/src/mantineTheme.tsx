@@ -1,7 +1,6 @@
 'use client';
 
 import { AppShell, Button, Container, createTheme, Group, Menu, rem, Stack } from '@mantine/core';
-
 import { mantineSpace, paletteMantine, primaryMain } from './define';
 
 // console.log(DEFAULT_THEME);
@@ -15,7 +14,6 @@ const CONTAINER_SIZES: Record<string, number> = {
 };
 
 export const theme = createTheme({
-
   breakpoints: {
     xs: '36em',
     sm: '52em',
@@ -24,7 +22,8 @@ export const theme = createTheme({
     xl: '88em',
   },
 
-  fontFamily: '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif',
+  fontFamily:
+    '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif',
   fontSizes: {
     xs: 'calc(0.75rem * var(--mantine-scale))',
     sm: 'calc(0.875rem * var(--mantine-scale))',
@@ -69,7 +68,7 @@ export const theme = createTheme({
   primaryColor: 'primary',
   primaryShade: { light: 6, dark: 8 },
   colors: {
-    ...paletteMantine
+    ...paletteMantine,
   },
 
   cursorType: 'pointer',
@@ -87,7 +86,7 @@ export const theme = createTheme({
     Group: Group.extend({
       defaultProps: {
         gap: 0,
-        wrap: 'nowrap'
+        wrap: 'nowrap',
       },
     }),
 
@@ -99,8 +98,8 @@ export const theme = createTheme({
 
     AppShell: AppShell.extend({
       defaultProps: {
-        withBorder: false
-      }
+        withBorder: false,
+      },
     }),
 
     Button: Button.extend({
@@ -119,11 +118,11 @@ export const theme = createTheme({
         } else {
           containerSize = rem(size);
         }
-        return ({
+        return {
           root: {
-            '--container-size': containerSize
+            '--container-size': containerSize,
           },
-        });
+        };
       },
     }),
 

@@ -2,11 +2,7 @@ import { ActionIcon, type ActionIconProps } from '@mantine/core';
 
 export interface ExtendedButtonProps
   extends ActionIconProps,
-  Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    keyof ActionIconProps
-  > {
-}
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps> {}
 
 export default function BlurIconButton(props: ExtendedButtonProps) {
   const { onMouseDown, onClick, ...rest } = props;

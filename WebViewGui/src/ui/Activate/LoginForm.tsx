@@ -1,17 +1,14 @@
 'use client';
 
-import { useSnackbarStore } from '@/store/SnackbarStore';
-import * as Juce from 'juce-framework-frontend';
-
-import { Button, rem, Stack, Text, TextInput } from '@mantine/core';
-
-import { useForm, Controller } from 'react-hook-form';
-
-import { CompanyWebsite, mantineSpace, PluginCode } from '@/define';
 import { useState } from 'react';
-import { useActivateStore } from '@/store/ActivateStore';
-import Trial from './Trial';
 import { EnvelopeSimpleIcon, LockSimpleIcon } from '@phosphor-icons/react';
+import * as Juce from 'juce-framework-frontend';
+import { Controller, useForm } from 'react-hook-form';
+import { Button, rem, Stack, Text, TextInput } from '@mantine/core';
+import { CompanyWebsite, mantineSpace, PluginCode } from '@/define';
+import { useActivateStore } from '@/store/ActivateStore';
+import { useSnackbarStore } from '@/store/SnackbarStore';
+import Trial from './Trial';
 
 type LoginFormValues = {
   userEmail: string;
@@ -27,7 +24,11 @@ export default function LoginForm() {
   const [loading, setLoading] = useState<boolean>(false);
 
   // 2. RHF useForm 설정
-  const { handleSubmit, control, formState: { isSubmitting } } = useForm<LoginFormValues>({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<LoginFormValues>({
     defaultValues: { userEmail: '', userPassword: '' },
   });
 
@@ -47,20 +48,21 @@ export default function LoginForm() {
 
     try {
       setLoading(true);
-      const res = await fetch(
-        `${CompanyWebsite}/api/productActivation`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            userEmail: values.userEmail,
-            userPassword: values.userPassword,
-            productCode: PluginCode
-          }),
-          cache: 'no-store'
-        }
-      ).then((res) => res.json().then((data) => ({ ok: res.ok, status: res.status, body: data })))
-        .catch((err) => { // 서버 에러
+      const res = await fetch(`${CompanyWebsite}/api/productActivation`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userEmail: values.userEmail,
+          userPassword: values.userPassword,
+          productCode: PluginCode,
+        }),
+        cache: 'no-store',
+      })
+        .then((res) => res.json().then((data) => ({ ok: res.ok, status: res.status, body: data })))
+        .catch((err) => {
+          // 서버 에러
+          // eslint-disable-next-line no-console
           console.error(err);
+          enqueueSnackbar('Unexpected error occurred', { variant: 'error' });
         });
       if (res?.ok) {
         setActivateJuce(values.userEmail);
@@ -72,6 +74,7 @@ export default function LoginForm() {
       }
       setLoading(false);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       enqueueSnackbar('Unexpected error occurred', { variant: 'error' });
     }
@@ -88,9 +91,7 @@ export default function LoginForm() {
               {...field}
               label="Email"
               ta="left"
-              leftSection={
-                <EnvelopeSimpleIcon size="1.0em" weight="bold" />
-              }
+              leftSection={<EnvelopeSimpleIcon size="1.0em" weight="bold" />}
             />
           )}
         />
@@ -104,9 +105,7 @@ export default function LoginForm() {
               type="password"
               label="Password"
               ta="left"
-              leftSection={
-                <LockSimpleIcon size="1.0em" weight="bold" />
-              }
+              leftSection={<LockSimpleIcon size="1.0em" weight="bold" />}
             />
           )}
         />
@@ -118,18 +117,13 @@ export default function LoginForm() {
               visitWebsite(`${CompanyWebsite}/reset-password`);
             }}
             sx={{
-              fontSize: 'var(--mantine-font-size-xs)'
+              fontSize: 'var(--mantine-font-size-xs)',
             }}
           >
             Forgot password?
           </Text>
         </Stack>
-        <Button
-          loading={loading}
-          type="submit"
-          variant="contained"
-          disabled={isSubmitting}
-        >
+        <Button loading={loading} type="submit" variant="contained" disabled={isSubmitting}>
           Sign in
         </Button>
 

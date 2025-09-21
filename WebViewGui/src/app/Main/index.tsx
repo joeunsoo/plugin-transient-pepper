@@ -1,14 +1,12 @@
 import { Group, rem, Stack } from '@mantine/core';
 import { mantineSpace } from '@/define';
-
 import SectionDetector from './SectionDetector';
-import SectionShape from './SectionShape';
-import SectionMix from './SectionMix';
-import SectionTone from './SectionTone';
 import SectionGraph from './SectionGraph';
+import SectionMix from './SectionMix';
+import SectionShape from './SectionShape';
+import SectionTone from './SectionTone';
 
 export default function App() {
-
   return (
     <Group
       p={rem(mantineSpace * 4)}
@@ -34,7 +32,7 @@ export default function App() {
         <SectionShape />
       </Stack>
 
-      <Stack gap={rem(mantineSpace * 5)} sx={{ flexGrow: 1 }} >
+      <Stack gap={rem(mantineSpace * 5)} sx={{ flexGrow: 1 }}>
         <SectionGraph />
         <SectionTone sx={{ width: '100%' }} />
       </Stack>

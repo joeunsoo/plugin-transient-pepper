@@ -1,16 +1,10 @@
 'use client';
 
-import {
-  PluginName,
-  GlassSx,
-  mantineSpace
-} from '@/define';
-
 import { Modal, rem, Stack, Title } from '@mantine/core';
-
+import { GlassSx, mantineSpace, PluginName } from '@/define';
 import { useActivateStore } from '@/store/ActivateStore';
-import LoginForm from './LoginForm';
 import Deactivate from './Deactivate';
+import LoginForm from './LoginForm';
 
 export default function App() {
   const { opened, close, activate } = useActivateStore();
@@ -20,26 +14,24 @@ export default function App() {
       opened={opened}
       centered
       withCloseButton={false}
-      onClose={() => { if (activate) close(); }}
+      onClose={() => {
+        if (activate) close();
+      }}
       p={rem(mantineSpace * 4)}
       styles={{
         content: {
           ...GlassSx,
-        }
+        },
       }}
-
     >
       <Stack
         align="center"
         gap={rem(mantineSpace * 4)}
         sx={{
-          textAlign: 'center'
+          textAlign: 'center',
         }}
       >
-        <Title
-          order={3}
-          component="h2"
-        >
+        <Title order={3} component="h2">
           {PluginName}
         </Title>
         {!activate ? <LoginForm /> : <Deactivate />}

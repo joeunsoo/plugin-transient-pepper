@@ -2,11 +2,7 @@ import { Button, type ButtonProps } from '@mantine/core';
 
 interface ExtendedButtonProps
   extends ButtonProps,
-  Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    keyof ButtonProps
-  > {
-}
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonProps> {}
 
 export default function BlurButton(props: ExtendedButtonProps) {
   const { onMouseDown, onClick, ...rest } = props;

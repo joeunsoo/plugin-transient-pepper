@@ -5,7 +5,5 @@ export default function App() {
     window.addEventListener('contextmenu', (e) => e.preventDefault());
   }
 
-  return (
-    <Activate />
-  );
+  return <Activate />;
 }

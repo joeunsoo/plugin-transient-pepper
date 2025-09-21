@@ -1,12 +1,11 @@
 'use client';
 
-import * as Juce from 'juce-framework-frontend';
-
-import { useActivateStore } from '@/store/ActivateStore';
-import { useSnackbarStore } from '@/store/SnackbarStore';
 import { useEffect, useState } from 'react';
+import * as Juce from 'juce-framework-frontend';
 import { Button, rem, Stack, Text } from '@mantine/core';
 import { mantineSpace } from '@/define';
+import { useActivateStore } from '@/store/ActivateStore';
+import { useSnackbarStore } from '@/store/SnackbarStore';
 
 const getActivate = Juce.getNativeFunction('getActivate');
 const setDeactivate = Juce.getNativeFunction('setActivate');
@@ -17,20 +16,21 @@ export default function App() {
   const [email, setEmail] = useState<string>();
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getActivate().then((result: any) => {
-      setEmail(result.activate);
+    getActivate()
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .then((result: any) => {
+        setEmail(result.activate);
 
-      return null;
-    }).catch(console.error);
+        return null;
+      })
+      // eslint-disable-next-line no-console
+      .catch(console.error);
   }, [setActivate]);
 
   return (
-    <Stack
-      gap={rem(mantineSpace * 4)}
-    >
+    <Stack gap={rem(mantineSpace * 4)}>
       <Text>{email}</Text>
       <Button
         onClick={() => {

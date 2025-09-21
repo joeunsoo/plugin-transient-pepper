@@ -1,31 +1,24 @@
 import { Group, Stack, type StackProps } from '@mantine/core';
-
+import { useControlStore } from '@/store/ControlStore';
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-import SectionTitle from './SectionTitle';
-import { msToString } from '@/utils/valueToString';
 import AttackHigh from '@/ui/Icon/AttackHigh';
 import AttackLow from '@/ui/Icon/AttackLow';
-import ReleaseLow from '@/ui/Icon/ReleaseLow';
 import ReleaseHigh from '@/ui/Icon/ReleaseHigh';
-import { useControlStore } from '@/store/ControlStore';
+import ReleaseLow from '@/ui/Icon/ReleaseLow';
+import { msToString } from '@/utils/valueToString';
+import SectionTitle from './SectionTitle';
 
-export default function Page({
-  sx, ...props
-}: StackProps) {
+export default function Page({ sx, ...props }: StackProps) {
   const { sidechainListen } = useControlStore();
   return (
     <Stack
       gap="var(--row-spacing)"
       sx={{
-        ...sx
+        ...sx,
       }}
       {...props}
     >
-      <SectionTitle
-        addTest={[!sidechainListen]}
-      >
-        Noise Shape
-      </SectionTitle>
+      <SectionTitle addTest={[!sidechainListen]}>Noise Shape</SectionTitle>
       <Group
         justify="space-between"
         gap="var(--column-spacing)"

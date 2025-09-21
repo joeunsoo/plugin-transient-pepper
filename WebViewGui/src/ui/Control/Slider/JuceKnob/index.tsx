@@ -1,34 +1,32 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import * as Juce from 'juce-framework-frontend';
-
+import { Box, Group, rem, Text, Tooltip, type BoxProps } from '@mantine/core';
 import {
   controlParameterIndexAnnotation,
-  toFixedDigits,
   LabelTypographySx,
-  testOpacity,
   mantineSpace,
+  testOpacity,
+  toFixedDigits,
 } from '@/define';
-
-import Knob from './Knob';
-import type { ValueToString } from '@/utils/valueToString';
 import { useControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
-import { Box, Group, rem, Text, Tooltip, type BoxProps } from '@mantine/core';
+import type { ValueToString } from '@/utils/valueToString';
+import Knob from './Knob';
 
-interface JuceSliderProps extends UIProps, Omit<BoxProps,'onChange'> {
-  identifier: string,
-  title?: string,
-  subDigit?: number
-  defaultValue?: number
-  hideTitle?: boolean
-  valueToString?: ValueToString
-  color?: string
-  ringColor?: string
-  lowIcon?: React.ReactNode
-  highIcon?: React.ReactNode
-  onChange?: (v: number) => void
+interface JuceSliderProps extends UIProps, Omit<BoxProps, 'onChange'> {
+  identifier: string;
+  title?: string;
+  subDigit?: number;
+  defaultValue?: number;
+  hideTitle?: boolean;
+  valueToString?: ValueToString;
+  color?: string;
+  ringColor?: string;
+  lowIcon?: React.ReactNode;
+  highIcon?: React.ReactNode;
+  onChange?: (v: number) => void;
 }
 
 export default function JuceSlider({
@@ -56,7 +54,7 @@ export default function JuceSlider({
   const [value, setValue] = useState<number>(sliderState.getNormalisedValue());
   const [properties, setProperties] = useState(sliderState.properties);
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (_event: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number') {
       sliderState.setNormalisedValue(newValue);
       setValue(newValue);
@@ -90,17 +88,20 @@ export default function JuceSlider({
     }
   };
 
-  const changeCommitted = useCallback((event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => {
-    sliderState.setNormalisedValue(newValue);
-    sliderState.sliderDragEnded();
-  }, [sliderState]);
+  const changeCommitted = useCallback(
+    (_event: Event | React.SyntheticEvent<Element, Event>, newValue: number | number[]) => {
+      sliderState.setNormalisedValue(newValue);
+      sliderState.sliderDragEnded();
+    },
+    [sliderState]
+  );
 
   useEffect(() => {
     const valueListenerId = sliderState.valueChangedEvent.addListener(() => {
       setValue(sliderState.getNormalisedValue());
     });
-    const propertiesListenerId = sliderState.propertiesChangedEvent.addListener(
-      () => setProperties(sliderState.properties)
+    const propertiesListenerId = sliderState.propertiesChangedEvent.addListener(() =>
+      setProperties(sliderState.properties)
     );
 
     return function cleanup() {
@@ -128,17 +129,13 @@ export default function JuceSlider({
   return (
     <Box
       {...{
-        [controlParameterIndexAnnotation]:
-          sliderState.properties.parameterIndex,
+        [controlParameterIndexAnnotation]: sliderState.properties.parameterIndex,
       }}
       style={{
         width: 'var(--knob-width)',
         flexShrink: 0,
-        opacity: testOpacity([
-          bypassed && !ignoreBypass,
-          ...addTest
-        ]),
-        ...style
+        opacity: testOpacity([bypassed && !ignoreBypass, ...addTest]),
+        ...style,
       }}
       {...props}
     >
@@ -160,21 +157,18 @@ export default function JuceSlider({
         onMouseOver={() => setOver(true)}
         onMouseLeave={() => setOver(false)}
       />
-      {!hideTitle &&
+      {!hideTitle && (
         <Group
           align="center"
           justify="center"
           gap={rem(mantineSpace * 1)}
           style={{
-            transform: 'translateY(-0.5em)'
+            transform: 'translateY(-0.5em)',
           }}
         >
           {lowIcon}
           <Tooltip
-            opened={
-              (focusAnchor === ref.current)
-              || (!focusAnchor) && isOver
-            }
+            opened={focusAnchor === ref.current || (!focusAnchor && isOver)}
             label={printValue()}
             position="bottom"
             openDelay={10}
@@ -198,7 +192,7 @@ export default function JuceSlider({
           </Tooltip>
           {highIcon}
         </Group>
-      }
+      )}
     </Box>
   );
 }

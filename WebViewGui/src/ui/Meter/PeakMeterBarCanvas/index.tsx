@@ -1,11 +1,11 @@
+import { rem, Stack, type StackProps } from '@mantine/core';
+import { GlassSx, mantineSpace, secondaryMain, testOpacity } from '@/define';
 import { useControlStore } from '@/store/ControlStore';
-import { testOpacity, GlassSx, mantineSpace, secondaryMain } from '@/define';
 import type { PeakMeterProps } from '@/types/PeakMeter';
 import Canvas from './Canvas';
-import { rem, Stack, type StackProps } from '@mantine/core';
 
 interface PeakMeterLedProps extends PeakMeterProps, StackProps {
-  length?: number,
+  length?: number;
 }
 
 export default function Page({
@@ -26,14 +26,11 @@ export default function Page({
         width: '100%',
         height: '100%',
         flexGrow: 1,
-        opacity: testOpacity([
-          bypassed && !ignoreBypass,
-          ...addTest
-        ]),
+        opacity: testOpacity([bypassed && !ignoreBypass, ...addTest]),
         backgroundColor: 'var(--mantine-color-secondaryDark-9)',
         borderRadius: '0.2em',
         overflow: 'hidden',
-        ...style
+        ...style,
       }}
       sx={{
         ...GlassSx,
@@ -44,16 +41,12 @@ export default function Page({
           width: '100%',
           height: '100%',
           flexGrow: 1,
-          aspectRatio: 'unset'
+          aspectRatio: 'unset',
         },
       }}
       {...props}
     >
-      <Canvas
-        idx={idx}
-        height={100}
-        fill={secondaryMain}
-      />
+      <Canvas idx={idx} height={100} fill={secondaryMain} />
     </Stack>
   );
 }

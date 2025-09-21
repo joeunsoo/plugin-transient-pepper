@@ -1,21 +1,16 @@
-import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
-import { useAnimationFrame } from 'framer-motion';
-import applySkew from '@/utils/applySkew';
 import { useEffect, useRef } from 'react';
+import { useAnimationFrame } from 'framer-motion';
+import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
+import applySkew from '@/utils/applySkew';
 
 interface EnvelopeGraphProps {
   idx: number;
   width?: number;
   height?: number;
-  fill?: string;       // 밑부분 색
+  fill?: string; // 밑부분 색
 }
 
-export default function EnvelopeGraph({
-  idx,
-  width = 1,
-  height = 10,
-  fill,
-}: EnvelopeGraphProps) {
+export default function EnvelopeGraph({ idx, width = 1, height = 10, fill }: EnvelopeGraphProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const bufferRef = useRef<HTMLCanvasElement | null>(null);
   const { motionValues } = useAnalysisDataStore();

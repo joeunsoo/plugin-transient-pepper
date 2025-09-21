@@ -1,13 +1,12 @@
 'use client';
 
-import * as Juce from 'juce-framework-frontend';
-
-import Scale from './Scale';
-import { useAboutStore } from '@/store/AboutStore';
-import { CompanyWebsite } from '@/define';
-import { useActivateStore } from '@/store/ActivateStore';
 import { GearSixIcon } from '@phosphor-icons/react';
+import * as Juce from 'juce-framework-frontend';
 import { ActionIcon, Menu, MenuDivider, MenuDropdown, MenuItem, MenuTarget } from '@mantine/core';
+import { CompanyWebsite } from '@/define';
+import { useAboutStore } from '@/store/AboutStore';
+import { useActivateStore } from '@/store/ActivateStore';
+import Scale from './Scale';
 
 const visitWebsite = Juce.getNativeFunction('visitWebsite');
 
@@ -31,14 +30,26 @@ export default function Page() {
       <MenuDropdown>
         <Scale />
         <MenuDivider />
-        <MenuItem onClick={() => { visitWebsite(CompanyWebsite); }}>
+        <MenuItem
+          onClick={() => {
+            visitWebsite(CompanyWebsite);
+          }}
+        >
           Visit JoEunsoo.com
         </MenuItem>
-        <MenuItem onClick={() => { setAboutOpen(); }}>
+        <MenuItem
+          onClick={() => {
+            setAboutOpen();
+          }}
+        >
           About
         </MenuItem>
         <MenuDivider />
-        <MenuItem onClick={() => { setActivateOpen(); }}>
+        <MenuItem
+          onClick={() => {
+            setActivateOpen();
+          }}
+        >
           {activate ? 'Deactivate' : 'Activate'}
         </MenuItem>
       </MenuDropdown>

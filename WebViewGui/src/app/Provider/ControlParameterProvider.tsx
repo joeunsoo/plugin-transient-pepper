@@ -1,5 +1,4 @@
 import * as Juce from 'juce-framework-frontend';
-
 import { controlParameterIndexAnnotation } from '@/define';
 
 export default function Provider() {

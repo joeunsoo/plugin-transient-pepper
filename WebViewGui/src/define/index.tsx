@@ -1,13 +1,7 @@
 // eslint-disable-next-line react-refresh/only-export-components
 export * from './Plugin';
 
-export {
-  themeColor,
-  paletteMantine,
-  primaryMain,
-  secondaryMain,
-  infoMain,
-} from './Color';
+export { themeColor, paletteMantine, primaryMain, secondaryMain, infoMain } from './Color';
 
 export const mantineSpace = 4;
 
@@ -39,5 +33,5 @@ export function testOpacity(
 ) {
   const result = data.find((item) => item);
 
-  return result ? ignoreBypassOpacity : 1.0 ;
+  return result ? ignoreBypassOpacity : 1.0;
 }

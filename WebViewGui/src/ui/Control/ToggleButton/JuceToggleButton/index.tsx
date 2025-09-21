@@ -1,22 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Juce from 'juce-framework-frontend';
-
 import { Box, type BoxProps } from '@mantine/core';
-
-import { testOpacity, controlParameterIndexAnnotation } from '@/define';
-
-import Button from './Button';
+import { controlParameterIndexAnnotation, testOpacity } from '@/define';
 import { useControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
+import Button from './Button';
 
-interface JuceCheckboxProps
-  extends UIProps, Omit<BoxProps, 'title' | 'onChange'> {
-  identifier: string,
-  title?: React.ReactNode,
-  invertValue?: boolean
-  onChange?: (e: Event, value: boolean) => void
+interface JuceCheckboxProps extends UIProps, Omit<BoxProps, 'title' | 'onChange'> {
+  identifier: string;
+  title?: React.ReactNode;
+  invertValue?: boolean;
+  onChange?: (e: Event, value: boolean) => void;
 }
 
 export default function JuceCheckbox({
@@ -26,7 +22,7 @@ export default function JuceCheckbox({
   style,
   onChange,
   ignoreBypass = false,
-  addTest=[],
+  addTest = [],
   ...props
 }: JuceCheckboxProps) {
   const { bypassed } = useControlStore();
@@ -51,8 +47,9 @@ export default function JuceCheckbox({
         onChange(new Event('change'), checkboxState.getValue());
       }
     });
-    const propertiesListenerId =
-      checkboxState.propertiesChangedEvent.addListener(() => setProperties(checkboxState.properties));
+    const propertiesListenerId = checkboxState.propertiesChangedEvent.addListener(() =>
+      setProperties(checkboxState.properties)
+    );
 
     return function cleanup() {
       checkboxState.valueChangedEvent.removeListener(valueListenerId);
@@ -65,22 +62,18 @@ export default function JuceCheckbox({
     if (onChange) {
       onChange(new Event('change'), checkboxState.getValue());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Box
       {...{
-        [controlParameterIndexAnnotation]:
-          checkboxState.properties.parameterIndex,
+        [controlParameterIndexAnnotation]: checkboxState.properties.parameterIndex,
       }}
       style={{
         width: 'var(--knob-width)',
-        opacity: testOpacity([
-          bypassed && !ignoreBypass,
-          ...addTest
-        ]),
-        ...style
+        opacity: testOpacity([bypassed && !ignoreBypass, ...addTest]),
+        ...style,
       }}
       {...props}
     >

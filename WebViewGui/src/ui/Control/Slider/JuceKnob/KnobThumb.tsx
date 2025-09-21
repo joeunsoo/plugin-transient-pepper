@@ -1,15 +1,13 @@
 export interface KnobProps {
-  value: number
+  value: number;
 }
 
-export default function Component({
-  value
-}: KnobProps) {
+export default function Component({ value }: KnobProps) {
   return (
     <g
       transform={`
         translate(100 100)
-        rotate(${(value * 270) + 45})
+        rotate(${value * 270 + 45})
       `}
     >
       <line

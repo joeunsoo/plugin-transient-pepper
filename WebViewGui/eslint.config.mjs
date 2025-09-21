@@ -1,17 +1,41 @@
 import js from '@eslint/js';
-import globals from 'globals';
+import tsParser from '@typescript-eslint/parser';
+import mantine from 'eslint-config-mantine';
+import configPrettier from 'eslint-config-prettier';
 import importPlugin from 'eslint-plugin-import';
+import prettier from 'eslint-plugin-prettier';
+import pluginPromise from 'eslint-plugin-promise';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
-import pluginPromise from 'eslint-plugin-promise';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
-// import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import tsParser from '@typescript-eslint/parser';
-import { globalIgnores } from 'eslint/config';
 
-export default tseslint.config([
+export default defineConfig([
+  tseslint.configs.recommended,
+  pluginPromise.configs['flat/recommended'],
+  configPrettier,
+  ...mantine,
   globalIgnores(['dist', 'build', '*/vite-env.d.ts']),
+  {
+    plugins: { prettier },
+    rules: {
+      'prettier/prettier': 'warn',
+    },
+  },
+  {
+    files: ['eslint.config.mjs'],
+    rules: {
+      'no-console': 'warn',
+    },
+  },
+  {
+    files: ['**/*.story.tsx'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     extends: [
@@ -27,7 +51,10 @@ export default tseslint.config([
     ],
     languageOptions: {
       parser: tsParser,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        process: 'readonly', // process를 전역으로 허용
+      },
       parserOptions: {
         tsconfigRootDir: process.cwd(),
         project: './tsconfig.app.json', // 타입 기반 룰 적용 시 필수
@@ -48,11 +75,14 @@ export default tseslint.config([
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
 
-      'semi': ['warn', 'always'],
-      'quotes': ['warn', 'single'],
-      'jsx-quotes': ['warn', 'prefer-double'],
-      'no-multiple-empty-lines': ['warn', { 'max': 1, 'maxEOF': 0 }], // 빈줄 최대 1개
-      'max-len': ['warn', { 'code': 400 }],
+      semi: ['warn', 'always'],
+      quotes: ['warn', 'single'],
+      'no-trailing-spaces': 'warn',
+      'eol-last': 2, // 파일 끝에 개행문자가 없을 경우 경고
+      indent: 'off',
+
+      'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 0 }], // 빈줄 최대 1개
+      'max-len': ['warn', { code: 400 }],
       'no-underscore-dangle': 'warn',
       'react/forbid-prop-types': 'warn',
       'react/jsx-no-target-blank': 'warn',
@@ -61,11 +91,10 @@ export default tseslint.config([
       'no-use-before-define': 'warn',
       'no-nested-ternary': 'warn',
       'no-constant-condition': 'warn',
-      'no-trailing-spaces': 'warn',
       'spaced-comment': 'warn', // 주석을 뒤에 쓰지 말라는 경고
       'arrow-body-style': 'warn', // 화살표 함수 안에 return을 사용할 수 있음
       'react/no-unescaped-entities': 'warn', // 문자열 내에서 " ' > } 허용
-      'implicit-arrow-linebreak': 'warn', // 연산자 다음 줄 바꿈을 사용할 수 있음
+      'implicit-arrow-linebreak': 'off', // 연산자 다음 줄 바꿈을 사용할 수 있음
 
       'react/prop-types': 'warn',
       'react/function-component-definition': 'warn',
@@ -85,14 +114,14 @@ export default tseslint.config([
 
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'camelcase': [
+      camelcase: [
         'warn',
         {
           properties: 'never',
           // ignoreDestructuring: true,
           // ignoreImports: true,
           // ignoreGlobals: true,
-        }
+        },
       ],
       'promise/catch-or-return': 'warn',
       'consistent-return': 'warn',
@@ -100,15 +129,14 @@ export default tseslint.config([
       'guard-for-in': 'warn',
       'array-callback-return': 'warn',
 
-      'eqeqeq': [2, 'allow-null'], // == 금지
-      'no-empty': ['error', { 'allowEmptyCatch': false }], // 빈 catch 금지
-      'eol-last': 2, // 파일 끝에 개행문자가 없을 경우 경고
-      'space-in-parens': [2, 'never'],// 괄호`()` 안에 공백을 추가하지 않음
+      eqeqeq: [2, 'allow-null'], // == 금지
+      'no-empty': ['error', { allowEmptyCatch: false }], // 빈 catch 금지
+      'space-in-parens': [2, 'never'], // 괄호`()` 안에 공백을 추가하지 않음
       'space-before-blocks': [2, 'always'], // 블록 앞에 공백을 강제
-      'brace-style': [2, '1tbs', { 'allowSingleLine': true }], // 중괄호 스타일
-      'function-paren-newline': ['error', 'consistent'], // 함수의 인자가 여러줄일 경우, 첫번째 인자는 첫줄에, 나머지는 각각 한줄씩
+      'brace-style': [2, '1tbs', { allowSingleLine: true }], // 중괄호 스타일
+      'function-paren-newline': 'off', // 함수의 인자가 여러줄일 경우, 첫번째 인자는 첫줄에, 나머지는 각각 한줄씩
       'object-curly-spacing': ['error', 'always'],
-      'curly': 'off',
+      curly: 'off',
       'no-dupe-keys': 'error',
     },
   },

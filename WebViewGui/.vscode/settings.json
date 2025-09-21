@@ -1,0 +1,11 @@
+{
+  "eslint.rules.customizations": [
+    { "rule": "prettier/prettier", "severity": "warn" }
+  ],
+  "eslint.alwaysShowRuleFailuresAsWarnings": false, 
+  "eslint.format.enable": false,
+  "eslint.problems.showRuleIds": true,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}

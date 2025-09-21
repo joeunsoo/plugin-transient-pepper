@@ -1,4 +1,4 @@
 export interface UIProps {
-  addTest?: boolean[]
-  ignoreBypass?: boolean,
+  addTest?: boolean[];
+  ignoreBypass?: boolean;
 }

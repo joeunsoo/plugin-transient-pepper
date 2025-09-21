@@ -1,20 +1,14 @@
-
 import { useState } from 'react';
-
 import { Box, Group, Stack, type GroupProps } from '@mantine/core';
-
+import { useControlStore } from '@/store/ControlStore';
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-
+import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 import NoiseGain from './NoiseGain';
 import OutputGain from './OutputGain';
-import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
-import { useControlStore } from '@/store/ControlStore';
 
-type PageProps = Omit<GroupProps, 'gap'>
+type PageProps = Omit<GroupProps, 'gap'>;
 
-export default function Page({
-  ...props
-}: PageProps) {
+export default function Page({ ...props }: PageProps) {
   const [wetSolo, setWetSolo] = useState<boolean>(false);
   const { sidechainListen } = useControlStore();
 
@@ -30,20 +24,14 @@ export default function Page({
       }}
       {...props}
     >
-      <Stack
-        align="center"
-        justify="end"
-        gap="var(--row-spacing)"
-      >
-        <Box
-          sx={{ flexGrow: 1 }}
-        >
+      <Stack align="center" justify="end" gap="var(--row-spacing)">
+        <Box sx={{ flexGrow: 1 }}>
           <NoiseGain h="100%" />
         </Box>
         <JuceToggleButton
           identifier="wetSoloToggle"
           title="Wet Solo"
-          onChange={(e, value) => setWetSolo(value)}
+          onChange={(_e, value) => setWetSolo(value)}
           addTest={[!sidechainListen]}
         />
         <JuceKnob
@@ -51,7 +39,7 @@ export default function Page({
           defaultValue={0.5}
           subDigit={1}
           sx={{
-            flexShrink: 0
+            flexShrink: 0,
           }}
           addTest={[wetSolo, !sidechainListen]}
         />

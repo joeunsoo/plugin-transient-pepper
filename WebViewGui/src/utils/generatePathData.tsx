@@ -1,11 +1,10 @@
 export default function generatePathData(
-  values: number[],      // 기존 값 배열
-  newValue: number,      // 새로 들어온 값
-  maxPoints: number,     // 최대 포인트 수
-  width: number,         // SVG width
-  height: number         // SVG height
-): { newValues: number[], pathData: string } {
-
+  values: number[], // 기존 값 배열
+  newValue: number, // 새로 들어온 값
+  maxPoints: number, // 최대 포인트 수
+  width: number, // SVG width
+  height: number // SVG height
+): { newValues: number[]; pathData: string } {
   // 1. 배열 업데이트 (고정 길이)
   const updatedValues = [...values, newValue];
   if (updatedValues.length > maxPoints) {

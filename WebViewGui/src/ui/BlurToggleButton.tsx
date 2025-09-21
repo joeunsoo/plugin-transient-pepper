@@ -1,25 +1,18 @@
 'use client';
 
+import type { MouseEvent } from 'react';
 import { Button, type ButtonProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import type { MouseEvent } from 'react';
 
 export interface BlurToggleButtonProps
   extends ButtonProps,
-    Omit<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    keyof ButtonProps | 'onChange' | 'value'
-  > {
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonProps | 'onChange' | 'value'> {
   value: boolean;
   onChange?: (checked: boolean) => void;
 }
 
 export default function BlurToggleButton(props: BlurToggleButtonProps) {
-  const {
-    value:_value,
-    onChange,
-    ...rest
-  } = props;
+  const { value: _value, onChange, ...rest } = props;
 
   // Mantine이 내부적으로 Checkbox 등에 쓰는 훅 (controlled/uncontrolled 패턴)
   const [value, setValue] = useUncontrolled({

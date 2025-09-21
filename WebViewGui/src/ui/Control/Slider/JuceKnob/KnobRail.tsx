@@ -1,16 +1,20 @@
 type PageProps = {
-  color?: string
-  ringColor?: string
-}
+  color?: string;
+  ringColor?: string;
+};
 
-export default function Page({
-  color = 'primary',
-  ringColor = 'secondary'
-}: PageProps) {
+export default function Page({ color = 'primary', ringColor = 'secondary' }: PageProps) {
   return (
     <>
       <defs>
-        <filter id="dropshadow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
+        <filter
+          id="dropshadow"
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+          filterUnits="userSpaceOnUse"
+        >
           <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blurredAlpha" />
           <feOffset in="blurredAlpha" dx="0" dy="25" result="offsetShadow" />
           <feFlood floodColor="#000" floodOpacity="0.9" result="shadowColor" />
@@ -22,7 +26,8 @@ export default function Page({
         </filter>
       </defs>
       <g transform="translate(100,100)">
-        <circle r={65}
+        <circle
+          r={65}
           fill={`var(--mantine-color-${ringColor}Dark-6)`}
           stroke="#000000"
           strokeWidth="1"

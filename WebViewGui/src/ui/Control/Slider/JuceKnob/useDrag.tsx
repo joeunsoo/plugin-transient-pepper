@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { MotionValue } from 'framer-motion';
 
 interface UseDragProps {
@@ -53,7 +53,15 @@ export function useDrag({
       window.addEventListener('mousemove', onMouseMove);
       window.addEventListener('mouseup', onMouseUp);
     },
-    [setIsDragParent, onDragStart, shiftSensitivity, dragRange, handleValue, onChangeCommitted, progressScaleValue]
+    [
+      setIsDragParent,
+      onDragStart,
+      shiftSensitivity,
+      dragRange,
+      handleValue,
+      onChangeCommitted,
+      progressScaleValue,
+    ]
   );
 
   return { isDrag, onMouseDown };

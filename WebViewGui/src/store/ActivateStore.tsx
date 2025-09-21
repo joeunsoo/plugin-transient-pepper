@@ -15,14 +15,16 @@ interface ActivateState {
 
 export const useActivateStore = create<ActivateState>((set) => ({
   activate: false,
-  setActivate: (value: boolean) => set(() => ({
-    activate: value,
-  })),
+  setActivate: (value: boolean) =>
+    set(() => ({
+      activate: value,
+    })),
 
   trial: 0,
-  setTrial: (value: number) => set(() => ({
-    trial: value,
-  })),
+  setTrial: (value: number) =>
+    set(() => ({
+      trial: value,
+    })),
 
   opened: false,
   open: () => set({ opened: true }),

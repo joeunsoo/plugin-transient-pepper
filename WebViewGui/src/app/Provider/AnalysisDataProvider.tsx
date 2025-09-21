@@ -1,10 +1,10 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { useAnimationFrame } from 'framer-motion';
 import { AnalysisDataReceiverLength } from '@/define';
 import { useAnalysisDataStore } from '@/store/AnalysisDataStore';
 import AnalysisDataReceiver from '@/ui/AnalysisDataReceiver';
-import { useAnimationFrame } from 'framer-motion';
-import { useEffect, useState } from 'react';
 
 const valuesIdxs = new Array(AnalysisDataReceiverLength).fill(0);
 
@@ -13,16 +13,15 @@ export default function App() {
   const [isActive, setIsActive] = useState<boolean>(true);
   let dataReceiver: AnalysisDataReceiver | null = null;
 
-  useAnimationFrame(() => { // (time, delta)
+  useAnimationFrame(() => {
+    // (time, delta)
     if (isActive) {
       if (dataReceiver) {
         outputNumChannels.set(dataReceiver.getOutputNumChannels());
 
         const data = dataReceiver.getLevels(Date.now());
         if (data) {
-          valuesIdxs.map(
-            (value, idx) => motionValues[idx].set(data[idx])
-          );
+          valuesIdxs.map((_value, idx) => motionValues[idx].set(data[idx]));
         }
       }
     }

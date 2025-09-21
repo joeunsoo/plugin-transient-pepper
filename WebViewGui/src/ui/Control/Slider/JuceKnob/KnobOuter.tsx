@@ -1,32 +1,21 @@
 interface DotProps extends React.SVGProps<SVGCircleElement> {
-  color?: string
+  color?: string;
 }
 
-function Dot({
-  color = 'primary',
-  ...props
-}: DotProps) {
-  return (
-    <circle
-      r={4}
-      fill={`var(--mantine-color-${color}Dark-3)`}
-      {...props}
-    />
-  );
+function Dot({ color = 'primary', ...props }: DotProps) {
+  return <circle r={4} fill={`var(--mantine-color-${color}Dark-3)`} {...props} />;
 }
 
 type PageProps = {
-  color?: string
-}
+  color?: string;
+};
 
-export default function PageProps({
-  color = 'primary'
-}: PageProps) {
+export default function PageProps({ color = 'primary' }: PageProps) {
   const distance = 75;
   const dotDistance = 76;
 
-  const angle1 = (1 * 270) - 180;
-  const radian1 = angle1 * Math.PI / 180;
+  const angle1 = 1 * 270 - 180;
+  const radian1 = (angle1 * Math.PI) / 180;
   const x1 = distance * Math.cos(radian1);
   const y1 = distance * Math.sin(radian1);
 
@@ -49,19 +38,11 @@ export default function PageProps({
         stroke={`var(--mantine-color-${color}Dark-2)`}
         strokeWidth={2}
         style={{
-          opacity: 0.2
+          opacity: 0.2,
         }}
       />
-      <Dot
-        cx={-dotDistance}
-        cy={0}
-        color={color}
-      />
-      <Dot
-        cx={dotX}
-        cy={dotY}
-        color={color}
-      />
+      <Dot cx={-dotDistance} cy={0} color={color} />
+      <Dot cx={dotX} cy={dotY} color={color} />
     </g>
   );
 }

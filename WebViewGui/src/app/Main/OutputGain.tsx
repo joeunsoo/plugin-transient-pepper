@@ -1,32 +1,19 @@
 import { Stack, type StackProps } from '@mantine/core';
-
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
-
 import PeakMeterStereo from '@/ui/Meter/PeakMeterStereo';
 
-export default function Page({
-  ...props
-}: StackProps) {
-
+export default function Page({ ...props }: StackProps) {
   return (
-      <Stack
-        align="center"
-        justify="end"
-        gap="var(--row-spacing)"
-        {...props}
-      >
-        <PeakMeterStereo
-          idx={0}
-          ignoreBypass
-        />
-        <JuceKnob
-          identifier="outputGainSlider"
-          defaultValue={0.5}
-          subDigit={1}
-          sx={{
-            flexShrink: 0
-          }}
-        />
-      </Stack>
+    <Stack align="center" justify="end" gap="var(--row-spacing)" {...props}>
+      <PeakMeterStereo idx={0} ignoreBypass />
+      <JuceKnob
+        identifier="outputGainSlider"
+        defaultValue={0.5}
+        subDigit={1}
+        sx={{
+          flexShrink: 0,
+        }}
+      />
+    </Stack>
   );
 }
