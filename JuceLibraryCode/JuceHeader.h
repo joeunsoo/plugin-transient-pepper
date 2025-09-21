@@ -49,7 +49,7 @@ namespace ProjectInfo
 {
     const char* const  projectName    = "JETransientPepper";
     const char* const  companyName    = "JoEunsoo";
-    const char* const  versionString  = "1.0.1";
-    const int          versionNumber  = 0x10001;
+    const char* const  versionString  = "1.0.2";
+    const int          versionNumber  = 0x10002;
 }
 #endif

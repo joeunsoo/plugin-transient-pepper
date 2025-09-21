@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="JETransientPepper" companyName="JoEunsoo" version="1.0.1"
+<JUCERPROJECT name="JETransientPepper" companyName="JoEunsoo" version="1.0.2"
               companyWebsite="http://joeunsoo.com" defines="PIP_JUCE_EXAMPLES_DIRECTORY=L1VzZXJzL2pvZXVuc29vL0pVQ0UvZXhhbXBsZXM="
               projectType="audioplug" pluginAUIsSandboxSafe="1" pluginManufacturer="JoEunsoo"
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
