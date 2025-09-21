@@ -1,8 +1,5 @@
-import {
-  getContrastRatio,
-  darken,
-  lighten,
-} from '@mui/material/styles';
+// eslint-disable-next-line react-refresh/only-export-components
+export * from './Plugin';
 
 export {
   themeColor,
@@ -13,45 +10,6 @@ export {
 } from './Color';
 
 export const mantineSpace = 4;
-
-import { infoMain, primaryMain, secondaryMain } from './Color';
-
-// eslint-disable-next-line react-refresh/only-export-components
-export * from './Plugin';
-
-export function generatePalette(color: string) {
-  return {
-    main: color,
-
-    whitest: lighten(color, 0.90),
-    lightest: lighten(color, 0.85),
-    lightermost: lighten(color, 0.70),
-    lighter: lighten(color, 0.60),
-    lightish: lighten(color, 0.50),
-    lighten: lighten(color, 0.35),
-    light: lighten(color, 0.2),
-
-    dark: darken(color, 0.2),
-    darken: darken(color, 0.35),
-    darkish: darken(color, 0.50),
-    darker: darken(color, 0.60),
-    darkermost: darken(color, 0.70),
-    darkest: darken(color, 0.85),
-    blackest: darken(color, 0.90),
-    contrastText: getContrastRatio(color, '#fff') > 2.5 ? '#fff' : '#111',
-  };
-}
-
-interface PaletteProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [prop: string]: any
-}
-
-export const palette:PaletteProps = {
-  primary: generatePalette(primaryMain),
-  secondary: generatePalette(secondaryMain),
-  info: generatePalette(infoMain)
-};
 
 export const meterStartColor = '#FF8F00';
 export const meterEndColor = '#E53935';

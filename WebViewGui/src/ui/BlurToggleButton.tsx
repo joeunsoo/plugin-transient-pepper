@@ -11,25 +11,19 @@ export interface BlurToggleButtonProps
     keyof ButtonProps | 'onChange' | 'value'
   > {
   value: boolean;
-  checked?: boolean;
-  defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
 }
 
 export default function BlurToggleButton(props: BlurToggleButtonProps) {
   const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     value:_value,
-    checked,
-    defaultChecked,
     onChange,
     ...rest
   } = props;
 
   // Mantine이 내부적으로 Checkbox 등에 쓰는 훅 (controlled/uncontrolled 패턴)
   const [value, setValue] = useUncontrolled({
-    value: checked,
-    defaultValue: defaultChecked,
+    value: _value,
     finalValue: false,
     onChange,
   });
@@ -38,7 +32,7 @@ export default function BlurToggleButton(props: BlurToggleButtonProps) {
     (e.currentTarget as HTMLElement).blur(); // 클릭 후 포커스 제거
     setValue(!value);
   };
-
+console.log(value);
   return (
     <Button
       {...rest}

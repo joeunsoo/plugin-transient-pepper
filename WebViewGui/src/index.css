@@ -17,6 +17,10 @@ body, #root {
   overflow: hidden;
 }
 
+html, body {
+  -webkit-user-select: none; /* 텍스트 선택 금지 */
+  -webkit-touch-callout: none; /* 길게 누를 때 메뉴 금지 */
+}
 html body * {
   cursor: default;
 }

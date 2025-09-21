@@ -32,20 +32,6 @@ export default function Page({
           <circle r={50} fill={`var(--mantine-color-${color}-6)`} />
         </g>
 
-        <linearGradient id="lightGradient" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor={'var(--mantine-color-black)'} stopOpacity="0.0" />
-          <stop offset="50%" stopColor={'var(--mantine-color-gray-6)'} stopOpacity="0.2" />
-          <stop offset="100%" stopColor={'var(--mantine-color-black)'} stopOpacity="0.0" />
-        </linearGradient>
-        <g transform="rotate(45)">
-          <circle
-            r={50}
-            fill="url(#lightGradient)"
-            stroke={`var(--mantine-color-${color}Dark-6)`}
-            strokeWidth="2"
-          />
-        </g>
-
         <linearGradient id="stroke" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="var(--mantine-color-white)" stopOpacity="1.0" />
           <stop offset="20%" stopColor="var(--mantine-color-primary-6)" stopOpacity="0" />

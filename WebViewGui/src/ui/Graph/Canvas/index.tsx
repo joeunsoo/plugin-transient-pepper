@@ -1,4 +1,4 @@
-import { palette, paletteMantine } from '@/define';
+import { paletteMantine } from '@/define';
 import Channel from './Channel';
 
 import { Box, alpha } from '@mantine/core';
