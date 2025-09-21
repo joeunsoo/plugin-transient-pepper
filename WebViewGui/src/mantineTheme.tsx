@@ -37,9 +37,9 @@ export const theme = createTheme({
     fontWeight: '700',
     sizes: {
       h1: { fontSize: 'calc(2.25rem * var(--mantine-scale))', lineHeight: '1.2' },
-      h2: { fontSize: 'calc(1.5rem * var(--mantine-scale))', lineHeight: '1.3' },
-      h3: { fontSize: 'calc(1.25rem * var(--mantine-scale))', lineHeight: '1.35' },
-      h4: { fontSize: 'calc(1.125rem * var(--mantine-scale))', lineHeight: '1.4' },
+      h2: { fontSize: 'calc(1.875rem * var(--mantine-scale))', lineHeight: '1.3' },
+      h3: { fontSize: 'calc(1.5rem * var(--mantine-scale))', lineHeight: '1.35' },
+      h4: { fontSize: 'calc(1.25rem * var(--mantine-scale))', lineHeight: '1.4' },
       h5: { fontSize: 'calc(1.0rem * var(--mantine-scale))', lineHeight: '1.45' },
       h6: { fontSize: 'calc(0.875rem * var(--mantine-scale))', lineHeight: '1.5' },
     },

@@ -15,35 +15,8 @@ export const themeVars = {
 
   typography: {
     fontFamily: '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif',
-    h1: {
-      fontSize: 'var(--mantine-font-size-xl4, 2.25rem)',
-      fontWeight: 'var(--mui-fontWeight-xl, 700)'
-    },
-    h2: {
-      fontSize: 'var(--mantine-font-size-xl3, 1.875rem)',
-      fontWeight: 'var(--mui-fontWeight-xl, 700)'
-    },
-    h3: {
-      fontSize: 'var(--mantine-font-size-xl2, 1.5rem)',
-      fontWeight: 'var(--mui-t-lg, 600)'
-    },
-    h4: {
-      fontSize: 'var(--mantine-font-size-xl, 1.25rem)',
-      fontWeight: 'var(--mui-fontWeight-lg, 600)'
-    },
-    h5: {
-      fontSize: 'var(--mantine-font-size-md, 1rem)',
-      fontWeight: 'var(--mui-fontWeight-lg, 600)'
-    },
   },
 
-  fontSize: {
-    xs: '0.75rem',
-    sm: '0.875rem',
-    md: '1rem',
-    lg: '1.125rem',
-    xl: '1.25rem',
-  },
   shape: {
     // borderRadius: 4,
   },
@@ -71,7 +44,7 @@ export const themeVars = {
       disabled: 'rgba(255, 255, 255, 0.5)',
       icon: 'rgba(255, 255, 255, 0.5)',
     },
-    divider: 'var(--mui-palette-common-black)',
+    divider: 'var(--mantine-color-black)',
   },
 
   components: {

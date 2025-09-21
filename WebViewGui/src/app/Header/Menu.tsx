@@ -22,7 +22,7 @@ export default function Page() {
           size="1.5em"
           variant="transparent"
           sx={{
-            color: 'var(--mui-palette-common-white)',
+            color: 'var(--mantine-color-white)',
           }}
         >
           <GearSixIcon size="1.15em" weight="fill" />
@@ -32,7 +32,7 @@ export default function Page() {
         sx={{
           '& .MuiPaper-root': {
             backgroundColor: 'var(--mui-palette-primary-darker)',
-            color: 'var(--mui-palette-common-white)',
+            color: 'var(--mantine-color-white)',
             '& .MuiList-root': {
               py: 0,
             },

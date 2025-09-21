@@ -25,7 +25,7 @@ export default function Component({
       style={{
         fontWeight: 600,
         fontSize: 'var(--mantine-font-size-sm)',
-        color: 'var(--mui-palette-common-white)',
+        color: 'var(--mantine-color-white)',
         opacity: testOpacity([
           bypassed && !ignoreBypass,
           ...addTest

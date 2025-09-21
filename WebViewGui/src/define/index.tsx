@@ -62,7 +62,7 @@ export const LabelTypographySxWithoutColor = {
 
 export const LabelTypographySx = {
   ...LabelTypographySxWithoutColor,
-  color: 'var(--mui-palette-common-white)',
+  color: 'var(--mantine-color-white)',
 };
 
 export const GlassSx = {
