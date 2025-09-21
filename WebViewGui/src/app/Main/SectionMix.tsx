@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import Stack, { type StackProps } from '@mui/material/Stack';
+
+import { Box, Group, Stack, type GroupProps } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
@@ -8,37 +9,35 @@ import NoiseGain from './NoiseGain';
 import OutputGain from './OutputGain';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 
+type PageProps = Omit<GroupProps, 'gap'>
+
 export default function Page({
-  sx, ...props
-}: StackProps) {
+  ...props
+}: PageProps) {
   const [wetSolo, setWetSolo] = useState<boolean>(false);
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="end"
-      spacing="var(--column-spacing)"
+    <Group
+      align="center"
+      justify="end"
+      gap="var(--column-spacing)"
       sx={{
         '> *': {
           height: '100%',
         },
-        ...sx
       }}
       {...props}
     >
       <Stack
-        direction="column"
-        alignItems="center"
-        justifyContent="end"
-        spacing="var(--row-spacing)"
+        align="center"
+        justify="end"
+        gap="var(--row-spacing)"
       >
-        <Stack
-          direction="row"
+        <Box
           sx={{ flexGrow: 1 }}
         >
-          <NoiseGain />
-        </Stack>
+          <NoiseGain h="100%" />
+        </Box>
         <JuceToggleButton
           identifier="wetSoloToggle"
           title="Wet Solo"
@@ -56,6 +55,6 @@ export default function Page({
       </Stack>
 
       <OutputGain />
-    </Stack>
+    </Group>
   );
 }

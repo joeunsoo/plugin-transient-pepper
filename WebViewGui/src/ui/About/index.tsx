@@ -4,15 +4,14 @@ import {
   PluginName,
   CompanyName,
   PluginVersion,
-  GlassSx
+  GlassSx,
+  mantineSpace
 } from '@/define';
 
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 import { useAboutStore } from '@/store/AboutStore';
+import { Paper, rem, Stack, Text, Title } from '@mantine/core';
 
 export default function App() {
   const { open, handleClose } = useAboutStore();
@@ -24,6 +23,8 @@ export default function App() {
     >
       <Paper
         onClick={handleClose}
+        p={rem(mantineSpace * 4)}
+        bg="primary.8"
         sx={{
           position: 'absolute',
           top: '50%',
@@ -32,38 +33,18 @@ export default function App() {
           boxSizing: 'border-box',
           transform: 'translate(-50%, -50%)',
           ...GlassSx,
-          p: 4
         }}
       >
-        <Stack
-          direction="column"
-          alignItems="center"
-          sx={{
-            textAlign: 'center'
-          }}
-        >
-          <Typography
-            variant="h6"
-            component="h2"
-            sx={{
-              fontWeight: 'var(--mui-fontWeight-xl)'
-            }}
-          >
+        <Stack align="center">
+          <Title order={4}>
             {PluginName}
-          </Typography>
-          <Typography
-            variant="body2"
-          >
+          </Title>
+          <Text size="sm">
             {PluginVersion}
-          </Typography>
-          <Typography
-            sx={{
-              pt:5,
-              fontWeight: 'var(--mui-fontWeight-xl)'
-            }}
-          >
+          </Text>
+          <Title order={6} pt={rem(mantineSpace * 4)}>
             &copy; {CompanyName}.
-          </Typography>
+          </Title>
         </Stack>
       </Paper>
     </Modal>

@@ -1,15 +1,14 @@
-import Stack, { type StackProps } from '@mui/material/Stack';
+import { Group, type GroupProps } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
 export default function Page({
   ...props
-}: StackProps) {
+}: GroupProps) {
   return (
-    <Stack
-      direction="row"
-      justifyContent="flex-end"
-      spacing="var(--column-spacing)"
+    <Group
+      justify="flex-end"
+      gap="var(--column-spacing)"
       {...props}
     >
       <JuceKnob
@@ -22,6 +21,6 @@ export default function Page({
         defaultValue={0.5}
         subDigit={1}
       />
-    </Stack>
+    </Group>
   );
 }

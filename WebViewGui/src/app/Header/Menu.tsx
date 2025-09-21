@@ -33,7 +33,8 @@ export default function Page() {
     <Box>
       <ActionIcon
         onClick={handleClick}
-        size="small"
+        size="sm"
+        variant="transparent"
         sx={{
           color: 'var(--mui-palette-common-white)',
         }}

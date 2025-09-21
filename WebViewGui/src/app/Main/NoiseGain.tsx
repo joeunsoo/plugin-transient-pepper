@@ -1,4 +1,4 @@
-import Stack, { type StackProps } from '@mui/material/Stack';
+import { Stack, type StackProps } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
@@ -9,10 +9,9 @@ export default function Page({
 }: StackProps) {
   return (
     <Stack
-      direction="column"
-      alignItems="center"
-      justifyContent="end"
-      spacing="var(--row-spacing)"
+      align="center"
+      justify="end"
+      gap="var(--row-spacing)"
       {...props}
     >
       <PeakMeterStereo idx={6} />

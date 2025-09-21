@@ -1,20 +1,28 @@
 import { testOpacity } from '@/define';
 import { uesControlStore } from '@/store/ControlStore';
 import type { UIProps } from '@/types/UI';
-import Box, { type BoxProps } from '@mui/material/Box';
+import { Box, type BoxProps } from '@mantine/core';
+
+interface PageProps
+  extends UIProps, BoxProps,
+  Omit<
+    React.ButtonHTMLAttributes<HTMLDivElement>,
+    keyof BoxProps
+  > {
+}
 
 export default function Component({
   children,
-  sx,
+  style,
   ignoreBypass=false,
   addTest=[],
   ...props
-}: UIProps & BoxProps) {
+}: PageProps) {
   const { bypassed } = uesControlStore();
 
   return (
     <Box
-      sx={{
+      style={{
         fontWeight: 'var(--mui-fontWeight-lg)',
         fontSize: 'var(--mui-fontSize-sm)',
         color: 'var(--mui-palette-common-white)',
@@ -22,7 +30,7 @@ export default function Component({
           bypassed && !ignoreBypass,
           ...addTest
         ]),
-        ...sx,
+        ...style,
       }}
       {...props}
     >

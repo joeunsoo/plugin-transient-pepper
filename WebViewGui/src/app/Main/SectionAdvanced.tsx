@@ -1,13 +1,12 @@
-import Stack from '@mui/material/Stack';
+import { Stack } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 
 export default function App() {
   return (
     <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="center"
+      align="center"
+      justify="center"
       sx={{
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',

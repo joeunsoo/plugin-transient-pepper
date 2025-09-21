@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Stack, { type StackProps } from '@mui/material/Stack';
+import { Group, Stack, type StackProps } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import SectionTitle from './SectionTitle';
@@ -15,9 +15,8 @@ export default function Page({
 
   return (
     <Stack
-      direction="column"
-      justifyContent="space-between"
-      spacing="var(--row-spacing)"
+      justify="space-between"
+      gap="var(--row-spacing)"
       sx={{
         ...sx
       }}
@@ -26,10 +25,9 @@ export default function Page({
       <SectionTitle>
         Transient Detector
       </SectionTitle>
-      <Stack
-        direction="row"
-        justifyContent="start"
-        spacing="var(--column-spacing)"
+      <Group
+        justify="start"
+        gap="var(--column-spacing)"
       >
         <JuceToggleButton
           identifier="linkChannelsToggle"
@@ -40,12 +38,11 @@ export default function Page({
           title="BPF On"
           onChange={(e, value) => setBpfOn(!value)}
         />
-      </Stack>
+      </Group>
 
-      <Stack
-        direction="row"
-        justifyContent="start"
-        spacing="var(--column-spacing)"
+      <Group
+        justify="start"
+        gap="var(--column-spacing)"
       >
         <JuceKnob
           identifier="thresholdSlider"
@@ -60,7 +57,7 @@ export default function Page({
           subDigit={1}
           addTest={[bpfOn]}
         />
-      </Stack>
+      </Group>
     </Stack>
   );
 }
