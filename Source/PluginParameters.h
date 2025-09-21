@@ -68,7 +68,7 @@ struct Parameters {
                                                   [](float value, int) { return hzToString(value); },
                                                   [](const juce::String& text) { return stringToHz(text); }
                                                   )),
-  
+  sidechainListen (addToLayout<AudioParameterBool> (layout, ID::sidechainListen, "Sidechain Listen", false)),
   tilt (addToLayout<AudioParameterFloat> (layout,
                                           ID::tilt,
                                           "Tone",
@@ -178,6 +178,7 @@ struct Parameters {
   
   AudioParameterBool& bpfPower;
   AudioParameterFloat& bpfFrequency;
+  AudioParameterBool& sidechainListen;
   
   AudioParameterFloat& tilt;
   AudioParameterFloat& midSide;

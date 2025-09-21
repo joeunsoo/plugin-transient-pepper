@@ -71,7 +71,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
     
     // 사이드체인 적용
     
-    if (sidechainBPFOn) {
+    if (sidechainBPFOn || sidechainListen) {
       sidechainBPF.process(sidechainContext);
       sidechainBPFGain.setGainDecibels(skewedMap(sidechainBPFFreq, 50.0f, 12000.0f, -6.0f, 12.0f, 0.12f)); // 0.27f
       sidechainBPFGain.process(sidechainContext);
@@ -111,6 +111,9 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
         SampleType out = inputBlock.getChannelPointer(ch)[n];
         out = airLayer.processSample();
         
+        if (sidechainListen) {
+          outputBlock.getChannelPointer(ch)[n] = sidechainBlock.getChannelPointer(ch)[n] * 1.5f; // 사이드체인
+        } else {
 #if CHECK_ENV
           outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch];
 #elif CHECK_SIDECHAIN
@@ -118,6 +121,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 #else
           outputBlock.getChannelPointer(ch)[n] = shapeEnv[ch] * out;
 #endif
+        }
       }
     }
   }
@@ -128,7 +132,8 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 
   void setSidechainBPFOn(bool value) { sidechainBPFOn = value; }
   void setSidechainBPFFreq(float value) { sidechainBPFFreq = value; }
-  
+  void setSidechainListen(bool value) { sidechainListen = value; }
+
   void setAttack(SampleType a) { attack = calcCoeff(a,sampleRate); }
   void setRelease(SampleType r) { release = calcCoeff(r,sampleRate); }
   void setThreshold(SampleType t) { transientFollower.threshold = t; }
@@ -152,6 +157,7 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   dsp::Gain<SampleType> sidechainBPFGain;
   bool sidechainBPFOn = false;
   float sidechainBPFFreq = 1000.0f;
+  bool sidechainListen = false;
   
   std::vector<SampleType> shapeEnv;
   

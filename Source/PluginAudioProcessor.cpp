@@ -128,6 +128,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 #endif
   transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
   transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
+  transientNoise.setSidechainListen(parameters.sidechainListen.get());
   
   transientNoise.setAttack(parameters.attack.get());
   transientNoise.setRelease(parameters.release.get());
@@ -146,6 +147,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   float wetMix = parameters.dryWet.get();
   if (parameters.wetSolo.get()) wetMix = 100.0f;
   if (parameters.bypass.get()) wetMix = 0.0f;
+  if (parameters.sidechainListen.get()) wetMix = 100.0f;
   dryWetMixer.setWetMixProportion(wetMix / 100.0f);
 
   float dryWetAdjust = 6.0f - 0.12f * std::abs(wetMix - 50.0f); // Dry/Wet 50% -6dB 손실 보정
@@ -173,15 +175,16 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     transientNoise.process(dsp::ProcessContextReplacing<float> (outBlock));
     envPeakMeter.push (transientNoise.envBlock); // Ouput 피크미터 저장
     
-    tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
-    tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
-    
-    midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
-    
+    if (!parameters.sidechainListen.get()) {
+      tiltEQ.process(dsp::ProcessContextReplacing<float> (outBlock));
+      tiltGain.process(dsp::ProcessContextReplacing<float> (outBlock));
+      
+      midSideMixer.process(dsp::ProcessContextReplacing<float> (outBlock)); // 미드 사이드 믹서
+      
 #if !CHECK_ENV && !CHECK_SIDECHAIN && !DISABLE_DCOFFSET_FILTER
-    dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
+      dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
 #endif
-    
+    }
     noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 노이즈 게인
     noisePeakMeter.push (outBlock); // 노이즈 레벨 미터 저장
     

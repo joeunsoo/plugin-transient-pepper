@@ -99,6 +99,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
 
   WebToggleButtonRelay bpfPowerToggleRelay      { "bpfPowerToggle" };
   WebSliderRelay       bpfFrequencySliderRelay    { "bpfFrequencySlider" };
+  WebToggleButtonRelay sidechainListenToggleRelay      { "sidechainListenToggle" };
 
   WebSliderRelay       tiltSliderRelay    { "tiltSlider" };
   WebSliderRelay       midSideSliderRelay    { "midSideSlider" };
@@ -131,6 +132,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
       .withOptionsFrom (thresholdSliderRelay)
       .withOptionsFrom (bpfPowerToggleRelay)
       .withOptionsFrom (bpfFrequencySliderRelay)
+      .withOptionsFrom (sidechainListenToggleRelay)
 
       .withOptionsFrom (tiltSliderRelay)
       .withOptionsFrom (midSideSliderRelay)
@@ -211,6 +213,7 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
   WebSliderParameterAttachment       thresholdAttachment;
   WebToggleButtonParameterAttachment       bpfPowerAttachment;
   WebSliderParameterAttachment       bpfFrequencyAttachment;
+  WebToggleButtonParameterAttachment       sidechainListenAttachment;
 
   WebSliderParameterAttachment       tiltAttachment;
   WebSliderParameterAttachment       midSideAttachment;

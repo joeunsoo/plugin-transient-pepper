@@ -161,6 +161,9 @@ bpfPowerAttachment (*processorRef.state.getParameter (ID::bpfPower.getParamID())
 bpfFrequencyAttachment (*processorRef.state.getParameter (ID::bpfFrequency.getParamID()),
                         bpfFrequencySliderRelay,
                         processorRef.state.undoManager),
+sidechainListenAttachment (*processorRef.state.getParameter (ID::sidechainListen.getParamID()),
+                    sidechainListenToggleRelay,
+                    processorRef.state.undoManager),
 
 tiltAttachment (*processorRef.state.getParameter (ID::tilt.getParamID()),
                 tiltSliderRelay,

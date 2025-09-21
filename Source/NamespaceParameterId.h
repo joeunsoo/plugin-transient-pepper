@@ -24,6 +24,7 @@ PARAMETER_ID (threshold)
 
 PARAMETER_ID (bpfPower)
 PARAMETER_ID (bpfFrequency)
+PARAMETER_ID (sidechainListen)
 
 PARAMETER_ID (tilt)
 PARAMETER_ID (midSide)

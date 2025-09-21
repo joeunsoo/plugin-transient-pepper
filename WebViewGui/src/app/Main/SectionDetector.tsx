@@ -1,17 +1,18 @@
 import { useState } from 'react';
 
-import { Group, Stack, type StackProps } from '@mantine/core';
+import { Box, Group, Stack, type StackProps } from '@mantine/core';
 
 import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import SectionTitle from './SectionTitle';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
 import { uesControlStore } from '@/store/ControlStore';
+import { HeadphonesIcon } from '@phosphor-icons/react';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
   const [bpfOn, setBpfOn] = useState<boolean>(true);
-  const { setThreshold } = uesControlStore();
+  const { sidechainListen, setThreshold, setSidechainListen } = uesControlStore();
 
   return (
     <Stack
@@ -35,8 +36,21 @@ export default function Page({
         />
         <JuceToggleButton
           identifier="bpfPowerToggle"
-          title="BPF On"
+          title="BPF"
           onChange={(e, value) => setBpfOn(!value)}
+          w="2.5em"
+          px={0}
+        />
+        <JuceToggleButton
+          identifier="sidechainListenToggle"
+          title={
+            <Box lh={0}>
+              <HeadphonesIcon size="var(--icon-size-xs)" />
+            </Box>
+          }
+          onChange={(e, value) => setSidechainListen(!value)}
+          w="2.5em"
+          px={0}
         />
       </Group>
 
@@ -55,7 +69,7 @@ export default function Page({
           identifier="bpfFrequencySlider"
           defaultValue={0.5}
           subDigit={1}
-          addTest={[bpfOn]}
+          addTest={[bpfOn && sidechainListen]}
         />
       </Group>
     </Stack>

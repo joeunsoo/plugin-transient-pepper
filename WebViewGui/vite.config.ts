@@ -33,6 +33,18 @@ export default defineConfig({
   ],
   build: {
     outDir: 'build',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // 예: react 관련 묶기
+          react: ['react', 'react-dom', 'react-hook-form'],
+          // UI 프레임워크 따로 묶기
+          mantine: ['@mantine/core', '@mantine/hooks', '@mantine/notifications', 'chroma-js'],
+          emotion: ['@emotion/cache', '@emotion/react', '@emotion/serialize', '@emotion/utils'],
+          motion: ['framer-motion'],
+        },
+      },
+    },
   },
   resolve: {
     alias: [

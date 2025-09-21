@@ -8,6 +8,7 @@ import JuceKnob from '@/ui/Control/Slider/JuceKnob';
 import NoiseGain from './NoiseGain';
 import OutputGain from './OutputGain';
 import JuceToggleButton from '@/ui/Control/ToggleButton/JuceToggleButton';
+import { uesControlStore } from '@/store/ControlStore';
 
 type PageProps = Omit<GroupProps, 'gap'>
 
@@ -15,6 +16,7 @@ export default function Page({
   ...props
 }: PageProps) {
   const [wetSolo, setWetSolo] = useState<boolean>(false);
+  const { sidechainListen } = uesControlStore();
 
   return (
     <Group
@@ -42,6 +44,7 @@ export default function Page({
           identifier="wetSoloToggle"
           title="Wet Solo"
           onChange={(e, value) => setWetSolo(value)}
+          addTest={[!sidechainListen]}
         />
         <JuceKnob
           identifier="dryWetSlider"
@@ -50,7 +53,7 @@ export default function Page({
           sx={{
             flexShrink: 0
           }}
-          addTest={[wetSolo]}
+          addTest={[wetSolo, !sidechainListen]}
         />
       </Stack>
 

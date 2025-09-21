@@ -4,6 +4,9 @@ interface ControlState {
   bypassed: boolean,
   setBypass: (value: boolean) => void;
 
+  sidechainListen: boolean,
+  setSidechainListen: (value: boolean) => void;
+
   threshold: number,
   setThreshold: (value: number) => void;
 
@@ -19,6 +22,11 @@ export const uesControlStore = create<ControlState>((set) => ({
   bypassed: false,
   setBypass: (value: boolean) => set(() => ({
     bypassed: value,
+  })),
+
+  sidechainListen: false,
+  setSidechainListen: (value: boolean) => set(() => ({
+    sidechainListen: value,
   })),
 
   threshold: 0,

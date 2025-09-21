@@ -7,10 +7,12 @@ import AttackHigh from '@/ui/Icon/AttackHigh';
 import AttackLow from '@/ui/Icon/AttackLow';
 import ReleaseLow from '@/ui/Icon/ReleaseLow';
 import ReleaseHigh from '@/ui/Icon/ReleaseHigh';
+import { uesControlStore } from '@/store/ControlStore';
 
 export default function Page({
   sx, ...props
 }: StackProps) {
+  const { sidechainListen } = uesControlStore();
   return (
     <Stack
       gap="var(--row-spacing)"
@@ -19,7 +21,9 @@ export default function Page({
       }}
       {...props}
     >
-      <SectionTitle>
+      <SectionTitle
+        addTest={[!sidechainListen]}
+      >
         Noise Shape
       </SectionTitle>
       <Group
@@ -38,6 +42,7 @@ export default function Page({
           color="secondary"
           lowIcon={<AttackLow />}
           highIcon={<AttackHigh />}
+          addTest={[!sidechainListen]}
         />
         <JuceKnob
           identifier="releaseSlider"
@@ -47,6 +52,7 @@ export default function Page({
           color="secondary"
           lowIcon={<ReleaseLow />}
           highIcon={<ReleaseHigh />}
+          addTest={[!sidechainListen]}
         />
       </Group>
     </Stack>

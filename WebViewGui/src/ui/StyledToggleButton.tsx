@@ -17,6 +17,7 @@ export default function StyledToggleButton({
     <ToggleButton
       my="0.2em"
       py="0.5em"
+      px={0}
       style={{
         width: '100%',
         border: '0.1em solid var(--mantine-color-primary-9)',
