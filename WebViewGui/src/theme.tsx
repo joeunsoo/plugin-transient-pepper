@@ -5,7 +5,6 @@ import {
 } from '@mui/material/styles';
 
 import {
-  noDragSx,
   palette,
 } from '@/define';
 
@@ -113,7 +112,7 @@ export const themeVars = {
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          ...noDragSx,
+          userSelect: 'none',
           mt:50,
         },
       },
@@ -121,14 +120,14 @@ export const themeVars = {
     MuiMenu: {
       styleOverrides: {
         root: {
-          ...noDragSx,
+          userSelect: 'none',
         },
       },
     },
     MuiTypography: {
       styleOverrides: {
         root: {
-          ...noDragSx,
+          userSelect: 'none',
           fontWeight: 'var(--mui-fontWeight-md)',
         },
       },

@@ -9,6 +9,8 @@ export {
   paletteMantine,
 } from './Color';
 
+export const mantineSpace = 4;
+
 // eslint-disable-next-line react-refresh/only-export-components
 export * from './Plugin';
 
@@ -52,10 +54,6 @@ export const palette:PaletteProps = {
 
 export const meterStartColor = '#FF8F00';
 export const meterEndColor = '#E53935';
-
-export const noDragSx = {
-  userSelect: 'none',
-};
 
 export const LabelTypographySxWithoutColor = {
   fontSize: 'calc(var(--knob-width) * 0.15)',

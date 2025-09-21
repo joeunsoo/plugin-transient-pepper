@@ -1,4 +1,5 @@
-import Stack from '@mui/material/Stack';
+import { Group, rem, Stack } from '@mantine/core';
+import { mantineSpace } from '@/define';
 
 import SectionDetector from './SectionDetector';
 import SectionShape from './SectionShape';
@@ -9,44 +10,38 @@ import SectionGraph from './SectionGraph';
 export default function App() {
 
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      justifyContent="space-between"
-      spacing={5}
-      sx={{
-        p: 4,
-        pb: 6,
-        width: '100%',
-        height: '100%',
-        '> *': {
-          height: '100%',
-        },
+    <Group
+      p={rem(mantineSpace * 4)}
+      pb={rem(mantineSpace * 6)}
+      align="center"
+      justify="space-between"
+      gap={rem(mantineSpace * 5)}
+      w="100%"
+      h="100%"
+      style={{
         '--knob-width': '5.3em',
         '--row-spacing': '0.6em',
         '--column-spacing': '0.4em',
       }}
+      sx={{
+        '> *': {
+          height: '100%',
+        },
+      }}
     >
-      <Stack
-        direction="column"
-        justifyContent="space-between"
-      >
+      <Stack justify="space-between">
         <SectionDetector />
         <SectionShape />
       </Stack>
-      <Stack
-        direction="column"
-        spacing={5}
-        sx={{
-          flexGrow: 1,
-        }}
-      >
+
+      <Stack gap={rem(mantineSpace * 5)} sx={{ flexGrow: 1 }} >
         <SectionGraph />
-        <SectionTone sx={{ width: '100%' }}/>
+        <SectionTone sx={{ width: '100%' }} />
       </Stack>
-      <Stack direction="row">
+
+      <Group align="stretch">
         <SectionMix />
-      </Stack>
-    </Stack>
+      </Group>
+    </Group>
   );
 }

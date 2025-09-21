@@ -1,9 +1,8 @@
 'use client';
 
-import { PluginName, CompanyName } from '@/define';
+import { PluginName, CompanyName, mantineSpace } from '@/define';
 
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import { Box, Group, rem } from '@mantine/core';
 import Button from '@/ui/BlurButton';
 
 import JuceToggleBypass from '@/ui/Control/ToggleButton/JuceToggleBypass';
@@ -16,25 +15,20 @@ export default function App() {
 
   return (
     <Box
-      sx={{
-        position: 'static',
-        px: 1,
-        py: 1.5,
-      }}
+      px={rem(mantineSpace * 1)}
+      py={rem(mantineSpace * 1.5)}
     >
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="space-between"
+      <Group
+        align="center"
+        justify="space-between"
         sx={{
           minHeight: 'var(--Header-minHeight)'
         }}
       >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="start"
-          spacing={2}
+        <Group
+          align="center"
+          justify="start"
+          gap={rem(mantineSpace * 2)}
         >
           <JuceToggleBypass
             identifier="bypassToggle"
@@ -52,13 +46,12 @@ export default function App() {
           >
             {PluginName}
           </Button>
-        </Stack>
+        </Group>
 
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="end"
-          spacing={2}
+        <Group
+          align="center"
+          justify="end"
+          gap={rem(mantineSpace * 2)}
         >
           <Button
             sx={{
@@ -71,8 +64,8 @@ export default function App() {
             {CompanyName}
           </Button>
           <Menu />
-        </Stack>
-      </Stack>
+        </Group>
+      </Group>
     </Box>
   );
 }

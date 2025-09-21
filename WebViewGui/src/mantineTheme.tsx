@@ -15,6 +15,7 @@ const CONTAINER_SIZES: Record<string, number> = {
 };
 
 export const theme = createTheme({
+
   breakpoints: {
     xs: '36em',
     sm: '52em',

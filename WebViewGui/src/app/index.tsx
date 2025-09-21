@@ -1,22 +1,21 @@
-
-import Box from '@mui/material/Box';
+import { Box } from '@mantine/core';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 
 import Main from './Main';
 import Header from './Header';
 import Provider from './Provider';
-import { noDragSx, GlassSx } from '@/define';
+import { GlassSx } from '@/define';
 
 export default function App() {
   return (
     <Provider>
       <Box
-        sx={{
+        style={{
           display: 'flex',
           minHeight: '100dvh',
           overflow: 'hidden',
-          ...noDragSx
+          userSelect: 'none',
         }}
       >
         <Stack
