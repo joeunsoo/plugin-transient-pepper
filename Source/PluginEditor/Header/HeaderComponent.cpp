@@ -2,20 +2,30 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-HeaderComponent::HeaderComponent()
+HeaderComponent::HeaderComponent() {
+  
+}
+void HeaderComponent::setEditorRef(PluginEditor& editor)
 {
+  editorRef = &editor;
+  const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
+  const Font fontSemiBold { FontOptions { editorRef->pretendardSemiBoldTypeface } };
+  const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
+
   // 왼쪽 버튼과 텍스트
   addAndMakeVisible(leftButton);
   leftButton.setButtonText("Left Button");
   
-  addAndMakeVisible(leftLabel);
-  leftLabel.setText("Transient Pepper", juce::dontSendNotification);
-  leftLabel.setJustificationType(juce::Justification::centredLeft);
   
-  // 오른쪽 버튼과 텍스트
-  addAndMakeVisible(rightLabel);
-  rightLabel.setText("JoEunsoo", juce::dontSendNotification);
-  rightLabel.setJustificationType(juce::Justification::centredRight);
+  addAndMakeVisible(logoLabel);
+  logoLabel.setFont(fontBold);
+  logoLabel.setText("Transient Pepper", juce::dontSendNotification);
+  logoLabel.setJustificationType(juce::Justification::centredLeft);
+  
+  addAndMakeVisible(companyLabel);
+  companyLabel.setFont(fontBold);
+  companyLabel.setText("JoEunsoo", juce::dontSendNotification);
+  companyLabel.setJustificationType(juce::Justification::centredRight);
   
   addAndMakeVisible(rightButton);
   rightButton.setButtonText("Right Button");
@@ -36,7 +46,7 @@ HeaderComponent::~HeaderComponent() = default;
 
 void HeaderComponent::paint(juce::Graphics& g)
 {
-  g.fillAll(juce::Colours::darkgrey);
+  // g.fillAll(juce::Colours::darkgrey);
 }
 
 void HeaderComponent::resized()
@@ -46,11 +56,11 @@ void HeaderComponent::resized()
   // 왼쪽 영역
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
   leftButton.setBounds(leftArea.removeFromLeft(100).reduced(5));
-  leftLabel.setBounds(leftArea.reduced(5));
+  logoLabel.setBounds(leftArea.reduced(5));
   
   // 오른쪽 영역
   auto rightArea = area; // 남은 절반
-  rightLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 100).reduced(5));
+  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 100).reduced(5));
   rightButton.setBounds(rightArea.reduced(5));
   
   scale100Button.setBounds (20, 20, 100, 30);

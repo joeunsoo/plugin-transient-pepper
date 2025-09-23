@@ -1,7 +1,8 @@
 #pragma once
 #include "../AudioProcessor/PluginAudioProcessor.h"
-#include "LookAndFeelDemo.h"
 #include "Header/HeaderComponent.h"
+#include "Main/MainComponent.h"
+#include "Main/DetectorComponent.h"
 
 class PluginEditor : public juce::AudioProcessorEditor
 {
@@ -13,13 +14,17 @@ class PluginEditor : public juce::AudioProcessorEditor
   void resized() override;
   
   void setScale(int scale);
-
+  //==============================================================================
+  juce::Typeface::Ptr pretendardMediumTypeface;
+  juce::Typeface::Ptr pretendardSemiBoldTypeface;
+  juce::Typeface::Ptr pretendardBoldTypeface;
+  //==============================================================================
   private:
   PluginAudioProcessor& processorRef;
   
   HeaderComponent headerComponent;
-
-  Slider rotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
-
+  MainComponent mainComponent;
+  DetectorComponent detectorComponent;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };

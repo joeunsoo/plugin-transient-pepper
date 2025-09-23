@@ -1,21 +1,39 @@
 #include "../Define.h"
 #include "PluginEditor.h"
 #include "../AudioProcessor/PluginAudioProcessor.h"
+#include "Header/HeaderComponent.h"
+#include "Main/MainComponent.h"
 
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
 : AudioProcessorEditor(&p), processorRef(p)
 {
-  addAndMakeVisible (headerComponent);
-  headerComponent.setEditorRef(*this); // 생성자 안에서 안전하게 연결
-
-  setSize(640, 360);
+  // 폰트 선언
+  pretendardMediumTypeface =
+      juce::Typeface::createSystemTypefaceFor(
+          BinaryData::PretendardStdMedium_otf,
+          BinaryData::PretendardStdMedium_otfSize
+      );
   
-  auto* laf = new CustomLookAndFeel();
-  rotarySlider.setLookAndFeel (laf);
-  addAndMakeVisible (rotarySlider);
-  rotarySlider.setValue (2.5);
-  // addAndMakeVisible(flexDemo); // FlexBoxDemo를 Editor 안에 표시
+  pretendardSemiBoldTypeface =
+      juce::Typeface::createSystemTypefaceFor(
+          BinaryData::PretendardStdSemiBold_otf,
+          BinaryData::PretendardStdSemiBold_otfSize
+      );
+  pretendardBoldTypeface =
+      juce::Typeface::createSystemTypefaceFor(
+          BinaryData::PretendardStdBold_otf,
+          BinaryData::PretendardStdBold_otfSize
+      );
+
+  // 헤더 불러오기
+  headerComponent.setEditorRef(*this);
+  addAndMakeVisible (headerComponent);
+  
+  mainComponent.setEditorRef(*this);
+  addAndMakeVisible (mainComponent);
+  
+  setSize(640, 360);
 }
 
 // 소멸자
@@ -28,11 +46,11 @@ void PluginEditor::paint(juce::Graphics& g)
 
 void PluginEditor::resized()
 {
-  auto area = getLocalBounds().reduced(10);
-  headerComponent.setBounds(area.removeFromTop(60).reduced(5));
   // UI layout code
-  rotarySlider.setBounds(50, 50, 100, 100);
-  // rotarySlider  .setBounds (row.removeFromLeft (100).reduced (5));
+  auto area = getLocalBounds().reduced(10);
+  headerComponent.setBounds(area.removeFromTop(60));
+  mainComponent.setBounds(area);
+  
 }
 
 void PluginEditor::setScale(int scale)
@@ -42,14 +60,14 @@ void PluginEditor::setScale(int scale)
   float factor = 1.0f;
   switch (scale)
   {
-      case 150: factor = 1.5f; break;
-      case 200: factor = 2.0f; break;
-      default:  factor = 1.0f; break;
+    case 150: factor = 1.5f; break;
+    case 200: factor = 2.0f; break;
+    default:  factor = 1.0f; break;
   }
-
+  
   // 기본 크기는 고정
   setSize(640, 360);
-
+  
   // 전체 에디터에 transform 적용
   setTransform(juce::AffineTransform::scale(factor));
 }

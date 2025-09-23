@@ -41,11 +41,20 @@
               file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
+        <GROUP id="{360A0E60-FFFE-FE52-A34D-DE3EDF589E05}" name="Main">
+          <FILE id="StE0l2" name="DetectorComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Main/DetectorComponent.h"/>
+          <FILE id="KN0I2D" name="DetectorComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/DetectorComponent.cpp"/>
+          <FILE id="UBBWmH" name="MainComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MainComponent.h"/>
+          <FILE id="gkDCuo" name="MainComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/MainComponent.cpp"/>
+        </GROUP>
         <GROUP id="{BEB779A9-B663-662B-2FD5-2230266C0E41}" name="Header">
-          <FILE id="JAM3Iv" name="HeaderComponent.cpp" compile="1" resource="0"
-                file="Source/PluginEditor/Header/HeaderComponent.cpp"/>
           <FILE id="EobrKI" name="HeaderComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Header/HeaderComponent.h"/>
+          <FILE id="JAM3Iv" name="HeaderComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Header/HeaderComponent.cpp"/>
         </GROUP>
         <FILE id="nGQFk1" name="LookAndFeelDemo.h" compile="0" resource="0"
               file="Source/PluginEditor/LookAndFeelDemo.h"/>
@@ -62,6 +71,12 @@
       <FILE id="Ivb2Pa" name="PluginWrapper.h" compile="0" resource="0" file="Source/PluginWrapper.h"/>
     </GROUP>
     <GROUP id="A9VZOH" name="Assets">
+      <FILE id="pW5J9J" name="PretendardStd-SemiBold.otf" compile="0" resource="1"
+            file="Assets/PretendardStd-SemiBold.otf"/>
+      <FILE id="PwZQYZ" name="PretendardStd-Bold.otf" compile="0" resource="1"
+            file="Assets/PretendardStd-Bold.otf"/>
+      <FILE id="lBkGDP" name="PretendardStd-Medium.otf" compile="0" resource="1"
+            file="Assets/PretendardStd-Medium.otf"/>
       <FILE id="lstfG1" name="DemoUtilities.h" compile="0" resource="0" file="Assets/DemoUtilities.h"/>
       <FILE id="lLMVeR" name="gui.zip" compile="0" resource="1" file="Assets/gui.zip"
             xcodeResource="0"/>

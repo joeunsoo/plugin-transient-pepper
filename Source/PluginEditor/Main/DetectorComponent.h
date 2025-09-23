@@ -6,11 +6,11 @@
 class PluginEditor;
 
 //==============================================================================
-class HeaderComponent : public juce::Component
+class DetectorComponent : public juce::Component
 {
   public:
-  HeaderComponent();
-  ~HeaderComponent() override;
+  DetectorComponent();
+  ~DetectorComponent() override;
   
   void paint(juce::Graphics& g) override;
   void resized() override;
@@ -20,15 +20,9 @@ class HeaderComponent : public juce::Component
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
 
-  juce::TextButton leftButton;
+  juce::Label label;
   juce::Label logoLabel;
-  
-  juce::Label companyLabel;
-  juce::TextButton rightButton;
-  
-  juce::TextButton scale100Button { "100%" };
-  juce::TextButton scale150Button { "150%" };
-  juce::TextButton scale200Button { "200%" };
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(HeaderComponent)
+  Slider rotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
 };
