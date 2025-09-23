@@ -10,95 +10,96 @@
 
 #pragma once
 
+#include <JuceHeader.h>
+
 #define CHECK_ENV false
 #define CHECK_SIDECHAIN false
 #define DISABLE_DCOFFSET_FILTER false
 #define ADVANCED false
 
+static const juce::Colour PRIMARY_RGB[] = {
+  juce::Colour(0xFFffffff),
+  juce::Colour(0xFFe0e0e1),
+  juce::Colour(0xFFc2c2c3),
+  juce::Colour(0xFFa5a5a6),
+  juce::Colour(0xFF88888a),
+  juce::Colour(0xFF6d6d6f),
+  juce::Colour(0xFF535355),
+  juce::Colour(0xFF383839),
+  juce::Colour(0xFF1f1f20),
+  juce::Colour(0xFF000000)
+};
+static const juce::Colour PRIMARY_LIGHT_RGB[] = {
+  juce::Colour(0xFFffffff),
+  juce::Colour(0xFFeaeaeb),
+  juce::Colour(0xFFd6d6d7),
+  juce::Colour(0xFFc2c2c3),
+  juce::Colour(0xFFaeaeaf),
+  juce::Colour(0xFF9b9b9c),
+  juce::Colour(0xFF88888a),
+  juce::Colour(0xFF767678),
+  juce::Colour(0xFF646466),
+  juce::Colour(0xFF535355)
+};
 
-const test = {
-  primary: [
-    '#ffffff',
-    '#e0e0e1',
-    '#c2c2c3',
-    '#a5a5a6',
-    '#88888a',
-    '#6d6d6f',
-    '#535355',
-    '#383839',
-    '#1f1f20',
-    '#000000',
-  ],
-  primaryLight: [
-    '#ffffff',
-    '#eaeaeb',
-    '#d6d6d7',
-    '#c2c2c3',
-    '#aeaeaf',
-    '#9b9b9c',
-    '#88888a',
-    '#767678',
-    '#646466',
-    '#535355',
-  ],
-  primaryDark: [
-    '#535355',
-    '#4a4a4c',
-    '#424243',
-    '#3a3a3b',
-    '#323233',
-    '#2a2a2a',
-    '#222223',
-    '#1b1b1b',
-    '#131313',
-    '#080808',
-  ],
-  secondary: [
-    '#ffffff',
-    '#ffdfd8',
-    '#ffbfb2',
-    '#fd9e8d',
-    '#f67d69',
-    '#ec5847',
-    '#df2926',
-    '#a71f1e',
-    '#721616',
-    '#420c0b',
-  ],
-  secondaryLight: [
-    '#ffffff',
-    '#ffeae5',
-    '#ffd4cb',
-    '#ffbfb2',
-    '#ffa999',
-    '#fb9381',
-    '#f67d69',
-    '#ef6552',
-    '#e84b3c',
-    '#df2926',
-  ],
-  secondaryDark: [
-    '#df2926',
-    '#c62723',
-    '#ad2520',
-    '#95231d',
-    '#7e201a',
-    '#671c17',
-    '#511914',
-    '#3c1410',
-    '#290f0a',
-    '#160403',
-  ],
-  info: [
-    '#ffffff',
-    '#e6dae1',
-    '#cdb6c4',
-    '#b593a8',
-    '#9c728c',
-    '#845172',
-    '#6b3058',
-    '#47233b',
-    '#261620',
-    '#000000',
-  ],
+static const juce::Colour PRIMARY_DARK_RGB[] = {
+  juce::Colour(0xFF535355),
+  juce::Colour(0xFF4a4a4c),
+  juce::Colour(0xFF424243),
+  juce::Colour(0xFF3a3a3b),
+  juce::Colour(0xFF323233),
+  juce::Colour(0xFF2a2a2a),
+  juce::Colour(0xFF222223),
+  juce::Colour(0xFF1b1b1b),
+  juce::Colour(0xFF131313),
+  juce::Colour(0xFF080808)
+};
+static const juce::Colour SECONDARY_RGB[] = {
+  juce::Colour(0xFFffffff),
+  juce::Colour(0xFFffdfd8),
+  juce::Colour(0xFFffbfb2),
+  juce::Colour(0xFFfd9e8d),
+  juce::Colour(0xFFf67d69),
+  juce::Colour(0xFFec5847),
+  juce::Colour(0xFFdf2926),
+  juce::Colour(0xFFa71f1e),
+  juce::Colour(0xFF721616),
+  juce::Colour(0xFF420c0b)
+};
+static const juce::Colour SECONDARY_LIGHT_RGB[] = {
+  juce::Colour(0xFFffffff),
+  juce::Colour(0xFFffeae5),
+  juce::Colour(0xFFffd4cb),
+  juce::Colour(0xFFffbfb2),
+  juce::Colour(0xFFffa999),
+  juce::Colour(0xFFfb9381),
+  juce::Colour(0xFFf67d69),
+  juce::Colour(0xFFef6552),
+  juce::Colour(0xFFe84b3c),
+  juce::Colour(0xFFdf2926)
+};
+static const juce::Colour SECONDARY_DARK_RGB[] = {
+  juce::Colour(0xFFdf2926),
+  juce::Colour(0xFFc62723),
+  juce::Colour(0xFFad2520),
+  juce::Colour(0xFF95231d),
+  juce::Colour(0xFF7e201a),
+  juce::Colour(0xFF671c17),
+  juce::Colour(0xFF511914),
+  juce::Colour(0xFF3c1410),
+  juce::Colour(0xFF290f0a),
+  juce::Colour(0xFF160403)
+};
+
+static const juce::Colour INFO_RGB[] = {
+    juce::Colour(0xFFffffff),
+    juce::Colour(0xFFe6dae1),
+    juce::Colour(0xFFcdb6c4),
+    juce::Colour(0xFFb593a8),
+    juce::Colour(0xFF9c728c),
+    juce::Colour(0xFF845172),
+    juce::Colour(0xFF6b3058),
+    juce::Colour(0xFF47233b),
+    juce::Colour(0xFF261620),
+    juce::Colour(0xFF000000)
 };

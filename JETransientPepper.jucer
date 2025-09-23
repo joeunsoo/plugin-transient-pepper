@@ -41,11 +41,17 @@
               file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
+        <GROUP id="{BEB779A9-B663-662B-2FD5-2230266C0E41}" name="Header">
+          <FILE id="JAM3Iv" name="HeaderComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Header/HeaderComponent.cpp"/>
+          <FILE id="EobrKI" name="HeaderComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Header/HeaderComponent.h"/>
+        </GROUP>
         <FILE id="nGQFk1" name="LookAndFeelDemo.h" compile="0" resource="0"
               file="Source/PluginEditor/LookAndFeelDemo.h"/>
+        <FILE id="f5m3Qr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
         <FILE id="AF5Wqe" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/PluginEditor/PluginEditor.cpp"/>
-        <FILE id="f5m3Qr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
       </GROUP>
       <FILE id="cUdXGx" name="Define.h" compile="0" resource="0" file="Source/Define.h"/>
       <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
