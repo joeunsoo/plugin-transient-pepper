@@ -10,40 +10,53 @@
               pluginAAXCategory="8192">
   <MAINGROUP id="eUJieJ" name="JETransientPepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
+      <GROUP id="{D5DEB346-40FE-5500-1277-47B2D96CDD9B}" name="WebviewPluginEditor">
+        <FILE id="ID5GpT" name="WebviewPluginEditor.h" compile="0" resource="0"
+              file="Source/WebviewPluginEditor/WebviewPluginEditor.h"/>
+        <FILE id="fA9tiB" name="WebviewPluginEditor.cpp" compile="1" resource="0"
+              file="Source/WebviewPluginEditor/WebviewPluginEditor.cpp"/>
+      </GROUP>
+      <GROUP id="{27642135-67E8-B504-B432-5117A92BDD20}" name="AudioProcessor">
+        <GROUP id="{628CCD0F-0631-CC59-C375-385916DBE476}" name="ProcessorBase">
+          <FILE id="WuaNQk" name="BandPassFilter.h" compile="0" resource="0"
+                file="Source/AudioProcessor/ProcessorBase/BandPassFilter.h"/>
+          <FILE id="aCk1kX" name="TransientNoiseLayer.h" compile="0" resource="0"
+                file="Source/AudioProcessor/ProcessorBase/TransientNoiseLayer.h"/>
+          <FILE id="wIKJQf" name="TransientNoise.h" compile="0" resource="0"
+                file="Source/AudioProcessor/ProcessorBase/TransientNoise.h"/>
+          <FILE id="VcRJj7" name="TransientFollower.h" compile="0" resource="0"
+                file="Source/AudioProcessor/ProcessorBase/TransientFollower.h"/>
+          <FILE id="UDA9HM" name="MidSideMixer.h" compile="0" resource="0" file="Source/AudioProcessor/ProcessorBase/MidSideMixer.h"/>
+          <FILE id="kgTC7R" name="TiltEQ.h" compile="0" resource="0" file="Source/AudioProcessor/ProcessorBase/TiltEQ.h"/>
+          <FILE id="YQCL7e" name="DCOffsetFilter.h" compile="0" resource="0"
+                file="Source/AudioProcessor/ProcessorBase/DCOffsetFilter.h"/>
+        </GROUP>
+        <FILE id="JvqXrU" name="PluginParameters.h" compile="0" resource="0"
+              file="Source/AudioProcessor/PluginParameters.h"/>
+        <FILE id="fdJvEd" name="ProcessUtils.h" compile="0" resource="0" file="Source/AudioProcessor/ProcessUtils.h"/>
+        <FILE id="LyeraB" name="PeakMeter.h" compile="0" resource="0" file="Source/AudioProcessor/PeakMeter.h"/>
+        <FILE id="S7sGay" name="PluginAudioProcessor.h" compile="0" resource="0"
+              file="Source/AudioProcessor/PluginAudioProcessor.h"/>
+        <FILE id="ea7jR1" name="PluginAudioProcessor.cpp" compile="1" resource="0"
+              file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
+      </GROUP>
+      <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
+        <FILE id="nGQFk1" name="LookAndFeelDemo.h" compile="0" resource="0"
+              file="Source/PluginEditor/LookAndFeelDemo.h"/>
+        <FILE id="AF5Wqe" name="PluginEditor.cpp" compile="1" resource="0"
+              file="Source/PluginEditor/PluginEditor.cpp"/>
+        <FILE id="f5m3Qr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
+      </GROUP>
       <FILE id="cUdXGx" name="Define.h" compile="0" resource="0" file="Source/Define.h"/>
       <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
             file="Source/NamespaceParameterId.h"/>
-      <FILE id="ogmPq8" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="uqbP9c" name="LicenseManager.h" compile="0" resource="0"
             file="Source/LicenseManager.h"/>
       <FILE id="UafBku" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="Ivb2Pa" name="PluginWrapper.h" compile="0" resource="0" file="Source/PluginWrapper.h"/>
-      <FILE id="syddNs" name="PluginParameters.h" compile="0" resource="0"
-            file="Source/PluginParameters.h"/>
-      <FILE id="BQzs2Y" name="PluginAudioProcessor.h" compile="0" resource="0"
-            file="Source/PluginAudioProcessor.h"/>
-      <FILE id="mQA8GB" name="PluginAudioProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginAudioProcessor.cpp"/>
-      <FILE id="StuZfR" name="PluginAudioEditor.h" compile="0" resource="0"
-            file="Source/PluginAudioEditor.h"/>
-      <FILE id="bU5RYr" name="PluginAudioEditor.cpp" compile="1" resource="0"
-            file="Source/PluginAudioEditor.cpp"/>
-      <FILE id="TkdTPf" name="PeakMeter.h" compile="0" resource="0" file="Source/PeakMeter.h"/>
-      <FILE id="TI3fZF" name="DCOffsetFilter.h" compile="0" resource="0"
-            file="Source/DCOffsetFilter.h"/>
-      <FILE id="VT7n7j" name="MidSideMixer.h" compile="0" resource="0" file="Source/MidSideMixer.h"/>
-      <FILE id="tY5CLN" name="TransientFollower.h" compile="0" resource="0"
-            file="Source/TransientFollower.h"/>
-      <FILE id="dOj0dV" name="TransientNoise.h" compile="0" resource="0"
-            file="Source/TransientNoise.h"/>
-      <FILE id="dI6yre" name="TransientNoiseLayer.h" compile="0" resource="0"
-            file="Source/TransientNoiseLayer.h"/>
-      <FILE id="zjRcRB" name="BandPassFilter.h" compile="0" resource="0"
-            file="Source/BandPassFilter.h"/>
-      <FILE id="loxmGH" name="TiltEQ.h" compile="0" resource="0" file="Source/TiltEQ.h"/>
     </GROUP>
     <GROUP id="A9VZOH" name="Assets">
-      <FILE id="SVPm6a" name="DemoUtilities.h" compile="0" resource="0" file="Source/DemoUtilities.h"/>
+      <FILE id="lstfG1" name="DemoUtilities.h" compile="0" resource="0" file="Assets/DemoUtilities.h"/>
       <FILE id="lLMVeR" name="gui.zip" compile="0" resource="1" file="Assets/gui.zip"
             xcodeResource="0"/>
     </GROUP>
@@ -93,11 +106,11 @@
     <VS2022 targetFolder="Builds/VisualStudio2022" extraCompilerFlags="/bigobj&#10;/I &quot;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&quot;&#10;">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"
-                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"
-                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"/>
+                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"
+                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"
-                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"
-                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared"/>
+                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"
+                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path=""/>

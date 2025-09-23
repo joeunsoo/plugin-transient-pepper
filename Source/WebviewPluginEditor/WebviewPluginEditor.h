@@ -17,8 +17,8 @@
 #endif
 
 #include <JuceHeader.h>
-#include "DemoUtilities.h"
-#include "PluginAudioProcessor.h"
+#include "../Assets/DemoUtilities.h"
+#include "../AudioProcessor/PluginAudioProcessor.h"
 
 extern const String localDevServerAddress;
 
@@ -40,10 +40,10 @@ struct SinglePageBrowser : WebBrowserComponent
 };
 
 //==============================================================================
-class PluginAudioEditor  : public AudioProcessorEditor, private Timer
+class WebviewPluginEditor  : public AudioProcessorEditor, private Timer
 {
   public:
-  explicit PluginAudioEditor (PluginAudioProcessor&);
+  explicit WebviewPluginEditor (PluginAudioProcessor&);
   
   std::optional<WebBrowserComponent::Resource> getResource (const String& url);
   
@@ -230,5 +230,5 @@ class PluginAudioEditor  : public AudioProcessorEditor, private Timer
 #endif
   std::deque<Array<var>> analysisDataFrames;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioEditor)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (WebviewPluginEditor)
 };

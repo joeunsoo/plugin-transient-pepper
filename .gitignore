@@ -9,7 +9,7 @@ Distribution.xml
 **/node_modules
 WebViewGUI/build
 
-/Assets
+/Assets/gui.zip
 /JuceLibraryCode/BinaryData.cpp
 /JuceLibraryCode/BinaryData.h
 

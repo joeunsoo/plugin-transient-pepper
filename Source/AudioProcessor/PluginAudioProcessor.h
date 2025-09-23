@@ -11,15 +11,16 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "NamespaceParameterId.h"
+#include "../NamespaceParameterId.h"
 #include "PluginParameters.h"
 
+#include "../LicenseManager.h"
+
 #include "PeakMeter.h"
-#include "DCOffsetFilter.h"
-#include "TransientNoise.h"
-#include "MidSideMixer.h"
-#include "TiltEQ.h"
-#include "LicenseManager.h"
+#include "ProcessorBase/DCOffsetFilter.h"
+#include "ProcessorBase/TransientNoise.h"
+#include "ProcessorBase/MidSideMixer.h"
+#include "ProcessorBase/TiltEQ.h"
 
 //==============================================================================
 class PluginAudioProcessor  : public AudioProcessor

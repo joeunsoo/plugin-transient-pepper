@@ -1,9 +1,10 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "DemoUtilities.h"
-#include "PluginAudioProcessor.h"
-#include "PluginAudioEditor.h"
+#include "../Assets/DemoUtilities.h"
+#include "AudioProcessor/PluginAudioProcessor.h"
+#include "WebviewPluginEditor/WebviewPluginEditor.h"
+#include "PluginEditor/PluginEditor.h"
 
 class PluginAudioProcessorWrapper  : public PluginAudioProcessor
 {
@@ -13,6 +14,7 @@ class PluginAudioProcessorWrapper  : public PluginAudioProcessor
   
   bool hasEditor() const override               { return true; }
   AudioProcessorEditor* createEditor() override {
-    return new PluginAudioEditor (*this);
+    // return new WebviewPluginEditor (*this);
+    return new PluginEditor (*this);
   }
 };

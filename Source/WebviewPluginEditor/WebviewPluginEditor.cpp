@@ -8,8 +8,8 @@
  ==============================================================================
  */
 
-#include "PluginAudioEditor.h"
-#include "Define.h"
+#include "../Define.h"
+#include "WebviewPluginEditor.h"
 
 #if !DEBUG
 static ZipFile* getZipFile()
@@ -61,7 +61,7 @@ static auto streamToVector (InputStream& stream)
   return result;
 }
 
-std::optional<WebBrowserComponent::Resource> PluginAudioEditor::getResource (const String& url)
+std::optional<WebBrowserComponent::Resource> WebviewPluginEditor::getResource (const String& url)
 {
   const auto urlToRetrive = url == "/" ? String { "index.html" }
   : url.fromFirstOccurrenceOf ("/", false, false);
@@ -148,7 +148,7 @@ bool SinglePageBrowser::pageAboutToLoad (const String& newURL)
 }
 
 //==============================================================================
-PluginAudioEditor::PluginAudioEditor (PluginAudioProcessor& p)
+WebviewPluginEditor::WebviewPluginEditor (PluginAudioProcessor& p)
 : AudioProcessorEditor (&p), processorRef (p),
 
 bypassAttachment (*processorRef.state.getParameter (ID::bypass.getParamID()),
@@ -242,7 +242,7 @@ linkChannelsAttachment (*processorRef.state.getParameter (ID::linkChannels.getPa
   // grabKeyboardFocus();
 }
 //==============================================================================
-bool PluginAudioEditor::keyPressed(const juce::KeyPress& key)
+bool WebviewPluginEditor::keyPressed(const juce::KeyPress& key)
 {
   // 스페이스바 / 엔터 / 기타 DAW 단축키
   if (key == juce::KeyPress::spaceKey || key == juce::KeyPress::returnKey)
@@ -260,18 +260,18 @@ bool PluginAudioEditor::keyPressed(const juce::KeyPress& key)
 
 
 //==============================================================================
-void PluginAudioEditor::paint (Graphics& g)
+void WebviewPluginEditor::paint (Graphics& g)
 {
   // (Our component is opaque, so we must completely fill the background with a solid colour)
   g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
 }
 
-void PluginAudioEditor::resized()
+void WebviewPluginEditor::resized()
 {
   webComponent.setBounds (getLocalBounds());
 }
 
-void PluginAudioEditor::setScale(int scale)
+void WebviewPluginEditor::setScale(int scale)
 {
   processorRef.windowScale = scale;
   

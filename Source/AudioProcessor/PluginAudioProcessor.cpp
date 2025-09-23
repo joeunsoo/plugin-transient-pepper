@@ -9,7 +9,7 @@
  */
 
 #include <JuceHeader.h>
-#include "Define.h"
+#include "../Define.h"
 #include "PluginAudioProcessor.h"
 
 

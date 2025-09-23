@@ -9,7 +9,7 @@
  */
 
 #pragma once
-#include "NamespaceParameterId.h"
+#include "../NamespaceParameterId.h"
 
 
 struct Parameters {
