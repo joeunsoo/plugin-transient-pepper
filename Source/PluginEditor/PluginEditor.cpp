@@ -33,7 +33,10 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   mainComponent.setEditorRef(*this);
   addAndMakeVisible (mainComponent);
   
+  
+  // 기본 크기
   setSize(640, 360);
+  setScale(processorRef.windowScale);
 }
 
 // 소멸자
@@ -64,9 +67,6 @@ void PluginEditor::setScale(int scale)
     case 200: factor = 2.0f; break;
     default:  factor = 1.0f; break;
   }
-  
-  // 기본 크기는 고정
-  setSize(640, 360);
   
   // 전체 에디터에 transform 적용
   setTransform(juce::AffineTransform::scale(factor));

@@ -15,7 +15,11 @@ void DetectorComponent::setEditorRef(PluginEditor& editor)
   auto* laf = new CustomLookAndFeel();
   rotarySlider.setLookAndFeel (laf);
   addAndMakeVisible (rotarySlider);
-  rotarySlider.setValue (2.5);
+  rotarySlider.setValue (5);
+  
+  rotarySlider2.setLookAndFeel (laf);
+  addAndMakeVisible (rotarySlider2);
+  rotarySlider2.setValue (2.5);
   
   addAndMakeVisible(logoLabel);
   logoLabel.setFont(fontBold);
@@ -35,5 +39,6 @@ void DetectorComponent::resized()
 {
   auto area = getLocalBounds().reduced(10);
   logoLabel.setBounds (20, 20, 100, 30);
-  rotarySlider.setBounds(50, 50, 100, 100);
+  rotarySlider.setBounds(50, 50, 200, 200);
+  rotarySlider2.setBounds(250, 50, 100, 100);
 }

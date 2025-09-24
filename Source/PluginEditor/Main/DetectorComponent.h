@@ -23,6 +23,7 @@ class DetectorComponent : public juce::Component
 
   juce::Label logoLabel;
   Slider rotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
+  Slider rotarySlider2    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
 };

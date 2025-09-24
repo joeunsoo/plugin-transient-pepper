@@ -10,236 +10,105 @@
  */
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
-  void drawRoundThumb (Graphics& g, float x, float y, float diameter, Colour colour, float outlineThickness)
+  void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
-    auto halfThickness = outlineThickness * 0.5f;
+    auto vw = width*0.0010f;
+    auto bounds = juce::Rectangle<float>(x, y, width, height);
+    auto knobBounds = bounds;
+    knobBounds.reduce(width * 0.1f, width * 0.1f);
+
+    auto centre = knobBounds.getCentre();
+    float radius = juce::jmin(width, height) / 2.0f;
     
-    Path p;
-    p.addEllipse (x + halfThickness,
-                  y + halfThickness,
-                  diameter - outlineThickness,
-                  diameter - outlineThickness);
+    g.setColour(PRIMARY_DARK_RGB[6]);
+    g.fillEllipse(knobBounds);
     
-    DropShadow (Colours::black, 1, {}).drawForPath (g, p);
+    // 윤곽선 그리기
+    g.setColour(juce::Colours::black);
+    g.drawEllipse(knobBounds, vw * 2.0f);
     
-    g.setColour (colour);
-    g.fillPath (p);
-    
-    g.setColour (colour.brighter());
-    g.strokePath (p, PathStrokeType (outlineThickness));
-  }
-  
-  void drawButtonBackground (Graphics& g, Button& button, const Colour& backgroundColour,
-                             bool isMouseOverButton, bool isButtonDown) override
-  {
-    auto baseColour = backgroundColour.withMultipliedSaturation (button.hasKeyboardFocus (true) ? 1.3f : 0.9f)
-      .withMultipliedAlpha      (button.isEnabled() ? 0.9f : 0.5f);
-    
-    if (isButtonDown || isMouseOverButton)
-      baseColour = baseColour.contrasting (isButtonDown ? 0.2f : 0.1f);
-    
-    auto flatOnLeft   = button.isConnectedOnLeft();
-    auto flatOnRight  = button.isConnectedOnRight();
-    auto flatOnTop    = button.isConnectedOnTop();
-    auto flatOnBottom = button.isConnectedOnBottom();
-    
-    auto width  = (float) button.getWidth()  - 1.0f;
-    auto height = (float) button.getHeight() - 1.0f;
-    
-    if (width > 0 && height > 0)
+    // Drop shadow 노브
+    juce::Image knobImage(juce::Image::ARGB, width, height, true);
+
+    // 노브 그리기
     {
-      auto cornerSize = jmin (15.0f, jmin (width, height) * 0.45f);
-      auto lineThickness = cornerSize    * 0.1f;
-      auto halfThickness = lineThickness * 0.5f;
-      
-      Path outline;
-      outline.addRoundedRectangle (0.5f + halfThickness, 0.5f + halfThickness, width - lineThickness, height - lineThickness,
-                                   cornerSize, cornerSize,
-                                   ! (flatOnLeft  || flatOnTop),
-                                   ! (flatOnRight || flatOnTop),
-                                   ! (flatOnLeft  || flatOnBottom),
-                                   ! (flatOnRight || flatOnBottom));
-      
-      auto outlineColour = button.findColour (button.getToggleState() ? TextButton::textColourOnId
-                                              : TextButton::textColourOffId);
-      
-      g.setColour (baseColour);
-      g.fillPath (outline);
-      
-      if (! button.getToggleState())
-      {
-        g.setColour (outlineColour);
-        g.strokePath (outline, PathStrokeType (lineThickness));
-      }
+      auto BoundsIn = knobBounds;
+      BoundsIn.reduce(width*0.07f, width*0.07f);
+        juce::Graphics g2(knobImage);
+        g2.setColour(juce::Colours::lightblue);
+        g2.fillEllipse(BoundsIn);
     }
-  }
-  
-  void drawTickBox (Graphics& g, Component& component,
-                    float x, float y, float w, float h,
-                    bool ticked,
-                    bool isEnabled,
-                    bool isMouseOverButton,
-                    bool isButtonDown) override
-  {
-    auto boxSize = w * 0.7f;
-    
-    auto isDownOrDragging = component.isEnabled() && (component.isMouseOverOrDragging() || component.isMouseButtonDown());
-    
-    auto colour = component.findColour (TextButton::buttonColourId)
-      .withMultipliedSaturation ((component.hasKeyboardFocus (false) || isDownOrDragging) ? 1.3f : 0.9f)
-      .withMultipliedAlpha (component.isEnabled() ? 1.0f : 0.7f);
-    
-    drawRoundThumb (g, x, y + (h - boxSize) * 0.5f, boxSize, colour,
-                    isEnabled ? ((isButtonDown || isMouseOverButton) ? 1.1f : 0.5f) : 0.3f);
-    
-    if (ticked)
+
+    // Drop shadow 생성
+    juce::DropShadow ds(juce::Colours::black.withAlpha(0.9f), static_cast<int>(vw * 25), {0, static_cast<int>(vw * 25)});
+
+    // 위치 변환 후 그림자 적용
+    g.saveState();
+    // g.addTransform(juce::AffineTransform::translation(centre.getX(), centre.getY()));
+    ds.drawForImage(g, knobImage);  // 이제 2개 인자
+    g.restoreState();
+
+
+    // 안쪽 그리기
     {
-      g.setColour (isEnabled ? findColour (TextButton::buttonOnColourId) : Colours::grey);
+      g.saveState();
+
+      auto BoundsIn = knobBounds;
+      BoundsIn.reduce(width*0.1f, width*0.1f);
+      g.setColour(PRIMARY_RGB[6]);
+      g.fillEllipse(BoundsIn);
       
-      auto scale = 9.0f;
-      auto trans = AffineTransform::scale (w / scale, h / scale).translated (x - 2.5f, y + 1.0f);
-      
-      g.fillPath (LookAndFeel_V4::getTickShape (6.0f), trans);
+      //그라데이션 윤곽선
+      juce::ColourGradient grad(
+          juce::Colours::white.withAlpha(1.0f),      // startColor
+          centre.x, centre.y - BoundsIn.getWidth()/2.0f,               // 시작점 (y1)
+          juce::Colour(PRIMARY_RGB[6]).withAlpha(0.0f), // primary-6 색상, 투명
+          centre.x, centre.y - BoundsIn.getWidth()/2.0f + BoundsIn.getWidth()/2.0f * 0.2f, // 끝점 y2 = 20% 지점
+          false                                      // radial = false → linear
+      );
+
+      // Graphics에 Gradient 적용
+      float angle = juce::degreesToRadians(305.0f);
+      g.addTransform(juce::AffineTransform::rotation(angle, centre.x, centre.y));
+      g.setGradientFill(grad);
+      // g.addTransform(juce::AffineTransform::rotation(-angle, centre.x, centre.y));
+
+      // 윤곽선 그리기
+      auto BoundsInGradStroke = knobBounds;
+      BoundsInGradStroke.reduce(width*0.1f, width*0.1f);
+      g.drawEllipse(BoundsInGradStroke, vw * 4.0f);
+
+      // 윤곽선 그리기
+      auto BoundsInStroke = knobBounds;
+      BoundsInStroke.reduce(width*0.09f, width*0.09f);
+      g.setColour(juce::Colours::black);
+      g.drawEllipse(BoundsInStroke, vw * 6.0f);
+
+      g.restoreState();
     }
-  }
-  
-  void drawLinearSliderThumb (Graphics& g, int x, int y, int width, int height,
-                              float sliderPos, float minSliderPos, float maxSliderPos,
-                              Slider::SliderStyle style, Slider& slider) override
-  {
-    auto sliderRadius = (float) (getSliderThumbRadius (slider) - 2);
-    
-    auto isDownOrDragging = slider.isEnabled() && (slider.isMouseOverOrDragging() || slider.isMouseButtonDown());
-    
-    auto knobColour = slider.findColour (Slider::thumbColourId)
-      .withMultipliedSaturation ((slider.hasKeyboardFocus (false) || isDownOrDragging) ? 1.3f : 0.9f)
-      .withMultipliedAlpha (slider.isEnabled() ? 1.0f : 0.7f);
-    
-    if (style == Slider::LinearHorizontal || style == Slider::LinearVertical)
-    {
-      float kx, ky;
-      
-      if (style == Slider::LinearVertical)
-      {
-        kx = (float) x + (float) width * 0.5f;
-        ky = sliderPos;
-      }
-      else
-      {
-        kx = sliderPos;
-        ky = (float) y + (float) height * 0.5f;
-      }
-      
-      auto outlineThickness = slider.isEnabled() ? 0.8f : 0.3f;
-      
-      drawRoundThumb (g,
-                      kx - sliderRadius,
-                      ky - sliderRadius,
-                      sliderRadius * 2.0f,
-                      knobColour, outlineThickness);
-    }
-    else
-    {
-      // Just call the base class for the demo
-      LookAndFeel_V2::drawLinearSliderThumb (g, x, y, width, height, sliderPos, minSliderPos, maxSliderPos, style, slider);
-    }
-  }
-  
-  void drawLinearSlider (Graphics& g, int x, int y, int width, int height,
-                         float sliderPos, float minSliderPos, float maxSliderPos,
-                         Slider::SliderStyle style, Slider& slider) override
-  {
-    g.fillAll (slider.findColour (Slider::backgroundColourId));
-    
-    if (style == Slider::LinearBar || style == Slider::LinearBarVertical)
-    {
-      Path p;
-      
-      if (style == Slider::LinearBarVertical)
-        p.addRectangle ((float) x, sliderPos, (float) width, 1.0f + (float) height - sliderPos);
-      else
-        p.addRectangle ((float) x, (float) y, sliderPos - (float) x, (float) height);
-      
-      auto baseColour = slider.findColour (Slider::rotarySliderFillColourId)
-        .withMultipliedSaturation (slider.isEnabled() ? 1.0f : 0.5f)
-        .withMultipliedAlpha (0.8f);
-      
-      g.setColour (baseColour);
-      g.fillPath (p);
-      
-      auto lineThickness = jmin (15.0f, (float) jmin (width, height) * 0.45f) * 0.1f;
-      g.drawRect (slider.getLocalBounds().toFloat(), lineThickness);
-    }
-    else
-    {
-      drawLinearSliderBackground (g, x, y, width, height, sliderPos, minSliderPos, maxSliderPos, style, slider);
-      drawLinearSliderThumb      (g, x, y, width, height, sliderPos, minSliderPos, maxSliderPos, style, slider);
-    }
-  }
-  
-  void drawLinearSliderBackground (Graphics& g, int x, int y, int width, int height,
-                                   float /*sliderPos*/,
-                                   float /*minSliderPos*/,
-                                   float /*maxSliderPos*/,
-                                   const Slider::SliderStyle /*style*/, Slider& slider) override
-  {
-    auto sliderRadius = (float) getSliderThumbRadius (slider) - 5.0f;
-    Path on, off;
-    
-    if (slider.isHorizontal())
-    {
-      auto iy = (float) y + (float) height * 0.5f - sliderRadius * 0.5f;
-      Rectangle<float> r ((float) x - sliderRadius * 0.5f, iy, (float) width + sliderRadius, sliderRadius);
-      auto onW = r.getWidth() * ((float) slider.valueToProportionOfLength (slider.getValue()));
-      
-      on.addRectangle (r.removeFromLeft (onW));
-      off.addRectangle (r);
-    }
-    else
-    {
-      auto ix = (float) x + (float) width * 0.5f - sliderRadius * 0.5f;
-      Rectangle<float> r (ix, (float) y - sliderRadius * 0.5f, sliderRadius, (float) height + sliderRadius);
-      auto onH = r.getHeight() * ((float) slider.valueToProportionOfLength (slider.getValue()));
-      
-      on.addRectangle (r.removeFromBottom (onH));
-      off.addRectangle (r);
-    }
-    
-    g.setColour (slider.findColour (Slider::rotarySliderFillColourId));
-    g.fillPath (on);
-    
-    g.setColour (slider.findColour (Slider::trackColourId));
-    g.fillPath (off);
-  }
-  
-  void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos,
-                         float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
-  {
-    auto radius = (float) jmin (width / 2, height / 2) - 2.0f;
-    auto centreX = (float) x + (float) width  * 0.5f;
-    auto centreY = (float) y + (float) height * 0.5f;
-    auto rx = centreX - radius;
-    auto ry = centreY - radius;
-    auto rw = radius * 2.0f;
-    auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
-    auto isMouseOver = slider.isMouseOverOrDragging() && slider.isEnabled();
-    
-    if (slider.isEnabled())
-      g.setColour (slider.findColour (Slider::rotarySliderFillColourId).withAlpha (isMouseOver ? 1.0f : 0.7f));
-    else
-      g.setColour (Colour (0x80808080));
+
     
     {
-      Path filledArc;
-      filledArc.addPieSegment (rx, ry, rw, rw, rotaryStartAngle, angle, 0.0);
-      g.fillPath (filledArc);
-    }
-    
-    {
-      auto lineThickness = jmin (15.0f, (float) jmin (width, height) * 0.45f) * 0.1f;
-      Path outlineArc;
-      outlineArc.addPieSegment (rx, ry, rw, rw, rotaryStartAngle, rotaryEndAngle, 0.0);
-      g.strokePath (outlineArc, PathStrokeType (lineThickness));
+      // Thumb 그리기
+      float pointerThickness = vw * 32.0f; // 두께
+      
+      // 각도 계산
+      float angle = 135 + rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+      
+      g.saveState();
+      
+      // 회전 변환
+      g.addTransform(juce::AffineTransform::rotation(angle, centre.x, centre.y));
+      
+      // 선 그리기 (pointer)
+      juce::Path pointer;
+      pointer.startNewSubPath(centre.x, centre.y + (75.0f * vw)); // 시작점
+      pointer.lineTo(centre.x, centre.y + (300.0f * vw)); // 종료점
+      
+      g.setColour(juce::Colours::white); // stroke color
+      g.strokePath(pointer, juce::PathStrokeType(pointerThickness, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+      
+      g.restoreState();
     }
   }
 };
