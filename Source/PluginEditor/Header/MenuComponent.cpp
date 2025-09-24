@@ -60,5 +60,4 @@ void MenuComponent::resized()
   auto area = getLocalBounds();
   // menuButton.setBounds (20, 20, 100, 30);
   menuButton.setBounds(area);
-  DBG(area.getX() << ',' << area.getY() << ',' << area.getWidth() << ',' << area.getHeight());
 }

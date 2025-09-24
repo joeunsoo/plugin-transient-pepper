@@ -10,10 +10,11 @@ KnobComponent::~KnobComponent() = default;
 
 void KnobComponent::init(
                          PluginEditor& editor,
-                         const String& parameterID,
+                         const String& paramID,
                          const String labelText)
 {
   editorRef = &editor;
+  parameterID = paramID;
   
   rotarySlider.setColour(
                          juce::Slider::rotarySliderFillColourId,
@@ -38,17 +39,43 @@ void KnobComponent::init(
   label.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(label);
   
-  tooltipLabel.setFont(editorRef->fontMedium);
-  tooltipLabel.setText("", juce::dontSendNotification);
-  tooltipLabel.setJustificationType(juce::Justification::centred);
-  addAndMakeVisible(tooltipLabel);
+  rotarySlider.addMouseListener(this, true);
+
+  rotarySlider.onValueChange = [this] {
+    sendTooltip();
+    };
   
-  rotarySlider.onValueChange = [this, parameterID] {
-    if (auto* param = editorRef->processorRef.state.getParameter(parameterID))
-      tooltipLabel.setText(param->getCurrentValueAsText(), juce::dontSendNotification);
-  };
+  rotarySlider.onDragStart = [this]{ editorRef->setDrag(true, parameterID); };
+  rotarySlider.onDragEnd   = [this]{ editorRef->setDrag(false, parameterID); };
 }
 
+void KnobComponent::sendTooltip()
+{
+  if (editorRef != nullptr)
+  {
+    if (auto* param = editorRef->processorRef.state.getParameter(parameterID)) {
+      auto topLeftInEditor = editorRef->getLocalPoint(&rotarySlider, juce::Point<int>(0, 0));
+
+      juce::Rectangle<int> tooltipArea(topLeftInEditor.getX(),
+                                       topLeftInEditor.getY() + rotarySlider.getHeight(),
+                                       rotarySlider.getWidth(), 24);
+
+      editorRef->showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
+    }
+    editorRef->tooltipLabel->setVisible(true);
+  }
+}
+void KnobComponent::mouseEnter(const juce::MouseEvent&)
+{
+  sendTooltip();
+};
+void KnobComponent::mouseExit(const juce::MouseEvent&)
+{
+  if (editorRef != nullptr)
+  {
+    editorRef->tooltipLabel->setVisible(false);
+  }
+};
 
 void KnobComponent::paint(juce::Graphics& g)
 {

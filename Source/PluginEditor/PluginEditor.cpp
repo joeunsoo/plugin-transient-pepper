@@ -19,6 +19,13 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   setSize(640, 360);
   setScale(processorRef.windowScale);
 
+  tooltipLabel = std::make_unique<juce::Label>();
+  tooltipLabel->setColour(juce::Label::backgroundColourId, juce::Colours::black.withAlpha(0.8f));
+  tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
+  tooltipLabel->setJustificationType(juce::Justification::centred);
+  tooltipLabel->setSize(60, 24);
+  addAndMakeVisible(*tooltipLabel);
+  tooltipLabel->setVisible(false);
 }
 
 // 소멸자
@@ -36,7 +43,27 @@ void PluginEditor::resized()
   headerComponent.setBounds(area.removeFromTop(35));
   area.setHeight(area.getHeight()-5);
   mainComponent.setBounds(area);
+}
+
+void PluginEditor::setDrag(bool value, String id) {
+  isDrag = value;
+  if (!value) {
+    dragID = "";
+  } else {
+    dragID = id;
+  }
+}
+void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, const juce::String& text)
+{
+  if (isDrag && dragID != id) { return ; }
+    tooltipLabel->setText(text, juce::dontSendNotification);
+    tooltipLabel->setBounds(area.getX(), area.getY() + 3, area.getWidth(), 24); // slider 위로 위치
   
+    tooltipLabel->toFront(true);  // 다른 컴포넌트 위로 올림
+    tooltipLabel->setVisible(true);
+
+    // 일정 시간 후 숨기기
+    // juce::Timer::callAfterDelay(3000, [this]{ tooltipLabel->setVisible(false); });
 }
 
 void PluginEditor::setScale(int scale)

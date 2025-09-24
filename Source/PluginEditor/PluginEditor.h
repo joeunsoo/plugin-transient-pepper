@@ -14,7 +14,10 @@ class PluginEditor : public juce::AudioProcessorEditor
   void resized() override;
   
   void setScale(int scale);
-  //==============================================================================  
+  void showTooltipAt(String id, const juce::Rectangle<int>& area, const juce::String& text);
+
+  void setDrag(bool value, String id);
+  //==============================================================================
   PluginAudioProcessor& processorRef;
 
   
@@ -22,14 +25,9 @@ class PluginEditor : public juce::AudioProcessorEditor
   juce::FontOptions fontSemiBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf, BinaryData::PretendardStdSemiBold_otfSize)};
   juce::FontOptions fontBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize)};
   
-  /*
-  juce::FontOptions fontMedium;
-  juce::FontOptions fontSemiBold;
-  juce::FontOptions fontBold;
-   */
-  // juce::Typeface::Ptr pretendardMediumTypeface;
-  // juce::Typeface::Ptr pretendardSemiBoldTypeface;
-  // juce::Typeface::Ptr pretendardBoldTypeface;
+  std::unique_ptr<juce::Label> tooltipLabel;
+  bool isDrag = false;
+  String dragID;
   //==============================================================================
   private:
   
