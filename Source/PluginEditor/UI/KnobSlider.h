@@ -1,3 +1,5 @@
+#pragma once
+
 struct KnobSlider : public juce::Slider
 {
     KnobSlider()

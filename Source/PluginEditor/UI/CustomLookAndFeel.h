@@ -1,11 +1,31 @@
 #pragma once
 
 #include "../../Define.h"
+#include "KnobSlider.h"
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
+    juce::Colour colorIn = PRIMARY_RGB[6];
+    juce::Colour colorDotLine = PRIMARY_DARK_RGB[2];
+    juce::Colour colorDot = PRIMARY_DARK_RGB[3];
+    juce::Colour colorRing = PRIMARY_DARK_RGB[6];
+
+    if (auto* knobSlider = dynamic_cast<KnobSlider*>(&slider))
+    {
+      juce::String color = knobSlider->color;
+      juce::String ringColor = knobSlider->ringColor;
+      if (color == "secondary") {
+        colorIn = SECONDARY_RGB[6];
+        colorDotLine = SECONDARY_DARK_RGB[2];
+        colorDot = SECONDARY_DARK_RGB[3];
+      }
+      if (ringColor == "secondary") {
+        colorRing = SECONDARY_DARK_RGB[6]
+      }
+    }
+    
     // auto bounds = juce::Rectangle<float>(x, y, width, height);
     float size = std::min(width, height);
     auto vw = size*0.001f;
@@ -20,21 +40,21 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       auto rx = centre.getX() - radius;
       auto ry = centre.getY() - radius;
       auto rw = radius * 2.0f;
-
+      
       {
         auto lineThickness = vw * 2.0f;
         Path outlineArc;
         outlineArc.addCentredArc(
-            rx + rw * 0.5f,  // 중심 X
-            ry + rw * 0.5f,  // 중심 Y
-            rw * 0.5f,       // X 반지름
-            rw * 0.5f,       // Y 반지름
-            0.0f,            // rotation
-            rotaryStartAngle,
-            rotaryEndAngle,
-            true             // true = moveTo(startAngle) → 선만
-        );
-        g.setColour(juce::Colours::white);
+                                 rx + rw * 0.5f,  // 중심 X
+                                 ry + rw * 0.5f,  // 중심 Y
+                                 rw * 0.5f,       // X 반지름
+                                 rw * 0.5f,       // Y 반지름
+                                 0.0f,            // rotation
+                                 rotaryStartAngle,
+                                 rotaryEndAngle,
+                                 true             // true = moveTo(startAngle) → 선만
+                                 );
+        g.setColour(colorDotLine);
         g.strokePath (outlineArc, PathStrokeType (lineThickness));
       }
       
@@ -49,20 +69,19 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                        dotRadius * 2,
                                        dotRadius * 2);
         
-        g.setColour(SECONDARY_RGB[6]);
+        g.setColour(colorDot);
         
         g.fillEllipse(dotArea);
       };
       drawDot(rotaryStartAngle);
       drawDot(rotaryEndAngle);
     }
-
+    
     auto knobBounds = bounds;
     knobBounds.reduce(size * 0.1f, size * 0.1f);
     // 노브 바깥쪽 그리기
     {
-      
-      g.setColour(PRIMARY_DARK_RGB[6]);
+      g.setColour(colorRing);
       g.fillEllipse(knobBounds);
       
       // 윤곽선 그리기
@@ -98,7 +117,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       
       auto BoundsIn = knobBounds;
       BoundsIn.reduce(size * 0.1f, size * 0.1f);
-      g.setColour(PRIMARY_RGB[6]);
+      g.setColour(colorIn);
       g.fillEllipse(BoundsIn);
       
       //그라데이션 윤곽선

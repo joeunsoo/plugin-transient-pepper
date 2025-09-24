@@ -65,3 +65,11 @@ void KnobComponent::resized()
   tooltipLabel.setBounds(area);
   
 }
+
+void KnobComponent::setColor(const String color) {
+  rotarySlider.color = color;
+}
+
+void KnobComponent::setRingColor(const String color) {
+  rotarySlider.ringColor = color;
+}

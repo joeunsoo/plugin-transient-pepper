@@ -17,9 +17,11 @@ void DetectorComponent::init(PluginEditor& editor)
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   
   thresholdKnob.init(editor, ID::threshold.getParamID(), "Threshold");
+  thresholdKnob.setColor("secondary");
   addAndMakeVisible(thresholdKnob);
   
   bpfFreqKnob.init(editor, ID::bpfFrequency.getParamID(), "BPF Freq");
+  thresholdKnob.setRingColor("secondary");
   addAndMakeVisible(bpfFreqKnob);
 }
 

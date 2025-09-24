@@ -12,14 +12,6 @@ struct HeaderLookAndFeel : juce::LookAndFeel_V4
     return juce::Font { options };
   }
 
-  void drawButtonBackground(Graphics& g, Button& b,
-                            const Colour& backgroundColour,
-                            bool shouldDrawButtonAsHighlighted,
-                            bool shouldDrawButtonAsDown) override
-  {
-      // 배경 그리지 않음 → 투명
-  }
-
   private:
   juce::Typeface::Ptr typeface;
 };

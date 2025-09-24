@@ -22,6 +22,9 @@ class KnobComponent : public juce::Component
   void paint(juce::Graphics& g) override;
   void resized() override;
   
+  void setColor(const String color);
+  void setRingColor(const String color);
+  
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
@@ -30,7 +33,6 @@ class KnobComponent : public juce::Component
   KnobSlider rotarySlider;
   juce::Label label;
   juce::Label tooltipLabel;
-  
   
   std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
   
