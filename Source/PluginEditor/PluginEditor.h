@@ -3,6 +3,7 @@
 #include "Header/HeaderComponent.h"
 #include "Main/MainComponent.h"
 #include "Main/DetectorComponent.h"
+#include "RoundedLabel.h"
 
 class PluginEditor : public juce::AudioProcessorEditor
 {
@@ -25,7 +26,7 @@ class PluginEditor : public juce::AudioProcessorEditor
   juce::FontOptions fontSemiBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf, BinaryData::PretendardStdSemiBold_otfSize)};
   juce::FontOptions fontBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize)};
   
-  std::unique_ptr<juce::Label> tooltipLabel;
+  std::unique_ptr<RoundedLabel> tooltipLabel;
   bool isDrag = false;
   String dragID;
   //==============================================================================

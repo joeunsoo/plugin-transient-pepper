@@ -3,6 +3,7 @@
 #include "../AudioProcessor/PluginAudioProcessor.h"
 #include "Header/HeaderComponent.h"
 #include "Main/MainComponent.h"
+#include "RoundedLabel.h"
 
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
@@ -11,19 +12,19 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   // 헤더 불러오기
   headerComponent.init(*this);
   addAndMakeVisible (headerComponent);
-
+  
   mainComponent.init(*this);
   addAndMakeVisible (mainComponent);
-
+  
   // 기본 크기
   setSize(640, 360);
   setScale(processorRef.windowScale);
-
-  tooltipLabel = std::make_unique<juce::Label>();
-  tooltipLabel->setColour(juce::Label::backgroundColourId, juce::Colours::black.withAlpha(0.8f));
+  
+  tooltipLabel = std::make_unique<RoundedLabel>();
+  tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB[9]);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
-  tooltipLabel->setSize(60, 24);
+  tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
 }
@@ -56,14 +57,25 @@ void PluginEditor::setDrag(bool value, String id) {
 void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, const juce::String& text)
 {
   if (isDrag && dragID != id) { return ; }
-    tooltipLabel->setText(text, juce::dontSendNotification);
-    tooltipLabel->setBounds(area.getX(), area.getY() + 3, area.getWidth(), 24); // slider 위로 위치
+  tooltipLabel->setText(text, juce::dontSendNotification);
+  tooltipLabel->setBounds(area.getX(), area.getY() + 3, area.getWidth(), 20); // slider 위로 위치
   
-    tooltipLabel->toFront(true);  // 다른 컴포넌트 위로 올림
-    tooltipLabel->setVisible(true);
-
-    // 일정 시간 후 숨기기
-    // juce::Timer::callAfterDelay(3000, [this]{ tooltipLabel->setVisible(false); });
+  auto textWidth  = tooltipLabel->getFont().getStringWidth(tooltipLabel->getText());
+  auto textHeight = tooltipLabel->getFont().getHeight();
+  
+  // padding 포함
+  int labelWidth  = textWidth + 16;
+  int labelHeight = static_cast<int>(textHeight) + 8;
+  
+  // 부모 기준 가운데 정렬
+  int x = area.getCentreX() - labelWidth / 2;
+  
+  tooltipLabel->setBounds(x, area.getY() + 3, labelWidth, labelHeight);
+  tooltipLabel->toFront(true);  // 다른 컴포넌트 위로 올림
+  tooltipLabel->setVisible(true);
+  
+  // 일정 시간 후 숨기기
+  // juce::Timer::callAfterDelay(3000, [this]{ tooltipLabel->setVisible(false); });
 }
 
 void PluginEditor::setScale(int scale)
