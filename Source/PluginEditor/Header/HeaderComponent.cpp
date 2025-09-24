@@ -6,7 +6,10 @@ HeaderComponent::HeaderComponent() {
   
 }
 
-HeaderComponent::~HeaderComponent() = default;
+HeaderComponent::~HeaderComponent()
+{
+  setLookAndFeel(nullptr);
+};
 
 void HeaderComponent::setEditorRef(PluginEditor& editor)
 {
@@ -14,15 +17,15 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
   const Font fontSemiBold { FontOptions { editorRef->pretendardSemiBoldTypeface } };
   const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
-
   
-  headerLnF.setTypeface(editorRef->pretendardMediumTypeface);
-  setLookAndFeel (&headerLnF);
-
+  
+  headerLaF.setTypeface(editorRef->pretendardMediumTypeface);
+  setLookAndFeel (&headerLaF);
+  
   // 왼쪽 버튼과 텍스트
   addAndMakeVisible(bypassComponent);
   bypassComponent.setEditorRef(editor);
-
+  
   
   addAndMakeVisible(logoLabel);
   logoLabel.setFont(fontBold);

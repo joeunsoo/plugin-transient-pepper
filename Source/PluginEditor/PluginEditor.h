@@ -25,7 +25,6 @@ class PluginEditor : public juce::AudioProcessorEditor
   
   HeaderComponent headerComponent;
   MainComponent mainComponent;
-  DetectorComponent detectorComponent;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };

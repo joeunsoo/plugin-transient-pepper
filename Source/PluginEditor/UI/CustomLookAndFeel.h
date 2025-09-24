@@ -1,13 +1,7 @@
-
 #pragma once
 
-//==============================================================================
-/** Custom Look And Feel subclasss.
- 
- Simply override the methods you need to, anything else will be inherited from the base class.
- It's a good idea not to hard code your colours, use the findColour method along with appropriate
- ColourIds so you can set these on a per-component basis.
- */
+#include "../../Define.h"
+
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
@@ -26,7 +20,6 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       auto rx = centre.getX() - radius;
       auto ry = centre.getY() - radius;
       auto rw = radius * 2.0f;
-      auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
 
       {
         auto lineThickness = vw * 2.0f;

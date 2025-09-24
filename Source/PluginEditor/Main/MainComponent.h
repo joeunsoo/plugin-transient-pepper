@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "DetectorComponent.h"
+#include "../UI/CustomLookAndFeel.h"
 
 // Forward declaration
 class PluginEditor;
@@ -22,6 +23,7 @@ class MainComponent : public juce::Component
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  CustomLookAndFeel mainLaf;
 
   DetectorComponent detectorComponent;
 
