@@ -16,12 +16,13 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
 
   // 왼쪽 버튼과 텍스트
-  addAndMakeVisible(leftButton);
-  leftButton.setButtonText("Left Button");
+  addAndMakeVisible(bypassComponent);
+  bypassComponent.setEditorRef(editor);
   
   
   addAndMakeVisible(logoLabel);
   logoLabel.setFont(fontBold);
+  logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);
   logoLabel.setText("Transient Pepper", juce::dontSendNotification);
   logoLabel.setJustificationType(juce::Justification::centredLeft);
   
@@ -46,12 +47,12 @@ void HeaderComponent::resized()
   
   // 왼쪽 영역
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
-  leftButton.setBounds(leftArea.removeFromLeft(100).reduced(5));
+  bypassComponent.setBounds(leftArea.removeFromLeft(30).reduced(5));
   logoLabel.setBounds(leftArea.reduced(5));
   
   // 오른쪽 영역
   auto rightArea = area; // 남은 절반
-  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 100).reduced(5));
+  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 30).reduced(5));
   
   menuComponent.setBounds(rightArea.reduced(5));
 }

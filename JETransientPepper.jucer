@@ -41,6 +41,12 @@
               file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
+        <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="LookAndFeel">
+          <FILE id="RHBGYe" name="MenuLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/LookAndFeel/MenuLookAndFeel.h"/>
+          <FILE id="s49vGq" name="KnobLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/LookAndFeel/KnobLookAndFeel.h"/>
+        </GROUP>
         <GROUP id="{360A0E60-FFFE-FE52-A34D-DE3EDF589E05}" name="Main">
           <FILE id="StE0l2" name="DetectorComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Main/DetectorComponent.h"/>
@@ -51,8 +57,10 @@
                 file="Source/PluginEditor/Main/MainComponent.cpp"/>
         </GROUP>
         <GROUP id="{BEB779A9-B663-662B-2FD5-2230266C0E41}" name="Header">
-          <FILE id="k4Bnhb" name="MenuLookAndFeel.h" compile="0" resource="0"
-                file="Source/PluginEditor/Header/MenuLookAndFeel.h"/>
+          <FILE id="qrbPyM" name="BypassComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Header/BypassComponent.h"/>
+          <FILE id="jtNpaD" name="BypassComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Header/BypassComponent.cpp"/>
           <FILE id="QUMQnQ" name="MenuComponent.h" compile="0" resource="0" file="Source/PluginEditor/Header/MenuComponent.h"/>
           <FILE id="aTYJV7" name="MenuComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Header/MenuComponent.cpp"/>
@@ -61,8 +69,6 @@
           <FILE id="JAM3Iv" name="HeaderComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Header/HeaderComponent.cpp"/>
         </GROUP>
-        <FILE id="nGQFk1" name="LookAndFeelDemo.h" compile="0" resource="0"
-              file="Source/PluginEditor/LookAndFeelDemo.h"/>
         <FILE id="f5m3Qr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
         <FILE id="AF5Wqe" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/PluginEditor/PluginEditor.cpp"/>
@@ -76,6 +82,11 @@
       <FILE id="Ivb2Pa" name="PluginWrapper.h" compile="0" resource="0" file="Source/PluginWrapper.h"/>
     </GROUP>
     <GROUP id="A9VZOH" name="Assets">
+      <GROUP id="{0C1D3CBD-E2AD-CF7B-0CF6-A52F717B0A2A}" name="icon">
+        <FILE id="X1DyDT" name="power-bold.svg" compile="0" resource="1" file="Assets/icon/power-bold.svg"/>
+        <FILE id="WGZ2MP" name="gear-six-fill.svg" compile="0" resource="1"
+              file="Assets/icon/gear-six-fill.svg"/>
+      </GROUP>
       <FILE id="pW5J9J" name="PretendardStd-SemiBold.otf" compile="0" resource="1"
             file="Assets/PretendardStd-SemiBold.otf"/>
       <FILE id="PwZQYZ" name="PretendardStd-Bold.otf" compile="0" resource="1"

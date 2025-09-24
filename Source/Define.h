@@ -103,3 +103,16 @@ static const juce::Colour INFO_RGB[] = {
     juce::Colour(0xFF261620),
     juce::Colour(0xFF000000)
 };
+
+static const juce::Colour DARK_RGB[] = {
+    juce::Colour(0xFFC9C9C9),
+    juce::Colour(0xFFb8b8b8),
+    juce::Colour(0xFF828282),
+    juce::Colour(0xFF696969),
+    juce::Colour(0xFF424242),
+    juce::Colour(0xFF3b3b3b),
+    juce::Colour(0xFF2e2e2e),
+    juce::Colour(0xFF242424),
+    juce::Colour(0xFF1f1f1f),
+    juce::Colour(0xFF141414)
+};

@@ -1,6 +1,6 @@
 #include "DetectorComponent.h"
 #include "../PluginEditor.h"
-#include "../LookAndFeelDemo.h"
+#include "../LookAndFeel/KnobLookAndFeel.h"
 
 //==============================================================================
 DetectorComponent::DetectorComponent() {

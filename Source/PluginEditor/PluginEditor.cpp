@@ -41,7 +41,7 @@ PluginEditor::~PluginEditor() = default;
 
 void PluginEditor::paint(juce::Graphics& g)
 {
-  g.fillAll(juce::Colour(SECONDARY_DARK_RGB[9]));
+  g.fillAll(SECONDARY_DARK_RGB[9]);
 }
 
 void PluginEditor::resized()
