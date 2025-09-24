@@ -27,14 +27,6 @@ void DetectorComponent::setEditorRef(PluginEditor& editor)
   thresholdLabel.setText("Threshold", juce::dontSendNotification);
   thresholdLabel.setJustificationType(juce::Justification::centred);
 
-  // thresholdRotarySlider.setInterceptsMouseClicks(true, true); // 부모와 자식 모두 클릭/hover 가능
-  // thresholdRotarySlider.setMouseCursor(MouseCursor::PointingHandCursor);
-  thresholdRotarySlider.onValueChange = [this]()
-  {
-    auto value = thresholdRotarySlider.getValue();
-    thresholdRotarySlider.setTooltip("Threshold: " + juce::String(value, 2));
-  };
-  
   addAndMakeVisible(thresholdLabel);
 
   addAndMakeVisible (bpfFrequencyRotarySlider);
@@ -44,20 +36,13 @@ void DetectorComponent::setEditorRef(PluginEditor& editor)
    ID::bpfFrequency.getParamID(),
    bpfFrequencyRotarySlider
    );
-  
-  bpfFrequencyRotarySlider.onValueChange = [this]()
-  {
-    auto value = bpfFrequencyRotarySlider.getValue();
-    bpfFrequencyRotarySlider.setTooltip("Threshold: " + juce::String(value, 2));
-  };
-  
 }
 
 DetectorComponent::~DetectorComponent() = default;
 
 void DetectorComponent::paint(juce::Graphics& g)
 {
-  // g.fillAll(juce::Colour(SECONDARY_DARK_RGB[5]));
+  g.fillAll(juce::Colours::transparentBlack);
 }
 
 void DetectorComponent::resized()

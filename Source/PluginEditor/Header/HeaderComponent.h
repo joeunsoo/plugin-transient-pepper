@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "MenuComponent.h"
 #include "BypassComponent.h"
+#include "../LookAndFeel/HeaderLookAndFeel.h"
 
 // Forward declaration
 class PluginEditor;
@@ -22,7 +23,8 @@ class HeaderComponent : public juce::Component
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  
+  HeaderLookAndFeel headerLnF;
+
   BypassComponent bypassComponent;
   juce::Label logoLabel;
   

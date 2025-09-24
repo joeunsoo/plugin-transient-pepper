@@ -42,8 +42,8 @@
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="LookAndFeel">
-          <FILE id="RHBGYe" name="MenuLookAndFeel.h" compile="0" resource="0"
-                file="Source/PluginEditor/LookAndFeel/MenuLookAndFeel.h"/>
+          <FILE id="RHBGYe" name="HeaderLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/LookAndFeel/HeaderLookAndFeel.h"/>
           <FILE id="s49vGq" name="CustomLookAndFeel.h" compile="0" resource="0"
                 file="Source/PluginEditor/LookAndFeel/CustomLookAndFeel.h"/>
         </GROUP>

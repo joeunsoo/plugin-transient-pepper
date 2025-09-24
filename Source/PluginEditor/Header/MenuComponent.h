@@ -1,7 +1,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../LookAndFeel/MenuLookAndFeel.h"
 
 // Forward declaration
 class PluginEditor;
@@ -21,8 +20,7 @@ class MenuComponent : public juce::Component
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  
-  MenuLookAndFeel menuLnF;
+
   juce::DrawableButton menuButton {
     "menuButton",
     juce::DrawableButton::ImageFitted

@@ -10,20 +10,6 @@
  */
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
-  
-  void drawTooltip(juce::Graphics& g, const juce::String& text,
-                   int width, int height) override
-  {
-      // 배경
-      g.setColour(juce::Colours::darkgrey);
-      g.fillRect(0, 0, width, height);
-
-      // 텍스트
-      g.setColour(juce::Colours::white);
-      g.setFont(juce::Font(14.0f, juce::Font::bold));
-      g.drawText(text, 0, 0, width, height, juce::Justification::centred, false);
-  }
-  
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
     auto vw = width*0.0010f;

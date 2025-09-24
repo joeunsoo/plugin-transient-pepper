@@ -8,9 +8,6 @@
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
 : AudioProcessorEditor(&p), processorRef(p)
 {
-  // 툴팁생성자
-  tooltipWindow = std::make_unique<juce::TooltipWindow>(this, 700); // 700ms 후 표시
-
   // 폰트 선언
   pretendardMediumTypeface =
       juce::Typeface::createSystemTypefaceFor(
@@ -39,6 +36,7 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   // 기본 크기
   setSize(640, 360);
   setScale(processorRef.windowScale);
+
 }
 
 // 소멸자

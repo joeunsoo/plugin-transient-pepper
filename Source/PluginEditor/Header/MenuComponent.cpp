@@ -11,9 +11,7 @@ MenuComponent::~MenuComponent() = default;
 void MenuComponent::setEditorRef(PluginEditor& editor)
 {
   editorRef = &editor;
-  
-  menuLnF.setTypeface(editorRef->pretendardMediumTypeface);
-  
+
   menuButton.setClickingTogglesState (false); // 토글 버튼이면 true
   addAndMakeVisible(menuButton);
   
@@ -36,12 +34,15 @@ void MenuComponent::setEditorRef(PluginEditor& editor)
   menuButton.onClick = [&]
   {
     PopupMenu menu;
-    menu.setLookAndFeel (&menuLnF);
     menu.addItem ("100%", [this] { editorRef->setScale(100); });
     menu.addItem ("150%", [this] { editorRef->setScale(150); });
     menu.addItem ("200%", [this] { editorRef->setScale(200); });
     menu.addSeparator();
-    menu.addItem ("Visit joeunsoo.com", nullptr);
+    menu.addItem ("Visit joeunsoo.com", [] {
+      const URL newUrl = URL ("https://joeunsoo.com");
+      if (newUrl.isWellFormed())
+        newUrl.launchInDefaultBrowser();
+    });
     menu.addItem ("About", nullptr);
     menu.addSeparator();
     menu.addItem ("Activate", nullptr);
@@ -51,7 +52,7 @@ void MenuComponent::setEditorRef(PluginEditor& editor)
 
 void MenuComponent::paint(juce::Graphics& g)
 {
-  // g.fillAll(juce::Colour(SECONDARY_DARK_RGB[5]));
+  g.fillAll(juce::Colours::transparentBlack);
 }
 
 void MenuComponent::resized()

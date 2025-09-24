@@ -15,6 +15,10 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   const Font fontSemiBold { FontOptions { editorRef->pretendardSemiBoldTypeface } };
   const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
 
+  
+  headerLnF.setTypeface(editorRef->pretendardMediumTypeface);
+  setLookAndFeel (&headerLnF);
+
   // 왼쪽 버튼과 텍스트
   addAndMakeVisible(bypassComponent);
   bypassComponent.setEditorRef(editor);
@@ -33,12 +37,11 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   
   addAndMakeVisible(menuComponent);
   menuComponent.setEditorRef(editor);
-
 }
 
 void HeaderComponent::paint(juce::Graphics& g)
 {
-  // g.fillAll(juce::Colours::darkgrey);
+  g.fillAll(juce::Colours::transparentBlack);
 }
 
 void HeaderComponent::resized()

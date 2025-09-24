@@ -26,8 +26,6 @@ class PluginEditor : public juce::AudioProcessorEditor
   HeaderComponent headerComponent;
   MainComponent mainComponent;
   DetectorComponent detectorComponent;
-
-  std::unique_ptr<juce::TooltipWindow> tooltipWindow;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };
