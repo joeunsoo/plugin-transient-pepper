@@ -49,7 +49,7 @@ void EnvelopeComponent::paint(juce::Graphics& g)
 void EnvelopeComponent::resized()
 {
   auto area = getLocalBounds().reduced(0);
-  auto labelArea = area.removeFromTop(15);
+  auto labelArea = area.removeFromTop(UI_SECTION_LABEL_HEIGHT);
   sectionLabel.setBounds(labelArea.reduced(0));
   
   auto SliderArea = area;

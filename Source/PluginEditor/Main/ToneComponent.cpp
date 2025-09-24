@@ -40,10 +40,10 @@ void ToneComponent::paint(juce::Graphics& g)
 void ToneComponent::resized()
 {
   auto area = getLocalBounds().reduced(0);
-  auto graphArea = area.removeFromTop(area.getHeight()-75);
+  auto graphArea = area.removeFromTop(area.getHeight()-UI_KNOB_HEIGHT);
   
   auto SliderArea = area;
-  SliderArea.removeFromLeft(area.getWidth()/4 * 2);
-  tiltKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/4));
-  midsideKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/4));
+  SliderArea.removeFromLeft(SliderArea.getWidth()-140);
+  tiltKnob.setBounds(SliderArea.removeFromLeft(UI_KNOB_WIDTH));
+  midsideKnob.setBounds(SliderArea.removeFromLeft(UI_KNOB_WIDTH));
 }

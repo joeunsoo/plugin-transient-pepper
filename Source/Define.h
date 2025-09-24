@@ -18,6 +18,11 @@
 #define ADVANCED false
 
 static const float DISABLED_ALPHA = 0.5f;
+#define  UI_SECTION_LABEL_HEIGHT 15
+#define  UI_BUTTON_HEIGHT 10
+#define  UI_KNOB_LABEL_HEIGHT 10
+#define  UI_KNOB_WIDTH 70
+#define  UI_KNOB_HEIGHT 70
 
 static const juce::Colour PRIMARY_RGB[] = {
   juce::Colour(0xFFffffff),

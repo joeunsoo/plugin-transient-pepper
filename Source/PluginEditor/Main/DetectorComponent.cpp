@@ -64,14 +64,14 @@ void DetectorComponent::paint(juce::Graphics& g)
 void DetectorComponent::resized()
 {
   auto area = getLocalBounds().reduced(0);
-  sectionLabel.setBounds(area.removeFromTop(30));
+  sectionLabel.setBounds(area.removeFromTop(UI_SECTION_LABEL_HEIGHT));
   
-  auto buttonArea = area.removeFromTop(20);
+  auto buttonArea = area.removeFromTop(UI_BUTTON_HEIGHT);
   channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3));
   bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   
-  auto SliderArea = area.removeFromTop(75);
+  auto SliderArea = area.removeFromTop(UI_KNOB_HEIGHT);
   thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
   bpfFreqKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
 }

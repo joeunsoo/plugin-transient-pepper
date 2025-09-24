@@ -39,12 +39,16 @@ void MainComponent::init(PluginEditor& editor)
 
 void MainComponent::resized()
 {
-  auto area = getLocalBounds().reduced(20, 5);
-  auto leftArea = area.removeFromLeft(225);
+  auto area = getLocalBounds()
+    .withTrimmedLeft(15)
+    .withTrimmedTop(5)
+    .withTrimmedRight(15)
+    .withTrimmedBottom(10);
+  auto leftArea = area.removeFromLeft(UI_KNOB_WIDTH * 3);
   detectorComponent.setBounds(leftArea.removeFromTop(150));
   envelopeComponent.setBounds(leftArea);
-  toneComponent.setBounds(area.removeFromLeft(300));
-  mixComponent.setBounds(area.removeFromLeft(75));
+  toneComponent.setBounds(area.removeFromLeft(area.getWidth()-(UI_KNOB_WIDTH * 2)));
+  mixComponent.setBounds(area);
 }
 
 void MainComponent::paint(juce::Graphics& g)

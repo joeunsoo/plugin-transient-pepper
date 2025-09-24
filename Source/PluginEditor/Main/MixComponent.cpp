@@ -13,6 +13,7 @@ void MixComponent::init(PluginEditor& editor)
   editorRef = &editor;
   
   noiseLevelGainKnob.init(editor, ID::noiseLevelGain.getParamID(), "Noise Level");
+  noiseLevelGainKnob.setRingColor("secondary");
   addAndMakeVisible(noiseLevelGainKnob);
 
   wetSoloButton.init(editor, ID::wetSolo.getParamID(), "Wet Solo");
@@ -21,6 +22,9 @@ void MixComponent::init(PluginEditor& editor)
   dryWetKnob.init(editor, ID::dryWet.getParamID(), "Dry/Wet");
   addAndMakeVisible(dryWetKnob);
   
+  outputGainKnob.init(editor, ID::outputGain.getParamID(), "Output");
+  addAndMakeVisible(outputGainKnob);
+
   editorRef->processorRef.parameters.bypass.addListener(this);
 }
 
@@ -45,8 +49,12 @@ void MixComponent::paint(juce::Graphics& g)
 void MixComponent::resized()
 {
   auto area = getLocalBounds().reduced(0);
-  auto meterArea = area.removeFromTop(area.getHeight()-(75+20+75));
-  noiseLevelGainKnob.setBounds(area.removeFromTop(75));
-  wetSoloButton.setBounds(area.removeFromTop(20));
-  dryWetKnob.setBounds(area);
+  auto leftArea = area.removeFromLeft(area.getWidth() / 2);
+  leftArea.removeFromTop(leftArea.getHeight()-(UI_KNOB_HEIGHT+20+UI_KNOB_HEIGHT));
+  noiseLevelGainKnob.setBounds(leftArea.removeFromTop(UI_KNOB_HEIGHT));
+  wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT));
+  dryWetKnob.setBounds(leftArea);
+  auto rightArea = area;
+  rightArea.removeFromTop(rightArea.getHeight()-(UI_KNOB_HEIGHT));
+  outputGainKnob.setBounds(rightArea);
 }

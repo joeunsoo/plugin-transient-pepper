@@ -1,4 +1,5 @@
 #include "KnobComponent.h"
+#include "../../define.h"
 #include "../../NamespaceParameterId.h"
 #include "../PluginEditor.h"
 
@@ -35,7 +36,7 @@ void KnobComponent::init(
    rotarySlider
    );
   
-  label.setFont(editorRef->fontMedium);
+  label.setFont(editorRef->fontMedium.withHeight(10.0f));
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(label);
@@ -49,7 +50,6 @@ void KnobComponent::init(
   rotarySlider.onDragStart = [this]{ editorRef->setDrag(true, parameterID); };
   rotarySlider.onDragEnd   = [this]{ editorRef->setDrag(false, parameterID); };
   
-  
 }
 
 void KnobComponent::sendTooltip()
@@ -59,8 +59,10 @@ void KnobComponent::sendTooltip()
     if (auto* param = editorRef->processorRef.state.getParameter(parameterID)) {
       auto topLeftInEditor = editorRef->getLocalPoint(&rotarySlider, juce::Point<int>(0, 0));
 
+      auto size = std::min(rotarySlider.getWidth(),rotarySlider.getHeight());
+      auto top = (rotarySlider.getHeight()/2) + (size/2) + UI_KNOB_LABEL_HEIGHT;
       juce::Rectangle<int> tooltipArea(topLeftInEditor.getX(),
-                                       topLeftInEditor.getY() + rotarySlider.getHeight(),
+                                       topLeftInEditor.getY() + top,
                                        rotarySlider.getWidth(), 24);
 
       editorRef->showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
@@ -90,10 +92,15 @@ void KnobComponent::paint(juce::Graphics& g)
 void KnobComponent::resized()
 {
   auto area = getLocalBounds();
-  rotarySlider.setBounds(area.removeFromTop(area.getHeight() - 10));
+  auto size = std::min(area.getWidth(),area.getHeight()-UI_KNOB_LABEL_HEIGHT);
 
-  area.setY(area.getY()-10);
-  label.setBounds(area);
+  rotarySlider.setBounds(area.removeFromTop(area.getHeight()-UI_KNOB_LABEL_HEIGHT));
+  
+  auto labelArea = getLocalBounds();
+  auto top = ((labelArea.getHeight()-UI_KNOB_LABEL_HEIGHT) / 2) + (size / 2);
+  labelArea.setY(top);
+  labelArea.setHeight(UI_KNOB_LABEL_HEIGHT);
+  label.setBounds(labelArea);
 }
 
 void KnobComponent::setColor(const String color) {
