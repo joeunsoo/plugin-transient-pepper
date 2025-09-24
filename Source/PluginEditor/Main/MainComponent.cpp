@@ -11,14 +11,14 @@ MainComponent::~MainComponent()
   setLookAndFeel(nullptr);
 };
 
-void MainComponent::setEditorRef(PluginEditor& editor)
+void MainComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
 
   setLookAndFeel (&mainLaf);
 
   addAndMakeVisible(detectorComponent);
-  detectorComponent.setEditorRef(editor);
+  detectorComponent.init(editor);
 
   // DropShadow 설정
   dropShadow.colour = juce::Colours::black.withAlpha(0.2f); // 그림자 색상

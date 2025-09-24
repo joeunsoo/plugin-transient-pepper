@@ -27,10 +27,10 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
       );
   
   // 헤더 불러오기
-  headerComponent.setEditorRef(*this);
+  headerComponent.init(*this);
   addAndMakeVisible (headerComponent);
 
-  mainComponent.setEditorRef(*this);
+  mainComponent.init(*this);
   addAndMakeVisible (mainComponent);
 
   // 기본 크기
@@ -51,7 +51,7 @@ void PluginEditor::resized()
 {
   // UI layout code
   auto area = getLocalBounds().reduced(10, 0);
-  // headerComponent.setBounds(area.removeFromTop(40));
+  headerComponent.setBounds(area.removeFromTop(40));
   mainComponent.setBounds(area);
   
 }

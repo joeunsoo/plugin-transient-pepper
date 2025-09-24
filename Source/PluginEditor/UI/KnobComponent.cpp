@@ -1,0 +1,67 @@
+#include "KnobComponent.h"
+#include "../PluginEditor.h"
+
+//==============================================================================
+KnobComponent::KnobComponent() {
+  
+}
+
+KnobComponent::~KnobComponent() = default;
+
+void KnobComponent::init(
+                         PluginEditor& editor,
+                         const String& parameterID,
+                         const String labelText)
+{
+  editorRef = &editor;
+  const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
+  const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
+  
+  rotarySlider.setColour(
+                         juce::Slider::rotarySliderFillColourId,
+                         juce::Colours::orange
+                         );
+  
+  rotarySlider.setColour(
+                         juce::Slider::rotarySliderOutlineColourId,
+                         juce::Colours::blue
+                         );
+
+  addAndMakeVisible (rotarySlider);
+  attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
+  (
+   editorRef->processorRef.state,
+   parameterID,
+   rotarySlider
+   );
+  
+  label.setFont(fontMedium);
+  label.setText(labelText, juce::dontSendNotification);
+  label.setJustificationType(juce::Justification::centred);
+  addAndMakeVisible(label);
+  
+  tooltipLabel.setFont(fontMedium);
+  tooltipLabel.setText("", juce::dontSendNotification);
+  tooltipLabel.setJustificationType(juce::Justification::centred);
+  addAndMakeVisible(tooltipLabel);
+  
+  rotarySlider.onValueChange = [this, parameterID] {
+    if (auto* param = editorRef->processorRef.state.getParameter(parameterID))
+      tooltipLabel.setText(param->getCurrentValueAsText(), juce::dontSendNotification);
+  };
+}
+
+
+void KnobComponent::paint(juce::Graphics& g)
+{
+  g.fillAll(juce::Colours::transparentBlack);
+}
+
+void KnobComponent::resized()
+{
+  auto area = getLocalBounds();
+  rotarySlider.setBounds(area.removeFromTop(area.getHeight() - 60));
+  label.setBounds(area.removeFromTop(30));
+  tooltipLabel.setBounds(area);
+  
+}

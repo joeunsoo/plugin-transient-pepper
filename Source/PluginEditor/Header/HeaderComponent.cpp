@@ -11,7 +11,7 @@ HeaderComponent::~HeaderComponent()
   setLookAndFeel(nullptr);
 };
 
-void HeaderComponent::setEditorRef(PluginEditor& editor)
+void HeaderComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
   const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
@@ -24,7 +24,7 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   
   // 왼쪽 버튼과 텍스트
   addAndMakeVisible(bypassComponent);
-  bypassComponent.setEditorRef(editor);
+  bypassComponent.init(editor);
   
   
   addAndMakeVisible(logoLabel);
@@ -39,7 +39,7 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   companyLabel.setJustificationType(juce::Justification::centredRight);
   
   addAndMakeVisible(menuComponent);
-  menuComponent.setEditorRef(editor);
+  menuComponent.init(editor);
 }
 
 void HeaderComponent::paint(juce::Graphics& g)

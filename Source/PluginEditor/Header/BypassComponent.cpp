@@ -18,7 +18,7 @@ BypassComponent::BypassComponent() {
 
 BypassComponent::~BypassComponent() = default;
 
-void BypassComponent::setEditorRef(PluginEditor& editor)
+void BypassComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
   

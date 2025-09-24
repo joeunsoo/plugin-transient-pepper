@@ -15,7 +15,7 @@ class MainComponent : public juce::Component
   MainComponent();
   ~MainComponent() override;
   
-  void setEditorRef(PluginEditor& editor);
+  void init(PluginEditor& editor);
 
   void paint(juce::Graphics& g) override;
   void resized() override;

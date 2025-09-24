@@ -8,7 +8,7 @@ MenuComponent::MenuComponent() {
 
 MenuComponent::~MenuComponent() = default;
 
-void MenuComponent::setEditorRef(PluginEditor& editor)
+void MenuComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
 

@@ -15,7 +15,7 @@ class HeaderComponent : public juce::Component
   HeaderComponent();
   ~HeaderComponent() override;
 
-  void setEditorRef(PluginEditor& editor);
+  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;

@@ -12,7 +12,7 @@ class BypassComponent : public juce::ToggleButton
   BypassComponent();
   ~BypassComponent();
   
-  void setEditorRef(PluginEditor& editor);
+  void init(PluginEditor& editor);
   
   void resized() override {};
   

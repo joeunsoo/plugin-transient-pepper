@@ -6,36 +6,21 @@ DetectorComponent::DetectorComponent() {
   
 }
 
-void DetectorComponent::setEditorRef(PluginEditor& editor)
+void DetectorComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
-  const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
+  const Font fontSemoBold { FontOptions { editorRef->pretendardSemiBoldTypeface } };
   
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(fontBold);
+  sectionLabel.setFont(fontSemoBold);
   sectionLabel.setText("Transient Pepper", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   
-  addAndMakeVisible (thresholdRotarySlider);
-  thresholdAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
-  (
-   editorRef->processorRef.state,
-   ID::threshold.getParamID(),
-   thresholdRotarySlider
-   );
+  thresholdKnob.init(editor, ID::threshold.getParamID(), "Threshold");
+  addAndMakeVisible(thresholdKnob);
   
-  thresholdLabel.setText("Threshold", juce::dontSendNotification);
-  thresholdLabel.setJustificationType(juce::Justification::centred);
-
-  addAndMakeVisible(thresholdLabel);
-
-  addAndMakeVisible (bpfFrequencyRotarySlider);
-  bpfFrequencyAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
-  (
-   editorRef->processorRef.state,
-   ID::bpfFrequency.getParamID(),
-   bpfFrequencyRotarySlider
-   );
+  bpfFreqKnob.init(editor, ID::bpfFrequency.getParamID(), "BPF Freq");
+  addAndMakeVisible(bpfFreqKnob);
 }
 
 DetectorComponent::~DetectorComponent() = default;
@@ -54,8 +39,7 @@ void DetectorComponent::resized()
   auto buttonArea = area.removeFromTop(30);
   auto SliderArea = area;
   
-  thresholdRotarySlider.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
-  // thresholdLabel.setBounds(0, 230, 200, 20);
-  
-  bpfFrequencyRotarySlider.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
+  thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
+  bpfFreqKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
+
 }

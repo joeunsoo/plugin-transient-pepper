@@ -12,7 +12,7 @@ class MenuComponent : public juce::Component
   MenuComponent();
   ~MenuComponent() override;
   
-  void setEditorRef(PluginEditor& editor);
+  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;
