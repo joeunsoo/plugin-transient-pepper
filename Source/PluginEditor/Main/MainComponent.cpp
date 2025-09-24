@@ -1,5 +1,6 @@
 #include "MainComponent.h"
 #include "../PluginEditor.h"
+#include "../LookAndFeel/CustomLookAndFeel.h"
 
 //==============================================================================
 MainComponent::MainComponent() {
@@ -12,6 +13,9 @@ void MainComponent::setEditorRef(PluginEditor& editor)
 {
   editorRef = &editor;
   
+  auto* laf = new CustomLookAndFeel();
+  setLookAndFeel (laf);
+
   addAndMakeVisible(detectorComponent);
   detectorComponent.setEditorRef(editor);
 

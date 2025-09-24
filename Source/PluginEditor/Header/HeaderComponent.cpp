@@ -18,7 +18,7 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   // 왼쪽 버튼과 텍스트
   addAndMakeVisible(bypassComponent);
   bypassComponent.setEditorRef(editor);
-  
+
   
   addAndMakeVisible(logoLabel);
   logoLabel.setFont(fontBold);

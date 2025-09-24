@@ -21,8 +21,8 @@ class BypassComponent : public juce::Component
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
   
-  juce::DrawableButton menuButton {
-    "menuButton",
+  juce::DrawableButton button {
+    "bypassButton",
     juce::DrawableButton::ImageFitted
   };
   

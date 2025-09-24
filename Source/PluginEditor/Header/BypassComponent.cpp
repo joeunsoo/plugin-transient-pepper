@@ -12,22 +12,22 @@ void BypassComponent::setEditorRef(PluginEditor& editor)
 {
   editorRef = &editor;
   
-  menuButton.setClickingTogglesState (false); // 토글 버튼이면 true
-  addAndMakeVisible(menuButton);
+  button.setClickingTogglesState (false); // 토글 버튼이면 true
+  addAndMakeVisible(button);
   
-  std::unique_ptr<juce::Drawable> menuSvg (
+  std::unique_ptr<juce::Drawable> buttonSvg (
       juce::Drawable::createFromImageData (BinaryData::powerbold_svg, BinaryData::powerbold_svgSize)
   );
-  auto normal = menuSvg->createCopy();
+  auto normal = buttonSvg->createCopy();
   normal->replaceColour (juce::Colours::black, juce::Colours::white);
 
-  auto over = menuSvg->createCopy();
+  auto over = buttonSvg->createCopy();
   over->replaceColour (juce::Colours::black, DARK_RGB[1]);
 
-  auto down = menuSvg->createCopy();
+  auto down = buttonSvg->createCopy();
   down->replaceColour (juce::Colours::black, DARK_RGB[1]);
 
-  menuButton.setImages (normal.get(), over.get(), down.get());
+  button.setImages (normal.get(), over.get(), down.get());
 
 }
 
@@ -39,5 +39,5 @@ void BypassComponent::paint(juce::Graphics& g)
 void BypassComponent::resized()
 {
   auto area = getLocalBounds();
-  menuButton.setBounds(area);
+  button.setBounds(area);
 }

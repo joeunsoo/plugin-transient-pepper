@@ -44,8 +44,8 @@
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="LookAndFeel">
           <FILE id="RHBGYe" name="MenuLookAndFeel.h" compile="0" resource="0"
                 file="Source/PluginEditor/LookAndFeel/MenuLookAndFeel.h"/>
-          <FILE id="s49vGq" name="KnobLookAndFeel.h" compile="0" resource="0"
-                file="Source/PluginEditor/LookAndFeel/KnobLookAndFeel.h"/>
+          <FILE id="s49vGq" name="CustomLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/LookAndFeel/CustomLookAndFeel.h"/>
         </GROUP>
         <GROUP id="{360A0E60-FFFE-FE52-A34D-DE3EDF589E05}" name="Main">
           <FILE id="StE0l2" name="DetectorComponent.h" compile="0" resource="0"

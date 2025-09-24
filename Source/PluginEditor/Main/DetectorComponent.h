@@ -21,9 +21,13 @@ class DetectorComponent : public juce::Component
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
 
-  juce::Label logoLabel;
-  Slider rotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
-  Slider rotarySlider2    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
+  juce::Label sectionLabel;
+  juce::Label thresholdLabel;
+  Slider thresholdRotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
+  Slider bpfFrequencyRotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
+
+  std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> thresholdAttachment;
+  std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> bpfFrequencyAttachment;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
 };
