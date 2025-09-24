@@ -42,6 +42,11 @@
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="UI">
+          <FILE id="hRmfSX" name="ToggleButton.h" compile="0" resource="0" file="Source/PluginEditor/UI/ToggleButton.h"/>
+          <FILE id="NigtLy" name="ToggleButtonComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/UI/ToggleButtonComponent.h"/>
+          <FILE id="aHvWDi" name="ToggleButtonComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/UI/ToggleButtonComponent.cpp"/>
           <FILE id="soiXLB" name="KnobSlider.h" compile="0" resource="0" file="Source/PluginEditor/UI/KnobSlider.h"/>
           <FILE id="FOBdDj" name="KnobComponent.h" compile="0" resource="0" file="Source/PluginEditor/UI/KnobComponent.h"/>
           <FILE id="kDUvJD" name="KnobComponent.cpp" compile="1" resource="0"

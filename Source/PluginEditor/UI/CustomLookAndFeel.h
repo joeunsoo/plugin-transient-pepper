@@ -22,7 +22,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         colorDot = SECONDARY_DARK_RGB[3];
       }
       if (ringColor == "secondary") {
-        colorRing = SECONDARY_DARK_RGB[6]
+        colorRing = SECONDARY_DARK_RGB[6];
       }
     }
     

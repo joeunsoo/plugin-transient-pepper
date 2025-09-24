@@ -15,7 +15,6 @@ void KnobComponent::init(
 {
   editorRef = &editor;
   const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
-  const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
   
   rotarySlider.setColour(
                          juce::Slider::rotarySliderFillColourId,
