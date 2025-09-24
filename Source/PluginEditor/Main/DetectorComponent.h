@@ -8,7 +8,8 @@
 class PluginEditor;
 
 //==============================================================================
-class DetectorComponent : public juce::Component
+class DetectorComponent : public juce::Component,
+public juce::AudioProcessorParameter::Listener
 {
   public:
   DetectorComponent();
@@ -18,6 +19,9 @@ class DetectorComponent : public juce::Component
   
   void paint(juce::Graphics& g) override;
   void resized() override;
+  
+  void parameterValueChanged (int parameterIndex, float newValue) override;
+  void parameterGestureChanged (int parameterIndex, bool gestureIsStarting) override {}
   
   //==============================================================================
   private:

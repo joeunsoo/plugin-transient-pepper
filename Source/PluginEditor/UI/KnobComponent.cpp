@@ -1,4 +1,5 @@
 #include "KnobComponent.h"
+#include "../../NamespaceParameterId.h"
 #include "../PluginEditor.h"
 
 //==============================================================================
@@ -47,6 +48,8 @@ void KnobComponent::init(
   
   rotarySlider.onDragStart = [this]{ editorRef->setDrag(true, parameterID); };
   rotarySlider.onDragEnd   = [this]{ editorRef->setDrag(false, parameterID); };
+  
+  
 }
 
 void KnobComponent::sendTooltip()
@@ -65,10 +68,12 @@ void KnobComponent::sendTooltip()
     editorRef->tooltipLabel->setVisible(true);
   }
 }
+
 void KnobComponent::mouseEnter(const juce::MouseEvent&)
 {
   sendTooltip();
 };
+
 void KnobComponent::mouseExit(const juce::MouseEvent&)
 {
   if (editorRef != nullptr)

@@ -17,6 +17,8 @@
 #define DISABLE_DCOFFSET_FILTER false
 #define ADVANCED false
 
+static const float DISABLED_ALPHA = 0.5f;
+
 static const juce::Colour PRIMARY_RGB[] = {
   juce::Colour(0xFFffffff),
   juce::Colour(0xFFe0e0e1),

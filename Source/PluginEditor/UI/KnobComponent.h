@@ -30,6 +30,8 @@ class KnobComponent : public juce::Component
   void mouseEnter(const juce::MouseEvent& event) override;
   void mouseExit(const juce::MouseEvent& event) override;
 
+  void setKnobDisabled(bool value);
+
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능

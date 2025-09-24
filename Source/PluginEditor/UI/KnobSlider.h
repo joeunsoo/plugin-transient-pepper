@@ -10,6 +10,7 @@ struct KnobSlider : public juce::Slider
   // 커스텀 멤버
   juce::String color = "primary";
   juce::String ringColor = "primary";
+  bool isDisabled = false;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobSlider)
 };

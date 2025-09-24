@@ -7,59 +7,62 @@ struct CustomLookAndFeel : public LookAndFeel_V4
 {
   
   void drawButtonBackground (juce::Graphics& g,
-                                 juce::Button& button,
-                                 const juce::Colour& backgroundColour,
-                                 bool shouldDrawButtonAsHighlighted,
-                                 bool shouldDrawButtonAsDown) override
-      {
-          auto bounds = button.getLocalBounds().toFloat();
-          float cornerSize = 6.0f;
-
-          // --- 상태별 배경색 (linear-gradient 느낌)
-          juce::ColourGradient gradient(
-              button.getToggleState()
-                  ? SECONDARY_DARK_RGB[0]   // 활성 (ON)
-                  : SECONDARY_DARK_RGB[6],     // 비활성 (OFF)
-              bounds.getTopLeft(),
-              button.getToggleState()
-                  ? SECONDARY_DARK_RGB[2]
-                  : SECONDARY_DARK_RGB[9],
-              bounds.getBottomRight(),
-              false
-          );
-
-          g.setGradientFill(gradient);
-          g.fillRoundedRectangle(bounds, cornerSize);
-
-          // --- border
-          g.setColour(PRIMARY_RGB[9]);
-          g.drawRoundedRectangle(bounds, cornerSize, 1.5f);
-
-          // --- hover 효과
-          if (shouldDrawButtonAsHighlighted && ! button.getToggleState())
-          {
-              g.setColour(juce::Colours::white.withAlpha(0.05f));
-              g.fillRoundedRectangle(bounds, cornerSize);
-          }
-
-          // --- 클릭 상태(Down) 효과
-          if (shouldDrawButtonAsDown)
-          {
-              g.setColour(juce::Colours::black.withAlpha(0.2f));
-              g.fillRoundedRectangle(bounds, cornerSize);
-          }
-      }
+                             juce::Button& button,
+                             const juce::Colour& backgroundColour,
+                             bool shouldDrawButtonAsHighlighted,
+                             bool shouldDrawButtonAsDown) override
+  {
+    auto bounds = button.getLocalBounds().toFloat();
+    float cornerSize = 6.0f;
+    
+    // --- 상태별 배경색 (linear-gradient 느낌)
+    juce::ColourGradient gradient(
+                                  button.getToggleState()
+                                  ? SECONDARY_DARK_RGB[0]   // 활성 (ON)
+                                  : SECONDARY_DARK_RGB[6],     // 비활성 (OFF)
+                                  bounds.getTopLeft(),
+                                  button.getToggleState()
+                                  ? SECONDARY_DARK_RGB[2]
+                                  : SECONDARY_DARK_RGB[9],
+                                  bounds.getBottomRight(),
+                                  false
+                                  );
+    
+    g.setGradientFill(gradient);
+    g.fillRoundedRectangle(bounds, cornerSize);
+    
+    // --- border
+    g.setColour(PRIMARY_RGB[9]);
+    g.drawRoundedRectangle(bounds, cornerSize, 1.5f);
+    
+    // --- hover 효과
+    if (shouldDrawButtonAsHighlighted && ! button.getToggleState())
+    {
+      g.setColour(juce::Colours::white.withAlpha(0.05f));
+      g.fillRoundedRectangle(bounds, cornerSize);
+    }
+    
+    // --- 클릭 상태(Down) 효과
+    if (shouldDrawButtonAsDown)
+    {
+      g.setColour(juce::Colours::black.withAlpha(0.2f));
+      g.fillRoundedRectangle(bounds, cornerSize);
+    }
+  }
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
     juce::Colour colorIn = PRIMARY_RGB[6];
     juce::Colour colorDotLine = PRIMARY_DARK_RGB[2];
     juce::Colour colorDot = PRIMARY_DARK_RGB[3];
     juce::Colour colorRing = PRIMARY_DARK_RGB[6];
-
+    
+    bool isDisabled = false;
+    
     if (auto* knobSlider = dynamic_cast<KnobSlider*>(&slider))
     {
       juce::String color = knobSlider->color;
       juce::String ringColor = knobSlider->ringColor;
+      
       if (color == "secondary") {
         colorIn = SECONDARY_RGB[6];
         colorDotLine = SECONDARY_DARK_RGB[2];
@@ -69,7 +72,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         colorRing = SECONDARY_DARK_RGB[6];
       }
     }
-    
+
     // auto bounds = juce::Rectangle<float>(x, y, width, height);
     float size = std::min(width, height);
     auto vw = size*0.001f;
@@ -225,7 +228,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   {
     return juce::Font { fontMedium };
   }
-
+  
   void setFontMedium (juce::FontOptions f) { fontMedium = f; }
   void setFontSemiBold (juce::FontOptions f) { fontSemiBold = f; }
   void setFontBold (juce::FontOptions f) { fontBold = f; }

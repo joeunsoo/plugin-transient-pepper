@@ -8,7 +8,8 @@
 class PluginEditor;
 
 //==============================================================================
-class EnvelopeComponent : public juce::Component
+class EnvelopeComponent : public juce::Component,
+public juce::AudioProcessorParameter::Listener
 {
   public:
   EnvelopeComponent();
@@ -19,10 +20,13 @@ class EnvelopeComponent : public juce::Component
   void paint(juce::Graphics& g) override;
   void resized() override;
   
+  void parameterValueChanged (int parameterIndex, float newValue) override;
+  void parameterGestureChanged (int parameterIndex, bool gestureIsStarting) override {}
+  
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-
+  
   
   juce::Label sectionLabel;
   KnobComponent attackKnob;

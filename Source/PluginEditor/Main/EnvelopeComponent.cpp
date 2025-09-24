@@ -6,6 +6,8 @@ EnvelopeComponent::EnvelopeComponent() {
   
 }
 
+EnvelopeComponent::~EnvelopeComponent() = default;
+
 void EnvelopeComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
@@ -23,9 +25,21 @@ void EnvelopeComponent::init(PluginEditor& editor)
   releaseKnob.setColor("secondary");
   addAndMakeVisible(releaseKnob);
   
+  editorRef->processorRef.parameters.bypass.addListener(this);
 }
 
-EnvelopeComponent::~EnvelopeComponent() = default;
+void EnvelopeComponent::parameterValueChanged (int, float) {
+  bool bypass = editorRef->processorRef.parameters.bypass.get();
+  if (bypass) {
+    sectionLabel.setAlpha(DISABLED_ALPHA);
+    attackKnob.setAlpha(DISABLED_ALPHA);
+    releaseKnob.setAlpha(DISABLED_ALPHA);
+  } else {
+    sectionLabel.setAlpha(1.0f);
+    attackKnob.setAlpha(1.0f);
+    releaseKnob.setAlpha(1.0f);
+  }
+}
 
 void EnvelopeComponent::paint(juce::Graphics& g)
 {
