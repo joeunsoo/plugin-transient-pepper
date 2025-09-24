@@ -17,11 +17,15 @@ void ToggleButtonComponent::init(
   const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
   const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
   
-  label.setFont(fontMedium);
-  label.setText(labelText, juce::dontSendNotification);
-  label.setJustificationType(juce::Justification::centred);
-  addAndMakeVisible(label);
-  
+  addAndMakeVisible (toggleButton);
+  attachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>
+  (
+   editorRef->processorRef.state,
+   parameterID,
+   toggleButton
+   );
+  toggleButton.setButtonText(labelText);
+
 }
 
 
@@ -33,6 +37,6 @@ void ToggleButtonComponent::paint(juce::Graphics& g)
 void ToggleButtonComponent::resized()
 {
   auto area = getLocalBounds();
-  label.setBounds(area);
+  toggleButton.setBounds(area);
   
 }

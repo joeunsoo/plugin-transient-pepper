@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "../UI/KnobComponent.h"
+#include "../UI/ToggleButtonComponent.h"
 
 // Forward declaration
 class PluginEditor;
@@ -26,6 +27,10 @@ class DetectorComponent : public juce::Component
   juce::Label sectionLabel;
   KnobComponent thresholdKnob;
   KnobComponent bpfFreqKnob;
+  
+  ToggleButtonComponent channelLinkButton;
+  ToggleButtonComponent bpfPowerButton;
+  ToggleButtonComponent sidechainListenButton;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
 };

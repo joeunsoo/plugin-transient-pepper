@@ -5,6 +5,50 @@
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
+  
+  void drawButtonBackground (juce::Graphics& g,
+                                 juce::Button& button,
+                                 const juce::Colour& backgroundColour,
+                                 bool shouldDrawButtonAsHighlighted,
+                                 bool shouldDrawButtonAsDown) override
+      {
+          auto bounds = button.getLocalBounds().toFloat();
+          float cornerSize = 6.0f;
+
+          // --- 상태별 배경색 (linear-gradient 느낌)
+          juce::ColourGradient gradient(
+              button.getToggleState()
+                  ? SECONDARY_DARK_RGB[0]   // 활성 (ON)
+                  : SECONDARY_DARK_RGB[6],     // 비활성 (OFF)
+              bounds.getTopLeft(),
+              button.getToggleState()
+                  ? SECONDARY_DARK_RGB[2]
+                  : SECONDARY_DARK_RGB[9],
+              bounds.getBottomRight(),
+              false
+          );
+
+          g.setGradientFill(gradient);
+          g.fillRoundedRectangle(bounds, cornerSize);
+
+          // --- border (Mantine primary-9 비슷하게)
+          g.setColour(PRIMARY_RGB[9]);
+          g.drawRoundedRectangle(bounds, cornerSize, 1.5f);
+
+          // --- hover 효과
+          if (shouldDrawButtonAsHighlighted && ! button.getToggleState())
+          {
+              g.setColour(juce::Colours::black.withAlpha(0.1f));
+              g.fillRoundedRectangle(bounds, cornerSize);
+          }
+
+          // --- 클릭 상태(Down) 효과
+          if (shouldDrawButtonAsDown)
+          {
+              g.setColour(juce::Colours::black.withAlpha(0.2f));
+              g.fillRoundedRectangle(bounds, cornerSize);
+          }
+      }
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
     juce::Colour colorIn = PRIMARY_RGB[6];
@@ -173,4 +217,20 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       g.restoreState();
     }
   }
+  
+  juce::Font getTextButtonFont (juce::TextButton&, int) override
+  {
+    juce::FontOptions options { mediumTypeface };
+    
+    return juce::Font { options };
+  }
+
+  void setMediumTypeface (juce::Typeface::Ptr tf) { mediumTypeface = tf; }
+  void setSemiBoldTypeface (juce::Typeface::Ptr tf) { semiBoldTypeface = tf; }
+  void setBoldTypeface (juce::Typeface::Ptr tf) { boldTypeface = tf; }
+  
+  private:
+  juce::Typeface::Ptr mediumTypeface;
+  juce::Typeface::Ptr semiBoldTypeface;
+  juce::Typeface::Ptr boldTypeface;
 };

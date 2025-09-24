@@ -15,6 +15,9 @@ void MainComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
 
+  mainLaf.setMediumTypeface(editorRef->pretendardMediumTypeface);
+  mainLaf.setSemiBoldTypeface(editorRef->pretendardSemiBoldTypeface);
+  mainLaf.setBoldTypeface(editorRef->pretendardSemiBoldTypeface);
   setLookAndFeel (&mainLaf);
 
   addAndMakeVisible(detectorComponent);

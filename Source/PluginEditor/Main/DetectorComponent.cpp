@@ -23,6 +23,13 @@ void DetectorComponent::init(PluginEditor& editor)
   bpfFreqKnob.init(editor, ID::bpfFrequency.getParamID(), "BPF Freq");
   thresholdKnob.setRingColor("secondary");
   addAndMakeVisible(bpfFreqKnob);
+  
+  channelLinkButton.init(editor, ID::linkChannels.getParamID(), "L/R Link");
+  addAndMakeVisible(channelLinkButton);
+  bpfPowerButton.init(editor, ID::bpfPower.getParamID(), "BPF");
+  addAndMakeVisible(bpfPowerButton);
+  sidechainListenButton.init(editor, ID::sidechainListen.getParamID(), "Listen");
+  addAndMakeVisible(sidechainListenButton);
 }
 
 DetectorComponent::~DetectorComponent() = default;
@@ -39,6 +46,9 @@ void DetectorComponent::resized()
   sectionLabel.setBounds(area.removeFromTop(30));
   
   auto buttonArea = area.removeFromTop(30);
+  channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3));
+  bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
+  sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   auto SliderArea = area;
   
   thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
