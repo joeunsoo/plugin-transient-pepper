@@ -46,16 +46,16 @@ void HeaderComponent::paint(juce::Graphics& g)
 
 void HeaderComponent::resized()
 {
-  auto area = getLocalBounds().reduced(10);
+  auto area = getLocalBounds().reduced(2, 10);
   
   // 왼쪽 영역
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
-  bypassComponent.setBounds(leftArea.removeFromLeft(30).reduced(5));
-  logoLabel.setBounds(leftArea.reduced(5));
+  bypassComponent.setBounds(leftArea.removeFromLeft(30));
+  logoLabel.setBounds(leftArea);
   
   // 오른쪽 영역
   auto rightArea = area; // 남은 절반
-  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 30).reduced(5));
+  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 30));
   
-  menuComponent.setBounds(rightArea.reduced(5));
+  menuComponent.setBounds(rightArea);
 }

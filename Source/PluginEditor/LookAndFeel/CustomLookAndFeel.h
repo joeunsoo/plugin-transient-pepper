@@ -12,13 +12,17 @@ struct CustomLookAndFeel : public LookAndFeel_V4
 {
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
-    auto vw = width*0.0010f;
-    auto bounds = juce::Rectangle<float>(x, y, width, height);
+    // auto bounds = juce::Rectangle<float>(x, y, width, height);
+    float size = std::min(width, height);
+    auto vw = size*0.0010f;
+
+    auto bounds = juce::Rectangle<float>(0, 0, size, size)
+                     .withCentre({ x + width * 0.5f, y + height * 0.5f });
     auto knobBounds = bounds;
-    knobBounds.reduce(width * 0.1f, width * 0.1f);
+    knobBounds.reduce(size * 0.1f, size * 0.1f);
 
     auto centre = knobBounds.getCentre();
-    float radius = juce::jmin(width, height) / 2.0f;
+    float radius = size / 2.0f;
     
     g.setColour(PRIMARY_DARK_RGB[6]);
     g.fillEllipse(knobBounds);
@@ -54,7 +58,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       g.saveState();
 
       auto BoundsIn = knobBounds;
-      BoundsIn.reduce(width*0.1f, width*0.1f);
+      BoundsIn.reduce(size * 0.1f, size * 0.1f);
       g.setColour(PRIMARY_RGB[6]);
       g.fillEllipse(BoundsIn);
       
@@ -75,12 +79,12 @@ struct CustomLookAndFeel : public LookAndFeel_V4
 
       // 윤곽선 그리기
       auto BoundsInGradStroke = knobBounds;
-      BoundsInGradStroke.reduce(width*0.1f, width*0.1f);
+      BoundsInGradStroke.reduce(size * 0.1f, size * 0.1f);
       g.drawEllipse(BoundsInGradStroke, vw * 4.0f);
 
       // 윤곽선 그리기
       auto BoundsInStroke = knobBounds;
-      BoundsInStroke.reduce(width*0.09f, width*0.09f);
+      BoundsInStroke.reduce(size * 0.09f, size * 0.09f);
       g.setColour(juce::Colours::black);
       g.drawEllipse(BoundsInStroke, vw * 6.0f);
 

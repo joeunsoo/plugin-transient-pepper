@@ -50,8 +50,8 @@ void PluginEditor::paint(juce::Graphics& g)
 void PluginEditor::resized()
 {
   // UI layout code
-  auto area = getLocalBounds().reduced(10);
-  headerComponent.setBounds(area.removeFromTop(60));
+  auto area = getLocalBounds().reduced(10, 0);
+  headerComponent.setBounds(area.removeFromTop(40));
   mainComponent.setBounds(area);
   
 }

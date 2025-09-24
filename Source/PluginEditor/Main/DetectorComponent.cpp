@@ -48,10 +48,14 @@ void DetectorComponent::paint(juce::Graphics& g)
 void DetectorComponent::resized()
 {
   auto area = getLocalBounds().reduced(0);
-  sectionLabel.setBounds (0, 0, 100, 30);
+
+  sectionLabel.setBounds(area.removeFromTop(30));
   
-  thresholdRotarySlider.setBounds(0, 30, 200, 200);
-  thresholdLabel.setBounds(0, 230, 200, 20);
+  auto buttonArea = area.removeFromTop(30);
+  auto SliderArea = area;
   
-  bpfFrequencyRotarySlider.setBounds(200, 30, 100, 100);
+  thresholdRotarySlider.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
+  // thresholdLabel.setBounds(0, 230, 200, 20);
+  
+  bpfFrequencyRotarySlider.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
 }
