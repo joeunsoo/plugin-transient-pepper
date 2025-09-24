@@ -14,12 +14,8 @@ HeaderComponent::~HeaderComponent()
 void HeaderComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
-  const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
-  const Font fontSemiBold { FontOptions { editorRef->pretendardSemiBoldTypeface } };
-  const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
-  
-  
-  headerLaF.setTypeface(editorRef->pretendardMediumTypeface);
+
+  headerLaF.setFont(editorRef->fontMedium);
   setLookAndFeel (&headerLaF);
   
   // 왼쪽 버튼과 텍스트
@@ -28,13 +24,13 @@ void HeaderComponent::init(PluginEditor& editor)
   
   
   addAndMakeVisible(logoLabel);
-  logoLabel.setFont(fontBold);
+  logoLabel.setFont(editorRef->fontBold);
   logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);
   logoLabel.setText("Transient Pepper", juce::dontSendNotification);
   logoLabel.setJustificationType(juce::Justification::centredLeft);
   
   addAndMakeVisible(companyLabel);
-  companyLabel.setFont(fontBold);
+  companyLabel.setFont(editorRef->fontBold);
   companyLabel.setText("JoEunsoo", juce::dontSendNotification);
   companyLabel.setJustificationType(juce::Justification::centredRight);
   
@@ -49,7 +45,7 @@ void HeaderComponent::paint(juce::Graphics& g)
 
 void HeaderComponent::resized()
 {
-  auto area = getLocalBounds().reduced(2, 10);
+  auto area = getLocalBounds().reduced(5, 10);
   
   // 왼쪽 영역
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);

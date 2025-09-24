@@ -14,8 +14,6 @@ void ToggleButtonComponent::init(
                          const String labelText)
 {
   editorRef = &editor;
-  const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
-  const Font fontBold { FontOptions { editorRef->pretendardBoldTypeface } };
   
   addAndMakeVisible (toggleButton);
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>

@@ -2,16 +2,13 @@
 
 struct HeaderLookAndFeel : juce::LookAndFeel_V4
 {
-  void setTypeface (juce::Typeface::Ptr tf) { typeface = tf; }
+  void setFont (juce::FontOptions f) { font = f; }
   
   juce::Font getPopupMenuFont() override
   {
-    // Pretendard 14pt Bold 예시
-    juce::FontOptions options { typeface };
-    
-    return juce::Font { options };
+    return juce::Font { font };
   }
 
   private:
-  juce::Typeface::Ptr typeface;
+  juce::FontOptions font;
 };

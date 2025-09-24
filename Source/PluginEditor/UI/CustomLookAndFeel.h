@@ -31,14 +31,14 @@ struct CustomLookAndFeel : public LookAndFeel_V4
           g.setGradientFill(gradient);
           g.fillRoundedRectangle(bounds, cornerSize);
 
-          // --- border (Mantine primary-9 비슷하게)
+          // --- border
           g.setColour(PRIMARY_RGB[9]);
           g.drawRoundedRectangle(bounds, cornerSize, 1.5f);
 
           // --- hover 효과
           if (shouldDrawButtonAsHighlighted && ! button.getToggleState())
           {
-              g.setColour(juce::Colours::black.withAlpha(0.1f));
+              g.setColour(juce::Colours::white.withAlpha(0.05f));
               g.fillRoundedRectangle(bounds, cornerSize);
           }
 
@@ -145,14 +145,17 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       g2.fillEllipse(BoundsIn);
     }
     
-    // Drop shadow 생성
-    juce::DropShadow ds(juce::Colours::black.withAlpha(0.9f), static_cast<int>(vw * 25), {0, static_cast<int>(vw * 25)});
-    
-    // 위치 변환 후 그림자 적용
-    g.saveState();
-    // g.addTransform(juce::AffineTransform::translation(centre.getX(), centre.getY()));
-    ds.drawForImage(g, knobImage);  // 이제 2개 인자
-    g.restoreState();
+    if ((vw * 25) > 1) {
+      // Drop shadow 생성
+      juce::DropShadow ds(juce::Colours::black.withAlpha(0.9f), static_cast<int>(vw * 25), {0, static_cast<int>(vw * 25)});
+      
+      
+      // 위치 변환 후 그림자 적용
+      g.saveState();
+      // g.addTransform(juce::AffineTransform::translation(centre.getX(), centre.getY()));
+      ds.drawForImage(g, knobImage);  // 이제 2개 인자
+      g.restoreState();
+    }
     
     
     // 안쪽 그리기
@@ -220,17 +223,15 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   
   juce::Font getTextButtonFont (juce::TextButton&, int) override
   {
-    juce::FontOptions options { mediumTypeface };
-    
-    return juce::Font { options };
+    return juce::Font { fontMedium };
   }
 
-  void setMediumTypeface (juce::Typeface::Ptr tf) { mediumTypeface = tf; }
-  void setSemiBoldTypeface (juce::Typeface::Ptr tf) { semiBoldTypeface = tf; }
-  void setBoldTypeface (juce::Typeface::Ptr tf) { boldTypeface = tf; }
+  void setFontMedium (juce::FontOptions f) { fontMedium = f; }
+  void setFontSemiBold (juce::FontOptions f) { fontSemiBold = f; }
+  void setFontBold (juce::FontOptions f) { fontBold = f; }
   
   private:
-  juce::Typeface::Ptr mediumTypeface;
-  juce::Typeface::Ptr semiBoldTypeface;
-  juce::Typeface::Ptr boldTypeface;
+  juce::FontOptions fontMedium;
+  juce::FontOptions fontSemiBold;
+  juce::FontOptions fontBold;
 };

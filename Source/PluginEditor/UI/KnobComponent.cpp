@@ -14,7 +14,6 @@ void KnobComponent::init(
                          const String labelText)
 {
   editorRef = &editor;
-  const Font fontMedium { FontOptions { editorRef->pretendardMediumTypeface } };
   
   rotarySlider.setColour(
                          juce::Slider::rotarySliderFillColourId,
@@ -34,12 +33,12 @@ void KnobComponent::init(
    rotarySlider
    );
   
-  label.setFont(fontMedium);
+  label.setFont(editorRef->fontMedium);
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(label);
   
-  tooltipLabel.setFont(fontMedium);
+  tooltipLabel.setFont(editorRef->fontMedium);
   tooltipLabel.setText("", juce::dontSendNotification);
   tooltipLabel.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(tooltipLabel);
@@ -59,10 +58,10 @@ void KnobComponent::paint(juce::Graphics& g)
 void KnobComponent::resized()
 {
   auto area = getLocalBounds();
-  rotarySlider.setBounds(area.removeFromTop(area.getHeight() - 60));
-  label.setBounds(area.removeFromTop(30));
-  tooltipLabel.setBounds(area);
-  
+  rotarySlider.setBounds(area.removeFromTop(area.getHeight() - 10));
+
+  area.setY(area.getY()-10);
+  label.setBounds(area);
 }
 
 void KnobComponent::setColor(const String color) {

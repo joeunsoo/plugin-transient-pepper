@@ -17,9 +17,19 @@ class PluginEditor : public juce::AudioProcessorEditor
   //==============================================================================  
   PluginAudioProcessor& processorRef;
 
-  juce::Typeface::Ptr pretendardMediumTypeface;
-  juce::Typeface::Ptr pretendardSemiBoldTypeface;
-  juce::Typeface::Ptr pretendardBoldTypeface;
+  
+  juce::FontOptions fontMedium {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdMedium_otf, BinaryData::PretendardStdMedium_otfSize)};
+  juce::FontOptions fontSemiBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf, BinaryData::PretendardStdSemiBold_otfSize)};
+  juce::FontOptions fontBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize)};
+  
+  /*
+  juce::FontOptions fontMedium;
+  juce::FontOptions fontSemiBold;
+  juce::FontOptions fontBold;
+   */
+  // juce::Typeface::Ptr pretendardMediumTypeface;
+  // juce::Typeface::Ptr pretendardSemiBoldTypeface;
+  // juce::Typeface::Ptr pretendardBoldTypeface;
   //==============================================================================
   private:
   

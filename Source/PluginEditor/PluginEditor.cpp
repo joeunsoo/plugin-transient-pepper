@@ -8,24 +8,6 @@
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
 : AudioProcessorEditor(&p), processorRef(p)
 {
-  // 폰트 선언
-  pretendardMediumTypeface =
-      juce::Typeface::createSystemTypefaceFor(
-          BinaryData::PretendardStdMedium_otf,
-          BinaryData::PretendardStdMedium_otfSize
-      );
-  
-  pretendardSemiBoldTypeface =
-      juce::Typeface::createSystemTypefaceFor(
-          BinaryData::PretendardStdSemiBold_otf,
-          BinaryData::PretendardStdSemiBold_otfSize
-      );
-  pretendardBoldTypeface =
-      juce::Typeface::createSystemTypefaceFor(
-          BinaryData::PretendardStdBold_otf,
-          BinaryData::PretendardStdBold_otfSize
-      );
-  
   // 헤더 불러오기
   headerComponent.init(*this);
   addAndMakeVisible (headerComponent);
@@ -50,8 +32,9 @@ void PluginEditor::paint(juce::Graphics& g)
 void PluginEditor::resized()
 {
   // UI layout code
-  auto area = getLocalBounds().reduced(10, 0);
-  headerComponent.setBounds(area.removeFromTop(40));
+  auto area = getLocalBounds();
+  headerComponent.setBounds(area.removeFromTop(35));
+  area.setHeight(area.getHeight()-5);
   mainComponent.setBounds(area);
   
 }
