@@ -69,5 +69,5 @@ void PluginEditor::setScale(int scale)
   }
   
   // 전체 에디터에 transform 적용
-  setTransform(juce::AffineTransform::scale(factor));
+  // setTransform(juce::AffineTransform::scale(factor));
 }
