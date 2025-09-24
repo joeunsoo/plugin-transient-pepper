@@ -51,6 +51,11 @@
                 file="Source/PluginEditor/Main/MainComponent.cpp"/>
         </GROUP>
         <GROUP id="{BEB779A9-B663-662B-2FD5-2230266C0E41}" name="Header">
+          <FILE id="k4Bnhb" name="MenuLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/Header/MenuLookAndFeel.h"/>
+          <FILE id="QUMQnQ" name="MenuComponent.h" compile="0" resource="0" file="Source/PluginEditor/Header/MenuComponent.h"/>
+          <FILE id="aTYJV7" name="MenuComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Header/MenuComponent.cpp"/>
           <FILE id="EobrKI" name="HeaderComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Header/HeaderComponent.h"/>
           <FILE id="JAM3Iv" name="HeaderComponent.cpp" compile="1" resource="0"

@@ -23,7 +23,6 @@ void MainComponent::setEditorRef(PluginEditor& editor)
 
 void MainComponent::paint(juce::Graphics& g)
 {
-  /*
   auto bounds = getLocalBounds().toFloat();
   float borderRadius = 15.0f;
   // ---------- 1. 외부 그림자 ----------
@@ -56,7 +55,6 @@ void MainComponent::paint(juce::Graphics& g)
   // ---------- 4. 경계선(optional) ----------
   g.setColour(juce::Colours::white.withAlpha(0.1f));
   g.drawRoundedRectangle(bounds, borderRadius, 1.0f);
-  */
 }
 
 void MainComponent::resized()

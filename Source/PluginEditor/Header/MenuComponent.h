@@ -1,18 +1,17 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "DetectorComponent.h"
+#include "MenuLookAndFeel.h"
 
 // Forward declaration
 class PluginEditor;
 
-
 //==============================================================================
-class MainComponent : public juce::Component
+class MenuComponent : public juce::Component
 {
   public:
-  MainComponent();
-  ~MainComponent() override;
+  MenuComponent();
+  ~MenuComponent() override;
   
   void setEditorRef(PluginEditor& editor);
 
@@ -22,10 +21,9 @@ class MainComponent : public juce::Component
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-
-  DetectorComponent detectorComponent;
-
-  juce::DropShadow dropShadow;
   
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
+  MenuLookAndFeel menuLnF;
+  juce::TextButton menuButton;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuComponent)
 };

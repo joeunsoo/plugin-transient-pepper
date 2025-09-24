@@ -5,6 +5,9 @@
 HeaderComponent::HeaderComponent() {
   
 }
+
+HeaderComponent::~HeaderComponent() = default;
+
 void HeaderComponent::setEditorRef(PluginEditor& editor)
 {
   editorRef = &editor;
@@ -27,22 +30,10 @@ void HeaderComponent::setEditorRef(PluginEditor& editor)
   companyLabel.setText("JoEunsoo", juce::dontSendNotification);
   companyLabel.setJustificationType(juce::Justification::centredRight);
   
-  addAndMakeVisible(rightButton);
-  rightButton.setButtonText("Right Button");
-  
-  
-  scale100Button.onClick = [this] { editorRef->setScale(100); };
-  addAndMakeVisible(scale100Button);
-  
-  scale150Button.onClick = [this] { editorRef->setScale(150); };
-  addAndMakeVisible(scale150Button);
-  
-  scale200Button.onClick = [this] { editorRef->setScale(200); };
-  addAndMakeVisible(scale200Button);
-  
-}
+  addAndMakeVisible(menuComponent);
+  menuComponent.setEditorRef(editor);
 
-HeaderComponent::~HeaderComponent() = default;
+}
 
 void HeaderComponent::paint(juce::Graphics& g)
 {
@@ -61,9 +52,6 @@ void HeaderComponent::resized()
   // 오른쪽 영역
   auto rightArea = area; // 남은 절반
   companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 100).reduced(5));
-  rightButton.setBounds(rightArea.reduced(5));
   
-  scale100Button.setBounds (20, 20, 100, 30);
-  scale150Button.setBounds (120, 20, 100, 30);
-  scale200Button.setBounds (220, 20, 100, 30);
+  menuComponent.setBounds(rightArea.reduced(5));
 }

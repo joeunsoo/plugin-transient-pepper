@@ -4,9 +4,7 @@
 
 //==============================================================================
 DetectorComponent::DetectorComponent() {
-  addAndMakeVisible(label);
-  label.setText("testest", juce::dontSendNotification);
-  label.setBounds(10, 10, 100, 30);
+  
 }
 
 void DetectorComponent::setEditorRef(PluginEditor& editor)
@@ -30,7 +28,7 @@ DetectorComponent::~DetectorComponent() = default;
 
 void DetectorComponent::paint(juce::Graphics& g)
 {
-  g.fillAll(juce::Colour(SECONDARY_DARK_RGB[5]));
+  // g.fillAll(juce::Colour(SECONDARY_DARK_RGB[5]));
 }
 
 void DetectorComponent::resized()
