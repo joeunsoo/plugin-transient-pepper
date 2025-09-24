@@ -66,6 +66,12 @@
                 file="Source/PluginEditor/Main/DetectorComponent.h"/>
           <FILE id="KN0I2D" name="DetectorComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Main/DetectorComponent.cpp"/>
+          <FILE id="jARmxy" name="ToneComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/ToneComponent.h"/>
+          <FILE id="AcDDm5" name="ToneComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/ToneComponent.cpp"/>
+          <FILE id="e0Y5GE" name="MixComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MixComponent.h"/>
+          <FILE id="hEKsrG" name="MixComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/MixComponent.cpp"/>
           <FILE id="UBBWmH" name="MainComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MainComponent.h"/>
           <FILE id="gkDCuo" name="MainComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Main/MainComponent.cpp"/>

@@ -71,7 +71,7 @@ void DetectorComponent::resized()
   bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   
-  auto SliderArea = area;
+  auto SliderArea = area.removeFromTop(75);
   thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
   bpfFreqKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
 }

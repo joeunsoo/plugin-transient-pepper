@@ -29,15 +29,22 @@ void MainComponent::init(PluginEditor& editor)
 
   addAndMakeVisible(envelopeComponent);
   envelopeComponent.init(editor);
+  
+  addAndMakeVisible (toneComponent);
+  toneComponent.init(editor);
 
+  addAndMakeVisible (mixComponent);
+  mixComponent.init(editor);
 }
 
 void MainComponent::resized()
 {
   auto area = getLocalBounds().reduced(20, 5);
-  auto leftArea = area.removeFromLeft(200);
+  auto leftArea = area.removeFromLeft(225);
   detectorComponent.setBounds(leftArea.removeFromTop(150));
   envelopeComponent.setBounds(leftArea);
+  toneComponent.setBounds(area.removeFromLeft(300));
+  mixComponent.setBounds(area.removeFromLeft(75));
 }
 
 void MainComponent::paint(juce::Graphics& g)

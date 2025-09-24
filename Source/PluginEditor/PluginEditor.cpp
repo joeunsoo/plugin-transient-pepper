@@ -15,16 +15,17 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   
   mainComponent.init(*this);
   addAndMakeVisible (mainComponent);
-  
+
   // 기본 크기
   setSize(640, 360);
   setScale(processorRef.windowScale);
   
+  // 툴팁
   tooltipLabel = std::make_unique<RoundedLabel>();
   tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB[9]);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
-  tooltipLabel->setFont(fontMedium.withHeight(12.0f));
+  tooltipLabel->setFont(fontMedium.withHeight(10.0f));
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
@@ -65,8 +66,8 @@ void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, co
   auto textHeight = tooltipLabel->getFont().getHeight();
   
   // padding 포함
-  int labelWidth  = textWidth + 16;
-  int labelHeight = static_cast<int>(textHeight) + 8;
+  int labelWidth  = textWidth + 12;
+  int labelHeight = static_cast<int>(textHeight) + 6;
   
   // 부모 기준 가운데 정렬
   int x = area.getCentreX() - labelWidth / 2;

@@ -2,17 +2,18 @@
 
 #include <JuceHeader.h>
 #include "../UI/KnobComponent.h"
+#include "../UI/ToggleButtonComponent.h"
 
 // Forward declaration
 class PluginEditor;
 
 //==============================================================================
-class EnvelopeComponent : public juce::Component,
+class MixComponent : public juce::Component,
 public juce::AudioProcessorParameter::Listener
 {
   public:
-  EnvelopeComponent();
-  ~EnvelopeComponent() override;
+  MixComponent();
+  ~MixComponent() override;
   
   void init(PluginEditor& editor);
   
@@ -26,10 +27,9 @@ public juce::AudioProcessorParameter::Listener
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
   
-  
-  juce::Label sectionLabel;
-  KnobComponent attackKnob;
-  KnobComponent releaseKnob;
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeComponent)
+  ToggleButtonComponent wetSoloButton;
+  KnobComponent noiseLevelGainKnob;
+  KnobComponent dryWetKnob;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MixComponent)
 };

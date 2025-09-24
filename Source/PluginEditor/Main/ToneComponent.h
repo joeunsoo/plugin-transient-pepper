@@ -7,12 +7,12 @@
 class PluginEditor;
 
 //==============================================================================
-class EnvelopeComponent : public juce::Component,
+class ToneComponent : public juce::Component,
 public juce::AudioProcessorParameter::Listener
 {
   public:
-  EnvelopeComponent();
-  ~EnvelopeComponent() override;
+  ToneComponent();
+  ~ToneComponent() override;
   
   void init(PluginEditor& editor);
   
@@ -26,10 +26,8 @@ public juce::AudioProcessorParameter::Listener
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
   
-  
-  juce::Label sectionLabel;
-  KnobComponent attackKnob;
-  KnobComponent releaseKnob;
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeComponent)
+  KnobComponent tiltKnob;
+  KnobComponent midsideKnob;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToneComponent)
 };

@@ -3,6 +3,8 @@
 #include <JuceHeader.h>
 #include "DetectorComponent.h"
 #include "EnvelopeComponent.h"
+#include "ToneComponent.h"
+#include "MixComponent.h"
 #include "../UI/CustomLookAndFeel.h"
 
 // Forward declaration
@@ -28,6 +30,8 @@ class MainComponent : public juce::Component
 
   DetectorComponent detectorComponent;
   EnvelopeComponent envelopeComponent;
+  ToneComponent toneComponent;
+  MixComponent mixComponent;
 
   juce::DropShadow dropShadow;
   
