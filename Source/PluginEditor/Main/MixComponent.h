@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "../UI/KnobComponent.h"
 #include "../UI/ToggleButtonComponent.h"
+#include "../UI/PeakMeterComponent.h"
 
 // Forward declaration
 class PluginEditor;
@@ -31,6 +32,8 @@ public juce::AudioProcessorParameter::Listener
   KnobComponent noiseLevelGainKnob;
   KnobComponent dryWetKnob;
   KnobComponent outputGainKnob;
+  PeakMeterComponent noisePeakMeter;
+  PeakMeterComponent outputPeakMeter;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MixComponent)
 };
