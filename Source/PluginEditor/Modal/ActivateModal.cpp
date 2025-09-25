@@ -9,13 +9,22 @@ ActivateModal::ActivateModal() {
   setAlwaysOnTop (true);
 }
 
-ActivateModal::~ActivateModal() = default;
+ActivateModal::~ActivateModal() {
+  setLookAndFeel(nullptr);
+};
 
 void ActivateModal::init(PluginEditor& editor)
 {
   editorRef = &editor;
-  deactivateComponent.init(editor);
-  loginComponent.init(editor);
+
+  modalLaf.setFontRegular(editorRef->fontRegular);
+  modalLaf.setFontMedium(editorRef->fontMedium);
+  modalLaf.setFontSemiBold(editorRef->fontSemiBold);
+  modalLaf.setFontBold(editorRef->fontBold);
+  setLookAndFeel (&modalLaf);
+
+  deactivateComponent.init(editor, *this);
+  loginComponent.init(editor, *this);
   
 }
 

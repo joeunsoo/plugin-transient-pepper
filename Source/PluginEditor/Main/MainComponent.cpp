@@ -19,6 +19,7 @@ void MainComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
 
+  mainLaf.setFontRegular(editorRef->fontRegular);
   mainLaf.setFontMedium(editorRef->fontMedium);
   mainLaf.setFontSemiBold(editorRef->fontSemiBold);
   mainLaf.setFontBold(editorRef->fontBold);

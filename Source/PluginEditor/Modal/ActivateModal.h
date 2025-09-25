@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "DeactivateComponent.h"
 #include "LoginComponent.h"
+#include "ModalLookAndFeel.h"
 
 // Forward declaration
 class PluginEditor;
@@ -25,7 +26,8 @@ class ActivateModal : public juce::Component
   
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  
+  ModalLookAndFeel modalLaf;
+
   DeactivateComponent deactivateComponent;
   LoginComponent loginComponent;
 

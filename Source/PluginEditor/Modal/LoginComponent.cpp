@@ -10,9 +10,10 @@ LoginComponent::LoginComponent() {
 
 LoginComponent::~LoginComponent() = default;
 
-void LoginComponent::init(PluginEditor& editor)
+void LoginComponent::init(PluginEditor& editor, ActivateModal& modal)
 {
   editorRef = &editor;
+  modalRef = &modal;
 }
 
 void LoginComponent::resized()

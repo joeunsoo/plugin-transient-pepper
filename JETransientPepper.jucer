@@ -54,6 +54,8 @@
                 file="Source/PluginEditor/Modal/ActivateModal.cpp"/>
           <FILE id="gP6vYy" name="AboutModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/AboutModal.h"/>
           <FILE id="aYrNGm" name="AboutModal.cpp" compile="1" resource="0" file="Source/PluginEditor/Modal/AboutModal.cpp"/>
+          <FILE id="o48acY" name="ModalLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/Modal/ModalLookAndFeel.h"/>
         </GROUP>
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="UI">
           <FILE id="X7aPKY" name="GraphContainer.h" compile="0" resource="0"

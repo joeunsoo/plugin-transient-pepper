@@ -4,6 +4,7 @@
 
 // Forward declaration
 class PluginEditor;
+class ActivateModal;
 
 class LoginComponent : public juce::Component
 {
@@ -11,7 +12,7 @@ class LoginComponent : public juce::Component
   LoginComponent();
   ~LoginComponent() override;
 
-  void init(PluginEditor& editor);
+  void init(PluginEditor& editor, ActivateModal& modal);
   
   void resized() override;
   void paint(juce::Graphics& g) override;
@@ -19,6 +20,7 @@ class LoginComponent : public juce::Component
   
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
 
   juce::Component flexContainer;
 

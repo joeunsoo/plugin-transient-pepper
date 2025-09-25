@@ -15,13 +15,23 @@ DeactivateComponent::DeactivateComponent() {
   flexContainer.addAndMakeVisible(accountEmailLabel);
   accountEmailLabel.setJustificationType (juce::Justification::centred);
   accountEmailLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  
+  flexContainer.addAndMakeVisible(deactivateButton);
+  
+  deactivateButton.setButtonText("Deactivate");
+  deactivateButton.setColour(juce::TextButton::buttonColourId, PRIMARY_DARK_RGB[4]);
+  deactivateButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
+  deactivateButton.setColour(juce::ComboBox::outlineColourId, PRIMARY_DARK_RGB[4]);
+  
 }
 
 DeactivateComponent::~DeactivateComponent() = default;
 
-void DeactivateComponent::init(PluginEditor& editor)
+void DeactivateComponent::init(PluginEditor& editor, ActivateModal& modal)
 {
   editorRef = &editor;
+  modalRef = &modal;
+
   pluginNameLabel.setFont(editorRef->fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
   pluginNameLabel.setInterceptsMouseClicks(false, false);
   
@@ -29,6 +39,12 @@ void DeactivateComponent::init(PluginEditor& editor)
   accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
   accountEmailLabel.setFont(editorRef->fontMedium.withHeight(10.0f));
   accountEmailLabel.setInterceptsMouseClicks(false, false);
+  
+  deactivateButton.onClick = [this]()
+  {
+    editorRef->processorRef.licenseManager.setDeactivate();
+    modalRef->resized();
+  };
 }
 
 void DeactivateComponent::resized()
@@ -44,12 +60,17 @@ void DeactivateComponent::resized()
   flexBox.items.add(FlexItem(pluginNameLabel)
                     .withWidth(bounds.getWidth())
                     .withMinHeight(UI_PLUGIN_NAME_FONT_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 4, 0}));
+                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
   
   flexBox.items.add(FlexItem(accountEmailLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(10.0f)
-                    .withMargin(FlexItem::Margin{0, 0, 4, 0}));
+                    .withMinHeight(15.0f)
+                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+  
+  flexBox.items.add(FlexItem(deactivateButton)
+                    .withWidth(80.0f)
+                    .withMinHeight(20.0f));
+  
   flexBox.performLayout (flexContainer.getLocalBounds()); // [6]
 }
 

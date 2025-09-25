@@ -295,12 +295,14 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
     return juce::Font { fontMedium.withHeight(fontHeight) };
   }
-  
+
+  void setFontRegular (juce::FontOptions f) { fontRegular = f; }
   void setFontMedium (juce::FontOptions f) { fontMedium = f; }
   void setFontSemiBold (juce::FontOptions f) { fontSemiBold = f; }
   void setFontBold (juce::FontOptions f) { fontBold = f; }
   
   private:
+  juce::FontOptions fontRegular;
   juce::FontOptions fontMedium;
   juce::FontOptions fontSemiBold;
   juce::FontOptions fontBold;
