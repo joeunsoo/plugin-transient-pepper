@@ -6,11 +6,18 @@ MenuComponent::MenuComponent() {
   
 }
 
-MenuComponent::~MenuComponent() = default;
+MenuComponent::~MenuComponent()
+{
+  setLookAndFeel(nullptr);
+};
+
 
 void MenuComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
+
+  menuLaF.setFont(editorRef->fontMedium);
+  setLookAndFeel (&menuLaF);
 
   menuButton.setClickingTogglesState (false); // 토글 버튼이면 true
   addAndMakeVisible(menuButton);
@@ -34,6 +41,7 @@ void MenuComponent::init(PluginEditor& editor)
   menuButton.onClick = [&]
   {
     PopupMenu menu;
+    menu.setLookAndFeel(&menuLaF);
     menu.addItem ("100%", [this] { editorRef->setScale(100); });
     menu.addItem ("150%", [this] { editorRef->setScale(150); });
     menu.addItem ("200%", [this] { editorRef->setScale(200); });

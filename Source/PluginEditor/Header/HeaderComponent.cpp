@@ -6,18 +6,12 @@ HeaderComponent::HeaderComponent() {
   
 }
 
-HeaderComponent::~HeaderComponent()
-{
-  setLookAndFeel(nullptr);
-};
+HeaderComponent::~HeaderComponent() = default;
 
 void HeaderComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
 
-  headerLaF.setFont(editorRef->fontMedium);
-  setLookAndFeel (&headerLaF);
-  
   // 왼쪽 버튼과 텍스트
   addAndMakeVisible(bypassComponent);
   bypassComponent.init(editor);

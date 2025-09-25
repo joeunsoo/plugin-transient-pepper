@@ -54,8 +54,8 @@
                 file="Source/PluginEditor/UI/KnobComponent.cpp"/>
           <FILE id="zHu2Lx" name="CustomLookAndFeel.h" compile="0" resource="0"
                 file="Source/PluginEditor/UI/CustomLookAndFeel.h"/>
-          <FILE id="k0A9FM" name="HeaderLookAndFeel.h" compile="0" resource="0"
-                file="Source/PluginEditor/UI/HeaderLookAndFeel.h"/>
+          <FILE id="k0A9FM" name="MenuLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/UI/MenuLookAndFeel.h"/>
         </GROUP>
         <GROUP id="{360A0E60-FFFE-FE52-A34D-DE3EDF589E05}" name="Main">
           <FILE id="A7RJyS" name="EnvelopeComponent.h" compile="0" resource="0"
