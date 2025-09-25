@@ -32,18 +32,24 @@ void MixComponent::init(PluginEditor& editor)
   addAndMakeVisible(outputGainKnob);
 
   editorRef->processorRef.parameters.bypass.addListener(this);
+  editorRef->processorRef.parameters.wetSolo.addListener(this);
   parameterValueChanged(0, 0);
 }
 
 void MixComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
+  bool wetSolo = editorRef->processorRef.parameters.wetSolo.get();
+
   if (bypass) {
     noiseLevelGainKnob.setAlpha(DISABLED_ALPHA);
     wetSoloButton.setAlpha(DISABLED_ALPHA);
-    dryWetKnob.setAlpha(DISABLED_ALPHA);
   } else {
     noiseLevelGainKnob.setAlpha(1.0f);
     wetSoloButton.setAlpha(1.0f);
+  }
+  if (bypass || wetSolo) {
+    dryWetKnob.setAlpha(DISABLED_ALPHA);
+  } else {
     dryWetKnob.setAlpha(1.0f);
   }
 }
