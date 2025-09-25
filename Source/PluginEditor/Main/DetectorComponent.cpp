@@ -46,6 +46,7 @@ void DetectorComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
   bool bpfPower = editorRef->processorRef.parameters.bpfPower.get();
   bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
+
   if (bypass) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
     channelLinkButton.setAlpha(DISABLED_ALPHA);

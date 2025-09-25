@@ -19,12 +19,15 @@ void ToneComponent::init(PluginEditor& editor)
   addAndMakeVisible(midsideKnob);
   
   editorRef->processorRef.parameters.bypass.addListener(this);
+  editorRef->processorRef.parameters.sidechainListen.addListener(this);
   parameterValueChanged(0, 0);
 }
 
 void ToneComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
-  if (bypass) {
+  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
+
+  if (bypass || sidechainListen) {
     tiltKnob.setAlpha(DISABLED_ALPHA);
     midsideKnob.setAlpha(DISABLED_ALPHA);
   } else {

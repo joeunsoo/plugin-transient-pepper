@@ -33,21 +33,28 @@ void MixComponent::init(PluginEditor& editor)
 
   editorRef->processorRef.parameters.bypass.addListener(this);
   editorRef->processorRef.parameters.wetSolo.addListener(this);
+  editorRef->processorRef.parameters.sidechainListen.addListener(this);
   parameterValueChanged(0, 0);
 }
 
 void MixComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
+  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
   bool wetSolo = editorRef->processorRef.parameters.wetSolo.get();
 
   if (bypass) {
     noiseLevelGainKnob.setAlpha(DISABLED_ALPHA);
-    wetSoloButton.setAlpha(DISABLED_ALPHA);
   } else {
     noiseLevelGainKnob.setAlpha(1.0f);
+  }
+
+  if (bypass || sidechainListen) {
+    wetSoloButton.setAlpha(DISABLED_ALPHA);
+  } else {
     wetSoloButton.setAlpha(1.0f);
   }
-  if (bypass || wetSolo) {
+
+  if (bypass || wetSolo || sidechainListen) {
     dryWetKnob.setAlpha(DISABLED_ALPHA);
   } else {
     dryWetKnob.setAlpha(1.0f);

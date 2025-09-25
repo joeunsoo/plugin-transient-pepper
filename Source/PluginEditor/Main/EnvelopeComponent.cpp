@@ -26,12 +26,15 @@ void EnvelopeComponent::init(PluginEditor& editor)
   addAndMakeVisible(releaseKnob);
   
   editorRef->processorRef.parameters.bypass.addListener(this);
+  editorRef->processorRef.parameters.sidechainListen.addListener(this);
   parameterValueChanged(0, 0);
 }
 
 void EnvelopeComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
-  if (bypass) {
+  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
+
+  if (bypass || sidechainListen) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
     attackKnob.setAlpha(DISABLED_ALPHA);
     releaseKnob.setAlpha(DISABLED_ALPHA);
