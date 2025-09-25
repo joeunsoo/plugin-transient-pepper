@@ -12,9 +12,11 @@ void MixComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
   
-  noisePeakMeter.init(editor);
-  outputPeakMeter.init(editor);
-  addAndMakeVisible(wetSoloButton);
+  noisePeakMeter.init(editor, 6);
+  addAndMakeVisible(noisePeakMeter);
+
+  outputPeakMeter.init(editor, 0);
+  addAndMakeVisible(outputPeakMeter);
   
   noiseLevelGainKnob.init(editor, ID::noiseLevelGain.getParamID(), "Noise Level");
   noiseLevelGainKnob.setRingColor("secondary");

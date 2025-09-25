@@ -12,7 +12,8 @@ private juce::Timer
   ~PeakMeterComponent() override;
   
   void init(
-            PluginEditor& editor
+            PluginEditor& editor,
+            int index
             );
   
   void setLevel(float newLevel);
@@ -24,6 +25,7 @@ private juce::Timer
 
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
   
+  int idx = -1;
   float level = 0.0f;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeterComponent)
