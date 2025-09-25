@@ -146,7 +146,8 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" xcodeValidArchs="arm64,x86_64" extraCompilerFlags="-Wall \&#10;-Wextra \&#10;-Wconversion \&#10;-Wsign-conversion \&#10;&#10;-Wshadow \&#10;-Wpedantic \&#10;&#10;-Wuninitialized&#10;-Wnull-dereference \&#10;-Wformat \&#10;-Wstrict-aliasing \&#10;&#10;-Wc++20-compat \&#10;-Wdeprecated \&#10;-Wnon-virtual-dtor \&#10;-Wfloat-equal">
+    <XCODE_MAC targetFolder="Builds/MacOSX" xcodeValidArchs="arm64,x86_64" extraCompilerFlags="-Wall \&#10;-Wextra \&#10;-Wconversion \&#10;-Wsign-conversion \&#10;&#10;-Wshadow \&#10;-Wpedantic \&#10;&#10;-Wuninitialized&#10;-Wnull-dereference \&#10;-Wformat \&#10;-Wstrict-aliasing \&#10;&#10;-Wc++20-compat \&#10;-Wdeprecated \&#10;-Wnon-virtual-dtor \&#10;-Wfloat-equal"
+               microphonePermissionNeeded="1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" osxCompatibility="10.13 SDK"
                        codeSigningIdentity="Apple Development: Eun Soo Jo (48GXV85C7B)"
