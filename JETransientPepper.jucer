@@ -41,6 +41,10 @@
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="UI">
+          <FILE id="AoAeyB" name="PeakMeterStereoComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/UI/PeakMeterStereoComponent.h"/>
+          <FILE id="FfejAi" name="PeakMeterStereoComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/UI/PeakMeterStereoComponent.cpp"/>
           <FILE id="e5H3pz" name="PeakMeterComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/UI/PeakMeterComponent.h"/>
           <FILE id="PaLzY2" name="PeakMeterComponent.cpp" compile="1" resource="0"
