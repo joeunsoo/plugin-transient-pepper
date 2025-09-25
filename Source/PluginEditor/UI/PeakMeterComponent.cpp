@@ -5,7 +5,7 @@
 
 PeakMeterComponent::PeakMeterComponent()
 {
-  startTimerHz(60); // 초당 갱신 프레임
+  startTimerHz(UI_TIMER_HZ); // 초당 갱신 프레임
 }
 
 PeakMeterComponent::~PeakMeterComponent() = default;
@@ -35,9 +35,6 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   bounds.removeFromBottom(UI_METER_PADDING_BOTTOM);
   bounds.removeFromRight(UI_METER_PADDING_RIGHT);
 
-  float cornerSize = UI_BUTTON_BORDER_RADIUS;
-  
-  
   // Drop shadow
   juce::Image buttonImage(
                           juce::Image::ARGB,
@@ -45,7 +42,7 @@ void PeakMeterComponent::paint(juce::Graphics& g)
                           juce::roundToInt(boundsOut.getHeight()),
                           true);
   juce::Graphics g2(buttonImage);
-  g2.fillRoundedRectangle(bounds, cornerSize);
+  g2.fillRoundedRectangle(bounds, UI_METER_BORDER_RADIUS);
   
   juce::DropShadow ds(
                       juce::Colours::black.withAlpha(0.5f),
@@ -61,7 +58,11 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   g.reduceClipRegion(bounds.getSmallestIntegerContainer());
   
   // 피크 레벨 막대
-  float barHeight = bounds.getHeight() * level;
+  float y = bounds.getHeight() * level;
+  
+  // smoothing
+  smoothedY += 0.2f * (y - smoothedY);
+  auto barHeight = smoothedY;
   g.setColour(SECONDARY_RGB[6]);
   g.fillRect(bounds.withTop(bounds.getBottom() - barHeight));
   g.restoreState();

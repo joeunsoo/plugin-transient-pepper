@@ -45,6 +45,14 @@
           <FILE id="aYrNGm" name="AboutModal.cpp" compile="1" resource="0" file="Source/PluginEditor/Modal/AboutModal.cpp"/>
         </GROUP>
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="UI">
+          <FILE id="X7aPKY" name="GraphContainer.h" compile="0" resource="0"
+                file="Source/PluginEditor/UI/GraphContainer.h"/>
+          <FILE id="cL6Dbk" name="GraphContainer.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/UI/GraphContainer.cpp"/>
+          <FILE id="PrANkJ" name="GraphComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/UI/GraphComponent.h"/>
+          <FILE id="F8Hdly" name="GraphComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/UI/GraphComponent.cpp"/>
           <FILE id="AoAeyB" name="PeakMeterStereoComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/UI/PeakMeterStereoComponent.h"/>
           <FILE id="FfejAi" name="PeakMeterStereoComponent.cpp" compile="1" resource="0"

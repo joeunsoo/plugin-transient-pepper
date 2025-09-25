@@ -4,19 +4,18 @@
 // Forward declaration
 class PluginEditor;
 
-class PeakMeterComponent : public juce::Component,
+class GraphComponent : public juce::Component,
 private juce::Timer
 {
   public:
-  PeakMeterComponent();
-  ~PeakMeterComponent() override;
+  GraphComponent(juce::Colour f, juce::Colour s);
+  ~GraphComponent() override;
   
   void init(
             PluginEditor& editor,
             int index
             );
   
-  void setLevel(float newLevel);
   
   void paint(juce::Graphics& g) override;
   
@@ -26,8 +25,17 @@ private juce::Timer
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
   
   int idx = -1;
-  float level = 0.0f;
+  float level1 = 0.0f;
+  float level2 = 0.0f;
+  float lastY = 0.0f;
   float smoothedY = 0.0f;
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeterComponent)
+
+  bool isInit = false;
+  juce::Image canvasImage;    // 화면에 표시할 이미지
+  juce::Image bufferImage;
+
+  juce::Colour fillColour;
+  juce::Colour strokeColour;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphComponent)
 };

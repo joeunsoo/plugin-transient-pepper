@@ -21,6 +21,9 @@ void ToneComponent::init(PluginEditor& editor)
   editorRef->processorRef.parameters.bypass.addListener(this);
   editorRef->processorRef.parameters.sidechainListen.addListener(this);
   parameterValueChanged(0, 0);
+  
+  graphContainer.init(editor);
+  addAndMakeVisible(graphContainer);
 }
 
 void ToneComponent::parameterValueChanged (int, float) {
@@ -51,7 +54,9 @@ void ToneComponent::resized()
 {
   auto area = getLocalBounds().reduced(0);
   auto graphArea = area.removeFromTop(area.getHeight()-UI_KNOB_HEIGHT);
-  
+
+  graphContainer.setBounds(graphArea);
+
   auto SliderArea = area;
   SliderArea.removeFromLeft(SliderArea.getWidth()-140);
   tiltKnob.setBounds(SliderArea.removeFromLeft(UI_KNOB_WIDTH));

@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "../UI/KnobComponent.h"
+#include "../UI/GraphContainer.h"
 
 // Forward declaration
 class PluginEditor;
@@ -28,6 +29,8 @@ public juce::AudioProcessorParameter::Listener
   
   KnobComponent tiltKnob;
   KnobComponent midsideKnob;
+  
+  GraphContainer graphContainer;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToneComponent)
 };
