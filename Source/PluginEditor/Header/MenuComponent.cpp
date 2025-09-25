@@ -53,6 +53,11 @@ void MenuComponent::init(PluginEditor& editor)
       if (newUrl.isWellFormed())
         newUrl.launchInDefaultBrowser();
     });
+    menu.addItem ("Online Manual", [] {
+      const URL newUrl = URL ("https://joeunsoo.com/plugins/transient-pepper/manual");
+      if (newUrl.isWellFormed())
+        newUrl.launchInDefaultBrowser();
+    });
     menu.addItem ("About", [this] { editorRef->showAbout(); });
     menu.addSeparator();
     menu.addItem (

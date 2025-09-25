@@ -12,7 +12,7 @@ void MixComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
   
-  noisePeakMeter.init(editor, 6);
+  noisePeakMeter.init(editor, 2);
   addAndMakeVisible(noisePeakMeter);
 
   outputPeakMeter.init(editor, 0);

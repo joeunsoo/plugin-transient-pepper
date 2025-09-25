@@ -22,7 +22,7 @@ void PeakMeterComponent::init(
 // 오디오 샘플 값 전달 (0.0 ~ 1.0)
 void PeakMeterComponent::setLevel(float newLevel)
 {
-  float skewLevel = skewedMap(newLevel, 0.0f, 1.0f, 0.0f, 1.0f, 0.15f);
+  float skewLevel = applySkew(newLevel, 0.0f, 1.0f, 0.15f);
   level = juce::jlimit(0.0f, 1.0f, skewLevel);
 }
 
@@ -61,8 +61,8 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   float y = bounds.getHeight() * level;
   
   // smoothing
-  smoothedY += 0.2f * (y - smoothedY);
-  auto barHeight = smoothedY;
+  // smoothedY += 0.2f * (y - smoothedY);
+  auto barHeight = y;
   g.setColour(SECONDARY_RGB[6]);
   g.fillRect(bounds.withTop(bounds.getBottom() - barHeight));
   g.restoreState();
