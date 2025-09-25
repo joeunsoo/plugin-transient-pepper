@@ -22,6 +22,7 @@ class PluginEditor : public juce::AudioProcessorEditor
   PluginAudioProcessor& processorRef;
 
   
+  juce::FontOptions fontRegular {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdRegular_otf, BinaryData::PretendardStdRegular_otfSize)};
   juce::FontOptions fontMedium {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdMedium_otf, BinaryData::PretendardStdMedium_otfSize)};
   juce::FontOptions fontSemiBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf, BinaryData::PretendardStdSemiBold_otfSize)};
   juce::FontOptions fontBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize)};

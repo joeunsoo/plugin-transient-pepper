@@ -35,7 +35,6 @@ void ToggleButtonComponent::resized()
 {
   auto area = getLocalBounds();
   toggleButton.setBounds(area);
-  // svgButton.setBounds(area)
 }
 void ToggleButtonComponent::setSvgDrawable(std::unique_ptr<Drawable> svgDrawable)
 {

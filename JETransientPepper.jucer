@@ -104,12 +104,14 @@
     </GROUP>
     <GROUP id="A9VZOH" name="Assets">
       <GROUP id="{2B6F30A1-D7F9-9A5B-D874-956D484E1EE8}" name="font">
+        <FILE id="N8dX4J" name="PretendardStd-Regular.otf" compile="0" resource="1"
+              file="Assets/font/PretendardStd-Regular.otf"/>
+        <FILE id="VgjvPf" name="PretendardStd-Medium.otf" compile="0" resource="1"
+              file="Assets/font/PretendardStd-Medium.otf"/>
         <FILE id="Uh69vF" name="PretendardStd-SemiBold.otf" compile="0" resource="1"
               file="Assets/font/PretendardStd-SemiBold.otf"/>
         <FILE id="tPA1jO" name="PretendardStd-Bold.otf" compile="0" resource="1"
               file="Assets/font/PretendardStd-Bold.otf"/>
-        <FILE id="VgjvPf" name="PretendardStd-Medium.otf" compile="0" resource="1"
-              file="Assets/font/PretendardStd-Medium.otf"/>
       </GROUP>
       <GROUP id="{0C1D3CBD-E2AD-CF7B-0CF6-A52F717B0A2A}" name="icon">
         <FILE id="XjYLxX" name="headphones-bold.svg" compile="0" resource="1"

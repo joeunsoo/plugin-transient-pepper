@@ -1,4 +1,5 @@
 #include "MenuComponent.h"
+#include "../../Define.h"
 #include "../PluginEditor.h"
 
 //==============================================================================
@@ -16,7 +17,7 @@ void MenuComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
 
-  menuLaF.setFont(editorRef->fontMedium);
+  menuLaF.setFont(editorRef->fontRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT));
   setLookAndFeel (&menuLaF);
 
   menuButton.setClickingTogglesState (false); // 토글 버튼이면 true
