@@ -1,6 +1,7 @@
 #pragma once
 #include "PeakMeterComponent.h"
 #include "../../Define.h"
+#include "../../Utils.h"
 #include "../PluginEditor.h"
 
 PeakMeterComponent::PeakMeterComponent()
@@ -22,7 +23,8 @@ void PeakMeterComponent::init(
 // 오디오 샘플 값 전달 (0.0 ~ 1.0)
 void PeakMeterComponent::setLevel(float newLevel)
 {
-  level = juce::jlimit(0.0f, 1.0f, newLevel);
+  float skewLevel = skewedMap(newLevel, 0.0f, 1.0f, 0.0f, 1.0f, 0.15f);
+  level = juce::jlimit(0.0f, 1.0f, skewLevel);
 }
 
 void PeakMeterComponent::paint(juce::Graphics& g)

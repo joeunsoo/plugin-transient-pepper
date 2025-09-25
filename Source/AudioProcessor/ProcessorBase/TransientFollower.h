@@ -10,7 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "../ProcessUtils.h"
+#include "../../Utils.h"
 
 template <typename SampleType>
 class TransientFollower

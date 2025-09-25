@@ -33,7 +33,6 @@
         </GROUP>
         <FILE id="JvqXrU" name="PluginParameters.h" compile="0" resource="0"
               file="Source/AudioProcessor/PluginParameters.h"/>
-        <FILE id="fdJvEd" name="ProcessUtils.h" compile="0" resource="0" file="Source/AudioProcessor/ProcessUtils.h"/>
         <FILE id="LyeraB" name="PeakMeter.h" compile="0" resource="0" file="Source/AudioProcessor/PeakMeter.h"/>
         <FILE id="S7sGay" name="PluginAudioProcessor.h" compile="0" resource="0"
               file="Source/AudioProcessor/PluginAudioProcessor.h"/>
@@ -101,6 +100,7 @@
       <FILE id="cUdXGx" name="Define.h" compile="0" resource="0" file="Source/Define.h"/>
       <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"
             file="Source/NamespaceParameterId.h"/>
+      <FILE id="HC3HSh" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="uqbP9c" name="LicenseManager.h" compile="0" resource="0"
             file="Source/LicenseManager.h"/>
       <FILE id="UafBku" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
