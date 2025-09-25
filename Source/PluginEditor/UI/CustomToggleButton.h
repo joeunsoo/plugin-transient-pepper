@@ -20,6 +20,10 @@ struct CustomToggleButton : public juce::TextButton
     if (svgDrawable != nullptr)
     {
       auto bounds = getLocalBounds().toFloat().reduced(UI_BUTTON_SVG_PADDING);
+      bounds.removeFromTop(UI_BUTTON_PADDING_TOP);
+      bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT);
+      bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM);
+      bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT);
       
       auto normal = svgDrawable->createCopy();
       normal->replaceColour(juce::Colours::black, juce::Colours::white);

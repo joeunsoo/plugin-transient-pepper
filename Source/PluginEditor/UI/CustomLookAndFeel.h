@@ -12,9 +12,37 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                              bool shouldDrawButtonAsHighlighted,
                              bool shouldDrawButtonAsDown) override
   {
-    auto bounds = button.getLocalBounds().toFloat();
+    auto boundsOut = button.getLocalBounds().toFloat();
+    auto bounds = boundsOut;
+    bounds.removeFromTop(UI_BUTTON_PADDING_TOP);
+    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT);
+    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM);
+    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT);
+
     float cornerSize = UI_BUTTON_BORDER_RADIUS;
     
+    
+    // Drop shadow
+    juce::Image buttonImage(
+                            juce::Image::ARGB,
+                            juce::roundToInt(boundsOut.getWidth()),
+                            juce::roundToInt(boundsOut.getHeight()),
+                            true);
+    juce::Graphics g2(buttonImage);
+    g2.fillRoundedRectangle(bounds, cornerSize);
+    
+    juce::DropShadow ds(
+                        juce::Colours::black.withAlpha(0.5f),
+                        1,
+                        {0, 3});
+    
+    // 위치 변환 후 그림자 적용
+    g.saveState();
+    
+    ds.drawForImage(g, buttonImage);  // 이제 2개 인자
+    // g.drawImageAt(buttonImage, 0, 0);
+    g.restoreState();
+
     // --- 상태별 배경색 (linear-gradient 느낌)
     juce::ColourGradient gradient(
                                   button.getToggleState()
@@ -50,6 +78,42 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     }
   }
 
+  void drawButtonText (Graphics& g, TextButton& button,
+                                       bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
+  override
+  {
+      Font font (getTextButtonFont (button, button.getHeight()));
+      g.setFont (font);
+      g.setColour (button.findColour (button.getToggleState() ? TextButton::textColourOnId
+                                                              : TextButton::textColourOffId)
+                         .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
+
+      const int yIndent = jmin (4, button.proportionOfHeight (0.3f));
+      const int cornerSize = jmin (button.getHeight(), button.getWidth()) / 2;
+
+      const int fontHeight = roundToInt (font.getHeight() * 0.6f);
+      const int leftIndent  = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2));
+      const int rightIndent = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2));
+      const int textWidth = button.getWidth() - leftIndent - rightIndent;
+    
+      auto bounds = button.getLocalBounds();
+      bounds.removeFromTop(UI_BUTTON_PADDING_TOP + yIndent);
+      bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT + leftIndent);
+      bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM + yIndent);
+      bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT + rightIndent);
+    
+    if (textWidth > 0)
+        g.drawFittedText (button.getButtonText(),
+                          bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(),
+                          Justification::centred, 2);
+    /*
+      if (textWidth > 0)
+          g.drawFittedText (button.getButtonText(),
+                            leftIndent, yIndent, textWidth, button.getHeight() - yIndent * 2,
+                            Justification::centred, 2);
+     */
+  }
+
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
     juce::Colour colorIn = PRIMARY_RGB[6];
@@ -82,7 +146,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     auto centre = bounds.getCentre();
     
     {
-      auto radius = size / 2.0f;
+      auto radius = (size * 0.95f) / 2.0f;
       auto rx = centre.getX() - radius;
       auto ry = centre.getY() - radius;
       auto rw = radius * 2.0f;
@@ -149,12 +213,15 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     
     if ((vw * 25) > 1) {
       // Drop shadow 생성
-      juce::DropShadow ds(juce::Colours::black.withAlpha(0.9f), static_cast<int>(vw * 25), {0, static_cast<int>(vw * 25)});
+      juce::DropShadow ds(
+                          juce::Colours::black.withAlpha(0.9f),
+                          static_cast<int>(vw * 120),
+                          {0, static_cast<int>(vw * 100)});
       
       
       // 위치 변환 후 그림자 적용
       g.saveState();
-      // g.addTransform(juce::AffineTransform::translation(centre.getX(), centre.getY()));
+      // g.addTransform(juce::AffineTransform::translation(0, 0));
       ds.drawForImage(g, knobImage);  // 이제 2개 인자
       g.restoreState();
     }
