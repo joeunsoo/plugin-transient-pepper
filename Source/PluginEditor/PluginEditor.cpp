@@ -25,7 +25,7 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB[9]);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
-  tooltipLabel->setFont(fontMedium.withHeight(10.0f));
+  tooltipLabel->setFont(fontMedium.withHeight(UI_TOOLTIP_FONT_HEIGHT));
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
@@ -60,14 +60,14 @@ void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, co
 {
   if (isDrag && dragID != id) { return ; }
   tooltipLabel->setText(text, juce::dontSendNotification);
-  tooltipLabel->setBounds(area.getX(), area.getY() + 3, area.getWidth(), 20); // slider 위로 위치
+  tooltipLabel->setBounds(area.getX(), area.getY() + UI_TOOLTIP_OFFSET_TOP, area.getWidth(), 20); // slider 위로 위치
   
   auto textWidth  = tooltipLabel->getFont().getStringWidth(tooltipLabel->getText());
   auto textHeight = tooltipLabel->getFont().getHeight();
   
   // padding 포함
-  int labelWidth  = textWidth + 12;
-  int labelHeight = static_cast<int>(textHeight) + 6;
+  int labelWidth  = textWidth + (UI_TOOLTIP_PADDING_X*2);
+  int labelHeight = static_cast<int>(textHeight) + (UI_TOOLTIP_PADDING_Y*2);
   
   // 부모 기준 가운데 정렬
   int x = area.getCentreX() - labelWidth / 2;

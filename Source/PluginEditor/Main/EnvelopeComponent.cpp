@@ -13,7 +13,7 @@ void EnvelopeComponent::init(PluginEditor& editor)
   editorRef = &editor;
 
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef->fontMedium.withHeight(12.0f));
+  sectionLabel.setFont(editorRef->fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Noise Shape", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   

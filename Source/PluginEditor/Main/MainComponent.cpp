@@ -43,7 +43,7 @@ void MainComponent::resized()
     .withTrimmedLeft(15)
     .withTrimmedTop(5)
     .withTrimmedRight(15)
-    .withTrimmedBottom(10);
+    .withTrimmedBottom(15);
   auto leftArea = area.removeFromLeft(UI_KNOB_WIDTH * 3);
   detectorComponent.setBounds(leftArea.removeFromTop(150));
   envelopeComponent.setBounds(leftArea);

@@ -21,6 +21,7 @@ class ToggleButtonComponent : public juce::Component
   
   void paint(juce::Graphics& g) override;
   void resized() override;
+  void setSvgDrawable(std::unique_ptr<Drawable> svgDrawable);
   
   //==============================================================================
   private:

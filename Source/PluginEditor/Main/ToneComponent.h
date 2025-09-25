@@ -20,7 +20,7 @@ public juce::AudioProcessorParameter::Listener
   void resized() override;
   
   void parameterValueChanged (int parameterIndex, float newValue) override;
-  void parameterGestureChanged (int parameterIndex, bool gestureIsStarting) override {}
+  void parameterGestureChanged (int, bool) override {} //int parameterIndex, bool gestureIsStarting
   
   //==============================================================================
   private:

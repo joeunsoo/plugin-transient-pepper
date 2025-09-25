@@ -5,7 +5,7 @@
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
-  
+
   void drawButtonBackground (juce::Graphics& g,
                              juce::Button& button,
                              const juce::Colour& backgroundColour,
@@ -13,7 +13,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                              bool shouldDrawButtonAsDown) override
   {
     auto bounds = button.getLocalBounds().toFloat();
-    float cornerSize = 6.0f;
+    float cornerSize = UI_BUTTON_BORDER_RADIUS;
     
     // --- 상태별 배경색 (linear-gradient 느낌)
     juce::ColourGradient gradient(
@@ -49,14 +49,13 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       g.fillRoundedRectangle(bounds, cornerSize);
     }
   }
+
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
     juce::Colour colorIn = PRIMARY_RGB[6];
     juce::Colour colorDotLine = PRIMARY_DARK_RGB[2];
     juce::Colour colorDot = PRIMARY_DARK_RGB[3];
     juce::Colour colorRing = PRIMARY_DARK_RGB[6];
-    
-    bool isDisabled = false;
     
     if (auto* knobSlider = dynamic_cast<KnobSlider*>(&slider))
     {
@@ -224,9 +223,10 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     }
   }
   
-  juce::Font getTextButtonFont (juce::TextButton&, int) override
+  juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
-    return juce::Font { fontMedium };
+    auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
+    return juce::Font { fontMedium.withHeight(fontHeight) };
   }
   
   void setFontMedium (juce::FontOptions f) { fontMedium = f; }

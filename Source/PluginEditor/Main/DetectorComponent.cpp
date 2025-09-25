@@ -13,7 +13,7 @@ void DetectorComponent::init(PluginEditor& editor)
   editorRef = &editor;
   
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef->fontMedium.withHeight(12.0f));
+  sectionLabel.setFont(editorRef->fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Transient Detector", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   
@@ -25,6 +25,8 @@ void DetectorComponent::init(PluginEditor& editor)
   addAndMakeVisible(bpfPowerButton);
   
   sidechainListenButton.init(editor, ID::sidechainListen.getParamID(), "Listen");
+  
+  sidechainListenButton.setSvgDrawable( juce::Drawable::createFromImageData(BinaryData::headphonesbold_svg, BinaryData::headphonesbold_svgSize));
   addAndMakeVisible(sidechainListenButton);
   
   thresholdKnob.init(editor, ID::threshold.getParamID(), "Threshold");
@@ -67,9 +69,9 @@ void DetectorComponent::resized()
   sectionLabel.setBounds(area.removeFromTop(UI_SECTION_LABEL_HEIGHT));
   
   auto buttonArea = area.removeFromTop(UI_BUTTON_HEIGHT);
-  channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3));
-  bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
-  sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
+  channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3).reduced(UI_GAP_SIZE));
+  bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6).reduced(UI_GAP_SIZE));
+  sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6).reduced(UI_GAP_SIZE));
   
   auto SliderArea = area.removeFromTop(UI_KNOB_HEIGHT);
   thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));

@@ -52,7 +52,7 @@ void MixComponent::resized()
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
   leftArea.removeFromTop(leftArea.getHeight()-(UI_KNOB_HEIGHT+20+UI_KNOB_HEIGHT));
   noiseLevelGainKnob.setBounds(leftArea.removeFromTop(UI_KNOB_HEIGHT));
-  wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT));
+  wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT).reduced(UI_GAP_SIZE));
   dryWetKnob.setBounds(leftArea);
   auto rightArea = area;
   rightArea.removeFromTop(rightArea.getHeight()-(UI_KNOB_HEIGHT));

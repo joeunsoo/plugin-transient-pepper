@@ -1,12 +1,43 @@
 #pragma once
 
+#include "../../Define.h"
+
 struct CustomToggleButton : public juce::TextButton
 {
   CustomToggleButton()
-        : juce::TextButton()
-    {
-      setClickingTogglesState(true);
-    }
+  : juce::TextButton()
+  {
+    setClickingTogglesState(true);
+  }
   
+  void paintButton(juce::Graphics& g, bool shouldDrawButtonAsHighlighted,
+                   bool shouldDrawButtonAsDown) override
+  {
+    LookAndFeel& laf = getLookAndFeel();
+    laf.drawButtonBackground(g, *this, PRIMARY_RGB[9],
+                             shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
+    
+    if (svgDrawable != nullptr)
+    {
+      auto bounds = getLocalBounds().toFloat().reduced(UI_BUTTON_SVG_PADDING);
+      
+      auto normal = svgDrawable->createCopy();
+      normal->replaceColour(juce::Colours::black, juce::Colours::white);
+      juce::Drawable* svgToDraw = normal.get();
+
+      svgToDraw->drawWithin(g, bounds, juce::RectanglePlacement::centred, 1.0f);
+    } else {
+      laf.drawButtonText (g, *this, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
+    }
+  }
+  
+  void setSvgDrawable(std::unique_ptr<Drawable> drawable)
+  {
+    svgDrawable = std::move(drawable);
+  }
+
+  private:
+  std::unique_ptr<juce::Drawable> svgDrawable;
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomToggleButton)
 };

@@ -112,6 +112,8 @@
               file="Assets/font/PretendardStd-Medium.otf"/>
       </GROUP>
       <GROUP id="{0C1D3CBD-E2AD-CF7B-0CF6-A52F717B0A2A}" name="icon">
+        <FILE id="XjYLxX" name="headphones-bold.svg" compile="0" resource="1"
+              file="Assets/icon/headphones-bold.svg"/>
         <FILE id="X1DyDT" name="power-bold.svg" compile="0" resource="1" file="Assets/icon/power-bold.svg"/>
         <FILE id="WGZ2MP" name="gear-six-fill.svg" compile="0" resource="1"
               file="Assets/icon/gear-six-fill.svg"/>

@@ -1,5 +1,5 @@
 #include "KnobComponent.h"
-#include "../../define.h"
+#include "../../Define.h"
 #include "../../NamespaceParameterId.h"
 #include "../PluginEditor.h"
 
@@ -36,7 +36,7 @@ void KnobComponent::init(
    rotarySlider
    );
   
-  label.setFont(editorRef->fontMedium.withHeight(10.0f));
+  label.setFont(editorRef->fontMedium.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(label);
