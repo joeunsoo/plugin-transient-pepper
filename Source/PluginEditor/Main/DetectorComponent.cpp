@@ -46,21 +46,28 @@ void DetectorComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
   bool bpfPower = editorRef->processorRef.parameters.bpfPower.get();
   bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
+  bool isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
 
   if (bypass) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
-    channelLinkButton.setAlpha(DISABLED_ALPHA);
     bpfPowerButton.setAlpha(DISABLED_ALPHA);
     sidechainListenButton.setAlpha(DISABLED_ALPHA);
     thresholdKnob.setAlpha(DISABLED_ALPHA);
     bpfFreqKnob.setAlpha(DISABLED_ALPHA);
   } else {
     sectionLabel.setAlpha(1.0f);
-    channelLinkButton.setAlpha(1.0f);
+    
     bpfPowerButton.setAlpha(1.0f);
     sidechainListenButton.setAlpha(1.0f);
     thresholdKnob.setAlpha(1.0f);
   }
+
+  if (bypass || !isStereo) {
+    channelLinkButton.setAlpha(DISABLED_ALPHA);
+  } else {
+    channelLinkButton.setAlpha(1.0f);
+  }
+
   if (bypass || (!bpfPower && !sidechainListen)) {
     bpfFreqKnob.setAlpha(DISABLED_ALPHA);
   } else {

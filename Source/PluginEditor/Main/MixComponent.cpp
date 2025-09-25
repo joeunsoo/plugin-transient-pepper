@@ -44,8 +44,10 @@ void MixComponent::parameterValueChanged (int, float) {
 
   if (bypass) {
     noiseLevelGainKnob.setAlpha(DISABLED_ALPHA);
+    outputGainKnob.setAlpha(DISABLED_ALPHA);
   } else {
     noiseLevelGainKnob.setAlpha(1.0f);
+    outputGainKnob.setAlpha(1.0f);
   }
 
   if (bypass || sidechainListen) {

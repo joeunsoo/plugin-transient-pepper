@@ -26,12 +26,18 @@ void ToneComponent::init(PluginEditor& editor)
 void ToneComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
   bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
+  bool isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
 
   if (bypass || sidechainListen) {
     tiltKnob.setAlpha(DISABLED_ALPHA);
-    midsideKnob.setAlpha(DISABLED_ALPHA);
   } else {
     tiltKnob.setAlpha(1.0f);
+  }
+  
+  
+  if (bypass || sidechainListen || !isStereo) {
+    midsideKnob.setAlpha(DISABLED_ALPHA);
+  } else {
     midsideKnob.setAlpha(1.0f);
   }
 }

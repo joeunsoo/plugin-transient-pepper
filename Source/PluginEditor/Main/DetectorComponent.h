@@ -26,7 +26,6 @@ public juce::AudioProcessorParameter::Listener
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-
   
   juce::Label sectionLabel;
   KnobComponent thresholdKnob;
