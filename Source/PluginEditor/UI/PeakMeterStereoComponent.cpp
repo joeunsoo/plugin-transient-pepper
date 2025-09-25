@@ -15,7 +15,7 @@ void PeakMeterStereoComponent::init(
                               )
 {
   editorRef = &editor;
-  isStereo = editorRef->processorRef.getTotalNumOutputChannels();
+  isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
   
   leftPeakMeter.init(editor, index);
   addAndMakeVisible(leftPeakMeter);
@@ -34,15 +34,17 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
 void PeakMeterStereoComponent::resized()
 {
   auto area = getLocalBounds();
-  auto leftArea = area.removeFromLeft(area.getWidth() / 2);
-  auto rightArea = area;
-  
+  auto meterArea = area;
+  meterArea.setWidth(std::min(UI_STEREO_METER_MAX_WIDTH,area.getWidth()));
+  meterArea.setX((area.getWidth()-meterArea.getWidth())/2);
+
+  auto leftArea = meterArea.removeFromLeft(meterArea.getWidth() / 2);
+  auto rightArea = meterArea;
+
   if (!isStereo) {
-    leftPeakMeter.setBounds(area);
+    leftPeakMeter.setBounds(meterArea);
   } else {
     leftPeakMeter.setBounds(leftArea);
     rightPeakMeter.setBounds(rightArea);
   }
-  
-  
 }

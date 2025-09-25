@@ -29,7 +29,29 @@ void PeakMeterComponent::setLevel(float newLevel)
 
 void PeakMeterComponent::paint(juce::Graphics& g)
 {
-  auto bounds = getLocalBounds().toFloat();
+  auto boundsOut = getLocalBounds().toFloat();
+  auto bounds = boundsOut;
+  bounds.removeFromTop(UI_METER_PADDING_TOP);
+  bounds.removeFromLeft(UI_METER_PADDING_LEFT);
+  bounds.removeFromBottom(UI_METER_PADDING_BOTTOM);
+  bounds.removeFromRight(UI_METER_PADDING_RIGHT);
+
+  float cornerSize = UI_BUTTON_BORDER_RADIUS;
+  
+  
+  // Drop shadow
+  juce::Image buttonImage(
+                          juce::Image::ARGB,
+                          juce::roundToInt(boundsOut.getWidth()),
+                          juce::roundToInt(boundsOut.getHeight()),
+                          true);
+  juce::Graphics g2(buttonImage);
+  g2.fillRoundedRectangle(bounds, cornerSize);
+  
+  juce::DropShadow ds(
+                      juce::Colours::black.withAlpha(0.5f),
+                      1,
+                      {0, 3});
   
   // 배경
   g.setColour(SECONDARY_DARK_RGB[9]);

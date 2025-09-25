@@ -26,6 +26,7 @@ void EnvelopeComponent::init(PluginEditor& editor)
   addAndMakeVisible(releaseKnob);
   
   editorRef->processorRef.parameters.bypass.addListener(this);
+  parameterValueChanged(0, 0);
 }
 
 void EnvelopeComponent::parameterValueChanged (int, float) {

@@ -32,6 +32,7 @@ void MixComponent::init(PluginEditor& editor)
   addAndMakeVisible(outputGainKnob);
 
   editorRef->processorRef.parameters.bypass.addListener(this);
+  parameterValueChanged(0, 0);
 }
 
 void MixComponent::parameterValueChanged (int, float) {

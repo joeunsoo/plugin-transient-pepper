@@ -19,6 +19,7 @@ void ToneComponent::init(PluginEditor& editor)
   addAndMakeVisible(midsideKnob);
   
   editorRef->processorRef.parameters.bypass.addListener(this);
+  parameterValueChanged(0, 0);
 }
 
 void ToneComponent::parameterValueChanged (int, float) {

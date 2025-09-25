@@ -37,10 +37,15 @@ void DetectorComponent::init(PluginEditor& editor)
   addAndMakeVisible(bpfFreqKnob);
   
   editorRef->processorRef.parameters.bypass.addListener(this);
+  editorRef->processorRef.parameters.bpfPower.addListener(this);
+  editorRef->processorRef.parameters.sidechainListen.addListener(this);
+  parameterValueChanged(0, 0);
 }
 
 void DetectorComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef->processorRef.parameters.bypass.get();
+  bool bpfPower = editorRef->processorRef.parameters.bpfPower.get();
+  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
   if (bypass) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
     channelLinkButton.setAlpha(DISABLED_ALPHA);
@@ -54,6 +59,10 @@ void DetectorComponent::parameterValueChanged (int, float) {
     bpfPowerButton.setAlpha(1.0f);
     sidechainListenButton.setAlpha(1.0f);
     thresholdKnob.setAlpha(1.0f);
+  }
+  if (bypass || (!bpfPower && !sidechainListen)) {
+    bpfFreqKnob.setAlpha(DISABLED_ALPHA);
+  } else {
     bpfFreqKnob.setAlpha(1.0f);
   }
 }
