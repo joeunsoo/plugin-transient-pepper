@@ -5,11 +5,11 @@
 // Forward declaration
 class PluginEditor;
 
-class AboutModal : public juce::Component
+class ActivateModal : public juce::Component
 {
   public:
-  AboutModal();
-  ~AboutModal() override;
+  ActivateModal();
+  ~ActivateModal() override;
 
   void init(PluginEditor& editor);
   
@@ -23,9 +23,9 @@ class AboutModal : public juce::Component
   
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  juce::Label pluginNameLabel, pluginVersionLabel, companyNameLabel;
+  juce::Label pluginNameLabel;
   
   juce::Component flexContainer;
-  
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AboutModal)
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActivateModal)
 };

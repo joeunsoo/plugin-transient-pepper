@@ -5,6 +5,7 @@
 #include "Main/DetectorComponent.h"
 #include "RoundedLabel.h"
 #include "Modal/AboutModal.h"
+#include "Modal/ActivateModal.h"
 
 class PluginEditor : public juce::AudioProcessorEditor
 {
@@ -20,6 +21,7 @@ class PluginEditor : public juce::AudioProcessorEditor
 
   void setDrag(bool value, String id);
   void showAbout();
+  void showActivate();
 
   //==============================================================================
   PluginAudioProcessor& processorRef;
@@ -40,6 +42,7 @@ class PluginEditor : public juce::AudioProcessorEditor
   MainComponent mainComponent;
   
   AboutModal aboutModal;
+  ActivateModal activateModal;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };

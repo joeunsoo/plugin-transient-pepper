@@ -1,54 +1,37 @@
-#include "AboutModal.h"
+#include "ActivateModal.h"
 #include "../../Define.h"
 #include "../../NamespaceParameterId.h"
 #include "../PluginEditor.h"
 
 //==============================================================================
-AboutModal::AboutModal() {
+ActivateModal::ActivateModal() {
   setInterceptsMouseClicks (true, true); // 뒤에 클릭 못 가게 막음
   setAlwaysOnTop (true);
 
   flexContainer.addAndMakeVisible(pluginNameLabel);
-  flexContainer.addAndMakeVisible(pluginVersionLabel);
-  flexContainer.addAndMakeVisible(companyNameLabel);
-
+   
   
   pluginNameLabel.setText ("Transient Pepper", juce::dontSendNotification);
-  pluginVersionLabel.setText ("v" + juce::String(JucePlugin_VersionString), juce::dontSendNotification);
-  juce::String companyNameText = juce::CharPointer_UTF8("\u00A9 JoEunsoo");
-  companyNameLabel.setText (companyNameText, juce::dontSendNotification);
   
   pluginNameLabel.setJustificationType (juce::Justification::centred);
-  pluginVersionLabel.setJustificationType (juce::Justification::centred);
-  companyNameLabel.setJustificationType (juce::Justification::centred);
   
   pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
-  pluginVersionLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
-  companyNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
   
   addAndMakeVisible (flexContainer);
 
 }
 
-AboutModal::~AboutModal() = default;
+ActivateModal::~ActivateModal() = default;
 
-void AboutModal::init(PluginEditor& editor)
+void ActivateModal::init(PluginEditor& editor)
 {
   editorRef = &editor;
   pluginNameLabel.setFont(editorRef->fontBold.withHeight(14));
-  pluginVersionLabel.setFont(editorRef->fontMedium.withHeight(10));
-  companyNameLabel.setFont(editorRef->fontBold.withHeight(10));
-
-  // 클릭 이벤트 처리
-  pluginNameLabel.setInterceptsMouseClicks(false, false);
-  pluginVersionLabel.setInterceptsMouseClicks(false, false);
-  companyNameLabel.setInterceptsMouseClicks(false, false);
-  flexContainer.setInterceptsMouseClicks(false, false);
 }
 
-void AboutModal::resized()
+void ActivateModal::resized()
 {
-  flexContainer.setBounds(getLocalBounds().withSizeKeepingCentre(250, 100));
+  flexContainer.setBounds(getLocalBounds().withSizeKeepingCentre(250, 200));
 
   juce::FlexBox flexBox;
   flexBox.flexDirection = FlexBox::Direction::column;
@@ -64,12 +47,10 @@ void AboutModal::resized()
   };
 
   flexBox.items.add(flexItemSetting(pluginNameLabel,14,4.0f));
-  flexBox.items.add(flexItemSetting(pluginVersionLabel,10,15.0f));
-  flexBox.items.add(flexItemSetting(companyNameLabel,10,0.0f));
   flexBox.performLayout (flexContainer.getLocalBounds()); // [6]
 }
 
-void AboutModal::paint (juce::Graphics& g)
+void ActivateModal::paint (juce::Graphics& g)
 {
   // 반투명 배경
   g.fillAll (juce::Colours::black.withAlpha (0.5f));
@@ -79,22 +60,21 @@ void AboutModal::paint (juce::Graphics& g)
   g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
 }
 
-void AboutModal::mouseUp (const juce::MouseEvent&)
+void ActivateModal::mouseUp (const juce::MouseEvent&)
 {
   close();
 }
 
-void AboutModal::showIn (juce::Component& parent)
+void ActivateModal::showIn (juce::Component& parent)
 {
   parent.addAndMakeVisible (this);
   setBounds (parent.getLocalBounds());
   toFront (true); // 맨 위로
 }
 
-void AboutModal::close()
+void ActivateModal::close()
 {
   setVisible (false);
   if (auto* p = getParentComponent())
     p->removeChildComponent (this);
 }
-

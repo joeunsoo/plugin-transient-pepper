@@ -35,6 +35,14 @@ class LicenseManager
     if (value.isEmpty()) return {};
     return decryptString(value);
   }
+
+  bool isActivate()
+  {
+    if (getActivate().length() > 0) {
+      return true;
+    }
+    return false;
+  }
   
   void setActivate(String email)
   {

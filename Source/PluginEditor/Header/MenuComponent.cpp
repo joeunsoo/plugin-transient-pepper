@@ -53,11 +53,11 @@ void MenuComponent::init(PluginEditor& editor)
       if (newUrl.isWellFormed())
         newUrl.launchInDefaultBrowser();
     });
-    menu.addItem ("About", [this] {
-      editorRef->showAbout();
-    });
+    menu.addItem ("About", [this] { editorRef->showAbout(); });
     menu.addSeparator();
-    menu.addItem ("Activate", nullptr);
+    menu.addItem (
+                  !editorRef->processorRef.licenseManager.isActivate() ? "Activate" : "Deactivate",
+                  [this] { editorRef->showActivate(); });
     menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (menuButton));
   };
 }

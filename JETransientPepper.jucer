@@ -41,6 +41,17 @@
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
         <GROUP id="{ACEEFD2A-87A7-60FE-AB31-B39E47D5EB7C}" name="Modal">
+          <FILE id="dQcuA7" name="DeactivateComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Modal/DeactivateComponent.h"/>
+          <FILE id="eove8X" name="DeactivateComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Modal/DeactivateComponent.cpp"/>
+          <FILE id="bnT95O" name="LoginComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Modal/LoginComponent.h"/>
+          <FILE id="Xf7oq5" name="LoginComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Modal/LoginComponent.cpp"/>
+          <FILE id="pL9Edy" name="ActivateModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/ActivateModal.h"/>
+          <FILE id="Qsc9kR" name="ActivateModal.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Modal/ActivateModal.cpp"/>
           <FILE id="gP6vYy" name="AboutModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/AboutModal.h"/>
           <FILE id="aYrNGm" name="AboutModal.cpp" compile="1" resource="0" file="Source/PluginEditor/Modal/AboutModal.cpp"/>
         </GROUP>

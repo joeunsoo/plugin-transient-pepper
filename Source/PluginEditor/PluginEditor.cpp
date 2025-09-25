@@ -28,6 +28,7 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
 
   // 모달
   aboutModal.init(*this);
+  activateModal.init(*this);
 }
 
 // 소멸자
@@ -102,4 +103,9 @@ void PluginEditor::setScale(int scale)
 void PluginEditor::showAbout()
 {
   aboutModal.showIn (*this);
+}
+
+void PluginEditor::showActivate()
+{
+  activateModal.showIn (*this);
 }
