@@ -1,9 +1,5 @@
-#include "../Define.h"
 #include "PluginEditor.h"
-#include "../AudioProcessor/PluginAudioProcessor.h"
-#include "Header/HeaderComponent.h"
-#include "Main/MainComponent.h"
-#include "RoundedLabel.h"
+#include "../Define.h"
 
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
@@ -29,6 +25,9 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
+
+  // 모달
+  aboutModal.init(*this);
 }
 
 // 소멸자
@@ -98,4 +97,9 @@ void PluginEditor::setScale(int scale)
 #else
   setSize(640, 360);
 #endif
+}
+
+void PluginEditor::showAbout()
+{
+  aboutModal.showIn (*this);
 }

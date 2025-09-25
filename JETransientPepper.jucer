@@ -40,6 +40,10 @@
               file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
       </GROUP>
       <GROUP id="{680D6CE1-5343-2124-E1E4-B73BB8BC2C43}" name="PluginEditor">
+        <GROUP id="{ACEEFD2A-87A7-60FE-AB31-B39E47D5EB7C}" name="Modal">
+          <FILE id="gP6vYy" name="AboutModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/AboutModal.h"/>
+          <FILE id="aYrNGm" name="AboutModal.cpp" compile="1" resource="0" file="Source/PluginEditor/Modal/AboutModal.cpp"/>
+        </GROUP>
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="UI">
           <FILE id="AoAeyB" name="PeakMeterStereoComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/UI/PeakMeterStereoComponent.h"/>

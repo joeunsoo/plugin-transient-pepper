@@ -4,6 +4,7 @@
 #include "Main/MainComponent.h"
 #include "Main/DetectorComponent.h"
 #include "RoundedLabel.h"
+#include "Modal/AboutModal.h"
 
 class PluginEditor : public juce::AudioProcessorEditor
 {
@@ -18,6 +19,8 @@ class PluginEditor : public juce::AudioProcessorEditor
   void showTooltipAt(String id, const juce::Rectangle<int>& area, const juce::String& text);
 
   void setDrag(bool value, String id);
+  void showAbout();
+
   //==============================================================================
   PluginAudioProcessor& processorRef;
 
@@ -36,5 +39,7 @@ class PluginEditor : public juce::AudioProcessorEditor
   HeaderComponent headerComponent;
   MainComponent mainComponent;
   
+  AboutModal aboutModal;
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };

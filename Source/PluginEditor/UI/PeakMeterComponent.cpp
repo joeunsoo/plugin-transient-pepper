@@ -1,4 +1,3 @@
-#pragma once
 #include "PeakMeterComponent.h"
 #include "../../Define.h"
 #include "../../Utils.h"

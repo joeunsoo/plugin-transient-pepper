@@ -1,4 +1,3 @@
-#pragma once
 #include "PeakMeterStereoComponent.h"
 #include "../PluginEditor.h"
 
@@ -38,13 +37,10 @@ void PeakMeterStereoComponent::resized()
   meterArea.setWidth(std::min(UI_STEREO_METER_MAX_WIDTH,area.getWidth()));
   meterArea.setX((area.getWidth()-meterArea.getWidth())/2);
 
-  auto leftArea = meterArea.removeFromLeft(meterArea.getWidth() / 2);
-  auto rightArea = meterArea;
-
   if (!isStereo) {
     leftPeakMeter.setBounds(meterArea);
   } else {
-    leftPeakMeter.setBounds(leftArea);
-    rightPeakMeter.setBounds(rightArea);
+    leftPeakMeter.setBounds(meterArea.removeFromLeft(meterArea.getWidth() / 2));
+    rightPeakMeter.setBounds(meterArea);
   }
 }

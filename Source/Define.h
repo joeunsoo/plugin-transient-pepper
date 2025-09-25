@@ -49,6 +49,8 @@
 #define UI_POPUPMENU_FONT_HEIGHT 10.0f
 #define UI_POPUPMENU_BORDER_RADIUS 4.0f
 
+#define UI_MODAL_BORDER_RADIUS 4.0f
+
 #define  DISABLED_ALPHA 0.5f
 
 static const juce::Colour PRIMARY_RGB[] = {

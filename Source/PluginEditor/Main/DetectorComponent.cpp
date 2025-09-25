@@ -12,13 +12,19 @@ void DetectorComponent::init(PluginEditor& editor)
 {
   editorRef = &editor;
   
+  bool isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
+
   addAndMakeVisible(sectionLabel);
   sectionLabel.setFont(editorRef->fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Transient Detector", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   
   
-  channelLinkButton.init(editor, ID::linkChannels.getParamID(), "L/R Link");
+  channelLinkButton.init(
+                         editor,
+                         ID::linkChannels.getParamID(),
+                         isStereo ? "L/R Link" : "Mono"
+                         );
   addAndMakeVisible(channelLinkButton);
   
   bpfPowerButton.init(editor, ID::bpfPower.getParamID(), "BPF");

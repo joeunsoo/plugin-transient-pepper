@@ -53,7 +53,9 @@ void MenuComponent::init(PluginEditor& editor)
       if (newUrl.isWellFormed())
         newUrl.launchInDefaultBrowser();
     });
-    menu.addItem ("About", nullptr);
+    menu.addItem ("About", [this] {
+      editorRef->showAbout();
+    });
     menu.addSeparator();
     menu.addItem ("Activate", nullptr);
     menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (menuButton));
