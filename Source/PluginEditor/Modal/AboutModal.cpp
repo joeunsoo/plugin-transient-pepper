@@ -27,7 +27,6 @@ AboutModal::AboutModal() {
   companyNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
   
   addAndMakeVisible (flexContainer);
-
 }
 
 AboutModal::~AboutModal() = default;

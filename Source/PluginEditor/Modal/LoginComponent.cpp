@@ -5,7 +5,7 @@
 
 //==============================================================================
 LoginComponent::LoginComponent() {
-  
+  addAndMakeVisible (flexContainer);
 }
 
 LoginComponent::~LoginComponent() = default;
@@ -17,11 +17,12 @@ void LoginComponent::init(PluginEditor& editor)
 
 void LoginComponent::resized()
 {
-  
+  flexContainer.setBounds(getLocalBounds());
 }
 
 void LoginComponent::paint (juce::Graphics& g)
 {
-  g.fillAll (juce::Colours::transparentBlack);
-  
+  // FlexContainer 배경색
+  g.setColour(DARK_RGB[7]);
+  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
 }
