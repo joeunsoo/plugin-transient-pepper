@@ -15,6 +15,10 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
   {
     return DARK_RGB[5]; // 원하는 배경색
   }
+  juce::Colour getTextColour()
+  {
+    return DARK_RGB[0]; // 원하는 배경색
+  }
   
   juce::Font getPopupMenuFont() override
   {
@@ -23,8 +27,16 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
   
   void drawPopupMenuBackground (juce::Graphics& g, int width, int height) override
   {
-    g.fillAll (getPopupMenuBackgroundColour());
-    
+    // g.fillAll (getPopupMenuBackgroundColour());
+
+    auto bounds = juce::Rectangle<float> ((float) width, (float) height);
+
+    g.setColour (getPopupMenuBackgroundColour());
+    g.fillRect (bounds);
+
+    g.setColour (DARK_RGB[4]);
+    g.drawRect (bounds, 1.0f);
+
 #if ! JUCE_MAC
     g.setColour (findColour (PopupMenu::textColourId).withAlpha (0.6f));
     g.drawRect (0, 0, width, height);
@@ -46,7 +58,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
           if (standardMenuItemHeight > 0 && font.getHeight() > (float) standardMenuItemHeight / 1.3f)
               font.setHeight ((float) standardMenuItemHeight / 1.3f);
 
-          idealHeight = standardMenuItemHeight > 0 ? standardMenuItemHeight : roundToInt (font.getHeight() * 1.5f);
+          idealHeight = standardMenuItemHeight > 0 ? standardMenuItemHeight : roundToInt (font.getHeight() * 2.0f);
           idealWidth = GlyphArrangement::getStringWidthInt (font, text) + idealHeight * 2;
       }
   }
@@ -64,12 +76,12 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
           auto r  = area.reduced (5, 0);
           r.removeFromTop (roundToInt (((float) r.getHeight() * 0.5f) - 0.5f));
 
-          g.setColour (findColour (PopupMenu::textColourId).withAlpha (0.3f));
+          g.setColour(DARK_RGB[4]);
           g.fillRect (r.removeFromTop (1));
       }
       else
       {
-          auto textColour = (textColourToUse == nullptr ? findColour (PopupMenu::textColourId)
+          auto textColour = (textColourToUse == nullptr ? getTextColour()
                                                         : *textColourToUse);
 
           auto r  = area.reduced (1);
@@ -79,7 +91,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
               g.setColour (getHighlightedBackgroundColour());
               g.fillRect (r);
 
-              g.setColour (findColour (PopupMenu::highlightedTextColourId));
+              g.setColour (getTextColour());
           }
           else
           {
