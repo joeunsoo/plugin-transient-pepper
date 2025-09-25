@@ -147,7 +147,7 @@ class WebviewPluginEditor  : public AudioProcessorEditor, private Timer
     .withOptionsFrom (slowReleaseSliderRelay)
 #endif
       .withOptionsFrom (controlParameterIndexReceiver)
-      .withNativeFunction ("isDebug", [](auto& var /*unused*/, auto complete) {
+      .withNativeFunction ("isDebug", [](auto&, auto complete) {
 #if DEBUG
         complete(true);
 #else
@@ -157,7 +157,7 @@ class WebviewPluginEditor  : public AudioProcessorEditor, private Timer
       .withNativeFunction ("setWindowScale", [this](auto& var, auto complete /*unused*/) {
         setScale(var[0]);
       })
-      .withNativeFunction ("getWindowScale", [this](auto& var /*unused*/, auto complete) {
+      .withNativeFunction ("getWindowScale", [this](auto&, auto complete) {
         complete (juce::String(processorRef.windowScale));
       })
       .withNativeFunction ("getActivate", [this](auto& var /*unused*/, auto complete) {

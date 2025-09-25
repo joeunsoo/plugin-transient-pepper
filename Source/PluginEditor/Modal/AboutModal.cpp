@@ -34,7 +34,7 @@ AboutModal::~AboutModal() = default;
 void AboutModal::init(PluginEditor& editor)
 {
   editorRef = &editor;
-  pluginNameLabel.setFont(editorRef->fontBold.withHeight(14));
+  pluginNameLabel.setFont(editorRef->fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
   pluginVersionLabel.setFont(editorRef->fontMedium.withHeight(10));
   companyNameLabel.setFont(editorRef->fontBold.withHeight(10));
 
@@ -62,7 +62,7 @@ void AboutModal::resized()
     ;
   };
 
-  flexBox.items.add(flexItemSetting(pluginNameLabel,14,4.0f));
+  flexBox.items.add(flexItemSetting(pluginNameLabel,UI_PLUGIN_NAME_FONT_HEIGHT,4.0f));
   flexBox.items.add(flexItemSetting(pluginVersionLabel,10,15.0f));
   flexBox.items.add(flexItemSetting(companyNameLabel,10,0.0f));
   flexBox.performLayout (flexContainer.getLocalBounds()); // [6]
