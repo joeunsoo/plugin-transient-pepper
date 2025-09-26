@@ -65,3 +65,15 @@ Address:
 542-17, Gusong-ro, Seopo-myeon,
 Sacheon-si, Gyeongsangnam-do,
 Republic of Korea.
+
+
+
+Annex: Third Party Libraries Used
+1. JUCE (https://juce.com/)
+Licensed under the AGPLv3. © Raw Material Software Limited
+
+2. Pretendard (https://github.com/orioncactus/pretendard)
+Licensed under SIL Open Font License 1.1 © 2025 Sandoll Inc.
+
+3. Phosphor Icons (https://phosphoricons.com/)
+Licensed under the MIT License © Phosphor Icons.
