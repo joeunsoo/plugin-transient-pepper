@@ -35,7 +35,8 @@ class KnobComponent : public juce::Component
   private:
   PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
-  // Slider rotarySlider    { Slider::RotaryHorizontalVerticalDrag, Slider::NoTextBox};
+  bool isDrag = false;
+
   KnobSlider rotarySlider;
   juce::Label label;
   String parameterID;
