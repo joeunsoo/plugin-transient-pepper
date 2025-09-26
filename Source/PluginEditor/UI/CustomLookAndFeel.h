@@ -8,7 +8,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
 
   void drawButtonBackground (juce::Graphics& g,
                              juce::Button& button,
-                             const juce::Colour& backgroundColour,
+                             const juce::Colour&, // backgroundColour
                              bool shouldDrawButtonAsHighlighted,
                              bool shouldDrawButtonAsDown) override
   {

@@ -89,6 +89,7 @@ void PluginEditor::setScale(int scale)
 {
   processorRef.windowScale = scale;
   
+#if !DEBUG
   float factor = 1.0f;
   switch (scale)
   {
@@ -96,8 +97,7 @@ void PluginEditor::setScale(int scale)
     case 200: factor = 2.0f; break;
     default:  factor = 1.0f; break;
   }
-  
-#if !DEBUG
+
   // 전체 에디터에 transform 적용
   setTransform(juce::AffineTransform::scale(factor));
 #else
