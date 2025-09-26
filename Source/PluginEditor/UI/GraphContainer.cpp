@@ -16,6 +16,18 @@ void GraphContainer::init(PluginEditor& editor)
   addAndMakeVisible(envGraph);
 }
 
+void GraphContainer::resized()
+{
+  auto areaOut = getLocalBounds();
+  auto area = areaOut;
+  area.removeFromTop(UI_GRAPH_PADDING_TOP);
+  area.removeFromLeft(UI_GRAPH_PADDING_LEFT);
+  area.removeFromBottom(UI_GRAPH_PADDING_BOTTOM);
+  area.removeFromRight(UI_GRAPH_PADDING_RIGHT);
+  inputLevelGraph.setBounds(area);
+  envGraph.setBounds(area);
+}
+
 void GraphContainer::paint(juce::Graphics& g)
 {
   auto boundsOut = getLocalBounds().toFloat();
@@ -42,18 +54,4 @@ void GraphContainer::paint(juce::Graphics& g)
   // 배경
   g.setColour(SECONDARY_DARK_RGB[9]);
   g.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
-  
 }
-
-void GraphContainer::resized()
-{
-  auto areaOut = getLocalBounds();
-  auto area = areaOut;
-  area.removeFromTop(UI_GRAPH_PADDING_TOP);
-  area.removeFromLeft(UI_GRAPH_PADDING_LEFT);
-  area.removeFromBottom(UI_GRAPH_PADDING_BOTTOM);
-  area.removeFromRight(UI_GRAPH_PADDING_RIGHT);
-  inputLevelGraph.setBounds(area);
-  envGraph.setBounds(area);
-}
-

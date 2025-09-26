@@ -55,7 +55,9 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   
   // 클리핑 설정: bounds 안에서만 그리기
   g.saveState();
-  g.reduceClipRegion(bounds.getSmallestIntegerContainer());
+  juce::Path clipPath;
+  clipPath.addRoundedRectangle(bounds, UI_METER_BORDER_RADIUS);
+  g.reduceClipRegion(clipPath); // clip 영역을 둥근 사각형으로 제한
   
   // 피크 레벨 막대
   float y = bounds.getHeight() * level;
@@ -65,6 +67,8 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   auto barHeight = y;
   g.setColour(SECONDARY_RGB[6]);
   g.fillRect(bounds.withTop(bounds.getBottom() - barHeight));
+  
+  // 클리핑 끝
   g.restoreState();
 }
 
