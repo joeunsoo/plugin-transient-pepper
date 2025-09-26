@@ -58,4 +58,6 @@ class TiltEQProcessor : public juce::dsp::ProcessorBase
   juce::dsp::IIR::Coefficients<SampleType>> lowShelf;
   juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<SampleType>,
   juce::dsp::IIR::Coefficients<SampleType>> highShelf;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TiltEQProcessor)
 };

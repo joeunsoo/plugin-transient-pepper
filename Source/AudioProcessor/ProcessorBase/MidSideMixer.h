@@ -66,4 +66,6 @@ class MidSideMixer : public juce::dsp::ProcessorBase
   private:
   double sampleRate = 44100.0;
   SampleType mixLevel = 1.0f;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidSideMixer)
 };

@@ -77,4 +77,6 @@ private:
         juce::dsp::IIR::Filter<SampleType>,
         juce::dsp::IIR::Coefficients<SampleType>>
         bandPass;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BandPassFilter)
 };

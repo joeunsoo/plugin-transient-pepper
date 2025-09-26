@@ -16,6 +16,7 @@ template <typename SampleType>
 class TransientFollower
 {
   public:
+  TransientFollower() = default;
   void prepare(const juce::dsp::ProcessSpec& spec)
   {
     sampleRate = spec.sampleRate;
@@ -105,4 +106,5 @@ class TransientFollower
   std::vector<SampleType> fastEnv;
   std::vector<SampleType> slowEnv;
   
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TransientFollower)
 };

@@ -12,11 +12,9 @@ AboutModal::AboutModal() {
   flexContainer.addAndMakeVisible(pluginVersionLabel);
   flexContainer.addAndMakeVisible(companyNameLabel);
 
-  
   pluginNameLabel.setText ("Transient Pepper", juce::dontSendNotification);
   pluginVersionLabel.setText ("v" + juce::String(JucePlugin_VersionString), juce::dontSendNotification);
-  juce::String companyNameText = juce::CharPointer_UTF8("\u00A9 JoEunsoo");
-  companyNameLabel.setText (companyNameText, juce::dontSendNotification);
+  companyNameLabel.setText ("JoEunsoo", juce::dontSendNotification);
   
   pluginNameLabel.setJustificationType (juce::Justification::centred);
   pluginVersionLabel.setJustificationType (juce::Justification::centred);

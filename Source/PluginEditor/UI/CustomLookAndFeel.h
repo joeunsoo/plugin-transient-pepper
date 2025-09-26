@@ -5,6 +5,9 @@
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
+  public:
+  CustomLookAndFeel() {}
+  ~CustomLookAndFeel() override {}
 
   void drawButtonBackground (juce::Graphics& g,
                              juce::Button& button,
@@ -306,4 +309,6 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   juce::FontOptions fontMedium;
   juce::FontOptions fontSemiBold;
   juce::FontOptions fontBold;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomLookAndFeel)
 };

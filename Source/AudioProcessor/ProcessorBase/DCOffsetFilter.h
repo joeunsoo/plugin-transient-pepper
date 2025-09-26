@@ -62,4 +62,6 @@ class DCOffsetFilter : public juce::dsp::ProcessorBase
   float R; // pole coefficient (0.995 ~ 0.9999)
   
   std::vector<float> x1, y1; // per-channel history
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DCOffsetFilter)
 };

@@ -20,7 +20,9 @@ template <typename SampleType>
 class TransientNoiseProcessor : public juce::dsp::ProcessorBase
 {
   public:
-  TransientNoiseProcessor() {}
+  TransientNoiseProcessor()
+  : transientFollower(),bitCrusher(),airLayer()
+  {}
   ~TransientNoiseProcessor() override {}
   
   void prepare(const juce::dsp::ProcessSpec& spec) override
@@ -166,4 +168,6 @@ class TransientNoiseProcessor : public juce::dsp::ProcessorBase
   dsp::Gain<SampleType> thresholdGain;
 
   juce::AudioBuffer<SampleType> envBuffer;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TransientNoiseProcessor)
 };

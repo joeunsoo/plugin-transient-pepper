@@ -4,7 +4,10 @@
 
 struct ModalLookAndFeel : public LookAndFeel_V4
 {
-  
+  public:
+  ModalLookAndFeel() {}
+  ~ModalLookAndFeel() override {}
+
   void drawButtonBackground (Graphics& g,
                              Button& button,
                              const Colour& backgroundColour,
@@ -211,4 +214,6 @@ struct ModalLookAndFeel : public LookAndFeel_V4
   juce::FontOptions fontMedium;
   juce::FontOptions fontSemiBold;
   juce::FontOptions fontBold;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModalLookAndFeel)
 };

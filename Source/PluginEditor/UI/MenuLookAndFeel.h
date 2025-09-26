@@ -4,6 +4,10 @@
 
 struct MenuLookAndFeel : juce::LookAndFeel_V4
 {
+  public:
+  MenuLookAndFeel() {}
+  ~MenuLookAndFeel() override {}
+
   void setFont (juce::FontOptions f) { mainFont = f; }
   
   juce::Colour getPopupMenuBackgroundColour()
@@ -177,4 +181,6 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
   private:
   juce::FontOptions mainFont;
   int windowScale;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuLookAndFeel)
 };

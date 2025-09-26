@@ -16,6 +16,7 @@
 class AirLayer
 {
   public:
+  AirLayer() = default;
   void prepare()
   {
     //rng.setSeedRandomly();
@@ -35,6 +36,8 @@ class AirLayer
   private:
   juce::Random rng;
   int seedValue = 20250912;
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AirLayer)
 };
 
 //==============================================================================
@@ -42,6 +45,7 @@ class AirLayer
 class BitCrusher
 {
   public:
+  BitCrusher() = default;
   void prepare()
   {
     step = 1.0f / 2.0f;
@@ -54,4 +58,6 @@ class BitCrusher
   
   private:
   float step = 1.0f / 2.0f;
+
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BitCrusher)
 };

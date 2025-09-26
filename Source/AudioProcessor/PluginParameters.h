@@ -245,4 +245,6 @@ struct Parameters {
   static float stringToDB (const juce::String& text) {
     return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
   }
+  
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Parameters)
 };
