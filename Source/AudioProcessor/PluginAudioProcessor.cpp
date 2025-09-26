@@ -183,8 +183,8 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 #if !CHECK_ENV && !CHECK_SIDECHAIN && !DISABLE_DCOFFSET_FILTER
       dcBlocker.process(dsp::ProcessContextReplacing<float> (outBlock)); // 초저음 제거
 #endif
-    }
     noiseLevelGain.process(dsp::ProcessContextReplacing<float> (outBlock)); // 노이즈 게인
+    }
     noisePeakMeter.push (outBlock); // 노이즈 레벨 미터 저장
     
     dryWetMixer.mixWetSamples (outBlock); // Dry/Wet 믹스

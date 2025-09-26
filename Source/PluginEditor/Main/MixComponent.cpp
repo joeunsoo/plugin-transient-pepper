@@ -43,16 +43,16 @@ void MixComponent::parameterValueChanged (int, float) {
   bool wetSolo = editorRef.processorRef.parameters.wetSolo.get();
   
   if (bypass) {
-    noiseLevelGainKnob.setAlpha(DISABLED_ALPHA);
     outputGainKnob.setAlpha(DISABLED_ALPHA);
   } else {
-    noiseLevelGainKnob.setAlpha(1.0f);
     outputGainKnob.setAlpha(1.0f);
   }
   
   if (bypass || sidechainListen) {
+    noiseLevelGainKnob.setAlpha(DISABLED_ALPHA);
     wetSoloButton.setAlpha(DISABLED_ALPHA);
   } else {
+    noiseLevelGainKnob.setAlpha(1.0f);
     wetSoloButton.setAlpha(1.0f);
   }
   
