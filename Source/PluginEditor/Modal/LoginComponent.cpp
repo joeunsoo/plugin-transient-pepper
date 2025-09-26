@@ -34,8 +34,19 @@ LoginComponent::LoginComponent() {
   addAndMakeVisible(loginButton);
   loginButton.setColour(juce::TextButton::buttonColourId, PRIMARY_DARK_RGB[4]);
   loginButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
-  loginButton.setColour(juce::ComboBox::outlineColourId, PRIMARY_DARK_RGB[4]);
+  loginButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB[2]);
   loginButton.setButtonText("Sign in");
+  
+  loginButton.onClick = [this]()
+  {
+    auto email = emailEditor.getText();
+    auto password = passwordEditor.getText();
+    auto result = editorRef->processorRef.licenseManager.sendActivationRequest(email,password);
+
+    DBG(result.message);
+  };
+  
+  
 }
 
 LoginComponent::~LoginComponent() = default;

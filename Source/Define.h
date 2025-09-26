@@ -17,6 +17,8 @@
 #define DISABLE_DCOFFSET_FILTER false
 #define ADVANCED false
 
+#define PLUGIN_CODE "transient-pepper"
+
 #define UI_TIMER_HZ 60
 
 #define UI_SECTION_LABEL_HEIGHT 20

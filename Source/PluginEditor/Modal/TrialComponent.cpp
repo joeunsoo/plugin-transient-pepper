@@ -15,9 +15,9 @@ void TrialComponent::init(PluginEditor& editor, ActivateModal& modal)
   modalRef = &modal;
   
   addAndMakeVisible(trialButton);
-  trialButton.setColour(juce::TextButton::buttonColourId, PRIMARY_DARK_RGB[4]);
+  trialButton.setColour(juce::TextButton::buttonColourId, DARK_RGB[8]);
   trialButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
-  trialButton.setColour(juce::ComboBox::outlineColourId, PRIMARY_DARK_RGB[4]);
+  trialButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB[8]);
 
   trialButton.onClick = [this]()
   {
