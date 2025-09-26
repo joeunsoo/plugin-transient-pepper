@@ -1,0 +1,4 @@
+#!/bin/bash
+# 이전 버전 파일 삭제
+rm -rf /Library/Audio/Plug-Ins/VST3/JETransientPepper.vst3
+exit 0
