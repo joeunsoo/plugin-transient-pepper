@@ -27,7 +27,6 @@ private juce::Timer
   
   int idx = -1;
   float level = 0.0f;
-  float smoothedY = 0.0f;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeterComponent)
 };

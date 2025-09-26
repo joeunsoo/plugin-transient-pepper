@@ -38,19 +38,21 @@ void GraphContainer::paint(juce::Graphics& g)
   bounds.removeFromRight(UI_GRAPH_PADDING_RIGHT);
   
   // Drop shadow
-  juce::Image buttonImage(
+  juce::Image graphImage(
                           juce::Image::ARGB,
                           juce::roundToInt(boundsOut.getWidth()),
                           juce::roundToInt(boundsOut.getHeight()),
                           true);
-  juce::Graphics g2(buttonImage);
+  juce::Graphics g2(graphImage);
   g2.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
   
   juce::DropShadow ds(
                       juce::Colours::black.withAlpha(0.5f),
-                      1,
-                      {0, 3});
-  
+                      5,
+                      {0, 5});
+
+  ds.drawForImage(g, graphImage);  // 이제 2개 인자
+
   // 배경
   g.setColour(SECONDARY_DARK_RGB[9]);
   g.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);

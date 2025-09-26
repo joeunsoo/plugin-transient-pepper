@@ -61,9 +61,7 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   
   // 피크 레벨 막대
   float y = bounds.getHeight() * level;
-  
-  // smoothing
-  // smoothedY += 0.2f * (y - smoothedY);
+
   auto barHeight = y;
   g.setColour(SECONDARY_RGB[6]);
   g.fillRect(bounds.withTop(bounds.getBottom() - barHeight));
