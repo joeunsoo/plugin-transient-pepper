@@ -10,12 +10,6 @@
               pluginAAXCategory="8192">
   <MAINGROUP id="eUJieJ" name="JETransientPepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
-      <GROUP id="{D5DEB346-40FE-5500-1277-47B2D96CDD9B}" name="WebviewPluginEditor">
-        <FILE id="ID5GpT" name="WebviewPluginEditor.h" compile="0" resource="0"
-              file="Source/WebviewPluginEditor/WebviewPluginEditor.h"/>
-        <FILE id="fA9tiB" name="WebviewPluginEditor.cpp" compile="1" resource="0"
-              file="Source/WebviewPluginEditor/WebviewPluginEditor.cpp"/>
-      </GROUP>
       <GROUP id="{27642135-67E8-B504-B432-5117A92BDD20}" name="AudioProcessor">
         <GROUP id="{628CCD0F-0631-CC59-C375-385916DBE476}" name="ProcessorBase">
           <FILE id="WuaNQk" name="BandPassFilter.h" compile="0" resource="0"
@@ -158,8 +152,6 @@
               file="Assets/icon/gear-six-fill.svg"/>
       </GROUP>
       <FILE id="lstfG1" name="DemoUtilities.h" compile="0" resource="0" file="Assets/DemoUtilities.h"/>
-      <FILE id="lLMVeR" name="gui.zip" compile="0" resource="1" file="Assets/gui.zip"
-            xcodeResource="0"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
