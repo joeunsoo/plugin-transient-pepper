@@ -3,8 +3,8 @@
 ; ======================================
 
 [Setup]
-AppName=JoEunsoo TransientPepper
-AppVersion=1.0.2
+AppName=JoEunsoo Transient Pepper
+AppVersion=1.0.3
 DefaultDirName={pf}
 DefaultGroupName=JoEunsoo
 OutputBaseFilename=JETransientPepperSetup
@@ -14,14 +14,14 @@ PrivilegesRequired=admin
 UsePreviousAppDir=no
 DisableDirPage=yes
 
-LicenseFile=../Resources/License.txt
+LicenseFile=../pkg/Resources/License.txt
 ; --------------------------------------
 ; 빌드 폴더 경로 설정
 ; (여기에 JUCE Release 빌드 경로를 맞춰주세요)
-#define BUILD_RELEASE_PATH "D:\juce\projects\plugin-transient-pepper\Builds\VisualStudio2022\x64\Release\VST3\JETransientPepper.vst3\Contents\x86_64-win"
+#define BUILD_RELEASE_PATH "D:\juce\projects\plugin-transient-pepper\Builds\VisualStudio2022\x64\Release\VST3\JE Transient Pepper.vst3\Contents\x86_64-win"
 
 [Files]
-Source: "{#BUILD_RELEASE_PATH}\JETransientPepper.vst3"; DestDir: "{code:GetVST3Dir}"; Flags: ignoreversion
+Source: "{#BUILD_RELEASE_PATH}\JE Transient Pepper.vst3"; DestDir: "{code:GetVST3Dir}"; Flags: ignoreversion
 
 [Code]
 var
@@ -40,6 +40,14 @@ begin
 
   // Set an initial default value for the directory (optional)
   VST3PathPage.Values[0] := ExpandConstant('{cf64}\VST3');
+end;
+
+procedure CurStepChanged(CurStep: TSetupStep);
+begin
+  if CurStep = ssInstall then
+  begin
+    DeleteFile(ExpandConstant('{cf64}\VST3\JETransientPepper.vst3'));
+  end;
 end;
 
 // [Files]에서 참조할 함수
