@@ -207,9 +207,7 @@
     </XCODE_MAC>
     <VS2022 targetFolder="Builds/VisualStudio2022" extraCompilerFlags="/bigobj&#10;/I &quot;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&quot;&#10;">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"
-                       libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"
-                       headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"/>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="3" defines="WIN32;_WINDOWS;_WIN32_WINNT=0x0A00;JUCE_WINDOWS=1"
                        libraryPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"
                        headerPath="C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um&#10;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared&#10;"/>

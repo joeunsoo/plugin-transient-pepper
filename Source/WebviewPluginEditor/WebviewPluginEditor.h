@@ -10,12 +10,6 @@
 
 #pragma once
 
-#if JUCE_WINDOWS
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <Windows.h>  // HWND, SendMessage 등 정의
-#endif
-
 #include <JuceHeader.h>
 #include "../Assets/DemoUtilities.h"
 #include "../AudioProcessor/PluginAudioProcessor.h"
