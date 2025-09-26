@@ -68,7 +68,11 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
       if (standardMenuItemHeight > 0 && font.getHeight() > (float) standardMenuItemHeight / 1.3f)
         font.setHeight ((float) standardMenuItemHeight / 1.3f);
       
-      idealHeight = standardMenuItemHeight > 0 ? standardMenuItemHeight : roundToInt (font.getHeight() * 2.0f);
+      float heightScale = 2.0f; // 원래는 1.3f
+      if (text == "Scale") {
+        heightScale = 1.3f;
+      }
+      idealHeight = standardMenuItemHeight > 0 ? standardMenuItemHeight : roundToInt (font.getHeight() * heightScale);
       idealWidth = GlyphArrangement::getStringWidthInt (font, text) + idealHeight * 2;
     }
   }

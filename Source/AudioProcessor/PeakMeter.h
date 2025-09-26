@@ -72,8 +72,8 @@ class PeakMeter
       {
         auto* channelData = destSubBlock.getChannelPointer(ch);
         float localPeak = currentPeak[ch];
-        for (size_t i = 0; i < numSamplesToWrite; ++i)
-          localPeak = std::max(localPeak, std::abs(channelData[i]));
+        for (int64 i = 0; i < numSamplesToWrite; ++i)
+          localPeak = std::max(localPeak, std::abs(channelData[(size_t)i]));
         currentPeak[ch] = localPeak;
       }
       

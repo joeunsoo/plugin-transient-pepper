@@ -44,6 +44,7 @@ void MenuComponent::init(PluginEditor& editor)
     PopupMenu menu;
     menuLaF.setWindowScale(editorRef->processorRef.windowScale);
     menu.setLookAndFeel(&menuLaF);
+    menu.addSectionHeader("Scale");
     menu.addItem ("100%", [this] { editorRef->setScale(100); });
     menu.addItem ("150%", [this] { editorRef->setScale(150); });
     menu.addItem ("200%", [this] { editorRef->setScale(200); });
