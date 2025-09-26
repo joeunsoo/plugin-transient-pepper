@@ -36,7 +36,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     
     juce::DropShadow ds(
                         juce::Colours::black.withAlpha(0.5f),
-                        1,
+                        2,
                         {0, 3});
     
     // 위치 변환 후 그림자 적용
@@ -64,7 +64,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     
     // --- border
     g.setColour(PRIMARY_RGB[9]);
-    g.drawRoundedRectangle(bounds, cornerSize, 1.5f);
+    g.drawRoundedRectangle(bounds, cornerSize, 1.0f);
     
     // --- hover 효과
     if (shouldDrawButtonAsHighlighted && ! button.getToggleState())
@@ -162,7 +162,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                  rotaryEndAngle,
                                  true             // true = moveTo(startAngle) → 선만
                                  );
-        g.setColour(colorDotLine);
+        g.setColour(colorDotLine.withAlpha(0.7f));
         g.strokePath (outlineArc, PathStrokeType (lineThickness));
       }
       
@@ -228,7 +228,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       g.saveState();
       
       auto BoundsIn = knobBounds;
-      BoundsIn.reduce(size * 0.1f, size * 0.1f);
+      BoundsIn.reduce(size * 0.08f, size * 0.08f);
       g.setColour(colorIn);
       g.fillEllipse(BoundsIn);
       
@@ -237,26 +237,26 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                 juce::Colours::white.withAlpha(1.0f),      // startColor
                                 centre.x, centre.y - BoundsIn.getWidth()/2.0f,               // 시작점 (y1)
                                 juce::Colour(PRIMARY_RGB[6]).withAlpha(0.0f), // primary-6 색상, 투명
-                                centre.x, centre.y - BoundsIn.getWidth()/2.0f + BoundsIn.getWidth()/2.0f * 0.2f, // 끝점 y2 = 20% 지점
+                                centre.x, centre.y - BoundsIn.getWidth()/2.0f + BoundsIn.getWidth()/2.0f * 0.25f, // 끝점 y2 = 20% 지점
                                 false                                      // radial = false → linear
                                 );
       
       // Graphics에 Gradient 적용
-      float angle = juce::degreesToRadians(305.0f);
+      float angle = juce::degreesToRadians(330.0f);
       g.addTransform(juce::AffineTransform::rotation(angle, centre.x, centre.y));
       g.setGradientFill(grad);
       // g.addTransform(juce::AffineTransform::rotation(-angle, centre.x, centre.y));
       
       // 윤곽선 그리기
       auto BoundsInGradStroke = knobBounds;
-      BoundsInGradStroke.reduce(size * 0.1f, size * 0.1f);
-      g.drawEllipse(BoundsInGradStroke, vw * 4.0f);
+      BoundsInGradStroke.reduce(size * 0.085f, size * 0.085f);
+      g.drawEllipse(BoundsInGradStroke, vw * 16.0f);
       
       // 윤곽선 그리기
       auto BoundsInStroke = knobBounds;
-      BoundsInStroke.reduce(size * 0.09f, size * 0.09f);
+      BoundsInStroke.reduce(size * 0.07f, size * 0.07f);
       g.setColour(juce::Colours::black);
-      g.drawEllipse(BoundsInStroke, vw * 8.0f);
+      g.drawEllipse(BoundsInStroke, vw * 16.0f);
       
       g.restoreState();
     }
@@ -264,7 +264,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     
     {
       // Thumb 그리기
-      float pointerThickness = vw * 40.0f; // 두께
+      float pointerThickness = vw * 48.0f; // 두께
       
       // 각도 계산
       float angle = juce::degreesToRadians(180.0f) + rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
@@ -276,8 +276,8 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       
       // 선 그리기 (pointer)
       juce::Path pointer;
-      pointer.startNewSubPath(centre.x, centre.y + (75.0f * vw)); // 시작점
-      pointer.lineTo(centre.x, centre.y + (300.0f * vw)); // 종료점
+      pointer.startNewSubPath(centre.x, centre.y + (100.0f * vw)); // 시작점
+      pointer.lineTo(centre.x, centre.y + (290.0f * vw)); // 종료점
       
       g.setColour(juce::Colours::white); // stroke color
       g.strokePath(pointer, juce::PathStrokeType(pointerThickness, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));

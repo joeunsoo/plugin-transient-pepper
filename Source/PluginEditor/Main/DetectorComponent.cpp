@@ -92,9 +92,9 @@ void DetectorComponent::resized()
   sectionLabel.setBounds(area.removeFromTop(UI_SECTION_LABEL_HEIGHT));
   
   auto buttonArea = area.removeFromTop(UI_BUTTON_HEIGHT);
-  channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3).reduced(UI_GAP_SIZE));
-  bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6).reduced(UI_GAP_SIZE));
-  sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6).reduced(UI_GAP_SIZE));
+  channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3));
+  bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
+  sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   
   auto SliderArea = area.removeFromTop(UI_KNOB_HEIGHT);
   thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));

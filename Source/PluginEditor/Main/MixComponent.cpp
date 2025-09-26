@@ -76,7 +76,7 @@ void MixComponent::resized()
   noisePeakMeter.setBounds(leftArea.removeFromTop(leftArea.getHeight()-(UI_KNOB_HEIGHT+NoiseGainGap+UI_BUTTON_HEIGHT+UI_KNOB_HEIGHT)));
   noiseLevelGainKnob.setBounds(leftArea.removeFromTop(UI_KNOB_HEIGHT));
   leftArea.removeFromTop(NoiseGainGap);
-  wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT).reduced(UI_GAP_SIZE));
+  wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT).reduced(2,0));
   dryWetKnob.setBounds(leftArea);
   auto rightArea = area;
   outputPeakMeter.setBounds(rightArea.removeFromTop(rightArea.getHeight()-(UI_KNOB_HEIGHT)).withTrimmedBottom(0));

@@ -17,7 +17,7 @@ void KnobComponent::init(
 {
   editorRef = &editor;
   parameterID = paramID;
-  
+
   rotarySlider.setColour(
                          juce::Slider::rotarySliderFillColourId,
                          juce::Colours::orange
