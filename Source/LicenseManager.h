@@ -25,9 +25,9 @@ class LicenseManager
     propertiesFile = std::make_unique<juce::PropertiesFile>(options);
   }
   
-  void sendActivationRequest(String userEmail,String userPassword)
+  std::pair<int, juce::String> sendActivationRequest(String userEmail,String userPassword)
   {
-    juce::URL url ("http://localhost:3000/api/productActivation");
+    juce::URL url ("https://joeunsoo.com/api/productActivation");
     
     juce::DynamicObject::Ptr jsonObj = new juce::DynamicObject();
     jsonObj->setProperty ("userEmail", userEmail);
@@ -57,29 +57,19 @@ class LicenseManager
       if (json.isObject())
       {
         auto& obj = *json.getDynamicObject();
-        return obj;
-
-        // 예: "status" 필드 읽기
-        juce::String status = obj.getProperty ("status").toString();
+        
         juce::String message = obj.getProperty ("message").toString();
-        DBG ("status: " << status << ", message: " << message);
-      }
-      else
+        DBG ("status: " << statusCode << ", message: " << message);
+  
+        return std::make_pair(statusCode, message);
+      } else
       {
-        juce::DynamicObject::Ptr errorNoJSON = new juce::DynamicObject();
-        jsonObj->setProperty ("status", 500);
-        jsonObj->setProperty ("message", "Failed to parse JSON or not an object");
-
-        return errorNoJSON;
+        return std::make_pair(500, "Failed to parse JSON");
       }
     }
     else
     {
-      juce::DynamicObject::Ptr errorNull = new juce::DynamicObject();
-      jsonObj->setProperty ("status", 500);
-      jsonObj->setProperty ("message", "Response stream is null — request failed or timeout");
-
-      return errorNull;
+      return std::make_pair(500, "Response stream is null");
     }
   }
   

@@ -34,8 +34,6 @@ void DeactivateComponent::init(PluginEditor& editor, ActivateModal& modal)
   pluginNameLabel.setFont(editorRef->fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
   pluginNameLabel.setInterceptsMouseClicks(false, false);
   
-  auto accountEmail = editorRef->processorRef.licenseManager.getActivate();
-  accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
   accountEmailLabel.setFont(editorRef->fontMedium.withHeight(10.0f));
   accountEmailLabel.setInterceptsMouseClicks(false, false);
   
@@ -44,10 +42,15 @@ void DeactivateComponent::init(PluginEditor& editor, ActivateModal& modal)
     editorRef->processorRef.licenseManager.setDeactivate();
     modalRef->resized();
   };
+
+  resized();
 }
 
 void DeactivateComponent::resized()
 {
+  auto accountEmail = editorRef->processorRef.licenseManager.getActivate();
+  accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
+
   auto bounds = getLocalBounds();
   flexContainer.setBounds(getLocalBounds());
 

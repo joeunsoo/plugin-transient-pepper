@@ -37,16 +37,9 @@ LoginComponent::LoginComponent() {
   loginButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB[2]);
   loginButton.setButtonText("Sign in");
   
-  loginButton.onClick = [this]()
-  {
-    auto email = emailEditor.getText();
-    auto password = passwordEditor.getText();
-    auto result = editorRef->processorRef.licenseManager.sendActivationRequest(email,password);
-
-    DBG(result.message);
-  };
-  
-  
+  loginButton.onClick = [this]() { callActivate(); };
+  emailEditor.addListener(this);
+  passwordEditor.addListener(this);
 }
 
 LoginComponent::~LoginComponent() = default;
@@ -81,6 +74,21 @@ void LoginComponent::init(PluginEditor& editor, ActivateModal& modal)
 
 
   trialComponent.init(editor, modal);
+}
+
+void LoginComponent::callActivate()
+{
+  auto email = emailEditor.getText();
+  auto password = passwordEditor.getText();
+  auto result = editorRef->processorRef.licenseManager.sendActivationRequest(email,password);
+
+  if (result.first == 201) {
+    editorRef->processorRef.licenseManager.setActivate(email);
+    emailEditor.setText("");
+    passwordEditor.setText("");
+    modalRef->resized();
+    modalRef->close();
+  }
 }
 
 void LoginComponent::resized()

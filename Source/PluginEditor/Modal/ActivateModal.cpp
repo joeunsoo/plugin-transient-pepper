@@ -26,15 +26,19 @@ void ActivateModal::init(PluginEditor& editor)
   deactivateComponent.init(editor, *this);
   loginComponent.init(editor, *this);
   
+  addAndMakeVisible (deactivateComponent);
+  addAndMakeVisible (loginComponent);
 }
 
 void ActivateModal::resized()
 {
   if (editorRef->processorRef.licenseManager.isActivate()) {
-    addAndMakeVisible (deactivateComponent);
+    deactivateComponent.setVisible(true);
+    loginComponent.setVisible(false);
     deactivateComponent.setBounds(getLocalBounds().withSizeKeepingCentre(250, 100));
   } else {
-    addAndMakeVisible (loginComponent);
+    deactivateComponent.setVisible(false);
+    loginComponent.setVisible(true);
     loginComponent.setBounds(getLocalBounds().withSizeKeepingCentre(250, 200));
   }
 }

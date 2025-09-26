@@ -16,7 +16,6 @@ void HeaderComponent::init(PluginEditor& editor)
   addAndMakeVisible(bypassComponent);
   bypassComponent.init(editor);
   
-  
   addAndMakeVisible(logoLabel);
   logoLabel.setFont(editorRef->fontBold);
   logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);

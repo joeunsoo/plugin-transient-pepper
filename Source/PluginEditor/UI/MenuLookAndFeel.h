@@ -50,6 +50,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
   
   void getIdealPopupMenuItemSize (const String& text, const bool isSeparator,
                                   int standardMenuItemHeight, int& idealWidth, int& idealHeight)
+  override
   {
     if (isSeparator)
     {
