@@ -39,7 +39,7 @@ void ActivateModal::resized()
   } else {
     deactivateComponent.setVisible(false);
     loginComponent.setVisible(true);
-    loginComponent.setBounds(getLocalBounds().withSizeKeepingCentre(250, 200));
+    loginComponent.setBounds(getLocalBounds().withSizeKeepingCentre(250, 220));
   }
 }
 

@@ -36,7 +36,7 @@ private juce::TextEditor::Listener
   ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
 
   juce::Component flexContainer;
-  juce::Label pluginNameLabel, emailLabel, passwordLabel;
+  juce::Label pluginNameLabel, emailLabel, passwordLabel, messageLabel;
   TextEditor emailEditor,
              passwordEditor  { "", (juce_wchar) 0x2022 };
 

@@ -60,7 +60,7 @@ void AboutModal::resized()
     ;
   };
 
-  flexBox.items.add(flexItemSetting(pluginNameLabel,UI_PLUGIN_NAME_FONT_HEIGHT,4.0f));
+  flexBox.items.add(flexItemSetting(pluginNameLabel,UI_PLUGIN_NAME_FONT_HEIGHT,6.0f));
   flexBox.items.add(flexItemSetting(pluginVersionLabel,10,15.0f));
   flexBox.items.add(flexItemSetting(companyNameLabel,10,0.0f));
   flexBox.performLayout (flexContainer.getLocalBounds()); // [6]
