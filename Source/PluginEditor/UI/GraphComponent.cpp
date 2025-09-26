@@ -29,6 +29,51 @@ void GraphComponent::paint(juce::Graphics& g)
     
     isInit = true;
   }
+
+  int movePixels = 5;
+
+  // 3) 새로운 값 계산
+  float newValue = (level1 + level2) / 2.0f;
+  float skewValue = applySkew(newValue, 0.0f, 1.0f, 0.15f);
+  float y = height - skewValue * height;
+
+  // 5) Path 생성 (fill + stroke)
+  float cpX = width - movePixels - 0.5f;
+  float cpY = 0 / 2.0f;
+  
+  // fill용 Path (아래쪽 영역)
+  juce::Path fillPath;
+  fillPath.startNewSubPath(width - movePixels - 1, lastY);
+  fillPath.quadraticTo(cpX, cpY, width - 1, y);
+  fillPath.lineTo(width - 1, height);
+  fillPath.lineTo(width - movePixels - 1, height);
+  fillPath.closeSubPath();
+  
+  g.setColour(fillColour); // 아래쪽 채우기
+  g.fillPath(fillPath);
+  
+  // stroke용 Path (위쪽 선)
+  juce::Path strokePath;
+  strokePath.startNewSubPath(width - movePixels - 1, lastY);
+  strokePath.quadraticTo(cpX, cpY, width - 1, y);
+  g.setColour(strokeColour); // 위쪽 밝은 선
+  g.strokePath(strokePath, juce::PathStrokeType(2.0f));
+  
+}
+/*
+void GraphComponent::paint(juce::Graphics& g)
+{
+  auto bounds = getLocalBounds().toFloat();
+  int width = static_cast<int>(bounds.getWidth());
+  int height = static_cast<int>(bounds.getHeight());
+  
+  if (!isInit) {
+    canvasImage = juce::Image(juce::Image::ARGB, width, height, true);
+    bufferImage = juce::Image(juce::Image::ARGB, width, height, true);
+    lastY = height;
+    
+    isInit = true;
+  }
   
   // 2) 이전 프레임 buffer 복사 (스크롤 처리)
   bufferImage.clear(juce::Rectangle<int>(0, 0, width, height));
@@ -96,6 +141,7 @@ void GraphComponent::paint(juce::Graphics& g)
   // 클리핑 끝
   g.restoreState();
 }
+*/
 
 void GraphComponent::timerCallback()
 {
