@@ -24,7 +24,16 @@ class LoginComponent : public juce::Component
   ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
 
   juce::Component flexContainer;
-  juce::Label pluginNameLabel;
+  juce::Label pluginNameLabel, emailLabel, passwordLabel;
+  TextEditor emailEditor,
+             passwordEditor  { "", (juce_wchar) 0x2022 };
+
+  juce::HyperlinkButton forgotPasswordButton {
+    "Forgot password?", {"https://joeunsoo.com/reset-password"}
+  };
+
+  juce::TextButton loginButton;
+
   TrialComponent trialComponent;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LoginComponent)

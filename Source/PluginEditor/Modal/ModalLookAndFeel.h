@@ -53,6 +53,23 @@ struct ModalLookAndFeel : public LookAndFeel_V4
     }
   }
   
+  
+  void drawTextEditorOutline (juce::Graphics& g, int width, int height, juce::TextEditor& textEditor) override
+  {
+    auto borderThickness = 1.0f;
+    auto cornerSize = UI_MODAL_TEXT_EDITOR_BORDER_RADIUS; // borderRadius 값
+    
+    auto bounds = juce::Rectangle<float>(0, 0, (float)width, (float)height);
+    
+    g.setColour (textEditor.hasKeyboardFocus (true)
+                 ? textEditor.findColour (juce::TextEditor::focusedOutlineColourId)
+                 : textEditor.findColour (juce::TextEditor::outlineColourId));
+    
+    g.drawRoundedRectangle (bounds.reduced (borderThickness * 0.5f),
+                            cornerSize,
+                            borderThickness);
+  }
+  
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
     auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
