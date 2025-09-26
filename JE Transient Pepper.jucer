@@ -151,7 +151,6 @@
         <FILE id="WGZ2MP" name="gear-six-fill.svg" compile="0" resource="1"
               file="Assets/icon/gear-six-fill.svg"/>
       </GROUP>
-      <FILE id="lstfG1" name="DemoUtilities.h" compile="0" resource="0" file="Assets/DemoUtilities.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>
