@@ -17,7 +17,6 @@ DeactivateComponent::DeactivateComponent() {
   accountEmailLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
   
   flexContainer.addAndMakeVisible(deactivateButton);
-  
   deactivateButton.setButtonText("Deactivate");
   deactivateButton.setColour(juce::TextButton::buttonColourId, PRIMARY_DARK_RGB[4]);
   deactivateButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);

@@ -45,6 +45,10 @@
                 file="Source/PluginEditor/Modal/DeactivateComponent.h"/>
           <FILE id="eove8X" name="DeactivateComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Modal/DeactivateComponent.cpp"/>
+          <FILE id="vmXq4n" name="TrialComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Modal/TrialComponent.h"/>
+          <FILE id="VRV6iv" name="TrialComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Modal/TrialComponent.cpp"/>
           <FILE id="bnT95O" name="LoginComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Modal/LoginComponent.h"/>
           <FILE id="Xf7oq5" name="LoginComponent.cpp" compile="1" resource="0"

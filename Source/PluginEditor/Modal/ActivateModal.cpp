@@ -50,6 +50,11 @@ void ActivateModal::mouseUp (const juce::MouseEvent&)
   if (editorRef->processorRef.licenseManager.isActivate()) {
     close();
   }
+
+  // 트라이얼 유효 유무 확인
+  if (!editorRef->processorRef.licenseManager.isTrialExpired()) {
+    close();
+  }
 }
 
 void ActivateModal::showIn (juce::Component& parent)
@@ -58,6 +63,8 @@ void ActivateModal::showIn (juce::Component& parent)
   parent.addAndMakeVisible (this);
   setBounds (parent.getLocalBounds());
   toFront (true); // 맨 위로
+  
+  loginComponent.resized();
 }
 
 void ActivateModal::close()

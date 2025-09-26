@@ -1,17 +1,16 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "TrialComponent.h"
 
 // Forward declaration
 class PluginEditor;
 class ActivateModal;
 
-class LoginComponent : public juce::Component
+class TrialComponent : public juce::Component
 {
   public:
-  LoginComponent();
-  ~LoginComponent() override;
+  TrialComponent();
+  ~TrialComponent() override;
 
   void init(PluginEditor& editor, ActivateModal& modal);
   
@@ -23,9 +22,7 @@ class LoginComponent : public juce::Component
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
   ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
 
-  juce::Component flexContainer;
-  juce::Label pluginNameLabel;
-  TrialComponent trialComponent;
+  juce::TextButton trialButton;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LoginComponent)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(TrialComponent)
 };

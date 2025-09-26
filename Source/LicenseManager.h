@@ -91,6 +91,10 @@ class LicenseManager
     return timestamp;
   }
   
+  // 트라이얼 유효 유무 확인,
+  // 트라이얼 시작되지 않은 경우에도 true
+  // 종료시간 지나면 true
+  // 트라이얼 시작하고 종료시간 안지나면 false
   bool isTrialExpired()
   {
       int64 startTime = getTrial(); // 복호화된 트라이얼 시작 timestamp
