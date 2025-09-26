@@ -6,8 +6,7 @@
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
               addUsingNamespaceToJuceHeader="1" id="juqXJH" jucerFormatVersion="1"
               companyEmail="info@joeunsoo.com" pluginName="JE Transient Pepper"
-              pluginCode="tspp" pluginManufacturerCode="JOES" pluginVST3Category="Dynamics"
-              pluginAAXCategory="8192">
+              pluginCode="tspp" pluginManufacturerCode="JOES" pluginAAXCategory="8192">
   <MAINGROUP id="eUJieJ" name="JE Transient Pepper">
     <GROUP id="{35A8EC3B-9539-F605-D986-D2058D0701EB}" name="Source">
       <GROUP id="{27642135-67E8-B504-B432-5117A92BDD20}" name="AudioProcessor">
@@ -170,8 +169,7 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" xcodeValidArchs="arm64,x86_64" extraCompilerFlags="-Wall \&#10;-Wextra \&#10;-Wconversion \&#10;-Wsign-conversion \&#10;&#10;-Wshadow \&#10;-Wpedantic \&#10;&#10;-Wuninitialized&#10;-Wnull-dereference \&#10;-Wformat \&#10;-Wstrict-aliasing \&#10;&#10;-Wc++20-compat \&#10;-Wdeprecated \&#10;-Wnon-virtual-dtor \&#10;-Wfloat-equal"
-               microphonePermissionNeeded="1">
+    <XCODE_MAC targetFolder="Builds/MacOSX" xcodeValidArchs="arm64,x86_64" extraCompilerFlags="-Wall \&#10;-Wextra \&#10;-Wconversion \&#10;-Wsign-conversion \&#10;&#10;-Wshadow \&#10;-Wpedantic \&#10;&#10;-Wuninitialized&#10;-Wnull-dereference \&#10;-Wformat \&#10;-Wstrict-aliasing \&#10;&#10;-Wc++20-compat \&#10;-Wdeprecated \&#10;-Wnon-virtual-dtor \&#10;-Wfloat-equal">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" osxCompatibility="10.13 SDK"
                        codeSigningIdentity="Apple Development: Eun Soo Jo (48GXV85C7B)"
