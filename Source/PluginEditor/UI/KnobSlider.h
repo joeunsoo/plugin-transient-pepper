@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../../Define.h"
+
 struct KnobSlider : public juce::Slider
 {
   KnobSlider()
   : juce::Slider(juce::Slider::RotaryHorizontalVerticalDrag, juce::Slider::NoTextBox)
   {
-    setMouseDragSensitivity (150);
+    setMouseDragSensitivity (UI_KNOB_DRAG_SENSITIVITY);
   }
   
   // 커스텀 멤버
