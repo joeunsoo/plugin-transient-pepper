@@ -8,7 +8,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   public:
   CustomLookAndFeel() {}
   ~CustomLookAndFeel() override {}
-
+  
   void drawButtonBackground (juce::Graphics& g,
                              juce::Button& button,
                              const juce::Colour&, // backgroundColour
@@ -21,7 +21,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT);
     bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM);
     bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT);
-
+    
     float cornerSize = UI_BUTTON_BORDER_RADIUS;
     
     
@@ -45,7 +45,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     ds.drawForImage(g, buttonImage);  // 이제 2개 인자
     // g.drawImageAt(buttonImage, 0, 0);
     g.restoreState();
-
+    
     // --- 상태별 배경색 (linear-gradient 느낌)
     juce::ColourGradient gradient(
                                   button.getToggleState()
@@ -80,43 +80,38 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       g.fillRoundedRectangle(bounds, cornerSize);
     }
   }
-
+  
   void drawButtonText (Graphics& g, TextButton& button,
-                                       bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
+                       bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
   override
   {
-      Font font (getTextButtonFont (button, button.getHeight()));
-      g.setFont (font);
-      g.setColour (button.findColour (button.getToggleState() ? TextButton::textColourOnId
-                                                              : TextButton::textColourOffId)
-                         .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
+    Font font (getTextButtonFont (button, button.getHeight()));
 
-      const int yIndent = jmin (4, button.proportionOfHeight (0.3f));
-      const int cornerSize = jmin (button.getHeight(), button.getWidth()) / 2;
-
-      const int fontHeight = roundToInt (font.getHeight() * 0.6f);
-      const int leftIndent  = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2));
-      const int rightIndent = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2));
-      const int textWidth = button.getWidth() - leftIndent - rightIndent;
+    g.setFont (font);
+    g.setColour (button.findColour (button.getToggleState() ? TextButton::textColourOnId
+                                    : TextButton::textColourOffId)
+                 .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
     
-      auto bounds = button.getLocalBounds();
-      bounds.removeFromTop(UI_BUTTON_PADDING_TOP + yIndent);
-      bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT + leftIndent);
-      bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM + yIndent);
-      bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT + rightIndent);
+    const int yIndent = jmin (4, button.proportionOfHeight (0.3f));
+    const int cornerSize = jmin (button.getHeight(), button.getWidth()) / 2;
+    
+    const int fontHeight = roundToInt (font.getHeight() * 0.6f);
+    const int leftIndent  = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2));
+    const int rightIndent = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2));
+    const int textWidth = button.getWidth() - leftIndent - rightIndent;
+    
+    auto bounds = button.getLocalBounds();
+    bounds.removeFromTop(UI_BUTTON_PADDING_TOP + yIndent);
+    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT + leftIndent);
+    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM + yIndent);
+    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT + rightIndent);
     
     if (textWidth > 0)
-        g.drawFittedText (button.getButtonText(),
-                          bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(),
-                          Justification::centred, 2);
-    /*
-      if (textWidth > 0)
-          g.drawFittedText (button.getButtonText(),
-                            leftIndent, yIndent, textWidth, button.getHeight() - yIndent * 2,
-                            Justification::centred, 2);
-     */
+      g.drawFittedText (button.getButtonText(),
+                        bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(),
+                        Justification::centred, 2);
   }
-
+  
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
     juce::Colour colorIn = PRIMARY_RGB[6];
@@ -138,7 +133,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         colorRing = SECONDARY_DARK_RGB[6];
       }
     }
-
+    
     // auto bounds = juce::Rectangle<float>(x, y, width, height);
     float size = std::min(width, height);
     auto vw = size*0.001f;
@@ -219,12 +214,10 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       juce::DropShadow ds(
                           juce::Colours::black.withAlpha(0.9f),
                           static_cast<int>(vw * 120),
-                          {0, static_cast<int>(vw * 100)});
-      
+                          {0, static_cast<int>(vw * 150)});
       
       // 위치 변환 후 그림자 적용
       g.saveState();
-      // g.addTransform(juce::AffineTransform::translation(0, 0));
       ds.drawForImage(g, knobImage);  // 이제 2개 인자
       g.restoreState();
     }
@@ -298,7 +291,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
     return juce::Font { fontMedium.withHeight(fontHeight) };
   }
-
+  
   void setFontRegular (juce::FontOptions f) { fontRegular = f; }
   void setFontMedium (juce::FontOptions f) { fontMedium = f; }
   void setFontSemiBold (juce::FontOptions f) { fontSemiBold = f; }

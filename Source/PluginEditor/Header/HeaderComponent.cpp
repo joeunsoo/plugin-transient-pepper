@@ -17,13 +17,13 @@ void HeaderComponent::init(PluginEditor& editor)
   bypassComponent.init(editor);
   
   addAndMakeVisible(logoLabel);
-  logoLabel.setFont(editorRef->fontBold);
+  logoLabel.setFont(editorRef->fontBold.withHeight(11.5f));
   logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);
   logoLabel.setText("Transient Pepper", juce::dontSendNotification);
   logoLabel.setJustificationType(juce::Justification::centredLeft);
   
   addAndMakeVisible(companyLabel);
-  companyLabel.setFont(editorRef->fontBold);
+  companyLabel.setFont(editorRef->fontBold.withHeight(10.0f));
   companyLabel.setText("JoEunsoo", juce::dontSendNotification);
   companyLabel.setJustificationType(juce::Justification::centredRight);
   

@@ -52,7 +52,7 @@ void ToneComponent::paint(juce::Graphics& g)
 
 void ToneComponent::resized()
 {
-  auto area = getLocalBounds().reduced(0);
+  auto area = getLocalBounds().withTrimmedBottom(17);
   auto graphArea = area.removeFromTop(area.getHeight()-UI_KNOB_HEIGHT);
 
   graphContainer.setBounds(graphArea);

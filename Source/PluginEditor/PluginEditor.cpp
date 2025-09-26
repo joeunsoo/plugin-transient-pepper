@@ -48,7 +48,7 @@ void PluginEditor::resized()
 {
   // UI layout code
   auto area = getLocalBounds();
-  headerComponent.setBounds(area.removeFromTop(35));
+  headerComponent.setBounds(area.removeFromTop(34));
   area.setHeight(area.getHeight()-5);
   mainComponent.setBounds(area);
 }

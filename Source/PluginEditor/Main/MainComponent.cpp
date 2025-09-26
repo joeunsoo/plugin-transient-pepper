@@ -42,12 +42,13 @@ void MainComponent::resized()
 {
   auto area = getLocalBounds()
     .withTrimmedLeft(15)
-    .withTrimmedTop(5)
+    .withTrimmedTop(15)
     .withTrimmedRight(15)
-    .withTrimmedBottom(15);
-  auto leftArea = area.removeFromLeft(UI_KNOB_WIDTH * 3);
-  detectorComponent.setBounds(leftArea.removeFromTop(150));
+    .withTrimmedBottom(5);
+  auto leftArea = area.removeFromLeft((UI_KNOB_WIDTH * 3)-20);
+  detectorComponent.setBounds(leftArea.removeFromTop(160));
   envelopeComponent.setBounds(leftArea);
+  area.removeFromLeft(20);
   toneComponent.setBounds(area.removeFromLeft(area.getWidth()-(UI_KNOB_WIDTH * 2)));
   mixComponent.setBounds(area);
 }

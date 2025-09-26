@@ -52,7 +52,7 @@ void EnvelopeComponent::paint(juce::Graphics& g)
 
 void EnvelopeComponent::resized()
 {
-  auto area = getLocalBounds().reduced(0);
+  auto area = getLocalBounds().withTrimmedBottom(10);
   auto labelArea = area.removeFromTop(UI_SECTION_LABEL_HEIGHT);
   sectionLabel.setBounds(labelArea.reduced(0));
   

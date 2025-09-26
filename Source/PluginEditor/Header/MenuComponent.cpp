@@ -70,6 +70,5 @@ void MenuComponent::paint(juce::Graphics& g)
 void MenuComponent::resized()
 {
   auto area = getLocalBounds();
-  // menuButton.setBounds (20, 20, 100, 30);
   menuButton.setBounds(area);
 }

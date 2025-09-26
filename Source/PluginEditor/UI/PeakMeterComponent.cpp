@@ -66,7 +66,6 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   g.setColour(SECONDARY_RGB[6]);
   g.fillRect(bounds.withTop(bounds.getBottom() - barHeight));
   g.restoreState();
-  
 }
 
 void PeakMeterComponent::timerCallback()
