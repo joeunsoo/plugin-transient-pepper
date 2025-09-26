@@ -29,7 +29,6 @@ private juce::Timer
   float level1 = 0.0f;
   float level2 = 0.0f;
   float lastY = 0.0f;
-  float smoothedY = 0.0f;
   
   bool isInit = false;
   juce::Image canvasImage, bufferImage;

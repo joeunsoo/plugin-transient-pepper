@@ -26,7 +26,6 @@ void GraphComponent::paint(juce::Graphics& g)
     canvasImage = juce::Image(juce::Image::ARGB, width, height, true);
     bufferImage = juce::Image(juce::Image::ARGB, width, height, true);
     lastY = height;
-    smoothedY = height;
     
     isInit = true;
   }
@@ -55,20 +54,14 @@ void GraphComponent::paint(juce::Graphics& g)
   float skewValue = applySkew(newValue, 0.0f, 1.0f, 0.15f);
   float y = height - skewValue * height;
   
-  // 4) smoothing
-  // const float alpha = 0.2f;
-  // smoothedY += alpha * (y - smoothedY);
-  smoothedY = y;
-  
   // 5) Path 생성 (fill + stroke)
   float cpX = width - movePixels - 0.5f;
-  // float cpY = (lastY + smoothedY) / 2.0f;
   float cpY = (lastY + y) / 2.0f;
   
   // fill용 Path (아래쪽 영역)
   juce::Path fillPath;
   fillPath.startNewSubPath(width - movePixels - 1, lastY);
-  fillPath.quadraticTo(cpX, cpY, width - 1, smoothedY);
+  fillPath.quadraticTo(cpX, cpY, width - 1, y);
   fillPath.lineTo(width - 1, height);
   fillPath.lineTo(width - movePixels - 1, height);
   fillPath.closeSubPath();
@@ -79,16 +72,13 @@ void GraphComponent::paint(juce::Graphics& g)
   // stroke용 Path (위쪽 선)
   juce::Path strokePath;
   strokePath.startNewSubPath(width - movePixels - 1, lastY);
-  strokePath.quadraticTo(cpX, cpY, width - 1, smoothedY);
+  strokePath.quadraticTo(cpX, cpY, width - 1, y);
   bufG.setColour(strokeColour); // 위쪽 밝은 선
   bufG.strokePath(strokePath, juce::PathStrokeType(2.0f));
   
-  
   lastY = y;
-  // lastY = smoothedY;
   // 6) canvasImage에 buffer 복사
   canvasImage = bufferImage.createCopy();
-  
   
   // 클리핑
   g.saveState();
