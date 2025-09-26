@@ -69,7 +69,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
     }
   }
   
-  void drawPopupMenuItem (Graphics& g, const Rectangle<int>& area,
+  void drawPopupMenuItem (Graphics& g, const juce::Rectangle<int>& area,
                           const bool isSeparator, const bool isActive,
                           const bool isHighlighted, const bool isTicked,
                           const bool hasSubMenu, const String& text,

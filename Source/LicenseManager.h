@@ -175,16 +175,16 @@ class LicenseManager
   }
   
   private:
-  juce::String encryptString(const juce::String& text)
+  juce::String encryptStringPass(const juce::String& text)
   {
     return text;
   }
-  juce::String decryptString(const juce::String& base64Text)
+  juce::String decryptStringPass(const juce::String& base64Text)
   {
     return base64Text;
   }
   
-  /*
+  
    // ---------------- XOR + Base64 ----------------
    
    juce::MemoryBlock base64Decode(const juce::String& text)
@@ -225,7 +225,7 @@ class LicenseManager
    
    return juce::String::fromUTF8((const char*)out.getData(), (int)out.getSize());
    }
-   */
+   
   
   std::unique_ptr<juce::PropertiesFile> propertiesFile;
   
