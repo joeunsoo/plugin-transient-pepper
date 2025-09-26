@@ -47,7 +47,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
     g.drawRect (bounds, 1.0f);
     
 #if ! JUCE_MAC
-    g.setColour (findColour (PopupMenu::textColourId).withAlpha (0.6f));
+    g.setColour (DARK_RGB[4].withAlpha (0.6f));
     g.drawRect (0, 0, width, height);
 #endif
   }
