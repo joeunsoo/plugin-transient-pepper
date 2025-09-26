@@ -29,6 +29,11 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   // 모달
   aboutModal.init(*this);
   activateModal.init(*this);
+  
+  if (!processorRef.licenseManager.isActivate()
+      && processorRef.licenseManager.isTrialExpired()) {
+    showActivate();
+  }
 }
 
 // 소멸자
