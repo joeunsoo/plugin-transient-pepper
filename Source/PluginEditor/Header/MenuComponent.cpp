@@ -48,11 +48,6 @@ void MenuComponent::init(PluginEditor& editor)
     menu.addItem ("150%", [this] { editorRef->setScale(150); });
     menu.addItem ("200%", [this] { editorRef->setScale(200); });
     menu.addSeparator();
-    menu.addItem ("Visit joeunsoo.com", [] {
-      const URL newUrl = URL ("https://joeunsoo.com");
-      if (newUrl.isWellFormed())
-        newUrl.launchInDefaultBrowser();
-    });
     menu.addItem ("Online Manual", [] {
       const URL newUrl = URL ("https://joeunsoo.com/plugins/transient-pepper/manual");
       if (newUrl.isWellFormed())
