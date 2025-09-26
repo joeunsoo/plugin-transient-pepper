@@ -10,6 +10,8 @@ envGraph (SECONDARY_DARK_RGB[2].withAlpha(0.3f), SECONDARY_LIGHT_RGB[7], editor,
 {
   addAndMakeVisible(inputLevelGraph);
   addAndMakeVisible(envGraph);
+  
+  startTimerHz(UI_TIMER_HZ); // 단일 타이머
 }
 GraphContainer::~GraphContainer() = default;
 
@@ -54,4 +56,24 @@ void GraphContainer::paint(juce::Graphics& g)
   // 배경
   g.setColour(SECONDARY_DARK_RGB[9]);
   g.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
+}
+
+void GraphContainer::timerCallback()
+{
+    // 모든 그래프 동기화 업데이트
+    {
+        float l1 = editorRef.processorRef.analysisData[4];
+        float l2 = editorRef.processorRef.analysisData[5];
+        inputLevelGraph.updateGraph(l1, l2);
+    }
+
+    {
+        float l1 = editorRef.processorRef.analysisData[6];
+        float l2 = editorRef.processorRef.analysisData[7];
+        envGraph.updateGraph(l1, l2);
+    }
+
+    // 동시에 repaint
+    inputLevelGraph.repaint();
+    envGraph.repaint();
 }

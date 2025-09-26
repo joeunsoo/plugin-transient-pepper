@@ -8,10 +8,9 @@ GraphComponent::GraphComponent(
                                juce::Colour s,
                                PluginEditor& editor,
                                int index
-                             )
+                               )
 : editorRef(editor), idx(index), fillColour(f), strokeColour(s)
 {
-  startTimerHz(UI_TIMER_HZ); // 초당 갱신 프레임
 }
 
 GraphComponent::~GraphComponent() = default;
@@ -19,90 +18,74 @@ GraphComponent::~GraphComponent() = default;
 void GraphComponent::paint(juce::Graphics& g)
 {
   auto bounds = getLocalBounds().toFloat();
-  int width = static_cast<int>(bounds.getWidth());
-  int height = static_cast<int>(bounds.getHeight());
+  g.setColour(fillColour);
   
-  if (!isInit) {
-    canvasImage = juce::Image(juce::Image::ARGB, width, height, true);
-    bufferImage = juce::Image(juce::Image::ARGB, width, height, true);
-    lastY = height;
-    
-    isInit = true;
-  }
-  
-  // 2) 이전 프레임 buffer 복사 (스크롤 처리)
-  bufferImage.clear(juce::Rectangle<int>(0, 0, width, height));
-  juce::Graphics bufG(bufferImage);
-  
-  int movePixels = 5;
-  bufG.drawImage(canvasImage,
-                 0, 0, width - movePixels, height,
-                 movePixels, 0, width - movePixels, height,
-                 false); // alpha 무시
-  
-  // 오른쪽 새 영역은 투명
-  bufG.setColour(juce::Colours::transparentBlack);
-  bufG.fillRect(juce::Rectangle<int>(
-                                     (width - movePixels),
-                                     0,
-                                     (movePixels),
-                                     (height)
-                                     ));
-  
-  // 3) 새로운 값 계산
-  float newValue = (level1 + level2) / 2.0f;
-  float skewValue = applySkew(newValue, 0.0f, 1.0f, 0.15f);
-  float y = height - skewValue * height;
-  
-  // 5) Path 생성 (fill + stroke)
-  float cpX = width - movePixels - 0.5f;
-  float cpY = (lastY + y) / 2.0f;
-  
-  // fill용 Path (아래쪽 영역)
   juce::Path fillPath;
-  fillPath.startNewSubPath(width - movePixels - 1, lastY);
-  fillPath.quadraticTo(cpX, cpY, width - 1, y);
-  fillPath.lineTo(width - 1, height);
-  fillPath.lineTo(width - movePixels - 1, height);
-  fillPath.closeSubPath();
-  
-  bufG.setColour(fillColour); // 아래쪽 채우기
-  bufG.fillPath(fillPath);
-  
-  // stroke용 Path (위쪽 선)
   juce::Path strokePath;
-  strokePath.startNewSubPath(width - movePixels - 1, lastY);
-  strokePath.quadraticTo(cpX, cpY, width - 1, y);
-  bufG.setColour(strokeColour); // 위쪽 밝은 선
-  bufG.strokePath(strokePath, juce::PathStrokeType(2.0f));
   
-  lastY = y;
-  // 6) canvasImage에 buffer 복사
-  canvasImage = bufferImage.createCopy();
-  
+  if (!graphValues.empty())
+  {
+    // Path 시작
+    fillPath.startNewSubPath(0, getHeight());
+    strokePath.startNewSubPath(0, graphValues[0]);
+    
+    for (size_t i = 0; i < graphValues.size(); ++i)
+    {
+      fillPath.lineTo((float)i, graphValues[i]);
+      strokePath.lineTo((float)i, graphValues[i]);
+    }
+    
+    fillPath.lineTo((float)(graphValues.size() - 1), getHeight());
+    fillPath.closeSubPath();
+  }
+
   // 클리핑
   g.saveState();
-  juce::Path clipPath;
-  clipPath.addRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
-  g.reduceClipRegion(clipPath); // clip 영역을 둥근 사각형으로 제한
+    juce::Path clipPath;
+    clipPath.addRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
+    g.reduceClipRegion(clipPath); // clip 영역을 둥근 사각형으로 제한
+
+  // 그리기
+  g.fillPath(fillPath);
+  g.setColour(strokeColour);
+  g.strokePath(strokePath, juce::PathStrokeType(2.0f));
   
-  
-  // 7) 화면에 그리기 (alpha 무시)
-  g.drawImage(canvasImage,
-              0, 0, width, height,
-              0, 0, canvasImage.getWidth(), canvasImage.getHeight(),
-              false);
-  
-  // 클리핑 끝
+  // 클리핑
   g.restoreState();
 }
 
-
-void GraphComponent::timerCallback()
+void GraphComponent::updateGraph(float level1, float level2)
 {
-  if (idx != -1) {
-    level1 = editorRef.processorRef.analysisData[static_cast<size_t>(idx)];
-    level2 = editorRef.processorRef.analysisData[static_cast<size_t>(idx+1)];
-    repaint();
-  }
+    float newValue = (level1 + level2) / 2.0f;
+    float skewValue = applySkew(newValue, 0.0f, 1.0f, 0.15f);
+    float y = getHeight() - skewValue * getHeight();
+
+    if (!isGraphInit)
+    {
+        // 초기 그래프 채우기
+        int w = getWidth();
+        graphValues.clear();
+        for (int i = 0; i < w; ++i)
+            graphValues.push_back(y); // 같은 값으로 초기 채움
+        lastY = y;
+        isGraphInit = true;
+        return; // 첫 프레임에서만 초기화
+    }
+
+    // 이후 기존 코드: 상승 즉시, 하강 보간
+    for (int i = 1; i <= movePixels; ++i)
+    {
+        float t = (float)i / movePixels;
+
+        if (y < lastY) // 상승
+            lastY = y;
+        else           // 하강 보간
+            lastY += (y - lastY) * t * 0.5f;
+
+        graphValues.push_back(lastY);
+    }
+
+    // 최대 width 유지
+    while (graphValues.size() > static_cast<std::vector<float>::size_type>(getWidth()))
+        graphValues.erase(graphValues.begin());
 }

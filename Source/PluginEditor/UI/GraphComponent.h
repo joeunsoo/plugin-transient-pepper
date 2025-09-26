@@ -4,8 +4,7 @@
 // Forward declaration
 class PluginEditor;
 
-class GraphComponent : public juce::Component,
-private juce::Timer
+class GraphComponent : public juce::Component
 {
   public:
   GraphComponent(
@@ -19,21 +18,22 @@ private juce::Timer
   
   
   void paint(juce::Graphics& g) override;
+  void updateGraph (float level1, float level2);
   
   private:
-  void timerCallback() override;
   
   PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
   int idx = -1;
-  float level1 = 0.0f;
-  float level2 = 0.0f;
   float lastY = 0.0f;
+  int movePixels = 4;
   
   bool isInit = false;
-  juce::Image canvasImage, bufferImage;
-  
+  bool isGraphInit = false;
+
   juce::Colour fillColour, strokeColour;
+
+  std::vector<float> graphValues; // x축 값 순서대로 저장
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphComponent)
 };

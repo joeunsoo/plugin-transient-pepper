@@ -4,7 +4,7 @@
 //==============================================================================
 HeaderComponent::HeaderComponent(PluginEditor& editor)
 : editorRef(editor),// 참조 멤버 초기화
-menuComponent(editor), bypassComponent(editor)
+bypassComponent(editor), menuComponent(editor) 
 {
   addAndMakeVisible(bypassComponent);
   

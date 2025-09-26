@@ -6,7 +6,8 @@
 // Forward declaration
 class PluginEditor;
 
-class GraphContainer : public juce::Component
+class GraphContainer : public juce::Component,
+private juce::Timer
 {
   public:
   GraphContainer(PluginEditor& editor);
@@ -16,8 +17,9 @@ class GraphContainer : public juce::Component
   void resized() override;
 
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  void timerCallback() override; // 단일 타이머
 
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   GraphComponent inputLevelGraph, envGraph;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GraphContainer)
