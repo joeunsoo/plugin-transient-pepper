@@ -33,7 +33,12 @@ sidechainListenButton(editor, ID::sidechainListen.getParamID(), "Listen")
   parameterValueChanged(0, 0);
 }
 
-DetectorComponent::~DetectorComponent() = default;
+DetectorComponent::~DetectorComponent()
+{
+  editorRef.processorRef.parameters.bypass.removeListener(this);
+  editorRef.processorRef.parameters.bpfPower.removeListener(this);
+  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+};
 
 void DetectorComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef.processorRef.parameters.bypass.get();

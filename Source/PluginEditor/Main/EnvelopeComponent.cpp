@@ -4,7 +4,7 @@
 //==============================================================================
 EnvelopeComponent::EnvelopeComponent(PluginEditor& editor)
 : editorRef(editor),
-attackKnob (editor, ID::release.getParamID(), "Release" ),
+attackKnob (editor, ID::attack.getParamID(), "Attack" ),
 releaseKnob (editor, ID::release.getParamID(), "Release")
 {
   addAndMakeVisible(sectionLabel);
@@ -23,7 +23,11 @@ releaseKnob (editor, ID::release.getParamID(), "Release")
   parameterValueChanged(0, 0);
 }
 
-EnvelopeComponent::~EnvelopeComponent() = default;
+EnvelopeComponent::~EnvelopeComponent()
+{
+  editorRef.processorRef.parameters.bypass.removeListener(this);
+  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+};
 
 void EnvelopeComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef.processorRef.parameters.bypass.get();

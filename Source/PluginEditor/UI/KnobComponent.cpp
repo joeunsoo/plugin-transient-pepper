@@ -24,19 +24,13 @@ KnobComponent::KnobComponent(
                          );
 
   addAndMakeVisible (rotarySlider);
-  /*
+  
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
   (
    editorRef.processorRef.state,
    parameterID,
    rotarySlider
    );
-   */
-  attachment.reset(
-                   new juce::AudioProcessorValueTreeState::SliderAttachment(
-                                                                            editorRef.processorRef.state, parameterID, rotarySlider)
-                   );
-  
   label.setFont(editorRef.fontRegular.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
@@ -53,7 +47,15 @@ KnobComponent::KnobComponent(
   
 }
 
-KnobComponent::~KnobComponent() = default;
+KnobComponent::~KnobComponent()
+{
+  attachment.reset();
+  rotarySlider.removeMouseListener(this);
+  rotarySlider.onValueChange = nullptr;
+  rotarySlider.onDragStart = nullptr;
+  rotarySlider.onDragEnd = nullptr;
+  attachment.reset();
+};
 
 void KnobComponent::sendTooltip()
 {

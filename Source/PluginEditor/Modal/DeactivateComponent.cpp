@@ -39,7 +39,9 @@ DeactivateComponent::DeactivateComponent(PluginEditor& editor, ActivateModal& mo
   resized();
 }
 
-DeactivateComponent::~DeactivateComponent() = default;
+DeactivateComponent::~DeactivateComponent() {
+  deactivateButton.onClick = nullptr;
+};
 
 void DeactivateComponent::resized()
 {

@@ -55,6 +55,7 @@ MenuComponent::MenuComponent(PluginEditor& editor)
 MenuComponent::~MenuComponent()
 {
   setLookAndFeel(nullptr);
+  menuButton.onClick = nullptr;
 };
 
 void MenuComponent::paint(juce::Graphics& g)

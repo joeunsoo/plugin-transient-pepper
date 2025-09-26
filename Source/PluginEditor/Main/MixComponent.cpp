@@ -30,7 +30,12 @@ outputPeakMeter(editor, 0)
   parameterValueChanged(0, 0);
 }
 
-MixComponent::~MixComponent() = default;
+MixComponent::~MixComponent()
+{
+  editorRef.processorRef.parameters.bypass.removeListener(this);
+  editorRef.processorRef.parameters.wetSolo.removeListener(this);
+  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+};
 
 void MixComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef.processorRef.parameters.bypass.get();

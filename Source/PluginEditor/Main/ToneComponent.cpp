@@ -19,7 +19,11 @@ graphContainer(editor)
   addAndMakeVisible(graphContainer);
 }
 
-ToneComponent::~ToneComponent() = default;
+ToneComponent::~ToneComponent()
+{
+  editorRef.processorRef.parameters.bypass.removeListener(this);
+  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+};
 
 void ToneComponent::parameterValueChanged (int, float) {
   bool bypass = editorRef.processorRef.parameters.bypass.get();

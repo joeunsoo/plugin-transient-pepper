@@ -26,7 +26,10 @@ TrialComponent::TrialComponent(PluginEditor& editor, ActivateModal& modal)
   };
 }
 
-TrialComponent::~TrialComponent() = default;
+TrialComponent::~TrialComponent()
+{
+  trialButton.onClick = nullptr;
+};
 
 void TrialComponent::resized()
 {

@@ -15,3 +15,4 @@ class PluginAudioProcessorWrapper  : public PluginAudioProcessor
     return new PluginEditor (*this);
   }
 };
+

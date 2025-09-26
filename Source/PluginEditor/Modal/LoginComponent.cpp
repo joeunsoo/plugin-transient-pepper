@@ -73,7 +73,11 @@ LoginComponent::LoginComponent(PluginEditor& editor, ActivateModal& modal)
   passwordEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB[0]);
 }
 
-LoginComponent::~LoginComponent() = default;
+LoginComponent::~LoginComponent() {
+  loginButton.onClick = nullptr;
+  emailEditor.removeListener(this);
+  passwordEditor.removeListener(this);
+};
 
 void LoginComponent::callActivate()
 {

@@ -29,7 +29,10 @@ BypassComponent::BypassComponent(PluginEditor& editor)
   repaint();
 }
 
-BypassComponent::~BypassComponent() = default;
+BypassComponent::~BypassComponent()
+{
+  bypassAttachment.reset();
+};
 
 void BypassComponent::paintButton(juce::Graphics& g, bool isMouseOver, bool isMouseDown)
 {

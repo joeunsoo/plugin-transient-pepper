@@ -10,22 +10,19 @@ ToggleButtonComponent::ToggleButtonComponent(
 {
   addAndMakeVisible (toggleButton);
   
-  /*
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>
   (
    editorRef.processorRef.state,
    parameterID,
    toggleButton
    );
-   */
-  attachment.reset(
-                   new juce::AudioProcessorValueTreeState::ButtonAttachment(
-                                                                            editorRef.processorRef.state, parameterID, toggleButton)
-                   );
   toggleButton.setButtonText(labelText);
 }
 
-ToggleButtonComponent::~ToggleButtonComponent() = default;
+ToggleButtonComponent::~ToggleButtonComponent()
+{
+  attachment.reset();
+};
 
 void ToggleButtonComponent::paint(juce::Graphics& g)
 {
