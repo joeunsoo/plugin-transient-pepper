@@ -31,9 +31,10 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                             juce::roundToInt(boundsOut.getWidth()),
                             juce::roundToInt(boundsOut.getHeight()),
                             true);
-    juce::Graphics g2(buttonImage);
-    g2.fillRoundedRectangle(bounds, cornerSize);
-    
+    {
+        juce::Graphics g2(buttonImage);
+        g2.fillRoundedRectangle(bounds, cornerSize);
+    }
     juce::DropShadow ds(
                         juce::Colours::black.withAlpha(0.5f),
                         2,

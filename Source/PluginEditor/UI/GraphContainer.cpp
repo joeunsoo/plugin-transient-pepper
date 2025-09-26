@@ -40,9 +40,10 @@ void GraphContainer::paint(juce::Graphics& g)
                           juce::roundToInt(boundsOut.getWidth()),
                           juce::roundToInt(boundsOut.getHeight()),
                           true);
-  juce::Graphics g2(graphImage);
-  g2.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
-  
+  {
+      juce::Graphics g2(graphImage);
+      g2.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
+  }
   juce::DropShadow ds(
                       juce::Colours::black.withAlpha(0.5f),
                       3,

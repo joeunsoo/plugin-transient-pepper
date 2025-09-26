@@ -68,10 +68,11 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
                               juce::roundToInt(area.getWidth()),
                               juce::roundToInt(area.getHeight()),
                               true);
-      juce::Graphics g2(graphImage);
-      g2.fillRoundedRectangle(leftArea, UI_METER_BORDER_RADIUS);
-      g2.fillRoundedRectangle(rightArea, UI_METER_BORDER_RADIUS);
-      
+      {
+          juce::Graphics g2(graphImage);
+          g2.fillRoundedRectangle(leftArea, UI_METER_BORDER_RADIUS);
+          g2.fillRoundedRectangle(rightArea, UI_METER_BORDER_RADIUS);
+      }
       juce::DropShadow ds(
                           juce::Colours::black.withAlpha(0.5f),
                           2,
