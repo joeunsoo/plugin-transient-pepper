@@ -87,4 +87,3 @@ void MainComponent::paint(juce::Graphics& g)
   g.setColour(PRIMARY_RGB[9].withAlpha(0.1f));
   g.drawRoundedRectangle(bounds, borderRadius, 1.0f);
 }
-

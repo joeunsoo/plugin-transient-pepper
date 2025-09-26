@@ -112,5 +112,5 @@ void PluginEditor::showAbout()
 
 void PluginEditor::showActivate()
 {
-  activateModal.showIn (*this);
+  activateModal.showIn (mainComponent);
 }

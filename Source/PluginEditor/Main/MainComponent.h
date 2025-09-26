@@ -22,7 +22,7 @@ class MainComponent : public juce::Component
 
   void paint(juce::Graphics& g) override;
   void resized() override;
-  
+
   //==============================================================================
   private:
   PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
