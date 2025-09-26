@@ -48,8 +48,8 @@ void GraphContainer::paint(juce::Graphics& g)
   
   juce::DropShadow ds(
                       juce::Colours::black.withAlpha(0.5f),
-                      5,
-                      {0, 5});
+                      3,
+                      {0, 2});
 
   ds.drawForImage(g, graphImage);  // 이제 2개 인자
 

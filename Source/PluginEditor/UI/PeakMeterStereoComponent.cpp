@@ -34,7 +34,7 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
   meterArea.setWidth(fminf(UI_STEREO_METER_MAX_WIDTH,area.getWidth()));
   meterArea.setX((area.getWidth()-meterArea.getWidth())/2);
 
-  if (isStereo) {
+  if (!isStereo) {
     meterArea.removeFromTop(UI_METER_PADDING_TOP);
     meterArea.removeFromLeft(UI_METER_PADDING_LEFT);
     meterArea.removeFromBottom(UI_METER_PADDING_BOTTOM);
@@ -51,7 +51,7 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
     
     juce::DropShadow ds(
                         juce::Colours::black.withAlpha(0.5f),
-                        3,
+                        2,
                         {0, 3});
 
     ds.drawForImage(g, graphImage);  // 이제 2개 인자
@@ -79,7 +79,7 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
       
       juce::DropShadow ds(
                           juce::Colours::black.withAlpha(0.5f),
-                          3,
+                          2,
                           {0, 3});
 
       ds.drawForImage(g, graphImage);  // 이제 2개 인자
