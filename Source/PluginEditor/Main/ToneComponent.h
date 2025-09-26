@@ -12,10 +12,8 @@ class ToneComponent : public juce::Component,
 public juce::AudioProcessorParameter::Listener
 {
   public:
-  ToneComponent();
+  ToneComponent(PluginEditor& editor);
   ~ToneComponent() override;
-  
-  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;
@@ -25,10 +23,9 @@ public juce::AudioProcessorParameter::Listener
   
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
-  KnobComponent tiltKnob;
-  KnobComponent midsideKnob;
+  KnobComponent tiltKnob, midsideKnob;
   
   GraphContainer graphContainer;
 

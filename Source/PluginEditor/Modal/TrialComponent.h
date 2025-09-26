@@ -9,18 +9,16 @@ class ActivateModal;
 class TrialComponent : public juce::Component
 {
   public:
-  TrialComponent();
+  TrialComponent(PluginEditor& editor, ActivateModal& modal);
   ~TrialComponent() override;
 
-  void init(PluginEditor& editor, ActivateModal& modal);
-  
   void resized() override;
   void paint(juce::Graphics& g) override;
 
   
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  ActivateModal& modalRef; // 포인터로 저장하면 forward declaration 가능
 
   juce::TextButton trialButton;
 

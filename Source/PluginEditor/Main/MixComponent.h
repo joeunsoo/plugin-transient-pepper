@@ -13,10 +13,8 @@ class MixComponent : public juce::Component,
 public juce::AudioProcessorParameter::Listener
 {
   public:
-  MixComponent();
+  MixComponent(PluginEditor& editor);
   ~MixComponent() override;
-  
-  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;
@@ -26,14 +24,11 @@ public juce::AudioProcessorParameter::Listener
   
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
   ToggleButtonComponent wetSoloButton;
-  KnobComponent noiseLevelGainKnob;
-  KnobComponent dryWetKnob;
-  KnobComponent outputGainKnob;
-  PeakMeterStereoComponent noisePeakMeter;
-  PeakMeterStereoComponent outputPeakMeter;
+  KnobComponent noiseLevelGainKnob, dryWetKnob, outputGainKnob;
+  PeakMeterStereoComponent noisePeakMeter, outputPeakMeter;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MixComponent)
 };

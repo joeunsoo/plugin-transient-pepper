@@ -3,21 +3,16 @@
 #include "../../Utils.h"
 #include "../PluginEditor.h"
 
-PeakMeterComponent::PeakMeterComponent()
+PeakMeterComponent::PeakMeterComponent(
+                                       PluginEditor& editor,
+                                       int index
+                                       )
+:editorRef(editor), idx(index)
 {
   startTimerHz(UI_TIMER_HZ); // 초당 갱신 프레임
 }
 
 PeakMeterComponent::~PeakMeterComponent() = default;
-
-void PeakMeterComponent::init(
-                              PluginEditor& editor,
-                              int index
-                              )
-{
-  editorRef = &editor;
-  idx = index;
-}
 
 // 오디오 샘플 값 전달 (0.0 ~ 1.0)
 void PeakMeterComponent::setLevel(float newLevel)
@@ -72,8 +67,8 @@ void PeakMeterComponent::paint(juce::Graphics& g)
 
 void PeakMeterComponent::timerCallback()
 {
-  if (editorRef != nullptr && idx != -1) {
-    setLevel(editorRef->processorRef.analysisData[static_cast<size_t>(idx)]);
+  if (idx != -1) {
+    setLevel(editorRef.processorRef.analysisData[static_cast<size_t>(idx)]);
     repaint();
   }
 }

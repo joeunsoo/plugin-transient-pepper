@@ -11,10 +11,8 @@ class LoginComponent : public juce::Component,
 private juce::TextEditor::Listener
 {
   public:
-  LoginComponent();
+  LoginComponent(PluginEditor& editor, ActivateModal& modal);
   ~LoginComponent() override;
-
-  void init(PluginEditor& editor, ActivateModal& modal);
   
   void callActivate();
   
@@ -32,8 +30,8 @@ private juce::TextEditor::Listener
   void textEditorEscapeKeyPressed(juce::TextEditor&) override {}
   void textEditorFocusLost(juce::TextEditor&) override {}
 
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  ActivateModal& modalRef; // 포인터로 저장하면 forward declaration 가능
 
   juce::Component flexContainer;
   juce::Label pluginNameLabel, emailLabel, passwordLabel, messageLabel;

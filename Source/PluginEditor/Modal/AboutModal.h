@@ -8,11 +8,9 @@ class PluginEditor;
 class AboutModal : public juce::Component
 {
   public:
-  AboutModal();
+  AboutModal(PluginEditor& editor);
   ~AboutModal() override;
 
-  void init(PluginEditor& editor);
-  
   void showIn(juce::Component& parent);
   void close();
   
@@ -22,7 +20,7 @@ class AboutModal : public juce::Component
 
   
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   juce::Label pluginNameLabel, pluginVersionLabel, companyNameLabel;
   
   juce::Component flexContainer;

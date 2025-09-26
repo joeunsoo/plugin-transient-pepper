@@ -10,17 +10,16 @@ class PluginEditor;
 class MenuComponent : public juce::Component
 {
   public:
-  MenuComponent();
+  MenuComponent(PluginEditor& editor);
   ~MenuComponent() override;
-  
-  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;
   
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+
   MenuLookAndFeel menuLaF;
 
   juce::DrawableButton menuButton {

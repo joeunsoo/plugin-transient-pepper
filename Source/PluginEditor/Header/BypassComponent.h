@@ -9,10 +9,8 @@ class PluginEditor;
 class BypassComponent : public juce::ToggleButton
 {
   public:
-  BypassComponent();
+  BypassComponent(PluginEditor& editor);
   ~BypassComponent();
-  
-  void init(PluginEditor& editor);
   
   void resized() override {};
   
@@ -22,7 +20,7 @@ class BypassComponent : public juce::ToggleButton
 
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
   std::unique_ptr<juce::Drawable> normalSvg, overSvg, downSvg;
   std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> bypassAttachment;

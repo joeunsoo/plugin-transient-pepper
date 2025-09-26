@@ -2,46 +2,41 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-MixComponent::MixComponent() {
+MixComponent::MixComponent(PluginEditor& editor)
+:editorRef(editor),
+wetSoloButton(editor, ID::wetSolo.getParamID(), "Wet Solo"),
+noiseLevelGainKnob(editor, ID::noiseLevelGain.getParamID(), "Noise Gain"),
+dryWetKnob(editor, ID::dryWet.getParamID(), "Dry/Wet"),
+outputGainKnob(editor, ID::outputGain.getParamID(), "Output Gain"),
+noisePeakMeter(editor, 2),
+outputPeakMeter(editor, 0)
+{
+  addAndMakeVisible(noisePeakMeter);
+
+  addAndMakeVisible(outputPeakMeter);
   
+  noiseLevelGainKnob.setRingColor("secondary");
+  addAndMakeVisible(noiseLevelGainKnob);
+  
+  addAndMakeVisible(wetSoloButton);
+  
+  addAndMakeVisible(dryWetKnob);
+  
+  addAndMakeVisible(outputGainKnob);
+  
+  editorRef.processorRef.parameters.bypass.addListener(this);
+  editorRef.processorRef.parameters.wetSolo.addListener(this);
+  editorRef.processorRef.parameters.sidechainListen.addListener(this);
+  parameterValueChanged(0, 0);
 }
 
 MixComponent::~MixComponent() = default;
 
-void MixComponent::init(PluginEditor& editor)
-{
-  editorRef = &editor;
-  
-  noisePeakMeter.init(editor, 2);
-  addAndMakeVisible(noisePeakMeter);
-
-  outputPeakMeter.init(editor, 0);
-  addAndMakeVisible(outputPeakMeter);
-  
-  noiseLevelGainKnob.init(editor, ID::noiseLevelGain.getParamID(), "Noise Gain");
-  noiseLevelGainKnob.setRingColor("secondary");
-  addAndMakeVisible(noiseLevelGainKnob);
-
-  wetSoloButton.init(editor, ID::wetSolo.getParamID(), "Wet Solo");
-  addAndMakeVisible(wetSoloButton);
-  
-  dryWetKnob.init(editor, ID::dryWet.getParamID(), "Dry/Wet");
-  addAndMakeVisible(dryWetKnob);
-  
-  outputGainKnob.init(editor, ID::outputGain.getParamID(), "Output Gain");
-  addAndMakeVisible(outputGainKnob);
-
-  editorRef->processorRef.parameters.bypass.addListener(this);
-  editorRef->processorRef.parameters.wetSolo.addListener(this);
-  editorRef->processorRef.parameters.sidechainListen.addListener(this);
-  parameterValueChanged(0, 0);
-}
-
 void MixComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef->processorRef.parameters.bypass.get();
-  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
-  bool wetSolo = editorRef->processorRef.parameters.wetSolo.get();
-
+  bool bypass = editorRef.processorRef.parameters.bypass.get();
+  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
+  bool wetSolo = editorRef.processorRef.parameters.wetSolo.get();
+  
   if (bypass) {
     noiseLevelGainKnob.setAlpha(DISABLED_ALPHA);
     outputGainKnob.setAlpha(DISABLED_ALPHA);
@@ -49,13 +44,13 @@ void MixComponent::parameterValueChanged (int, float) {
     noiseLevelGainKnob.setAlpha(1.0f);
     outputGainKnob.setAlpha(1.0f);
   }
-
+  
   if (bypass || sidechainListen) {
     wetSoloButton.setAlpha(DISABLED_ALPHA);
   } else {
     wetSoloButton.setAlpha(1.0f);
   }
-
+  
   if (bypass || wetSolo || sidechainListen) {
     dryWetKnob.setAlpha(DISABLED_ALPHA);
   } else {

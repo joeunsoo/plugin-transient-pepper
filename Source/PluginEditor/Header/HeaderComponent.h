@@ -11,17 +11,15 @@ class PluginEditor;
 class HeaderComponent : public juce::Component
 {
   public:
-  HeaderComponent();
+  explicit HeaderComponent(PluginEditor& editor);
   ~HeaderComponent() override;
-
-  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;
   
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
 
   BypassComponent bypassComponent;
   juce::Label logoLabel;

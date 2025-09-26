@@ -3,18 +3,15 @@
 #include "../../Utils.h"
 #include "../PluginEditor.h"
 
-GraphContainer::GraphContainer() { }
-GraphContainer::~GraphContainer() = default;
-
-void GraphContainer::init(PluginEditor& editor)
+GraphContainer::GraphContainer(PluginEditor& editor)
+: editorRef(editor),
+inputLevelGraph (PRIMARY_DARK_RGB[9], PRIMARY_LIGHT_RGB[7], editor, 4),
+envGraph (SECONDARY_DARK_RGB[2].withAlpha(0.3f), SECONDARY_LIGHT_RGB[7], editor, 6)
 {
-  editorRef = &editor;
-  inputLevelGraph.init(editor,4);
-  envGraph.init(editor,6);
-
   addAndMakeVisible(inputLevelGraph);
   addAndMakeVisible(envGraph);
 }
+GraphContainer::~GraphContainer() = default;
 
 void GraphContainer::resized()
 {

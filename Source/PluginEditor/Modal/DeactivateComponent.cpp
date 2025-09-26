@@ -4,7 +4,9 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-DeactivateComponent::DeactivateComponent() {
+DeactivateComponent::DeactivateComponent(PluginEditor& editor, ActivateModal& modal)
+: editorRef(editor), modalRef(modal)
+{
   addAndMakeVisible (flexContainer);
   
   flexContainer.addAndMakeVisible(pluginNameLabel);
@@ -22,33 +24,26 @@ DeactivateComponent::DeactivateComponent() {
   deactivateButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
   deactivateButton.setColour(juce::ComboBox::outlineColourId, PRIMARY_DARK_RGB[4]);
   
-}
-
-DeactivateComponent::~DeactivateComponent() = default;
-
-void DeactivateComponent::init(PluginEditor& editor, ActivateModal& modal)
-{
-  editorRef = &editor;
-  modalRef = &modal;
-
-  pluginNameLabel.setFont(editorRef->fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
+  pluginNameLabel.setFont(editorRef.fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
   pluginNameLabel.setInterceptsMouseClicks(false, false);
   
-  accountEmailLabel.setFont(editorRef->fontMedium.withHeight(10.0f));
+  accountEmailLabel.setFont(editorRef.fontMedium.withHeight(10.0f));
   accountEmailLabel.setInterceptsMouseClicks(false, false);
   
   deactivateButton.onClick = [this]()
   {
-    editorRef->processorRef.licenseManager.setDeactivate();
-    modalRef->resized();
+    editorRef.processorRef.licenseManager.setDeactivate();
+    modalRef.resized();
   };
 
   resized();
 }
 
+DeactivateComponent::~DeactivateComponent() = default;
+
 void DeactivateComponent::resized()
 {
-  auto accountEmail = editorRef->processorRef.licenseManager.getActivate();
+  auto accountEmail = editorRef.processorRef.licenseManager.getActivate();
   accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
 
   auto bounds = getLocalBounds();

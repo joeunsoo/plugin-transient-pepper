@@ -11,11 +11,9 @@ class PluginEditor;
 class ActivateModal : public juce::Component
 {
   public:
-  ActivateModal();
+  ActivateModal(PluginEditor& editor);
   ~ActivateModal() override;
 
-  void init(PluginEditor& editor);
-  
   void showIn(juce::Component& parent);
   void close();
   
@@ -25,7 +23,7 @@ class ActivateModal : public juce::Component
 
   
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   ModalLookAndFeel modalLaf;
 
   DeactivateComponent deactivateComponent;

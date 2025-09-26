@@ -4,35 +4,30 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-ActivateModal::ActivateModal() {
+ActivateModal::ActivateModal(PluginEditor& editor)
+: editorRef(editor), deactivateComponent(editor, *this), loginComponent(editor, *this)  // 참조 멤버 초기화
+{
   setInterceptsMouseClicks (true, true); // 뒤에 클릭 못 가게 막음
   setAlwaysOnTop (true);
+
+  modalLaf.setFontRegular(editorRef.fontRegular);
+  modalLaf.setFontMedium(editorRef.fontMedium);
+  modalLaf.setFontSemiBold(editorRef.fontSemiBold);
+  modalLaf.setFontBold(editorRef.fontBold);
+  setLookAndFeel (&modalLaf);
+  
+  addAndMakeVisible (deactivateComponent);
+  addAndMakeVisible (loginComponent);
 }
 
 ActivateModal::~ActivateModal() {
   setLookAndFeel(nullptr);
 };
 
-void ActivateModal::init(PluginEditor& editor)
-{
-  editorRef = &editor;
-
-  modalLaf.setFontRegular(editorRef->fontRegular);
-  modalLaf.setFontMedium(editorRef->fontMedium);
-  modalLaf.setFontSemiBold(editorRef->fontSemiBold);
-  modalLaf.setFontBold(editorRef->fontBold);
-  setLookAndFeel (&modalLaf);
-
-  deactivateComponent.init(editor, *this);
-  loginComponent.init(editor, *this);
-  
-  addAndMakeVisible (deactivateComponent);
-  addAndMakeVisible (loginComponent);
-}
 
 void ActivateModal::resized()
 {
-  if (editorRef->processorRef.licenseManager.isActivate()) {
+  if (editorRef.processorRef.licenseManager.isActivate()) {
     deactivateComponent.setVisible(true);
     loginComponent.setVisible(false);
     deactivateComponent.setBounds(getLocalBounds().withSizeKeepingCentre(250, 100));
@@ -51,12 +46,12 @@ void ActivateModal::paint (juce::Graphics& g)
 
 void ActivateModal::mouseUp (const juce::MouseEvent&)
 {
-  if (editorRef->processorRef.licenseManager.isActivate()) {
+  if (editorRef.processorRef.licenseManager.isActivate()) {
     close();
   }
 
   // 트라이얼 유효 유무 확인
-  if (!editorRef->processorRef.licenseManager.isTrialExpired()) {
+  if (!editorRef.processorRef.licenseManager.isTrialExpired()) {
     close();
   }
 }

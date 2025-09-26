@@ -2,29 +2,30 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-ToggleButtonComponent::ToggleButtonComponent() {
-  
-}
-
-ToggleButtonComponent::~ToggleButtonComponent() = default;
-
-void ToggleButtonComponent::init(
-                         PluginEditor& editor,
-                         const String& parameterID,
-                         const String labelText)
+ToggleButtonComponent::ToggleButtonComponent(
+                                             PluginEditor& editor,
+                                             const String& parameterID,
+                                             const String labelText)
+:editorRef(editor)
 {
-  editorRef = &editor;
-  
   addAndMakeVisible (toggleButton);
+  
+  /*
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>
   (
-   editorRef->processorRef.state,
+   editorRef.processorRef.state,
    parameterID,
    toggleButton
    );
+   */
+  attachment.reset(
+                   new juce::AudioProcessorValueTreeState::ButtonAttachment(
+                                                                            editorRef.processorRef.state, parameterID, toggleButton)
+                   );
   toggleButton.setButtonText(labelText);
 }
 
+ToggleButtonComponent::~ToggleButtonComponent() = default;
 
 void ToggleButtonComponent::paint(juce::Graphics& g)
 {

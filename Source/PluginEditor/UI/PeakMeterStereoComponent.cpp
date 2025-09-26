@@ -1,29 +1,24 @@
 #include "PeakMeterStereoComponent.h"
 #include "../PluginEditor.h"
 
-PeakMeterStereoComponent::PeakMeterStereoComponent()
+PeakMeterStereoComponent::PeakMeterStereoComponent(
+                                                   PluginEditor& editor,
+                                                   int index
+                                                   )
+:editorRef(editor),
+leftPeakMeter(editor, index),
+rightPeakMeter(editor, index + 1)
 {
+  isStereo = editorRef.processorRef.getTotalNumOutputChannels() > 1;
 
-}
-
-PeakMeterStereoComponent::~PeakMeterStereoComponent() = default;
-
-void PeakMeterStereoComponent::init(
-                              PluginEditor& editor,
-                              int index
-                              )
-{
-  editorRef = &editor;
-  isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
-  
-  leftPeakMeter.init(editor, index);
   addAndMakeVisible(leftPeakMeter);
 
   if (isStereo) {
-    rightPeakMeter.init(editor, index + 1);
     addAndMakeVisible(rightPeakMeter);
   }
 }
+
+PeakMeterStereoComponent::~PeakMeterStereoComponent() = default;
 
 void PeakMeterStereoComponent::paint(juce::Graphics& g)
 {

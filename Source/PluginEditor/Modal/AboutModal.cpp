@@ -4,7 +4,9 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-AboutModal::AboutModal() {
+AboutModal::AboutModal(PluginEditor& editor)
+: editorRef(editor) // 참조 멤버 초기화
+{
   setInterceptsMouseClicks (true, true); // 뒤에 클릭 못 가게 막음
   setAlwaysOnTop (true);
 
@@ -25,16 +27,10 @@ AboutModal::AboutModal() {
   companyNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
   
   addAndMakeVisible (flexContainer);
-}
 
-AboutModal::~AboutModal() = default;
-
-void AboutModal::init(PluginEditor& editor)
-{
-  editorRef = &editor;
-  pluginNameLabel.setFont(editorRef->fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
-  pluginVersionLabel.setFont(editorRef->fontMedium.withHeight(10));
-  companyNameLabel.setFont(editorRef->fontBold.withHeight(10));
+  pluginNameLabel.setFont(editorRef.fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
+  pluginVersionLabel.setFont(editorRef.fontMedium.withHeight(10));
+  companyNameLabel.setFont(editorRef.fontBold.withHeight(10));
 
   // 클릭 이벤트 처리
   pluginNameLabel.setInterceptsMouseClicks(false, false);
@@ -42,6 +38,8 @@ void AboutModal::init(PluginEditor& editor)
   companyNameLabel.setInterceptsMouseClicks(false, false);
   flexContainer.setInterceptsMouseClicks(false, false);
 }
+
+AboutModal::~AboutModal() = default;
 
 void AboutModal::resized()
 {

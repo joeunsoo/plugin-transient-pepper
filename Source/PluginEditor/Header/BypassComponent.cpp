@@ -2,7 +2,9 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-BypassComponent::BypassComponent() {  
+BypassComponent::BypassComponent(PluginEditor& editor)
+: editorRef(editor) // 참조 멤버 초기화
+{
   setClickingTogglesState(true);
   
   // SVG 로드
@@ -14,18 +16,11 @@ BypassComponent::BypassComponent() {
   onStateChange = [this] {
     repaint();
   };
-}
-
-BypassComponent::~BypassComponent() = default;
-
-void BypassComponent::init(PluginEditor& editor)
-{
-  editorRef = &editor;
   
   // APVTS 연동
   bypassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>
   (
-   editorRef->processorRef.state, // APVTS
+   editorRef.processorRef.state, // APVTS
    ID::bypass.getParamID(), // 파라미터 ID
    *this
    );
@@ -33,6 +28,8 @@ void BypassComponent::init(PluginEditor& editor)
   //초기 색 반영
   repaint();
 }
+
+BypassComponent::~BypassComponent() = default;
 
 void BypassComponent::paintButton(juce::Graphics& g, bool isMouseOver, bool isMouseDown)
 {

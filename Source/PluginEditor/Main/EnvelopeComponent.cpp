@@ -2,37 +2,32 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-EnvelopeComponent::EnvelopeComponent() {
+EnvelopeComponent::EnvelopeComponent(PluginEditor& editor)
+: editorRef(editor),
+attackKnob (editor, ID::release.getParamID(), "Release" ),
+releaseKnob (editor, ID::release.getParamID(), "Release")
+{
+  addAndMakeVisible(sectionLabel);
+  sectionLabel.setFont(editorRef.fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
+  sectionLabel.setText("Noise Shape", juce::dontSendNotification);
+  sectionLabel.setJustificationType(juce::Justification::centredLeft);
   
+  attackKnob.setColor("secondary");
+  addAndMakeVisible(attackKnob);
+  
+  releaseKnob.setColor("secondary");
+  addAndMakeVisible(releaseKnob);
+  
+  editorRef.processorRef.parameters.bypass.addListener(this);
+  editorRef.processorRef.parameters.sidechainListen.addListener(this);
+  parameterValueChanged(0, 0);
 }
 
 EnvelopeComponent::~EnvelopeComponent() = default;
 
-void EnvelopeComponent::init(PluginEditor& editor)
-{
-  editorRef = &editor;
-
-  addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef->fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
-  sectionLabel.setText("Noise Shape", juce::dontSendNotification);
-  sectionLabel.setJustificationType(juce::Justification::centredLeft);
-  
-  attackKnob.init(editor, ID::attack.getParamID(), "Attack");
-  attackKnob.setColor("secondary");
-  addAndMakeVisible(attackKnob);
-  
-  releaseKnob.init(editor, ID::release.getParamID(), "Release");
-  releaseKnob.setColor("secondary");
-  addAndMakeVisible(releaseKnob);
-  
-  editorRef->processorRef.parameters.bypass.addListener(this);
-  editorRef->processorRef.parameters.sidechainListen.addListener(this);
-  parameterValueChanged(0, 0);
-}
-
 void EnvelopeComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef->processorRef.parameters.bypass.get();
-  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
+  bool bypass = editorRef.processorRef.parameters.bypass.get();
+  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
 
   if (bypass || sidechainListen) {
     sectionLabel.setAlpha(DISABLED_ALPHA);

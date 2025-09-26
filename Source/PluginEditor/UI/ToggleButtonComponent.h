@@ -10,14 +10,13 @@ class PluginEditor;
 class ToggleButtonComponent : public juce::Component
 {
   public:
-  ToggleButtonComponent();
+  ToggleButtonComponent(
+                        PluginEditor& editor,
+                        const String& parameterID,
+                        const String Label
+                        );
   ~ToggleButtonComponent() override;
   
-  void init(
-            PluginEditor& editor,
-            const String& parameterID,
-            const String Label
-            );
   
   void paint(juce::Graphics& g) override;
   void resized() override;
@@ -25,7 +24,7 @@ class ToggleButtonComponent : public juce::Component
   
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
   juce::Label label;
   CustomToggleButton toggleButton;

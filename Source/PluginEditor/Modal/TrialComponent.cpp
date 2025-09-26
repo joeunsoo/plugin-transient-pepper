@@ -4,16 +4,9 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-TrialComponent::TrialComponent() {
-}
-
-TrialComponent::~TrialComponent() = default;
-
-void TrialComponent::init(PluginEditor& editor, ActivateModal& modal)
+TrialComponent::TrialComponent(PluginEditor& editor, ActivateModal& modal)
+: editorRef(editor), modalRef(modal)
 {
-  editorRef = &editor;
-  modalRef = &modal;
-  
   addAndMakeVisible(trialButton);
   trialButton.setColour(juce::TextButton::buttonColourId, DARK_RGB[8]);
   trialButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
@@ -21,24 +14,26 @@ void TrialComponent::init(PluginEditor& editor, ActivateModal& modal)
 
   trialButton.onClick = [this]()
   {
-    if (!editorRef->processorRef.licenseManager.getTrial()) {
+    if (!editorRef.processorRef.licenseManager.getTrial()) {
       // 트라이얼 자체를 시작안한상태 였음
-      editorRef->processorRef.licenseManager.startTrial();
+      editorRef.processorRef.licenseManager.startTrial();
     }
 
-    modalRef->resized();
-    if (!editorRef->processorRef.licenseManager.isTrialExpired()) {
-      modalRef->close();
+    modalRef.resized();
+    if (!editorRef.processorRef.licenseManager.isTrialExpired()) {
+      modalRef.close();
     }
   };
 }
 
+TrialComponent::~TrialComponent() = default;
+
 void TrialComponent::resized()
 {
 
-  bool isTrialExpired = editorRef->processorRef.licenseManager.isTrialExpired();
-  int64 trialTimestamp = editorRef->processorRef.licenseManager.getTrial();
-  int trialDays = editorRef->processorRef.licenseManager.getTrialDays();
+  bool isTrialExpired = editorRef.processorRef.licenseManager.isTrialExpired();
+  int64 trialTimestamp = editorRef.processorRef.licenseManager.getTrial();
+  int trialDays = editorRef.processorRef.licenseManager.getTrialDays();
 
   String buttonText = "Start Trial (30 days)";
 

@@ -4,7 +4,9 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-LoginComponent::LoginComponent() {
+LoginComponent::LoginComponent(PluginEditor& editor, ActivateModal& modal)
+: editorRef(editor), modalRef(modal), trialComponent(editor, modal)
+{
   addAndMakeVisible (flexContainer);
   
   flexContainer.addAndMakeVisible(pluginNameLabel);
@@ -38,63 +40,54 @@ LoginComponent::LoginComponent() {
   loginButton.onClick = [this]() { callActivate(); };
   emailEditor.addListener(this);
   passwordEditor.addListener(this);
-}
-
-LoginComponent::~LoginComponent() = default;
-
-void LoginComponent::init(PluginEditor& editor, ActivateModal& modal)
-{
-  editorRef = &editor;
-  modalRef = &modal;
   
   juce::Colour backgroundColourId = DARK_RGB[6];
   juce::Colour outlineColourId = DARK_RGB[5];
   juce::Colour focusedOutlineColourId = DARK_RGB[4];
 
-  pluginNameLabel.setFont(editorRef->fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
+  pluginNameLabel.setFont(editorRef.fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
 
-  emailLabel.setFont(editorRef->fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
-  passwordLabel.setFont(editorRef->fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
+  emailLabel.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
+  passwordLabel.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
 
-  forgotPasswordButton.setFont(editorRef->fontRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT), false);
+  forgotPasswordButton.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT), false);
   forgotPasswordButton.setJustificationType (juce::Justification::right);
   forgotPasswordButton.setColour(juce::HyperlinkButton::textColourId, DARK_RGB[1]);
 
-  messageLabel.setFont(editorRef->fontRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT));
+  messageLabel.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT));
   messageLabel.setJustificationType (juce::Justification::centred);
   messageLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);
 
-  emailEditor.setFont(editorRef->fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
+  emailEditor.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
   emailEditor.setJustification(juce::Justification::centredLeft);
   emailEditor.setColour (juce::TextEditor::backgroundColourId, backgroundColourId);
   emailEditor.setColour (juce::TextEditor::outlineColourId, outlineColourId);
   emailEditor.setColour (juce::TextEditor::focusedOutlineColourId, focusedOutlineColourId);
   emailEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB[0]);
 
-  passwordEditor.setFont(editorRef->fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
+  passwordEditor.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
   passwordEditor.setJustification(juce::Justification::centredLeft);
   passwordEditor.setColour (juce::TextEditor::backgroundColourId, backgroundColourId);
   passwordEditor.setColour (juce::TextEditor::outlineColourId, outlineColourId);
   passwordEditor.setColour (juce::TextEditor::focusedOutlineColourId, focusedOutlineColourId);
   passwordEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB[0]);
-
-
-  trialComponent.init(editor, modal);
 }
+
+LoginComponent::~LoginComponent() = default;
 
 void LoginComponent::callActivate()
 {
   auto email = emailEditor.getText();
   auto password = passwordEditor.getText();
-  auto result = editorRef->processorRef.licenseManager.sendActivationRequest(email,password);
+  auto result = editorRef.processorRef.licenseManager.sendActivationRequest(email,password);
 
   if (result.first == 201) {
-    editorRef->processorRef.licenseManager.setActivate(email);
+    editorRef.processorRef.licenseManager.setActivate(email);
     emailEditor.setText("");
     passwordEditor.setText("");
     messageLabel.setText("", juce::dontSendNotification);
-    modalRef->resized();
-    modalRef->close();
+    modalRef.resized();
+    modalRef.close();
   } else {
     messageLabel.setText(result.second, juce::dontSendNotification);
   }

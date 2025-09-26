@@ -8,13 +8,12 @@ class PeakMeterComponent : public juce::Component,
 private juce::Timer
 {
   public:
-  PeakMeterComponent();
+  PeakMeterComponent(
+                     PluginEditor& editor,
+                     int index
+                     );
   ~PeakMeterComponent() override;
   
-  void init(
-            PluginEditor& editor,
-            int index
-            );
   
   void setLevel(float newLevel);
   
@@ -23,7 +22,7 @@ private juce::Timer
   private:
   void timerCallback() override;
 
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
   int idx = -1;
   float level = 0.0f;

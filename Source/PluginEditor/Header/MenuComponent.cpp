@@ -3,21 +3,10 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-MenuComponent::MenuComponent() {
-  
-}
-
-MenuComponent::~MenuComponent()
+MenuComponent::MenuComponent(PluginEditor& editor)
+: editorRef(editor) // 참조 멤버 초기화
 {
-  setLookAndFeel(nullptr);
-};
-
-
-void MenuComponent::init(PluginEditor& editor)
-{
-  editorRef = &editor;
-
-  menuLaF.setFont(editorRef->fontRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT));
+  menuLaF.setFont(editorRef.fontRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT));
   setLookAndFeel (&menuLaF);
 
   menuButton.setClickingTogglesState (false); // 토글 버튼이면 true
@@ -42,26 +31,31 @@ void MenuComponent::init(PluginEditor& editor)
   menuButton.onClick = [&]
   {
     PopupMenu menu;
-    menuLaF.setWindowScale(editorRef->processorRef.windowScale);
+    menuLaF.setWindowScale(editorRef.processorRef.windowScale);
     menu.setLookAndFeel(&menuLaF);
     menu.addSectionHeader("Scale");
-    menu.addItem ("100%", [this] { editorRef->setScale(100); });
-    menu.addItem ("150%", [this] { editorRef->setScale(150); });
-    menu.addItem ("200%", [this] { editorRef->setScale(200); });
+    menu.addItem ("100%", [this] { editorRef.setScale(100); });
+    menu.addItem ("150%", [this] { editorRef.setScale(150); });
+    menu.addItem ("200%", [this] { editorRef.setScale(200); });
     menu.addSeparator();
     menu.addItem ("Online Manual", [] {
       const URL newUrl = URL ("https://joeunsoo.com/plugins/transient-pepper/manual");
       if (newUrl.isWellFormed())
         newUrl.launchInDefaultBrowser();
     });
-    menu.addItem ("About", [this] { editorRef->showAbout(); });
+    menu.addItem ("About", [this] { editorRef.showAbout(); });
     menu.addSeparator();
     menu.addItem (
-                  !editorRef->processorRef.licenseManager.isActivate() ? "Activate" : "Deactivate",
-                  [this] { editorRef->showActivate(); });
+                  !editorRef.processorRef.licenseManager.isActivate() ? "Activate" : "Deactivate",
+                  [this] { editorRef.showActivate(); });
     menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (menuButton));
   };
 }
+
+MenuComponent::~MenuComponent()
+{
+  setLookAndFeel(nullptr);
+};
 
 void MenuComponent::paint(juce::Graphics& g)
 {

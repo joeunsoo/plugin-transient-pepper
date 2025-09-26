@@ -12,10 +12,8 @@ class DetectorComponent : public juce::Component,
 public juce::AudioProcessorParameter::Listener
 {
   public:
-  DetectorComponent();
+  DetectorComponent(PluginEditor& editor);
   ~DetectorComponent() override;
-  
-  void init(PluginEditor& editor);
   
   void paint(juce::Graphics& g) override;
   void resized() override;
@@ -25,15 +23,13 @@ public juce::AudioProcessorParameter::Listener
   
   //==============================================================================
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
+  bool isStereo = false;
   juce::Label sectionLabel;
-  KnobComponent thresholdKnob;
-  KnobComponent bpfFreqKnob;
+  KnobComponent thresholdKnob, bpfFreqKnob;
   
-  ToggleButtonComponent channelLinkButton;
-  ToggleButtonComponent bpfPowerButton;
-  ToggleButtonComponent sidechainListenButton;
+  ToggleButtonComponent channelLinkButton, bpfPowerButton, sidechainListenButton;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
 };

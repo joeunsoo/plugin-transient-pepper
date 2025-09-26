@@ -4,18 +4,13 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-KnobComponent::KnobComponent() {
-  
-}
-
-KnobComponent::~KnobComponent() = default;
-
-void KnobComponent::init(
-                         PluginEditor& editor,
-                         const String& paramID,
-                         const String labelText)
+KnobComponent::KnobComponent(
+                             PluginEditor& editor,
+                             const String& paramID,
+                             const String labelText
+                             )
+: editorRef(editor)
 {
-  editorRef = &editor;
   parameterID = paramID;
 
   rotarySlider.setColour(
@@ -29,14 +24,20 @@ void KnobComponent::init(
                          );
 
   addAndMakeVisible (rotarySlider);
+  /*
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
   (
-   editorRef->processorRef.state,
+   editorRef.processorRef.state,
    parameterID,
    rotarySlider
    );
+   */
+  attachment.reset(
+                   new juce::AudioProcessorValueTreeState::SliderAttachment(
+                                                                            editorRef.processorRef.state, parameterID, rotarySlider)
+                   );
   
-  label.setFont(editorRef->fontRegular.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
+  label.setFont(editorRef.fontRegular.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(label);
@@ -47,17 +48,17 @@ void KnobComponent::init(
     sendTooltip();
     };
   
-  rotarySlider.onDragStart = [this]{ editorRef->setDrag(true, parameterID); };
-  rotarySlider.onDragEnd   = [this]{ editorRef->setDrag(false, parameterID); };
+  rotarySlider.onDragStart = [this]{ editorRef.setDrag(true, parameterID); };
+  rotarySlider.onDragEnd   = [this]{ editorRef.setDrag(false, parameterID); };
   
 }
 
+KnobComponent::~KnobComponent() = default;
+
 void KnobComponent::sendTooltip()
 {
-  if (editorRef != nullptr)
-  {
-    if (auto* param = editorRef->processorRef.state.getParameter(parameterID)) {
-      auto topLeftInEditor = editorRef->getLocalPoint(&rotarySlider, juce::Point<int>(0, 0));
+    if (auto* param = editorRef.processorRef.state.getParameter(parameterID)) {
+      auto topLeftInEditor = editorRef.getLocalPoint(&rotarySlider, juce::Point<int>(0, 0));
 
       auto size = std::min(rotarySlider.getWidth(),rotarySlider.getHeight());
       auto top = (rotarySlider.getHeight()/2) + (size/2) + UI_KNOB_LABEL_HEIGHT;
@@ -65,10 +66,9 @@ void KnobComponent::sendTooltip()
                                        topLeftInEditor.getY() + top,
                                        rotarySlider.getWidth(), 24);
 
-      editorRef->showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
+      editorRef.showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
     }
-    editorRef->tooltipLabel->setVisible(true);
-  }
+    editorRef.tooltipLabel->setVisible(true);
 }
 
 void KnobComponent::mouseEnter(const juce::MouseEvent&)
@@ -78,10 +78,7 @@ void KnobComponent::mouseEnter(const juce::MouseEvent&)
 
 void KnobComponent::mouseExit(const juce::MouseEvent&)
 {
-  if (editorRef != nullptr)
-  {
-    editorRef->tooltipLabel->setVisible(false);
-  }
+  editorRef.tooltipLabel->setVisible(false);
 };
 
 void KnobComponent::paint(juce::Graphics& g)

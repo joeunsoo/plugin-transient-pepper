@@ -3,13 +3,11 @@
 
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
-: AudioProcessorEditor(&p), processorRef(p)
+: AudioProcessorEditor(&p), processorRef(p),
+  headerComponent(*this), mainComponent(*this),
+  aboutModal(*this), activateModal(*this)  // 생성자에서 바로 전달
 {
-  // 헤더 불러오기
-  headerComponent.init(*this);
   addAndMakeVisible (headerComponent);
-  
-  mainComponent.init(*this);
   addAndMakeVisible (mainComponent);
   
   // 기본 크기
@@ -25,10 +23,6 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
-
-  // 모달
-  aboutModal.init(*this);
-  activateModal.init(*this);
   
   if (!processorRef.licenseManager.isActivate()
       && processorRef.licenseManager.isTrialExpired()) {

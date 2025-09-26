@@ -10,18 +10,16 @@ class ActivateModal;
 class DeactivateComponent : public juce::Component
 {
   public:
-  DeactivateComponent();
+  DeactivateComponent(PluginEditor& editor, ActivateModal& modal);
   ~DeactivateComponent() override;
-
-  void init(PluginEditor& editor, ActivateModal& modal);
   
   void resized() override;
   void paint(juce::Graphics& g) override;
 
   
   private:
-  PluginEditor* editorRef = nullptr; // 포인터로 저장하면 forward declaration 가능
-  ActivateModal* modalRef = nullptr; // 포인터로 저장하면 forward declaration 가능
+  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  ActivateModal& modalRef; // 포인터로 저장하면 forward declaration 가능
 
   juce::Component flexContainer;
   juce::Label pluginNameLabel, accountEmailLabel;

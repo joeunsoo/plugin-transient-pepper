@@ -3,23 +3,18 @@
 #include "../../Utils.h"
 #include "../PluginEditor.h"
 
-GraphComponent::GraphComponent(juce::Colour f, juce::Colour s)
+GraphComponent::GraphComponent(
+                               juce::Colour f,
+                               juce::Colour s,
+                               PluginEditor& editor,
+                               int index
+                             )
+: editorRef(editor), idx(index), fillColour(f), strokeColour(s)
 {
-  fillColour=f;
-  strokeColour=s;
   startTimerHz(UI_TIMER_HZ); // 초당 갱신 프레임
 }
 
 GraphComponent::~GraphComponent() = default;
-
-void GraphComponent::init(
-                          PluginEditor& editor,
-                          int index
-                          )
-{
-  editorRef = &editor;
-  idx = index;
-}
 
 void GraphComponent::paint(juce::Graphics& g)
 {
@@ -114,9 +109,9 @@ void GraphComponent::paint(juce::Graphics& g)
 
 void GraphComponent::timerCallback()
 {
-  if (editorRef != nullptr && idx != -1) {
-    level1 = editorRef->processorRef.analysisData[static_cast<size_t>(idx)];
-    level2 = editorRef->processorRef.analysisData[static_cast<size_t>(idx+1)];
+  if (idx != -1) {
+    level1 = editorRef.processorRef.analysisData[static_cast<size_t>(idx)];
+    level2 = editorRef.processorRef.analysisData[static_cast<size_t>(idx+1)];
     repaint();
   }
 }

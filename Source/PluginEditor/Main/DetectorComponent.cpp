@@ -2,57 +2,43 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-DetectorComponent::DetectorComponent() {
-  
-}
-
-DetectorComponent::~DetectorComponent() = default;
-
-void DetectorComponent::init(PluginEditor& editor)
+DetectorComponent::DetectorComponent(PluginEditor& editor)
+: editorRef(editor), isStereo(editor.processorRef.getTotalNumOutputChannels() > 1),
+thresholdKnob(editor, ID::threshold.getParamID(), "Threshold"),
+bpfFreqKnob(editor, ID::bpfFrequency.getParamID(), "BPF Freq"),
+channelLinkButton(editor,ID::linkChannels.getParamID(), isStereo ? "L/R Link": "Mono"),
+bpfPowerButton(editor, ID::bpfPower.getParamID(), "BPF"),
+sidechainListenButton(editor, ID::sidechainListen.getParamID(), "Listen")
 {
-  editorRef = &editor;
-  
-  bool isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
 
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef->fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
+  sectionLabel.setFont(editorRef.fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Transient Detector", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
-  
-  
-  channelLinkButton.init(
-                         editor,
-                         ID::linkChannels.getParamID(),
-                         isStereo ? "L/R Link" : "Mono"
-                         );
   addAndMakeVisible(channelLinkButton);
   
-  bpfPowerButton.init(editor, ID::bpfPower.getParamID(), "BPF");
   addAndMakeVisible(bpfPowerButton);
-  
-  sidechainListenButton.init(editor, ID::sidechainListen.getParamID(), "Listen");
   
   sidechainListenButton.setSvgDrawable( juce::Drawable::createFromImageData(BinaryData::headphonesbold_svg, BinaryData::headphonesbold_svgSize));
   addAndMakeVisible(sidechainListenButton);
   
-  thresholdKnob.init(editor, ID::threshold.getParamID(), "Threshold");
   thresholdKnob.setRingColor("secondary");
   addAndMakeVisible(thresholdKnob);
-  
-  bpfFreqKnob.init(editor, ID::bpfFrequency.getParamID(), "BPF Freq");
+
   addAndMakeVisible(bpfFreqKnob);
   
-  editorRef->processorRef.parameters.bypass.addListener(this);
-  editorRef->processorRef.parameters.bpfPower.addListener(this);
-  editorRef->processorRef.parameters.sidechainListen.addListener(this);
+  editorRef.processorRef.parameters.bypass.addListener(this);
+  editorRef.processorRef.parameters.bpfPower.addListener(this);
+  editorRef.processorRef.parameters.sidechainListen.addListener(this);
   parameterValueChanged(0, 0);
 }
 
+DetectorComponent::~DetectorComponent() = default;
+
 void DetectorComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef->processorRef.parameters.bypass.get();
-  bool bpfPower = editorRef->processorRef.parameters.bpfPower.get();
-  bool sidechainListen = editorRef->processorRef.parameters.sidechainListen.get();
-  bool isStereo = editorRef->processorRef.getTotalNumOutputChannels() > 1;
+  bool bypass = editorRef.processorRef.parameters.bypass.get();
+  bool bpfPower = editorRef.processorRef.parameters.bpfPower.get();
+  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
 
   if (bypass) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
