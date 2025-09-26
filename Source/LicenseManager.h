@@ -75,6 +75,25 @@ class LicenseManager
     return decrypted.getLargeIntValue();
   }
   
+  int getTrialDays()
+  {
+    int64 trialTimestamp = getTrial();
+    int64 nowMs = juce::Time::getCurrentTime().toMilliseconds(); // 현재 시간
+    
+    // trial 기간 (예: 30일)
+    constexpr int trialPeriodDays = 30;
+
+    // 경과 일수 계산
+    int64 elapsedDays = (nowMs - trialTimestamp) / (1000 * 60 * 60 * 24);
+
+    // 남은 일수
+    int64 remainingDays = trialPeriodDays - elapsedDays;
+    if (remainingDays < 0)
+        remainingDays = 0; // 음수 방지
+
+    return (int) remainingDays;
+  }
+  
   int64 startTrial()
   {
     if (propertiesFile == nullptr)
@@ -108,8 +127,25 @@ class LicenseManager
   }
 
   private:
-  
+  juce::String encryptString(const juce::String& text)
+  {
+    return text;
+  }
+  juce::String decryptString(const juce::String& base64Text)
+  {
+    return base64Text;
+  }
+
+  /*
   // ---------------- XOR + Base64 ----------------
+
+   juce::MemoryBlock base64Decode(const juce::String& text)
+   {
+       juce::MemoryOutputStream out;
+       juce::Base64::convertFromBase64(out, text);
+       return out.getMemoryBlock();
+   }
+
   juce::String encryptString(const juce::String& text)
   {
       juce::MemoryBlock mb(text.getNumBytesAsUTF8());
@@ -124,13 +160,6 @@ class LicenseManager
 #pragma clang diagnostic  pop
 
       return juce::Base64::toBase64(mb.getData(), mb.getSize());
-  }
-
-  juce::MemoryBlock base64Decode(const juce::String& text)
-  {
-      juce::MemoryOutputStream out;
-      juce::Base64::convertFromBase64(out, text);
-      return out.getMemoryBlock();
   }
 
   juce::String decryptString(const juce::String& base64Text)
@@ -148,7 +177,8 @@ class LicenseManager
 
       return juce::String::fromUTF8((const char*)out.getData(), (int)out.getSize());
   }
-  
+  */
+
   std::unique_ptr<juce::PropertiesFile> propertiesFile;
   
   const juce::String secretKey = "f9a3d7b2e8c14f6a9d3e7b1c5a8f0d2e";

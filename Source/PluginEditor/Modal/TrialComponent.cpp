@@ -35,17 +35,20 @@ void TrialComponent::init(PluginEditor& editor, ActivateModal& modal)
 
 void TrialComponent::resized()
 {
+
   bool isTrialExpired = editorRef->processorRef.licenseManager.isTrialExpired();
   int64 trialTimestamp = editorRef->processorRef.licenseManager.getTrial();
+  int trialDays = editorRef->processorRef.licenseManager.getTrialDays();
+
   String buttonText = "Start Trial (30 days)";
 
   if (trialTimestamp > 0 && isTrialExpired) {
     buttonText = "Trial Ended";
   } else if (trialTimestamp > 0) {
-    buttonText = "Continue Trial (${trialDays} days remaining)";
+    buttonText = "Continue Trial (" + juce::String(trialDays) + " days remaining)";
   }
-  trialButton.setButtonText(buttonText);
 
+  trialButton.setButtonText(buttonText);
   trialButton.setBounds(getLocalBounds());
 }
 

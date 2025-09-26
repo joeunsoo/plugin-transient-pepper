@@ -34,7 +34,7 @@ void LoginComponent::resized()
 
   flexContainer.setBounds(getLocalBounds());
 
-  auto bounds = getLocalBounds();
+  auto bounds = getLocalBounds().reduced(20, 10);
   flexContainer.setBounds(getLocalBounds());
 
   juce::FlexBox flexBox;
