@@ -5,9 +5,9 @@
 //==============================================================================
 MainComponent::MainComponent() {
   // DropShadow 설정
-  dropShadow.colour = juce::Colours::black.withAlpha(1.0f); // 그림자 색상
+  dropShadow.colour = juce::Colours::black.withAlpha(0.5f); // 그림자 색상
   dropShadow.radius = 10;  // blur 반경
-  dropShadow.offset = juce::Point<int>(0, 4); // x, y 오프셋
+  dropShadow.offset = juce::Point<int>(0, 0); // x, y 오프셋
 }
 
 MainComponent::~MainComponent()
@@ -42,7 +42,7 @@ void MainComponent::resized()
 {
   auto area = getLocalBounds()
     .withTrimmedLeft(15)
-    .withTrimmedTop(15)
+    .withTrimmedTop(14)
     .withTrimmedRight(15)
     .withTrimmedBottom(5);
   auto leftArea = area.removeFromLeft((UI_KNOB_WIDTH * 3)-20);

@@ -70,14 +70,15 @@ void MixComponent::paint(juce::Graphics& g)
 
 void MixComponent::resized()
 {
-  auto area = getLocalBounds().withTrimmedBottom(17);
+  int NoiseGainGap = 11;
+  auto area = getLocalBounds().withTrimmedBottom(21);
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
-  noisePeakMeter.setBounds(leftArea.removeFromTop(leftArea.getHeight()-(UI_KNOB_HEIGHT+20+UI_BUTTON_HEIGHT+UI_KNOB_HEIGHT)));
+  noisePeakMeter.setBounds(leftArea.removeFromTop(leftArea.getHeight()-(UI_KNOB_HEIGHT+NoiseGainGap+UI_BUTTON_HEIGHT+UI_KNOB_HEIGHT)));
   noiseLevelGainKnob.setBounds(leftArea.removeFromTop(UI_KNOB_HEIGHT));
-  leftArea.removeFromTop(16);
+  leftArea.removeFromTop(NoiseGainGap);
   wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT).reduced(UI_GAP_SIZE));
   dryWetKnob.setBounds(leftArea);
   auto rightArea = area;
-  outputPeakMeter.setBounds(rightArea.removeFromTop(rightArea.getHeight()-(UI_KNOB_HEIGHT)));
+  outputPeakMeter.setBounds(rightArea.removeFromTop(rightArea.getHeight()-(UI_KNOB_HEIGHT)).withTrimmedBottom(0));
   outputGainKnob.setBounds(rightArea);
 }

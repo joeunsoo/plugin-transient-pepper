@@ -256,7 +256,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       auto BoundsInStroke = knobBounds;
       BoundsInStroke.reduce(size * 0.09f, size * 0.09f);
       g.setColour(juce::Colours::black);
-      g.drawEllipse(BoundsInStroke, vw * 6.0f);
+      g.drawEllipse(BoundsInStroke, vw * 8.0f);
       
       g.restoreState();
     }
@@ -264,7 +264,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     
     {
       // Thumb 그리기
-      float pointerThickness = vw * 32.0f; // 두께
+      float pointerThickness = vw * 40.0f; // 두께
       
       // 각도 계산
       float angle = juce::degreesToRadians(180.0f) + rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
