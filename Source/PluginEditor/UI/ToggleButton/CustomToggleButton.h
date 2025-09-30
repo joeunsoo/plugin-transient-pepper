@@ -26,6 +26,7 @@ struct CustomToggleButton : public juce::TextButton
       bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT);
       bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM);
       bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT);
+      bounds.reduce(UI_BUTTON_SVG_PADDING, UI_BUTTON_SVG_PADDING);
       
       auto normal = svgDrawable->createCopy();
       normal->replaceColour(juce::Colours::black, juce::Colours::white);
