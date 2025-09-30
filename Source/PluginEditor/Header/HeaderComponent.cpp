@@ -10,13 +10,13 @@ bypassComponent(editor), menuComponent(editor)
   
   addAndMakeVisible(logoLabel);
   logoLabel.setFont(editorRef.fontPretendardBold.withHeight(11.5f));
-  logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);
-  logoLabel.setText("Transient Pepper", juce::dontSendNotification);
+  logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB_6);
+  logoLabel.setText(PLUGIN_NAME, juce::dontSendNotification);
   logoLabel.setJustificationType(juce::Justification::centredLeft);
   
   addAndMakeVisible(companyLabel);
   companyLabel.setFont(editorRef.fontPretendardBold.withHeight(10.0f));
-  companyLabel.setText("JoEunsoo", juce::dontSendNotification);
+  companyLabel.setText(COMPANY_NAME, juce::dontSendNotification);
   companyLabel.setJustificationType(juce::Justification::centredRight);
   
   addAndMakeVisible(menuComponent);

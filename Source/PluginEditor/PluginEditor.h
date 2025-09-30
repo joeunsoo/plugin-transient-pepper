@@ -8,8 +8,6 @@
 #include "Modal/AboutModal.h"
 #include "Modal/ActivateModal.h"
 
-class PluginWrapper;
-
 class PluginEditor : public juce::AudioProcessorEditor
 {
   public:

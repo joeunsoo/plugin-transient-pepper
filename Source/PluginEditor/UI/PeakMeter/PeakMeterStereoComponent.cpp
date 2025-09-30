@@ -1,5 +1,5 @@
 #include "PeakMeterStereoComponent.h"
-#include "../PluginEditor.h"
+#include "../../PluginEditor.h"
 
 PeakMeterStereoComponent::PeakMeterStereoComponent(
                                                    PluginEditor& editor,

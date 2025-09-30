@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../DefineUI.h"
+#include "../../DefineUI.h"
 
 struct KnobSlider : public juce::Slider
 {

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../UI/KnobComponent.h"
-#include "../UI/ToggleButtonComponent.h"
+#include "../UI/Knob/KnobComponent.h"
+#include "../UI/ToggleButton/ToggleButtonComponent.h"
 
 // Forward declaration
 class PluginEditor;

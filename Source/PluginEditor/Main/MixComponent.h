@@ -1,9 +1,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../UI/KnobComponent.h"
-#include "../UI/ToggleButtonComponent.h"
-#include "../UI/PeakMeterStereoComponent.h"
+#include "../UI/Knob/KnobComponent.h"
+#include "../UI/ToggleButton/ToggleButtonComponent.h"
+#include "../UI/PeakMeter/PeakMeterStereoComponent.h"
 
 // Forward declaration
 class PluginEditor;

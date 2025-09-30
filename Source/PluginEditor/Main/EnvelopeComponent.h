@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../UI/KnobComponent.h"
+#include "../UI/Knob/KnobComponent.h"
 
 // Forward declaration
 class PluginEditor;

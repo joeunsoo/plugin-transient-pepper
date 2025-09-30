@@ -1,7 +1,7 @@
 #include "GraphComponent.h"
-#include "../DefineUI.h"
-#include "../../Utils.h"
-#include "../PluginEditor.h"
+#include "../../DefineUI.h"
+#include "../../../Utils.h"
+#include "../../PluginEditor.h"
 
 GraphComponent::GraphComponent(
                                juce::Colour f,

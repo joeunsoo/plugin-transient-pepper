@@ -21,7 +21,7 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB_9);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
-  // tooltipLabel->setBorderRadius(UI_TOOLTIP_BORDER_RADIUS);
+  tooltipLabel->setBorderRadius(UI_TOOLTIP_BORDER_RADIUS);
   tooltipLabel->setFont(fontPretendardMedium.withHeight(UI_TOOLTIP_FONT_HEIGHT));
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);

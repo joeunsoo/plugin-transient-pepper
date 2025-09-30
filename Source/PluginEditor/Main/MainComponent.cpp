@@ -12,7 +12,7 @@ toneComponent(editor), mixComponent(editor)
   dropShadow.colour = juce::Colours::black.withAlpha(0.5f); // 그림자 색상
   dropShadow.radius = 10;  // blur 반경
   dropShadow.offset = juce::Point<int>(0, 0); // x, y 오프셋
-  
+
   mainLaf.setFontRegular(editorRef.fontPretendardRegular);
   mainLaf.setFontMedium(editorRef.fontPretendardMedium);
   mainLaf.setFontSemiBold(editorRef.fontPretendardSemiBold);
@@ -57,7 +57,7 @@ void MainComponent::paint(juce::Graphics& g)
   dropShadow.drawForPath(g, roundedRect);
   
   // 배경다시 그리기
-  g.setColour(SECONDARY_DARK_RGB[9]);
+  g.setColour(SECONDARY_DARK_RGB_9);
   g.fillRoundedRectangle(bounds, borderRadius);
   
   // ---------- 2. 반투명 배경 (glass effect) ----------
@@ -72,11 +72,11 @@ void MainComponent::paint(juce::Graphics& g)
   g.fillRoundedRectangle(bounds, borderRadius);
   
   // 3) 위쪽 하이라이트 (빛 반사)
-  g.setColour (PRIMARY_RGB[7].withAlpha (0.35f));
+  g.setColour (DARK_RGB_5.withAlpha (0.35f));
   g.drawLine (bounds.getX() + borderRadius, bounds.getY() + 1,
               bounds.getRight() - borderRadius, bounds.getY() + 1, 1.5f);
   
   // ---------- 4. 경계선(optional) ----------
-  g.setColour(PRIMARY_RGB[9].withAlpha(0.1f));
+  g.setColour(juce::Colours::black.withAlpha(0.1f));
   g.drawRoundedRectangle(bounds, borderRadius, 1.0f);
 }

@@ -12,16 +12,16 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
   
   juce::Colour getPopupMenuBackgroundColour()
   {
-    return DARK_RGB[6]; // 원하는 배경색
+    return DARK_RGB_6; // 원하는 배경색
   }
   
   juce::Colour getHighlightedBackgroundColour()
   {
-    return DARK_RGB[5]; // 원하는 배경색
+    return DARK_RGB_5; // 원하는 배경색
   }
   juce::Colour getTextColour()
   {
-    return DARK_RGB[0]; // 원하는 배경색
+    return DARK_RGB_0; // 원하는 배경색
   }
   
   juce::Font getPopupMenuFont() override
@@ -36,18 +36,16 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
   
   void drawPopupMenuBackground (juce::Graphics& g, int width, int height) override
   {
-    // g.fillAll (getPopupMenuBackgroundColour());
-    
     auto bounds = juce::Rectangle<float> ((float) width, (float) height);
     
     g.setColour (getPopupMenuBackgroundColour());
     g.fillRect (bounds);
     
-    g.setColour (DARK_RGB[4]);
+    g.setColour (DARK_RGB_4);
     g.drawRect (bounds, 1.0f);
     
 #if ! JUCE_MAC
-    g.setColour (DARK_RGB[4].withAlpha (0.6f));
+    g.setColour (DARK_RGB_4.withAlpha (0.6f));
     g.drawRect (0, 0, width, height);
 #endif
   }
@@ -90,7 +88,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
       auto r  = area.reduced (5, 0);
       r.removeFromTop (roundToInt (((float) r.getHeight() * 0.5f) - 0.5f));
       
-      g.setColour(DARK_RGB[4]);
+      g.setColour(DARK_RGB_4);
       g.fillRect (r.removeFromTop (1));
     }
     else
@@ -170,7 +168,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
           || (text == "150%" && windowScale == 150)
           || (text == "200%" && windowScale == 200)
           ) {
-            g.setColour(PRIMARY_RGB[5]);
+            g.setColour(DARK_RGB_3);
             auto bounds = area;
             
             bounds.setX(area.getWidth()-15);

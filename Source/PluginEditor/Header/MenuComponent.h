@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../UI/MenuLookAndFeel.h"
+#include "MenuLookAndFeel.h"
 
 // Forward declaration
 class PluginEditor;

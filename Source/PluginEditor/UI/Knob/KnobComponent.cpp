@@ -1,7 +1,7 @@
 #include "KnobComponent.h"
-#include "../DefineUI.h"
-#include "../../NamespaceParameterId.h"
-#include "../PluginEditor.h"
+#include "../../DefineUI.h"
+#include "../../../NamespaceParameterId.h"
+#include "../../PluginEditor.h"
 
 //==============================================================================
 KnobComponent::KnobComponent(

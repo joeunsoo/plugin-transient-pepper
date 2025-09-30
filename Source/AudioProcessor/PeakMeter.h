@@ -146,6 +146,6 @@ class PeakMeter
   
   float envDecayTimeMs = 10.0f;
   float envDecayCoeff  = 0.0f;
-
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeter)
 };

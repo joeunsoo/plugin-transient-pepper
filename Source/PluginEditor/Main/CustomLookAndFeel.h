@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../DefineUI.h"
-#include "KnobSlider.h"
+#include "../UI/Knob/KnobSlider.h"
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
@@ -50,12 +50,12 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     // --- 상태별 배경색 (linear-gradient 느낌)
     juce::ColourGradient gradient(
                                   button.getToggleState()
-                                  ? SECONDARY_DARK_RGB[0]   // 활성 (ON)
-                                  : SECONDARY_DARK_RGB[6],     // 비활성 (OFF)
+                                  ? SECONDARY_DARK_RGB_0   // 활성 (ON)
+                                  : SECONDARY_DARK_RGB_6,     // 비활성 (OFF)
                                   bounds.getTopLeft(),
                                   button.getToggleState()
-                                  ? SECONDARY_DARK_RGB[2]
-                                  : SECONDARY_DARK_RGB[9],
+                                  ? SECONDARY_DARK_RGB_2
+                                  : SECONDARY_DARK_RGB_9,
                                   bounds.getBottomRight(),
                                   false
                                   );
@@ -64,7 +64,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     g.fillRoundedRectangle(bounds, cornerSize);
     
     // --- border
-    g.setColour(PRIMARY_RGB[9]);
+    g.setColour(juce::Colours::black);
     g.drawRoundedRectangle(bounds, cornerSize, 1.0f);
     
     // --- hover 효과
@@ -115,10 +115,10 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
-    juce::Colour colorIn = PRIMARY_RGB[6];
-    juce::Colour colorDotLine = PRIMARY_DARK_RGB[2];
-    juce::Colour colorDot = PRIMARY_DARK_RGB[3];
-    juce::Colour colorRing = PRIMARY_DARK_RGB[6];
+    juce::Colour colorIn = DARK_RGB_4;
+    juce::Colour colorDotLine = DARK_RGB_4;
+    juce::Colour colorDot = DARK_RGB_5;
+    juce::Colour colorRing = DARK_RGB_7;
     
     if (auto* knobSlider = dynamic_cast<KnobSlider*>(&slider))
     {
@@ -126,12 +126,12 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       juce::String ringColor = knobSlider->ringColor;
       
       if (color == "secondary") {
-        colorIn = SECONDARY_RGB[6];
-        colorDotLine = SECONDARY_DARK_RGB[2];
-        colorDot = SECONDARY_DARK_RGB[3];
+        colorIn = SECONDARY_RGB_6;
+        colorDotLine = SECONDARY_DARK_RGB_2;
+        colorDot = SECONDARY_DARK_RGB_3;
       }
       if (ringColor == "secondary") {
-        colorRing = SECONDARY_DARK_RGB[6];
+        colorRing = SECONDARY_DARK_RGB_6;
       }
     }
     
@@ -237,7 +237,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       juce::ColourGradient grad(
                                 juce::Colours::white.withAlpha(1.0f),      // startColor
                                 centre.x, centre.y - BoundsIn.getWidth()/2.0f,               // 시작점 (y1)
-                                juce::Colour(PRIMARY_RGB[6]).withAlpha(0.0f), // primary-6 색상, 투명
+                                juce::Colour(DARK_RGB_4).withAlpha(0.0f), // primary-6 색상, 투명
                                 centre.x, centre.y - BoundsIn.getWidth()/2.0f + BoundsIn.getWidth()/2.0f * 0.25f, // 끝점 y2 = 20% 지점
                                 false                                      // radial = false → linear
                                 );

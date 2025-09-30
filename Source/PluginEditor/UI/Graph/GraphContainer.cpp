@@ -1,12 +1,12 @@
 #include "GraphContainer.h"
-#include "../DefineUI.h"
-#include "../../Utils.h"
-#include "../PluginEditor.h"
+#include "../../DefineUI.h"
+#include "../../../Utils.h"
+#include "../../PluginEditor.h"
 
 GraphContainer::GraphContainer(PluginEditor& editor)
 : editorRef(editor),
-inputLevelGraph (PRIMARY_DARK_RGB[9], PRIMARY_LIGHT_RGB[7], editor, 4),
-envGraph (SECONDARY_DARK_RGB[2].withAlpha(0.3f), SECONDARY_LIGHT_RGB[7], editor, 6)
+inputLevelGraph (DARK_RGB_9, DARK_RGB_2, editor, 4),
+envGraph (SECONDARY_DARK_RGB_2.withAlpha(0.3f), SECONDARY_LIGHT_RGB_7, editor, 6)
 {
   addAndMakeVisible(inputLevelGraph);
   addAndMakeVisible(envGraph);
@@ -54,7 +54,7 @@ void GraphContainer::paint(juce::Graphics& g)
   ds.drawForImage(g, graphImage);  // 이제 2개 인자
 
   // 배경
-  g.setColour(SECONDARY_DARK_RGB[9]);
+  g.setColour(SECONDARY_DARK_RGB_9);
   g.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
 }
 

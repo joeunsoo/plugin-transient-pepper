@@ -34,7 +34,6 @@ class PluginAudioProcessor  : public AudioProcessor
   void prepareToPlay (double sampleRate, int samplesPerBlock) override;
   void releaseResources() override {}
   
-  bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
   
   void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
   using AudioProcessor::processBlock;
@@ -57,11 +56,31 @@ class PluginAudioProcessor  : public AudioProcessor
   //==============================================================================
   void getStateInformation (MemoryBlock& destData) override;
   void setStateInformation (const void* data, int sizeInBytes) override;
+  
+  //==============================================================================
+  bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+  int getLatencySamples() const;
+  //==============================================================================
+  void setActivated (bool value) { activated = value; }
 
-
+  //==============================================================================
   Parameters parameters;
   AudioProcessorValueTreeState state;
+  //==============================================================================
+  /*
+   0, 1 = L,R 출력 피크 레벨
+   2, 3 = L,R 노이즈 레벨
+   */
+  std::vector<float> analysisData = [] { return std::vector<float> (8, 0.0f); }();
   
+  SpinLock peakDataLock;
+  PeakMeter peakMeter;
+  PeakMeter noisePeakMeter;
+  PeakMeter envPeakMeter;
+  PeakMeter inputPeakMeter;
+  
+  private:
+  //==============================================================================
   dsp::Gain<float> noiseLevelGain;
   dsp::Gain<float> tiltGain;
   dsp::Gain<float> outputGain;
@@ -69,36 +88,14 @@ class PluginAudioProcessor  : public AudioProcessor
   TiltEQProcessor<float> tiltEQ;
   
   juce::dsp::DryWetMixer<float> dryWetMixer;
-
+  
   TransientNoiseProcessor<float> transientNoise;
   MidSideMixer<float> midSideMixer;
-
-  /*
-   0, 1 = L,R 출력 피크 레벨
-   2, 3 = L,R 노이즈 레벨
-  */
-  std::vector<float> analysisData = [] { return std::vector<float> (8, 0.0f); }();
-
-  SpinLock peakDataLock;
-  PeakMeter peakMeter;
-  PeakMeter noisePeakMeter;
-  PeakMeter envPeakMeter;
-  PeakMeter inputPeakMeter;
-  
   DCOffsetFilter<float> dcBlocker;
-
-  int windowScale;
-  
-  LicenseManager licenseManager;
-  bool activated;
-
-  juce::dsp::ProcessSpec spec;
-
-  private:
-  juce::ApplicationProperties appProperties;
-  juce::PropertiesFile* props = nullptr; // 소유권은 ApplicationProperties가 관리
-  
-
+  //==============================================================================
+  int   totalLatencySamples { 0 };   // 체인 총 지연(호스트 보고와 동일)
+  //==============================================================================
+  bool activated = false;
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginAudioProcessor)
   

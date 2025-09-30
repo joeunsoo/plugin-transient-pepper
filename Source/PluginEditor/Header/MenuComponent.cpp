@@ -1,6 +1,7 @@
 #include "MenuComponent.h"
 #include "../DefineUI.h"
 #include "../PluginEditor.h"
+#include "../../PluginWrapper.h"
 
 //==============================================================================
 MenuComponent::MenuComponent(PluginEditor& editor)
@@ -19,10 +20,10 @@ MenuComponent::MenuComponent(PluginEditor& editor)
   normal->replaceColour (juce::Colours::black, juce::Colours::white);
 
   auto over = menuSvg->createCopy();
-  over->replaceColour (juce::Colours::black, DARK_RGB[1]);
+  over->replaceColour (juce::Colours::black, DARK_RGB_1);
 
   auto down = menuSvg->createCopy();
-  down->replaceColour (juce::Colours::black, DARK_RGB[1]);
+  down->replaceColour (juce::Colours::black, DARK_RGB_1);
 
   menuButton.setImages (normal.get(), over.get(), down.get());
 
@@ -31,7 +32,8 @@ MenuComponent::MenuComponent(PluginEditor& editor)
   menuButton.onClick = [&]
   {
     PopupMenu menu;
-    menuLaF.setWindowScale(editorRef.processorRef.windowScale);
+    menuLaF.setWindowScale(editorRef.wrapperRef.windowScale);
+
     menu.setLookAndFeel(&menuLaF);
     menu.addSectionHeader("Scale");
     menu.addItem ("100%", [this] { editorRef.setScale(100); });
@@ -39,14 +41,14 @@ MenuComponent::MenuComponent(PluginEditor& editor)
     menu.addItem ("200%", [this] { editorRef.setScale(200); });
     menu.addSeparator();
     menu.addItem ("Online Manual", [] {
-      const URL newUrl = URL ("https://joeunsoo.com/plugins/transient-pepper/manual");
+      const URL newUrl = URL (PLUGIN_MANUAL_URL);
       if (newUrl.isWellFormed())
         newUrl.launchInDefaultBrowser();
     });
     menu.addItem ("About", [this] { editorRef.showAbout(); });
     menu.addSeparator();
     menu.addItem (
-                  !editorRef.processorRef.licenseManager.isActivate() ? "Activate" : "Deactivate",
+                  !editorRef.wrapperRef.licenseManager.isActivate() ? "Activate" : "Deactivate",
                   [this] { editorRef.showActivate(); });
     menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (menuButton));
   };

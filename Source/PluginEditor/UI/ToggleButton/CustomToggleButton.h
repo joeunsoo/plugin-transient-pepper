@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../DefineUI.h"
+#include "../../DefineUI.h"
 
 struct CustomToggleButton : public juce::TextButton
 {
@@ -14,16 +14,14 @@ struct CustomToggleButton : public juce::TextButton
                    bool shouldDrawButtonAsDown) override
   {
     LookAndFeel& laf = getLookAndFeel();
-    laf.drawButtonBackground(g, *this, PRIMARY_RGB[9],
+    
+    juce::Colour backgroundColor = getToggleState() ? DARK_RGB_0 : DARK_RGB_4;
+    laf.drawButtonBackground(g, *this, backgroundColor,
                              shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
     
     if (svgDrawable != nullptr)
     {
-      auto bounds = getLocalBounds().toFloat().reduced(UI_BUTTON_SVG_PADDING);
-      bounds.removeFromTop(UI_BUTTON_PADDING_TOP);
-      bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT);
-      bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM);
-      bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT);
+      auto bounds = getLocalBounds().toFloat();
       
       auto normal = svgDrawable->createCopy();
       normal->replaceColour(juce::Colours::black, juce::Colours::white);

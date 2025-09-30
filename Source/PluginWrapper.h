@@ -2,7 +2,6 @@
 
 #include <JuceHeader.h>
 #include "AudioProcessor/PluginAudioProcessor.h"
-#include "PluginEditor/PluginEditor.h"
 #include "LicenseManager.h"
 
 class PluginWrapper  : public PluginAudioProcessor

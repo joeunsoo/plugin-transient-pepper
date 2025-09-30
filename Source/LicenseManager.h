@@ -1,15 +1,7 @@
-/*
- ==============================================================================
- 
- LicenseActivate.h
- Created: 13 Sep 2025 11:43:07am
- Author:  JoEunsoo
- 
- ==============================================================================
- */
-
 #pragma once
+
 #include <JuceHeader.h>
+#include "Define.h"
 
 class LicenseManager
 {
@@ -77,7 +69,7 @@ class LicenseManager
   {
     if (propertiesFile == nullptr) return {};
     
-    auto encId = encryptString("TransientPepperLicence");
+    auto encId = encryptString(LICENCE_KEY);
     juce::String value = propertiesFile->getValue(encId, ""); // 기본값 10
     
     if (value.isEmpty()) return {};
@@ -96,7 +88,7 @@ class LicenseManager
   {
     if (propertiesFile == nullptr) return;
     
-    auto encId = encryptString("TransientPepperLicence");
+    auto encId = encryptString(LICENCE_KEY);
     auto encEmail = encryptString(email);
     propertiesFile->setValue(encId, encEmail);
     propertiesFile->saveIfNeeded();
@@ -106,7 +98,7 @@ class LicenseManager
   {
     if (propertiesFile == nullptr) return;
     
-    auto encId = encryptString("TransientPepperLicence");
+    auto encId = encryptString(LICENCE_KEY);
     propertiesFile->setValue(encId, "");
     propertiesFile->saveIfNeeded();
   }
@@ -115,7 +107,7 @@ class LicenseManager
   {
     if (propertiesFile == nullptr) return 0;
     
-    auto encId = encryptString("TransientPepperTrial");
+    auto encId = encryptString(LICENCE_TRIAL_KEY);
     juce::String enc = propertiesFile->getValue(encId, "");
     
     if (enc.isEmpty()) return 0;
@@ -149,11 +141,11 @@ class LicenseManager
     
     int64 timestamp = juce::Time::getCurrentTime().toMilliseconds(); // 1970 기준 ms
     
-    auto encId = encryptString("TransientPepperTrial");
+    auto encId = encryptString(LICENCE_TRIAL_KEY);
     auto enc = encryptString(juce::String(timestamp));
     
     propertiesFile->setValue(encId, enc);
-    propertiesFile->setValue("TransientPepper", timestamp);
+    propertiesFile->setValue(LICENCE_KEY, timestamp);
     propertiesFile->saveIfNeeded();
     return timestamp;
   }
@@ -229,5 +221,5 @@ class LicenseManager
   
   std::unique_ptr<juce::PropertiesFile> propertiesFile;
   
-  const juce::String secretKey = "f9a3d7b2e8c14f6a9d3e7b1c5a8f0d2e";
+  const juce::String secretKey = LICENCE_SECRET_KEY;
 };

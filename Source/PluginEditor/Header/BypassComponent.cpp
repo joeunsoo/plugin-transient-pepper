@@ -24,7 +24,7 @@ BypassComponent::BypassComponent(PluginEditor& editor)
    ID::bypass.getParamID(), // 파라미터 ID
    *this
    );
-
+  
   //초기 색 반영
   repaint();
 }
@@ -34,28 +34,35 @@ BypassComponent::~BypassComponent()
   bypassAttachment.reset();
 };
 
+bool BypassComponent::hitTest(int x, int y)
+{
+    int extraMargin = 5; // 클릭 영역 확대
+    return juce::Rectangle<int>(-extraMargin, -extraMargin, getWidth() + extraMargin*2, getHeight() + extraMargin*2)
+           .contains(x, y);
+}
+
 void BypassComponent::paintButton(juce::Graphics& g, bool isMouseOver, bool isMouseDown)
 {
-    if (!normalSvg) return;
-
-    bool value = getToggleState();
-
-    juce::Colour activeColor = value ? PRIMARY_RGB[7] : SECONDARY_RGB[6];
-    juce::Colour overColor   = value ? PRIMARY_RGB[7].darker(0.5f) : SECONDARY_RGB[6].darker(0.5f);
-    juce::Colour downColor   = value ? PRIMARY_RGB[7].darker(0.8f) : SECONDARY_RGB[6].darker(0.8f);
-
-    // 매번 새 Drawable 생성 (기존 색 누적 방지)
-    auto normal = normalSvg->createCopy();
-    auto over   = normalSvg->createCopy();
-    auto down   = normalSvg->createCopy();
-
-    normal->replaceColour(juce::Colours::black, activeColor);
-    over->replaceColour(juce::Colours::black, overColor);
-    down->replaceColour(juce::Colours::black, downColor);
-
-    juce::Drawable* svgToDraw = normal.get();
-    if (isMouseDown) svgToDraw = down.get();
-    else if (isMouseOver) svgToDraw = over.get();
-
-    svgToDraw->drawWithin(g, getLocalBounds().toFloat(), juce::RectanglePlacement::centred, 1.0f);
+  if (!normalSvg) return;
+  
+  bool value = getToggleState();
+  
+  juce::Colour activeColor = value ? DARK_RGB_5 : SECONDARY_RGB_6;
+  juce::Colour overColor   = value ? DARK_RGB_5.darker(0.5f) : SECONDARY_RGB_6.darker(0.5f);
+  juce::Colour downColor   = value ? DARK_RGB_5.darker(0.8f) : SECONDARY_RGB_6.darker(0.8f);
+  
+  // 매번 새 Drawable 생성 (기존 색 누적 방지)
+  auto normal = normalSvg->createCopy();
+  auto over   = normalSvg->createCopy();
+  auto down   = normalSvg->createCopy();
+  
+  normal->replaceColour(juce::Colours::black, activeColor);
+  over->replaceColour(juce::Colours::black, overColor);
+  down->replaceColour(juce::Colours::black, downColor);
+  
+  juce::Drawable* svgToDraw = normal.get();
+  if (isMouseDown) svgToDraw = down.get();
+  else if (isMouseOver) svgToDraw = over.get();
+  
+  svgToDraw->drawWithin(g, getLocalBounds().toFloat(), juce::RectanglePlacement::centred, 1.0f);
 }

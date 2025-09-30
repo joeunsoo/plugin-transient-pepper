@@ -1,7 +1,7 @@
 #include "PeakMeterComponent.h"
-#include "../DefineUI.h"
-#include "../../Utils.h"
-#include "../PluginEditor.h"
+#include "../../DefineUI.h"
+#include "../../../Utils.h"
+#include "../../PluginEditor.h"
 
 PeakMeterComponent::PeakMeterComponent(
                                        PluginEditor& editor,
@@ -45,7 +45,7 @@ void PeakMeterComponent::paint(juce::Graphics& g)
                       {0, 3});
   
   // 배경
-  g.setColour(SECONDARY_DARK_RGB[9]);
+  g.setColour(SECONDARY_DARK_RGB_9);
   g.fillRoundedRectangle(bounds, UI_METER_BORDER_RADIUS);
   
   // 클리핑 설정: bounds 안에서만 그리기
@@ -58,7 +58,7 @@ void PeakMeterComponent::paint(juce::Graphics& g)
   float y = bounds.getHeight() * level;
 
   auto barHeight = y;
-  g.setColour(SECONDARY_RGB[6]);
+  g.setColour(SECONDARY_RGB_6);
   g.fillRect(bounds.withTop(bounds.getBottom() - barHeight));
   
   // 클리핑 끝
