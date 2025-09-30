@@ -1,11 +1,14 @@
 #pragma once
+
 #include "../AudioProcessor/PluginAudioProcessor.h"
+#include "../PluginWrapper.h"
 #include "Header/HeaderComponent.h"
 #include "Main/MainComponent.h"
-#include "Main/DetectorComponent.h"
-#include "RoundedLabel.h"
+#include "UI/RoundedLabel.h"
 #include "Modal/AboutModal.h"
 #include "Modal/ActivateModal.h"
+
+class PluginWrapper;
 
 class PluginEditor : public juce::AudioProcessorEditor
 {
@@ -25,12 +28,13 @@ class PluginEditor : public juce::AudioProcessorEditor
 
   //==============================================================================
   PluginAudioProcessor& processorRef;
-
+  PluginWrapper& wrapperRef;
+  //==============================================================================
   
-  juce::FontOptions fontRegular {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdRegular_otf, BinaryData::PretendardStdRegular_otfSize)};
-  juce::FontOptions fontMedium {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdMedium_otf, BinaryData::PretendardStdMedium_otfSize)};
-  juce::FontOptions fontSemiBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf, BinaryData::PretendardStdSemiBold_otfSize)};
-  juce::FontOptions fontBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize)};
+  juce::FontOptions fontPretendardRegular {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdRegular_otf, BinaryData::PretendardStdRegular_otfSize)};
+  juce::FontOptions fontPretendardMedium {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdMedium_otf, BinaryData::PretendardStdMedium_otfSize)};
+  juce::FontOptions fontPretendardSemiBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf, BinaryData::PretendardStdSemiBold_otfSize)};
+  juce::FontOptions fontPretendardBold {juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize)};
   
   std::unique_ptr<RoundedLabel> tooltipLabel;
   bool isDrag = false;

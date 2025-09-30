@@ -55,6 +55,7 @@
                 file="Source/PluginEditor/Modal/ModalLookAndFeel.h"/>
         </GROUP>
         <GROUP id="{57B4C4EB-2E0B-01B6-DBE6-6910A4820490}" name="UI">
+          <FILE id="tIEvz2" name="RoundedLabel.h" compile="0" resource="0" file="Source/PluginEditor/RoundedLabel.h"/>
           <FILE id="X7aPKY" name="GraphContainer.h" compile="0" resource="0"
                 file="Source/PluginEditor/UI/GraphContainer.h"/>
           <FILE id="cL6Dbk" name="GraphContainer.cpp" compile="1" resource="0"
@@ -119,7 +120,6 @@
                 file="Source/PluginEditor/Header/HeaderComponent.cpp"/>
         </GROUP>
         <FILE id="Q4XkXw" name="DefineUI.h" compile="0" resource="0" file="Source/PluginEditor/DefineUI.h"/>
-        <FILE id="tIEvz2" name="RoundedLabel.h" compile="0" resource="0" file="Source/PluginEditor/RoundedLabel.h"/>
         <FILE id="f5m3Qr" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
         <FILE id="AF5Wqe" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/PluginEditor/PluginEditor.cpp"/>

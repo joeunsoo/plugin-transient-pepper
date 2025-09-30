@@ -31,7 +31,7 @@ KnobComponent::KnobComponent(
    parameterID,
    rotarySlider
    );
-  label.setFont(editorRef.fontRegular.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
+  label.setFont(editorRef.fontPretendardRegular.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
   addAndMakeVisible(label);

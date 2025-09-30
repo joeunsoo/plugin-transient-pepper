@@ -10,29 +10,29 @@ DeactivateComponent::DeactivateComponent(PluginEditor& editor, ActivateModal& mo
   addAndMakeVisible (flexContainer);
   
   flexContainer.addAndMakeVisible(pluginNameLabel);
-  pluginNameLabel.setText ("Transient Pepper", juce::dontSendNotification);
+  pluginNameLabel.setText (PLUGIN_NAME, juce::dontSendNotification);
   pluginNameLabel.setJustificationType (juce::Justification::centred);
-  pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
   
   flexContainer.addAndMakeVisible(accountEmailLabel);
   accountEmailLabel.setJustificationType (juce::Justification::centred);
-  accountEmailLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  accountEmailLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
   
   flexContainer.addAndMakeVisible(deactivateButton);
   deactivateButton.setButtonText("Deactivate");
-  deactivateButton.setColour(juce::TextButton::buttonColourId, PRIMARY_DARK_RGB[4]);
-  deactivateButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
-  deactivateButton.setColour(juce::ComboBox::outlineColourId, PRIMARY_DARK_RGB[4]);
+  deactivateButton.setColour(juce::TextButton::buttonColourId, DARK_RGB_5);
+  deactivateButton.setColour(juce::TextButton::textColourOffId, DARK_RGB_0);
+  deactivateButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB_5);
   
-  pluginNameLabel.setFont(editorRef.fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
+  pluginNameLabel.setFont(editorRef.fontPretendardBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
   pluginNameLabel.setInterceptsMouseClicks(false, false);
   
-  accountEmailLabel.setFont(editorRef.fontMedium.withHeight(10.0f));
+  accountEmailLabel.setFont(editorRef.fontPretendardMedium.withHeight(10.0f));
   accountEmailLabel.setInterceptsMouseClicks(false, false);
   
   deactivateButton.onClick = [this]()
   {
-    editorRef.processorRef.licenseManager.setDeactivate();
+    editorRef.wrapperRef.licenseManager.setDeactivate();
     modalRef.resized();
   };
 
@@ -45,7 +45,7 @@ DeactivateComponent::~DeactivateComponent() {
 
 void DeactivateComponent::resized()
 {
-  auto accountEmail = editorRef.processorRef.licenseManager.getActivate();
+  auto accountEmail = editorRef.wrapperRef.licenseManager.getActivate();
   accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
 
   auto bounds = getLocalBounds();
@@ -76,6 +76,6 @@ void DeactivateComponent::resized()
 void DeactivateComponent::paint (juce::Graphics& g)
 {
   // FlexContainer 배경색
-  g.setColour(DARK_RGB[7]);
+  g.setColour(DARK_RGB_7);
   g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
 }

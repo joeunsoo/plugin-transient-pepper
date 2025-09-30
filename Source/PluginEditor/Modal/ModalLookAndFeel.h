@@ -2,6 +2,19 @@
 
 #include "../DefineUI.h"
 
+#define UI_MODAL_BORDER_RADIUS 4.0f
+#define UI_MODAL_BUTTON_FONT_HEIGHT 8.5f
+#define UI_MODAL_BUTTON_BORDER_RADIUS 4.0f
+#define UI_MODAL_TEXT_LABEL_HEIGHT 9.0f
+#define UI_MODAL_TEXT_LABEL_FONT_HEIGHT 9.0f
+#define UI_MODAL_TEXT_EDITOR_LABEL_HEIGHT 9.0f
+#define UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT 9.0f
+#define UI_MODAL_TEXT_EDITOR_BORDER_RADIUS 4.0f
+#define UI_MODAL_TEXT_EDITOR_HEIGHT 20
+#define UI_MODAL_TEXT_EDITOR_FONT_HEIGHT 10.0f
+
+#define UI_PLUGIN_NAME_FONT_HEIGHT 14
+
 struct ModalLookAndFeel : public LookAndFeel_V4
 {
   public:
@@ -75,22 +88,22 @@ struct ModalLookAndFeel : public LookAndFeel_V4
   
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
-    auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
+    auto fontHeight = std::min<float>(UI_MODAL_BUTTON_FONT_HEIGHT, buttonHeight);
     return juce::Font { fontRegular.withHeight(fontHeight) };
   }
   
   juce::Colour getPopupMenuBackgroundColour()
   {
-    return DARK_RGB[6]; // 원하는 배경색
+    return DARK_RGB_6; // 원하는 배경색
   }
   
   juce::Colour getHighlightedBackgroundColour()
   {
-    return DARK_RGB[5]; // 원하는 배경색
+    return DARK_RGB_5; // 원하는 배경색
   }
   juce::Colour getTextColour()
   {
-    return DARK_RGB[0]; // 원하는 배경색
+    return DARK_RGB_0; // 원하는 배경색
   }
   
   juce::Font getPopupMenuFont() override
@@ -107,7 +120,7 @@ struct ModalLookAndFeel : public LookAndFeel_V4
     g.setColour (getPopupMenuBackgroundColour());
     g.fillRect (bounds);
     
-    g.setColour (DARK_RGB[4]);
+    g.setColour (DARK_RGB_4);
     g.drawRect (bounds, 1.0f);
     
 #if ! JUCE_MAC
@@ -129,7 +142,7 @@ struct ModalLookAndFeel : public LookAndFeel_V4
       auto r  = area.reduced (5, 0);
       r.removeFromTop (roundToInt (((float) r.getHeight() * 0.5f) - 0.5f));
       
-      g.setColour(DARK_RGB[4]);
+      g.setColour(DARK_RGB_4);
       g.fillRect (r.removeFromTop (1));
     }
     else

@@ -3,16 +3,26 @@
 #include <JuceHeader.h>
 #include "AudioProcessor/PluginAudioProcessor.h"
 #include "PluginEditor/PluginEditor.h"
+#include "LicenseManager.h"
 
-class PluginAudioProcessorWrapper  : public PluginAudioProcessor
+class PluginWrapper  : public PluginAudioProcessor
 {
   public:
-  PluginAudioProcessorWrapper()  : PluginAudioProcessor ({})
-  {}
-  
+  //==============================================================================
+  PluginWrapper();
+  ~PluginWrapper();
+  //==============================================================================
   bool hasEditor() const override               { return true; }
-  AudioProcessorEditor* createEditor() override {
-    return new PluginEditor (*this);
-  }
+  AudioProcessorEditor* createEditor() override;
+  //==============================================================================
+
+  LicenseManager licenseManager;
+  int windowScale;
+  
+  private:
+  //==============================================================================
+  juce::ApplicationProperties appProperties;
+  juce::PropertiesFile* props = nullptr; // 소유권은 ApplicationProperties가 관리
+
 };
 

@@ -4,7 +4,6 @@
 
 // Forward declaration
 class PluginEditor;
-
 class ActivateModal;
 
 class DeactivateComponent : public juce::Component

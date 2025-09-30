@@ -10,10 +10,10 @@ ActivateModal::ActivateModal(PluginEditor& editor)
   setInterceptsMouseClicks (true, true); // 뒤에 클릭 못 가게 막음
   setAlwaysOnTop (true);
 
-  modalLaf.setFontRegular(editorRef.fontRegular);
-  modalLaf.setFontMedium(editorRef.fontMedium);
-  modalLaf.setFontSemiBold(editorRef.fontSemiBold);
-  modalLaf.setFontBold(editorRef.fontBold);
+  modalLaf.setFontRegular(editorRef.fontPretendardRegular);
+  modalLaf.setFontMedium(editorRef.fontPretendardMedium);
+  modalLaf.setFontSemiBold(editorRef.fontPretendardSemiBold);
+  modalLaf.setFontBold(editorRef.fontPretendardBold);
   setLookAndFeel (&modalLaf);
   
   addAndMakeVisible (deactivateComponent);
@@ -27,7 +27,7 @@ ActivateModal::~ActivateModal() {
 
 void ActivateModal::resized()
 {
-  if (editorRef.processorRef.licenseManager.isActivate()) {
+  if (editorRef.wrapperRef.licenseManager.isActivate()) {
     deactivateComponent.setVisible(true);
     loginComponent.setVisible(false);
     deactivateComponent.setBounds(getLocalBounds().withSizeKeepingCentre(250, 100));
@@ -46,12 +46,12 @@ void ActivateModal::paint (juce::Graphics& g)
 
 void ActivateModal::mouseUp (const juce::MouseEvent&)
 {
-  if (editorRef.processorRef.licenseManager.isActivate()) {
+  if (editorRef.wrapperRef.licenseManager.isActivate()) {
     close();
   }
 
   // 트라이얼 유효 유무 확인
-  if (!editorRef.processorRef.licenseManager.isTrialExpired()) {
+  if (!editorRef.wrapperRef.licenseManager.isTrialExpired()) {
     close();
   }
 }

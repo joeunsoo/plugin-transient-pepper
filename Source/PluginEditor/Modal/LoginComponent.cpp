@@ -10,19 +10,19 @@ LoginComponent::LoginComponent(PluginEditor& editor, ActivateModal& modal)
   addAndMakeVisible (flexContainer);
   
   flexContainer.addAndMakeVisible(pluginNameLabel);
-  pluginNameLabel.setText ("Transient Pepper", juce::dontSendNotification);
+  pluginNameLabel.setText (PLUGIN_NAME, juce::dontSendNotification);
   pluginNameLabel.setJustificationType (juce::Justification::centred);
-  pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
   
   flexContainer.addAndMakeVisible(emailLabel);
   emailLabel.setText ("Email", juce::dontSendNotification);
   emailLabel.setJustificationType (juce::Justification::centredLeft);
-  emailLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  emailLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
   
   flexContainer.addAndMakeVisible(passwordLabel);
   passwordLabel.setText ("Password", juce::dontSendNotification);
   passwordLabel.setJustificationType (juce::Justification::centredLeft);
-  passwordLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  passwordLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
   
   flexContainer.addAndMakeVisible(emailEditor);
   flexContainer.addAndMakeVisible(passwordEditor);
@@ -32,45 +32,45 @@ LoginComponent::LoginComponent(PluginEditor& editor, ActivateModal& modal)
   flexContainer.addAndMakeVisible(trialComponent);
 
   addAndMakeVisible(loginButton);
-  loginButton.setColour(juce::TextButton::buttonColourId, PRIMARY_DARK_RGB[4]);
-  loginButton.setColour(juce::TextButton::textColourOffId, DARK_RGB[0]);
-  loginButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB[2]);
+  loginButton.setColour(juce::TextButton::buttonColourId, DARK_RGB_5);
+  loginButton.setColour(juce::TextButton::textColourOffId, DARK_RGB_0);
+  loginButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB_2);
   loginButton.setButtonText("Sign in");
   
   loginButton.onClick = [this]() { callActivate(); };
   emailEditor.addListener(this);
   passwordEditor.addListener(this);
   
-  juce::Colour backgroundColourId = DARK_RGB[6];
-  juce::Colour outlineColourId = DARK_RGB[5];
-  juce::Colour focusedOutlineColourId = DARK_RGB[4];
+  juce::Colour backgroundColourId = DARK_RGB_6;
+  juce::Colour outlineColourId = DARK_RGB_5;
+  juce::Colour focusedOutlineColourId = DARK_RGB_4;
 
-  pluginNameLabel.setFont(editorRef.fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
+  pluginNameLabel.setFont(editorRef.fontPretendardBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
 
-  emailLabel.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
-  passwordLabel.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
+  emailLabel.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
+  passwordLabel.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
 
-  forgotPasswordButton.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT), false);
+  forgotPasswordButton.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT), false);
   forgotPasswordButton.setJustificationType (juce::Justification::right);
-  forgotPasswordButton.setColour(juce::HyperlinkButton::textColourId, DARK_RGB[1]);
+  forgotPasswordButton.setColour(juce::HyperlinkButton::textColourId, DARK_RGB_1);
 
-  messageLabel.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT));
+  messageLabel.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT));
   messageLabel.setJustificationType (juce::Justification::centred);
-  messageLabel.setColour(juce::Label::textColourId, SECONDARY_RGB[6]);
+  messageLabel.setColour(juce::Label::textColourId, SECONDARY_RGB_6);
 
-  emailEditor.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
+  emailEditor.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
   emailEditor.setJustification(juce::Justification::centredLeft);
   emailEditor.setColour (juce::TextEditor::backgroundColourId, backgroundColourId);
   emailEditor.setColour (juce::TextEditor::outlineColourId, outlineColourId);
   emailEditor.setColour (juce::TextEditor::focusedOutlineColourId, focusedOutlineColourId);
-  emailEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB[0]);
+  emailEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB_0);
 
-  passwordEditor.setFont(editorRef.fontRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
+  passwordEditor.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
   passwordEditor.setJustification(juce::Justification::centredLeft);
   passwordEditor.setColour (juce::TextEditor::backgroundColourId, backgroundColourId);
   passwordEditor.setColour (juce::TextEditor::outlineColourId, outlineColourId);
   passwordEditor.setColour (juce::TextEditor::focusedOutlineColourId, focusedOutlineColourId);
-  passwordEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB[0]);
+  passwordEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB_0);
 }
 
 LoginComponent::~LoginComponent() {
@@ -83,10 +83,10 @@ void LoginComponent::callActivate()
 {
   auto email = emailEditor.getText();
   auto password = passwordEditor.getText();
-  auto result = editorRef.processorRef.licenseManager.sendActivationRequest(email,password);
+  auto result = editorRef.wrapperRef.licenseManager.sendActivationRequest(email,password);
 
   if (result.first == 201) {
-    editorRef.processorRef.licenseManager.setActivate(email);
+    editorRef.wrapperRef.licenseManager.setActivate(email);
     emailEditor.setText("");
     passwordEditor.setText("");
     messageLabel.setText("", juce::dontSendNotification);
@@ -162,6 +162,6 @@ void LoginComponent::resized()
 void LoginComponent::paint (juce::Graphics& g)
 {
   // FlexContainer 배경색
-  g.setColour(DARK_RGB[7]);
+  g.setColour(DARK_RGB_7);
   g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
 }

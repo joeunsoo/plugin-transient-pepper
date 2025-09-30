@@ -12,7 +12,7 @@ sidechainListenButton(editor, ID::sidechainListen.getParamID(), "Listen")
 {
 
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef.fontMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
+  sectionLabel.setFont(editorRef.fontPretendardMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Transient Detector", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   addAndMakeVisible(channelLinkButton);

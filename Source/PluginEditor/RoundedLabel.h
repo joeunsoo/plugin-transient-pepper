@@ -10,7 +10,6 @@ public:
     void paint(juce::Graphics& g) override
     {
         auto bounds = getLocalBounds().toFloat();
-        float radius = UI_TOOLTIP_BORDER_RADIUS; // 원하는 border-radius
 
         // 배경
         g.setColour(findColour(backgroundColourId));
@@ -21,5 +20,8 @@ public:
         g.setFont(getFont());
         g.drawFittedText(getText(), getLocalBounds(), getJustificationType(), 1);
     }
+  void setBorderRadius(float value) { radius = value; }
+  private:
+  float radius = 4.0f;
+  
 };
-

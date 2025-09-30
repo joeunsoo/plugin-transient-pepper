@@ -13,10 +13,10 @@ toneComponent(editor), mixComponent(editor)
   dropShadow.radius = 10;  // blur 반경
   dropShadow.offset = juce::Point<int>(0, 0); // x, y 오프셋
   
-  mainLaf.setFontRegular(editorRef.fontRegular);
-  mainLaf.setFontMedium(editorRef.fontMedium);
-  mainLaf.setFontSemiBold(editorRef.fontSemiBold);
-  mainLaf.setFontBold(editorRef.fontBold);
+  mainLaf.setFontRegular(editorRef.fontPretendardRegular);
+  mainLaf.setFontMedium(editorRef.fontPretendardMedium);
+  mainLaf.setFontSemiBold(editorRef.fontPretendardSemiBold);
+  mainLaf.setFontBold(editorRef.fontPretendardBold);
   setLookAndFeel (&mainLaf);
   
   addAndMakeVisible(detectorComponent);

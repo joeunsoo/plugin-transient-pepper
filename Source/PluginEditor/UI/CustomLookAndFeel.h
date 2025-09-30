@@ -290,19 +290,19 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
     auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
-    return juce::Font { fontMedium.withHeight(fontHeight) };
+    return juce::Font { fontPretendardMedium.withHeight(fontHeight) };
   }
   
-  void setFontRegular (juce::FontOptions f) { fontRegular = f; }
-  void setFontMedium (juce::FontOptions f) { fontMedium = f; }
-  void setFontSemiBold (juce::FontOptions f) { fontSemiBold = f; }
-  void setFontBold (juce::FontOptions f) { fontBold = f; }
+  void setFontRegular (juce::FontOptions f) { fontPretendardRegular = f; }
+  void setFontMedium (juce::FontOptions f) { fontPretendardMedium = f; }
+  void setFontSemiBold (juce::FontOptions f) { fontPretendardSemiBold = f; }
+  void setFontBold (juce::FontOptions f) { fontPretendardBold = f; }
   
   private:
-  juce::FontOptions fontRegular;
-  juce::FontOptions fontMedium;
-  juce::FontOptions fontSemiBold;
-  juce::FontOptions fontBold;
+  juce::FontOptions fontPretendardRegular;
+  juce::FontOptions fontPretendardMedium;
+  juce::FontOptions fontPretendardSemiBold;
+  juce::FontOptions fontPretendardBold;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomLookAndFeel)
 };

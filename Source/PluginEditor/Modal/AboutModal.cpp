@@ -14,23 +14,23 @@ AboutModal::AboutModal(PluginEditor& editor)
   flexContainer.addAndMakeVisible(pluginVersionLabel);
   flexContainer.addAndMakeVisible(companyNameLabel);
 
-  pluginNameLabel.setText ("Transient Pepper", juce::dontSendNotification);
+  pluginNameLabel.setText (PLUGIN_NAME, juce::dontSendNotification);
   pluginVersionLabel.setText ("v" + juce::String(JucePlugin_VersionString), juce::dontSendNotification);
-  companyNameLabel.setText ("JoEunsoo", juce::dontSendNotification);
+  companyNameLabel.setText (COMPANY_NAME, juce::dontSendNotification);
   
   pluginNameLabel.setJustificationType (juce::Justification::centred);
   pluginVersionLabel.setJustificationType (juce::Justification::centred);
   companyNameLabel.setJustificationType (juce::Justification::centred);
   
-  pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
-  pluginVersionLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
-  companyNameLabel.setColour(juce::Label::textColourId, DARK_RGB[0]);
+  pluginNameLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
+  pluginVersionLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
+  companyNameLabel.setColour(juce::Label::textColourId, DARK_RGB_0);
   
   addAndMakeVisible (flexContainer);
 
-  pluginNameLabel.setFont(editorRef.fontBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
-  pluginVersionLabel.setFont(editorRef.fontMedium.withHeight(10));
-  companyNameLabel.setFont(editorRef.fontBold.withHeight(10));
+  pluginNameLabel.setFont(editorRef.fontPretendardBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
+  pluginVersionLabel.setFont(editorRef.fontPretendardMedium.withHeight(10));
+  companyNameLabel.setFont(editorRef.fontPretendardBold.withHeight(10));
 
   // 클릭 이벤트 처리
   pluginNameLabel.setInterceptsMouseClicks(false, false);
@@ -70,7 +70,7 @@ void AboutModal::paint (juce::Graphics& g)
   g.fillAll (juce::Colours::black.withAlpha (0.5f));
   
   // FlexContainer 배경색
-  g.setColour(DARK_RGB[7]);
+  g.setColour(DARK_RGB_7);
   g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
 }
 

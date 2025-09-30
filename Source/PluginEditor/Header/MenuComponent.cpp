@@ -6,7 +6,7 @@
 MenuComponent::MenuComponent(PluginEditor& editor)
 : editorRef(editor) // 참조 멤버 초기화
 {
-  menuLaF.setFont(editorRef.fontRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT));
+  menuLaF.setFont(editorRef.fontPretendardRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT));
   setLookAndFeel (&menuLaF);
 
   menuButton.setClickingTogglesState (false); // 토글 버튼이면 true

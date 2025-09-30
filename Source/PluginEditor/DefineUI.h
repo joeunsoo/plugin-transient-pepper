@@ -57,6 +57,50 @@
 
 #define  DISABLED_ALPHA 0.5f
 
+#define SECONDARY_RGB_0 juce::Colour(0xFFffffff)
+#define SECONDARY_RGB_1 juce::Colour(0xFFffdfd8)
+#define SECONDARY_RGB_2 juce::Colour(0xFFffbfb2)
+#define SECONDARY_RGB_3 juce::Colour(0xFFfd9e8d)
+#define SECONDARY_RGB_4 juce::Colour(0xFFf67d69)
+#define SECONDARY_RGB_5 juce::Colour(0xFFec5847)
+#define SECONDARY_RGB_6 juce::Colour(0xFFdf2926)
+#define SECONDARY_RGB_7 juce::Colour(0xFFa71f1e)
+#define SECONDARY_RGB_8 juce::Colour(0xFF721616)
+#define SECONDARY_RGB_9 juce::Colour(0xFF420c0b)
+
+#define SECONDARY_LIGHT_RGB_0 juce::Colour(0xFFffffff)
+#define SECONDARY_LIGHT_RGB_1 juce::Colour(0xFFffeae5)
+#define SECONDARY_LIGHT_RGB_2 juce::Colour(0xFFffd4cb)
+#define SECONDARY_LIGHT_RGB_3 juce::Colour(0xFFffbfb2)
+#define SECONDARY_LIGHT_RGB_4 juce::Colour(0xFFffa999)
+#define SECONDARY_LIGHT_RGB_5 juce::Colour(0xFFfb9381)
+#define SECONDARY_LIGHT_RGB_6 juce::Colour(0xFFf67d69)
+#define SECONDARY_LIGHT_RGB_7 juce::Colour(0xFFef6552)
+#define SECONDARY_LIGHT_RGB_8 juce::Colour(0xFFe84b3c)
+#define SECONDARY_LIGHT_RGB_9 juce::Colour(0xFFdf2926)
+
+#define SECONDARY_DARK_RGB_0 juce::Colour(0xFFdf2926)
+#define SECONDARY_DARK_RGB_1 juce::Colour(0xFFc62723)
+#define SECONDARY_DARK_RGB_2 juce::Colour(0xFFad2520)
+#define SECONDARY_DARK_RGB_3 juce::Colour(0xFF95231d)
+#define SECONDARY_DARK_RGB_4 juce::Colour(0xFF7e201a)
+#define SECONDARY_DARK_RGB_5 juce::Colour(0xFF671c17)
+#define SECONDARY_DARK_RGB_6 juce::Colour(0xFF511914)
+#define SECONDARY_DARK_RGB_7 juce::Colour(0xFF3c1410)
+#define SECONDARY_DARK_RGB_8 juce::Colour(0xFF290f0a)
+#define SECONDARY_DARK_RGB_9 juce::Colour(0xFF160403)
+
+#define DARK_RGB_0 juce::Colour(0xFFC9C9C9)
+#define DARK_RGB_1 juce::Colour(0xFFb8b8b8)
+#define DARK_RGB_2 juce::Colour(0xFF828282)
+#define DARK_RGB_3 juce::Colour(0xFF696969)
+#define DARK_RGB_4 juce::Colour(0xFF424242)
+#define DARK_RGB_5 juce::Colour(0xFF3b3b3b)
+#define DARK_RGB_6 juce::Colour(0xFF2e2e2e)
+#define DARK_RGB_7 juce::Colour(0xFF242424)
+#define DARK_RGB_8 juce::Colour(0xFF1f1f1f)
+#define DARK_RGB_9 juce::Colour(0xFF141414)
+
 static const juce::Colour PRIMARY_RGB[] = {
   juce::Colour(0xFFffffff),
   juce::Colour(0xFFe0e0e1),

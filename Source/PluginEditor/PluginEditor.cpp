@@ -1,9 +1,11 @@
 #include "PluginEditor.h"
 #include "DefineUI.h"
+#include "../PluginWrapper.h"
 
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
 : AudioProcessorEditor(&p), processorRef(p),
+  wrapperRef(dynamic_cast<PluginWrapper&>(p)),
   headerComponent(*this), mainComponent(*this),
   aboutModal(*this), activateModal(*this)  // 생성자에서 바로 전달
 {
@@ -12,20 +14,21 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   
   // 기본 크기
   setSize(640, 360);
-  setScale(processorRef.windowScale);
+  setScale(wrapperRef.windowScale);
   
   // 툴팁
   tooltipLabel = std::make_unique<RoundedLabel>();
-  tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB[9]);
+  tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB_9);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
-  tooltipLabel->setFont(fontMedium.withHeight(UI_TOOLTIP_FONT_HEIGHT));
+  // tooltipLabel->setBorderRadius(UI_TOOLTIP_BORDER_RADIUS);
+  tooltipLabel->setFont(fontPretendardMedium.withHeight(UI_TOOLTIP_FONT_HEIGHT));
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
   
-  if (!processorRef.licenseManager.isActivate()
-      && processorRef.licenseManager.isTrialExpired()) {
+  if (!wrapperRef.licenseManager.isActivate()
+      && wrapperRef.licenseManager.isTrialExpired()) {
     showActivate();
   }
 }
@@ -35,7 +38,7 @@ PluginEditor::~PluginEditor() = default;
 
 void PluginEditor::paint(juce::Graphics& g)
 {
-  g.fillAll(SECONDARY_DARK_RGB[9]);
+  g.fillAll(SECONDARY_DARK_RGB_9);
 }
 
 void PluginEditor::resized()
@@ -43,7 +46,6 @@ void PluginEditor::resized()
   // UI layout code
   auto area = getLocalBounds();
   headerComponent.setBounds(area.removeFromTop(34));
-  area.setHeight(area.getHeight());
   mainComponent.setBounds(area);
 }
 
@@ -81,7 +83,7 @@ void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, co
 
 void PluginEditor::setScale(int scale)
 {
-  processorRef.windowScale = scale;
+  wrapperRef.windowScale = scale;
   
 #if !DEBUG
   float factor = 1.0f;

@@ -13,5 +13,5 @@
 //==============================================================================
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-  return new PluginAudioProcessorWrapper();
+  return new PluginWrapper();
 }
