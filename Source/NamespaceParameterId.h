@@ -16,7 +16,6 @@ namespace ID {
 
 PARAMETER_ID (bypass)
 
-PARAMETER_ID (generatorType)
 PARAMETER_ID (attack)
 PARAMETER_ID (release)
 
@@ -35,13 +34,6 @@ PARAMETER_ID (outputGain)
 PARAMETER_ID (dryWet)
 PARAMETER_ID (wetSolo)
 PARAMETER_ID (linkChannels)
-
-#if ADVANCED
-PARAMETER_ID (fastAttack)
-PARAMETER_ID (fastRelease)
-PARAMETER_ID (slowAttack)
-PARAMETER_ID (slowRelease)
-#endif
 
 #undef PARAMETER_ID
 }

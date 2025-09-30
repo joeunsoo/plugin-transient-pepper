@@ -17,13 +17,6 @@ struct Parameters {
   explicit Parameters (AudioProcessorValueTreeState::ParameterLayout& layout)
   :
   bypass (addToLayout<AudioParameterBool> (layout, ID::bypass, "Bypass", false)),
-#if ADVANCED
-  generatorType (addToLayout<AudioParameterChoice> (layout,
-                                                 ID::generatorType,
-                                                 "Noise type",
-                                                 StringArray { "Air", "Bitcrush" },
-                                                 0)),
-#endif
   attack (addToLayout<AudioParameterFloat> (layout,
                                             ID::attack,
                                             "Attack",
@@ -123,44 +116,7 @@ struct Parameters {
                                             [](const juce::String& text) { return stringToPercent(text); }
                                             )),
   
-#if ADVANCED
-  fastAttack (addToLayout<AudioParameterFloat> (layout,
-                                                ID::fastAttack,
-                                                "Fast Attack",
-                                                NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
-                                                0.0050f,
-                                                "",
-                                                juce::AudioProcessorParameter::genericParameter
-                                                )),
-  
-  fastRelease (addToLayout<AudioParameterFloat> (layout,
-                                                 ID::fastRelease,
-                                                 "Fast Release",
-                                                 NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
-                                                 0.0170f,
-                                                 "",
-                                                 juce::AudioProcessorParameter::genericParameter
-                                                 )),
-  
-  slowAttack (addToLayout<AudioParameterFloat> (layout,
-                                                ID::slowAttack,
-                                                "Slow Attack",
-                                                NormalisableRange<float> { 0.001f, 0.1000f, 0.001f, 1.0f },
-                                                0.0200f,
-                                                "",
-                                                juce::AudioProcessorParameter::genericParameter
-                                                )),
-  
-  slowRelease (addToLayout<AudioParameterFloat> (layout,
-                                                 ID::slowRelease,
-                                                 "Slow Release",
-                                                 NormalisableRange<float> { 0.001f, 0.2000f, 0.001f, 1.0f },
-                                                 0.1000f,
-                                                 "",
-                                                 juce::AudioProcessorParameter::genericParameter
-                                                 )),
-#endif
-  
+
   wetSolo (addToLayout<AudioParameterBool> (layout, ID::wetSolo, "Wet Solo", false)),
   linkChannels (addToLayout<AudioParameterBool> (layout, ID::linkChannels, "Channels Link", true))
   
@@ -168,9 +124,7 @@ struct Parameters {
   }
   
   AudioParameterBool&  bypass;
-#if ADVANCED
-  AudioParameterChoice& generatorType;
-#endif
+
   AudioParameterFloat& attack;
   AudioParameterFloat& release;
   
@@ -186,14 +140,7 @@ struct Parameters {
   AudioParameterFloat& noiseLevelGain;
   AudioParameterFloat& outputGain;
   AudioParameterFloat& dryWet;
-  
-#if ADVANCED
-  AudioParameterFloat& fastAttack;
-  AudioParameterFloat& fastRelease;
-  AudioParameterFloat& slowAttack;
-  AudioParameterFloat& slowRelease;
-#endif
-  
+
   AudioParameterBool& wetSolo;
   AudioParameterBool& linkChannels;
   

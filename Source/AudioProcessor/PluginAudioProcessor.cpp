@@ -122,9 +122,7 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
   
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear (i, 0, buffer.getNumSamples());
-#if ADVANCED
-  transientNoise.setGeneratorType(parameters.generatorType.getIndex());
-#endif
+
   transientNoise.setSidechainBPFOn(parameters.bpfPower.get());
   transientNoise.setSidechainBPFFreq(parameters.bpfFrequency.get());
   transientNoise.setSidechainListen(parameters.sidechainListen.get());
@@ -151,13 +149,6 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
 
   float dryWetAdjust = 6.0f - 0.12f * std::abs(wetMix - 50.0f); // Dry/Wet 50% -6dB 손실 보정
   outputGain.setGainDecibels(parameters.outputGain.get() + dryWetAdjust);
-  
-#if ADVANCED
-  transientNoise.transientFollower.setFastAttack(parameters.fastAttack.get());
-  transientNoise.transientFollower.setFastRelease(parameters.fastRelease.get());
-  transientNoise.transientFollower.setSlowAttack(parameters.slowAttack.get());
-  transientNoise.transientFollower.setSlowRelease(parameters.slowRelease.get());
-#endif
 
   /// DSP 계산 시작
   auto outBlock = dsp::AudioBlock<float> { buffer }.getSubsetChannelBlock (0, (size_t) getTotalNumOutputChannels());
