@@ -1,5 +1,5 @@
 #include "AboutModal.h"
-#include "../../Define.h"
+#include "../DefineUI.h"
 #include "../../NamespaceParameterId.h"
 #include "../PluginEditor.h"
 

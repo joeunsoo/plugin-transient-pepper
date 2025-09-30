@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Define.h"
+#include "../DefineUI.h"
 
 struct ModalLookAndFeel : public LookAndFeel_V4
 {

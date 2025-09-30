@@ -1,5 +1,5 @@
 #include "PluginEditor.h"
-#include "../Define.h"
+#include "DefineUI.h"
 
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)

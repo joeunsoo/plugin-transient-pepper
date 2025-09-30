@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Define.h"
+#include "../DefineUI.h"
 
 struct MenuLookAndFeel : juce::LookAndFeel_V4
 {

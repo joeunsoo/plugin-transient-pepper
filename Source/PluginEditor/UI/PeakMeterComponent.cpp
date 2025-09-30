@@ -1,5 +1,5 @@
 #include "PeakMeterComponent.h"
-#include "../../Define.h"
+#include "../DefineUI.h"
 #include "../../Utils.h"
 #include "../PluginEditor.h"
 

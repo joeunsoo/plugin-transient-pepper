@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Define.h"
+#include "../DefineUI.h"
 #include "KnobSlider.h"
 
 struct CustomLookAndFeel : public LookAndFeel_V4

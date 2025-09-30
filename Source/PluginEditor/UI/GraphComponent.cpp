@@ -1,5 +1,5 @@
 #include "GraphComponent.h"
-#include "../../Define.h"
+#include "../DefineUI.h"
 #include "../../Utils.h"
 #include "../PluginEditor.h"
 

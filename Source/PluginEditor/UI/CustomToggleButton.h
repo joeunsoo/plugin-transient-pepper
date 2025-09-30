@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../Define.h"
+#include "../DefineUI.h"
 
 struct CustomToggleButton : public juce::TextButton
 {

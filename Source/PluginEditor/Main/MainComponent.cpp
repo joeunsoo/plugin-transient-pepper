@@ -1,5 +1,5 @@
 #include "MainComponent.h"
-#include "../../Define.h"
+#include "../DefineUI.h"
 #include "../PluginEditor.h"
 
 //==============================================================================

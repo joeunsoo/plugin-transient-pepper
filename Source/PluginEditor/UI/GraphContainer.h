@@ -1,6 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
-#include "../../Define.h"
+#include "../DefineUI.h"
 #include "GraphComponent.h"
 
 // Forward declaration
