@@ -4,11 +4,10 @@
 
 GraphComponent::GraphComponent(const ScaleProvider& sp,
                                juce::Colour f,
-                               juce::Colour s,
-                               int index
+                               juce::Colour s
                                )
 : scaleProvider(sp),
-idx(index), fillColour(f), strokeColour(s)
+fillColour(f), strokeColour(s)
 {
 }
 

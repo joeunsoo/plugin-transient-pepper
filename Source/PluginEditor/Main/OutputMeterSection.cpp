@@ -3,7 +3,7 @@
 
 //==============================================================================
 OutputMeterSection::OutputMeterSection(Providers& pv)
-: scaleProvider(pv.scale), processorProvider(pv.processor),
+: scaleProvider(pv.scale),
 outputPeakMeter(pv.processor, 0, true),
 outputMeterTick(pv.scale, false, false),
 meterTickLabel(pv.scale, false, true)

@@ -20,7 +20,6 @@ class OutputMeterSection : public juce::Component
   //==============================================================================
   private:
   const ScaleProvider& scaleProvider;
-  ProcessorProvider& processorProvider;
   //==============================================================================
 
   PeakMeterStereoComponent outputPeakMeter;

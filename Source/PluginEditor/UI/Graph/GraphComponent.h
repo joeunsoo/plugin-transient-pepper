@@ -8,8 +8,7 @@ class GraphComponent : public juce::Component
   public:
   GraphComponent(const ScaleProvider& sp,
                  juce::Colour f,
-                 juce::Colour s,
-                 int index
+                 juce::Colour s
                  );
   ~GraphComponent() override;
   
@@ -22,7 +21,6 @@ class GraphComponent : public juce::Component
   private:  
   const ScaleProvider& scaleProvider;
 
-  int idx = -1;
   float lastY = 1.0f;
   int movePixels = 4;
 

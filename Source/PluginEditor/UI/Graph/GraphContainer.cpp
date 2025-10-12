@@ -4,8 +4,8 @@
 
 GraphContainer::GraphContainer(const ScaleProvider& sp, ProcessorProvider& pp)
 : scaleProvider(sp), processorProvider(pp),
-inputLevelGraph (sp, DARK_RGB_9, DARK_RGB_2, 4),
-envGraph (sp, SECONDARY_DARK_RGB_2.withAlpha(0.3f), SECONDARY_LIGHT_RGB_7, 6)
+inputLevelGraph (sp, DARK_RGB_9, DARK_RGB_2),
+envGraph (sp, SECONDARY_DARK_RGB_2.withAlpha(0.3f), SECONDARY_LIGHT_RGB_7)
 {
   addAndMakeVisible(inputLevelGraph);
   addAndMakeVisible(envGraph);
