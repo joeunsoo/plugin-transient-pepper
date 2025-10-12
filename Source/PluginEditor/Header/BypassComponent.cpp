@@ -1,9 +1,9 @@
 #include "BypassComponent.h"
-#include "../PluginEditor.h"
+#include "../DefineUI.h"
+#include "../../NamespaceParameterId.h"
 
 //==============================================================================
-BypassComponent::BypassComponent(PluginEditor& editor)
-: editorRef(editor) // 참조 멤버 초기화
+BypassComponent::BypassComponent(ProcessorProvider& pp)
 {
   setClickingTogglesState(true);
   
@@ -20,7 +20,7 @@ BypassComponent::BypassComponent(PluginEditor& editor)
   // APVTS 연동
   bypassAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>
   (
-   editorRef.processorRef.state, // APVTS
+   pp.state(), // APVTS
    ID::bypass.getParamID(), // 파라미터 ID
    *this
    );
@@ -47,9 +47,9 @@ void BypassComponent::paintButton(juce::Graphics& g, bool isMouseOver, bool isMo
   
   bool value = getToggleState();
   
-  juce::Colour activeColor = value ? DARK_RGB_5 : SECONDARY_RGB_6;
-  juce::Colour overColor   = value ? DARK_RGB_5.darker(0.5f) : SECONDARY_RGB_6.darker(0.5f);
-  juce::Colour downColor   = value ? DARK_RGB_5.darker(0.8f) : SECONDARY_RGB_6.darker(0.8f);
+  juce::Colour activeColor = value ? DARK_RGB_5 : UI_HEADER_MAIN;
+  juce::Colour overColor   = value ? DARK_RGB_5.darker(0.5f) : UI_HEADER_MAIN.darker(0.5f);
+  juce::Colour downColor   = value ? DARK_RGB_5.darker(0.8f) : UI_HEADER_MAIN.darker(0.8f);
   
   // 매번 새 Drawable 생성 (기존 색 누적 방지)
   auto normal = normalSvg->createCopy();

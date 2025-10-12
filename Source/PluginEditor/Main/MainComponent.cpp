@@ -3,20 +3,16 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-MainComponent::MainComponent(PluginEditor& editor)
-: editorRef(editor),
-detectorComponent(editor), envelopeComponent(editor),
-toneComponent(editor), mixComponent(editor)
+MainComponent::MainComponent(Providers& pv)
+: scaleProvider(pv.scale), mainLaf(pv.scale),
+detectorComponent(pv), envelopeComponent(pv),
+toneComponent(pv), mixComponent(pv)
 {
   // DropShadow 설정
   dropShadow.colour = juce::Colours::black.withAlpha(0.5f); // 그림자 색상
   dropShadow.radius = 10;  // blur 반경
   dropShadow.offset = juce::Point<int>(0, 0); // x, y 오프셋
 
-  mainLaf.setFontRegular(editorRef.fontPretendardRegular);
-  mainLaf.setFontMedium(editorRef.fontPretendardMedium);
-  mainLaf.setFontSemiBold(editorRef.fontPretendardSemiBold);
-  mainLaf.setFontBold(editorRef.fontPretendardBold);
   setLookAndFeel (&mainLaf);
   
   addAndMakeVisible(detectorComponent);
@@ -32,25 +28,28 @@ MainComponent::~MainComponent()
 
 void MainComponent::resized()
 {
+  auto scale = scaleProvider.getScale();
   auto area = getLocalBounds()
-    .withTrimmedLeft(15)
-    .withTrimmedTop(14)
-    .withTrimmedRight(15)
-    .withTrimmedBottom(5);
-  auto leftArea = area.removeFromLeft((UI_KNOB_WIDTH * 3)-20);
-  detectorComponent.setBounds(leftArea.removeFromTop(160));
+    .withTrimmedLeft(int(18 * scale))
+    .withTrimmedTop(int(14 * scale))
+    .withTrimmedRight(int(18 * scale))
+    .withTrimmedBottom(int(18 * scale));
+  auto leftArea = area.removeFromLeft(int (((UI_KNOB_WIDTH * 3)-20) * scale));
+  detectorComponent.setBounds(leftArea.removeFromTop(int(160 * scale)));
   envelopeComponent.setBounds(leftArea);
-  area.removeFromLeft(20);
-  toneComponent.setBounds(area.removeFromLeft(area.getWidth()-(UI_KNOB_WIDTH * 2)));
+  area.removeFromLeft(int(20 * scale));
+  toneComponent.setBounds(area.removeFromLeft(area.getWidth()-(int(UI_KNOB_WIDTH * scale) * 2)));
   mixComponent.setBounds(area);
 }
 
 void MainComponent::paint(juce::Graphics& g)
 {
+  auto scale = scaleProvider.getScale();
+
   auto bounds = getLocalBounds().toFloat();
-  bounds.setBounds(8,0,bounds.getWidth()-16,bounds.getHeight()-5);
+  bounds.setBounds(8 * scale, 0, bounds.getWidth() - (16 * scale), bounds.getHeight() -(5 * scale));
   
-  float borderRadius = 15.0f;
+  const float borderRadius = 15.0f * scale;
   // ---------- 1. 외부 그림자 ----------
   juce::Path roundedRect;
   roundedRect.addRoundedRectangle(bounds, borderRadius);
@@ -78,5 +77,5 @@ void MainComponent::paint(juce::Graphics& g)
   
   // ---------- 4. 경계선(optional) ----------
   g.setColour(juce::Colours::black.withAlpha(0.1f));
-  g.drawRoundedRectangle(bounds, borderRadius, 1.0f);
+  g.drawRoundedRectangle(bounds, borderRadius, 1.0f * scale);
 }

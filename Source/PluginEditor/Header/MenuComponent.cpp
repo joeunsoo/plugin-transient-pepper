@@ -1,13 +1,11 @@
 #include "MenuComponent.h"
 #include "../DefineUI.h"
-#include "../PluginEditor.h"
-#include "../../PluginWrapper.h"
 
 //==============================================================================
-MenuComponent::MenuComponent(PluginEditor& editor)
-: editorRef(editor) // 참조 멤버 초기화
+MenuComponent::MenuComponent(Providers& pv)
+: editorProvider(pv.editor), scaleProvider(pv.scale), scaleController(pv.scaleController), licenseProvider(pv.license),
+menuLaF(scaleProvider)
 {
-  menuLaF.setFont(editorRef.fontPretendardRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT));
   setLookAndFeel (&menuLaF);
 
   menuButton.setClickingTogglesState (false); // 토글 버튼이면 true
@@ -27,29 +25,27 @@ MenuComponent::MenuComponent(PluginEditor& editor)
 
   menuButton.setImages (normal.get(), over.get(), down.get());
 
-  // menuButton.setImages (menuSvg.get());
-
   menuButton.onClick = [&]
   {
     PopupMenu menu;
-    menuLaF.setWindowScale(editorRef.wrapperRef.windowScale);
+    menuLaF.setWindowScale(scaleProvider.getWindowScale());
 
     menu.setLookAndFeel(&menuLaF);
     menu.addSectionHeader("Scale");
-    menu.addItem ("100%", [this] { editorRef.setScale(100); });
-    menu.addItem ("150%", [this] { editorRef.setScale(150); });
-    menu.addItem ("200%", [this] { editorRef.setScale(200); });
+    menu.addItem ("100%", [this] { scaleController.setScale(100); });
+    menu.addItem ("150%", [this] { scaleController.setScale(150); });
+    menu.addItem ("200%", [this] { scaleController.setScale(200); });
     menu.addSeparator();
     menu.addItem ("Online Manual", [] {
       const URL newUrl = URL (PLUGIN_MANUAL_URL);
       if (newUrl.isWellFormed())
         newUrl.launchInDefaultBrowser();
     });
-    menu.addItem ("About", [this] { editorRef.showAbout(); });
+    menu.addItem ("About", [this] { editorProvider.showAbout(); });
     menu.addSeparator();
     menu.addItem (
-                  !editorRef.wrapperRef.licenseManager.isActivate() ? "Activate" : "Deactivate",
-                  [this] { editorRef.showActivate(); });
+                  !licenseProvider.isActivate() ? "Activate" : "Deactivate",
+                  [this] { editorProvider.showActivate(); });
     menu.showMenuAsync (PopupMenu::Options{}.withTargetComponent (menuButton));
   };
 }
@@ -67,6 +63,9 @@ void MenuComponent::paint(juce::Graphics& g)
 
 void MenuComponent::resized()
 {
+  auto scale = scaleProvider.getScale();
+  menuLaF.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_POPUPMENU_FONT_HEIGHT * scale));
+
   auto area = getLocalBounds();
   menuButton.setBounds(area);
 }

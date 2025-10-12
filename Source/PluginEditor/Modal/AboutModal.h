@@ -1,14 +1,12 @@
 #pragma once
 
 #include <JuceHeader.h>
-
-// Forward declaration
-class PluginEditor;
+#include "../Provider/ScaleProvider.h"
 
 class AboutModal : public juce::Component
 {
   public:
-  AboutModal(PluginEditor& editor);
+  AboutModal(const ScaleProvider& sp);
   ~AboutModal() override;
 
   void showIn(juce::Component& parent);
@@ -20,7 +18,7 @@ class AboutModal : public juce::Component
 
   
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
   juce::Label pluginNameLabel, pluginVersionLabel, companyNameLabel;
   
   juce::Component flexContainer;

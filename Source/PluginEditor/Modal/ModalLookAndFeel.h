@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Provider/ScaleProvider.h"
 #include "../DefineUI.h"
 
 #define UI_MODAL_BORDER_RADIUS 4.0f
@@ -18,7 +19,8 @@
 struct ModalLookAndFeel : public LookAndFeel_V4
 {
   public:
-  ModalLookAndFeel() {}
+  ModalLookAndFeel(const ScaleProvider& sp)
+  :scaleProvider(sp) {}
   ~ModalLookAndFeel() override {}
 
   void drawButtonBackground (Graphics& g,
@@ -28,8 +30,10 @@ struct ModalLookAndFeel : public LookAndFeel_V4
                              bool shouldDrawButtonAsDown)
   override
   {
-    auto cornerSize = UI_MODAL_BUTTON_BORDER_RADIUS;
-    auto bounds = button.getLocalBounds().toFloat().reduced (0.5f, 0.5f);
+    auto scale = scaleProvider.getScale();
+
+    auto cornerSize = UI_MODAL_BUTTON_BORDER_RADIUS * scale;
+    auto bounds = button.getLocalBounds().toFloat().reduced (0.5f * scale, 0.5f * scale);
     
     auto baseColour = backgroundColour.withMultipliedSaturation (button.hasKeyboardFocus (true) ? 1.3f : 0.9f)
       .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f);
@@ -72,8 +76,10 @@ struct ModalLookAndFeel : public LookAndFeel_V4
   
   void drawTextEditorOutline (juce::Graphics& g, int width, int height, juce::TextEditor& textEditor) override
   {
+    auto scale = scaleProvider.getScale();
+
     auto borderThickness = 1.0f;
-    auto cornerSize = UI_MODAL_TEXT_EDITOR_BORDER_RADIUS; // borderRadius 값
+    auto cornerSize = UI_MODAL_TEXT_EDITOR_BORDER_RADIUS * scale; // borderRadius 값
     
     auto bounds = juce::Rectangle<float>(0, 0, (float)width, (float)height);
     
@@ -88,8 +94,9 @@ struct ModalLookAndFeel : public LookAndFeel_V4
   
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
-    auto fontHeight = std::min<float>(UI_MODAL_BUTTON_FONT_HEIGHT, buttonHeight);
-    return juce::Font { fontRegular.withHeight(fontHeight) };
+    auto scale = scaleProvider.getScale();
+    auto fontHeight = std::min<float>(UI_MODAL_BUTTON_FONT_HEIGHT * scale, buttonHeight);
+    return juce::Font { FONT_PRETENDARD_REGULAR.withHeight(fontHeight) };
   }
   
   juce::Colour getPopupMenuBackgroundColour()
@@ -108,7 +115,8 @@ struct ModalLookAndFeel : public LookAndFeel_V4
   
   juce::Font getPopupMenuFont() override
   {
-    return juce::Font { fontRegular.withHeight(UI_POPUPMENU_FONT_HEIGHT) };
+    auto scale = scaleProvider.getScale();
+    return juce::Font { FONT_PRETENDARD_REGULAR.withHeight(UI_POPUPMENU_FONT_HEIGHT * scale) };
   }
   
   void drawPopupMenuBackground (juce::Graphics& g, int width, int height) override
@@ -137,9 +145,11 @@ struct ModalLookAndFeel : public LookAndFeel_V4
                           const Drawable* icon, const Colour* const textColourToUse)
   override
   {
+    auto scale = scaleProvider.getScale();
+
     if (isSeparator)
     {
-      auto r  = area.reduced (5, 0);
+      auto r  = area.reduced (int(5 * scale), 0);
       r.removeFromTop (roundToInt (((float) r.getHeight() * 0.5f) - 0.5f));
       
       g.setColour(DARK_RGB_4);
@@ -164,7 +174,7 @@ struct ModalLookAndFeel : public LookAndFeel_V4
         g.setColour (textColour.withMultipliedAlpha (isActive ? 1.0f : 0.5f));
       }
       
-      r.reduce (jmin (5, area.getWidth() / 20), 0);
+      r.reduce (jmin (int(5 * scale), area.getWidth() / 20), 0);
       
       auto font = getPopupMenuFont();
       
@@ -184,7 +194,7 @@ struct ModalLookAndFeel : public LookAndFeel_V4
       }
       else if (isTicked)
       {
-        auto tick = getTickShape (1.0f);
+        auto tick = getTickShape (1.0f * scale);
         g.fillPath (tick, tick.getTransformToScaleToFit (iconArea.reduced (iconArea.getWidth() / 5, 0).toFloat(), true));
       }
       
@@ -217,16 +227,8 @@ struct ModalLookAndFeel : public LookAndFeel_V4
       }
     }
   }
-  void setFontRegular (juce::FontOptions f) { fontRegular = f; }
-  void setFontMedium (juce::FontOptions f) { fontMedium = f; }
-  void setFontSemiBold (juce::FontOptions f) { fontSemiBold = f; }
-  void setFontBold (juce::FontOptions f) { fontBold = f; }
-  
+
   private:
-  juce::FontOptions fontRegular;
-  juce::FontOptions fontMedium;
-  juce::FontOptions fontSemiBold;
-  juce::FontOptions fontBold;
-  
+  const ScaleProvider& scaleProvider;
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ModalLookAndFeel)
 };

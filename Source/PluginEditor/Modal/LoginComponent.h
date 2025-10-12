@@ -2,16 +2,19 @@
 
 #include <JuceHeader.h>
 #include "TrialComponent.h"
+#include "../Provider/ScaleProvider.h"
+#include "../Provider/LicenseProvider.h"
 
 // Forward declaration
-class PluginEditor;
 class ActivateModal;
 
 class LoginComponent : public juce::Component,
 private juce::TextEditor::Listener
 {
   public:
-  LoginComponent(PluginEditor& editor, ActivateModal& modal);
+  LoginComponent(ActivateModal& modal,
+                 const ScaleProvider& sp,
+                 LicenseProvider& lp);
   ~LoginComponent() override;
   
   void callActivate();
@@ -30,8 +33,9 @@ private juce::TextEditor::Listener
   void textEditorEscapeKeyPressed(juce::TextEditor&) override {}
   void textEditorFocusLost(juce::TextEditor&) override {}
 
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   ActivateModal& modalRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
+  LicenseProvider& licenseProvider;
 
   juce::Component flexContainer;
   juce::Label pluginNameLabel, emailLabel, passwordLabel, messageLabel;

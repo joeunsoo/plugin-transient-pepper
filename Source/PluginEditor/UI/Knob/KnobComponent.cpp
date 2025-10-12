@@ -1,15 +1,16 @@
 #include "KnobComponent.h"
 #include "../../DefineUI.h"
 #include "../../../NamespaceParameterId.h"
-#include "../../PluginEditor.h"
 
 //==============================================================================
-KnobComponent::KnobComponent(
-                             PluginEditor& editor,
+KnobComponent::KnobComponent(EditorProvider& ep,
+                             const ScaleProvider& sp,
+                             ProcessorProvider& pp,
                              const String& paramID,
                              const String labelText
                              )
-: editorRef(editor)
+: editorProvider(ep), scaleProvider(sp),
+processorProvider(pp), rotarySlider(sp)
 {
   parameterID = paramID;
   
@@ -27,13 +28,13 @@ KnobComponent::KnobComponent(
   
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
   (
-   editorRef.processorRef.state,
+   processorProvider.state(),
    parameterID,
    rotarySlider
    );
-  label.setFont(editorRef.fontPretendardRegular.withHeight(UI_KNOB_LABEL_FONT_HEIGHT));
   label.setText(labelText, juce::dontSendNotification);
   label.setJustificationType(juce::Justification::centred);
+  label.setColour(juce::Label::textColourId, UI_KNOB_LABEL_COLOUR);
   addAndMakeVisible(label);
   
   rotarySlider.addMouseListener(this, true);
@@ -46,18 +47,17 @@ KnobComponent::KnobComponent(
   
   rotarySlider.onDragStart = [this]{
     isDrag = true;
-    editorRef.setDrag(true, parameterID);
+    editorProvider.setDrag(true, parameterID);
   };
   rotarySlider.onDragEnd   = [this]{
     isDrag = false;
-    editorRef.setDrag(false, parameterID);
+    editorProvider.setDrag(false, parameterID);
   };
   
 }
 
 KnobComponent::~KnobComponent()
 {
-  attachment.reset();
   rotarySlider.removeMouseListener(this);
   rotarySlider.onValueChange = nullptr;
   rotarySlider.onDragStart = nullptr;
@@ -67,18 +67,21 @@ KnobComponent::~KnobComponent()
 
 void KnobComponent::sendTooltip()
 {
-  if (auto* param = editorRef.processorRef.state.getParameter(parameterID)) {
-    auto topLeftInEditor = editorRef.getLocalPoint(&rotarySlider, juce::Point<int>(0, 0));
+  auto scale = scaleProvider.getScale();
+
+  if (auto* param = processorProvider.state().getParameter(parameterID)) {
+    auto topLeftInEditor = editorProvider.getLocalPointInEditor(&rotarySlider, juce::Point<int>(0, 0));
     
     auto size = std::min(rotarySlider.getWidth(),rotarySlider.getHeight());
-    auto top = (rotarySlider.getHeight()/2) + (size/2) + UI_KNOB_LABEL_HEIGHT;
+    auto top = (rotarySlider.getHeight()/2) + (size/2) + (UI_KNOB_LABEL_HEIGHT * scale);
     juce::Rectangle<int> tooltipArea(topLeftInEditor.getX(),
-                                     topLeftInEditor.getY() + top,
-                                     rotarySlider.getWidth(), 24);
+                                     int(topLeftInEditor.getY() + top),
+                                     rotarySlider.getWidth(),
+                                     int(24 * scale));
     
-    editorRef.showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
+    editorProvider.showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
   }
-  editorRef.tooltipLabel->setVisible(true);
+  editorProvider.setTooltipLabelVisible(true);
 }
 
 void KnobComponent::mouseEnter(const juce::MouseEvent&)
@@ -90,7 +93,7 @@ void KnobComponent::mouseEnter(const juce::MouseEvent&)
 void KnobComponent::mouseExit(const juce::MouseEvent&)
 {
   isDrag = false;
-  editorRef.tooltipLabel->setVisible(false);
+  editorProvider.setTooltipLabelVisible(false);
 };
 
 void KnobComponent::paint(juce::Graphics& g)
@@ -100,15 +103,18 @@ void KnobComponent::paint(juce::Graphics& g)
 
 void KnobComponent::resized()
 {
+  auto scale = scaleProvider.getScale();
+ label.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_KNOB_LABEL_FONT_HEIGHT * scale));
+
   auto area = getLocalBounds();
-  auto size = std::min(area.getWidth(),area.getHeight()-UI_KNOB_LABEL_HEIGHT);
+  auto size = std::min(area.getWidth(),area.getHeight()-int(UI_KNOB_LABEL_HEIGHT * scale));
   
-  rotarySlider.setBounds(area.removeFromTop(area.getHeight()-UI_KNOB_LABEL_HEIGHT));
+  rotarySlider.setBounds(area.removeFromTop(area.getHeight()-int(UI_KNOB_LABEL_HEIGHT * scale)));
   
   auto labelArea = getLocalBounds();
-  auto top = ((labelArea.getHeight()-UI_KNOB_LABEL_HEIGHT) / 2) + (size / 2);
+  auto top = ((labelArea.getHeight()-int(UI_KNOB_LABEL_HEIGHT * scale)) / 2) + (size / 2);
   labelArea.setY(top);
-  labelArea.setHeight(UI_KNOB_LABEL_HEIGHT);
+  labelArea.setHeight(int(UI_KNOB_LABEL_HEIGHT * scale));
   label.setBounds(labelArea);
 }
 

@@ -1,25 +1,24 @@
 #include "DetectorComponent.h"
-#include "../PluginEditor.h"
+#include "../../NamespaceParameterId.h"
 
 //==============================================================================
-DetectorComponent::DetectorComponent(PluginEditor& editor)
-: editorRef(editor), isStereo(editor.processorRef.getTotalNumOutputChannels() > 1),
-thresholdKnob(editor, ID::threshold.getParamID(), "Threshold"),
-bpfFreqKnob(editor, ID::bpfFrequency.getParamID(), "BPF Freq"),
-channelLinkButton(editor,ID::linkChannels.getParamID(), isStereo ? "L/R Link": "Mono"),
-bpfPowerButton(editor, ID::bpfPower.getParamID(), "BPF"),
-sidechainListenButton(editor, ID::sidechainListen.getParamID(), "Listen")
+DetectorComponent::DetectorComponent(Providers& pv)
+: scaleProvider(pv.scale), processorProvider(pv.processor),
+thresholdKnob(pv.editor, pv.scale, pv.processor, ID::threshold.getParamID(), "Threshold"),
+bpfFreqKnob(pv.editor, pv.scale, pv.processor, ID::bpfFrequency.getParamID(), "BPF Freq"),
+channelLinkButton(pv.scale, pv.processor,ID::linkChannels.getParamID(), isStereo ? "L/R Link": "Mono"),
+bpfPowerButton(pv.scale, pv.processor, ID::bpfPower.getParamID(), "BPF"),
+sidechainListenButton( pv.scale, pv.processor, ID::sidechainListen.getParamID(), "Listen")
 {
 
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef.fontPretendardMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Transient Detector", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   addAndMakeVisible(channelLinkButton);
   
   addAndMakeVisible(bpfPowerButton);
   
-  sidechainListenButton.setSvgDrawable( juce::Drawable::createFromImageData(BinaryData::headphonesbold_svg, BinaryData::headphonesbold_svgSize));
+  // sidechainListenButton.setSvgDrawable( juce::Drawable::createFromImageData(BinaryData::headphonesbold_svg, BinaryData::headphonesbold_svgSize));
   addAndMakeVisible(sidechainListenButton);
   
   thresholdKnob.setRingColor("secondary");
@@ -27,24 +26,24 @@ sidechainListenButton(editor, ID::sidechainListen.getParamID(), "Listen")
 
   addAndMakeVisible(bpfFreqKnob);
   
-  editorRef.processorRef.parameters.bypass.addListener(this);
-  editorRef.processorRef.parameters.bpfPower.addListener(this);
-  editorRef.processorRef.parameters.sidechainListen.addListener(this);
-  parameterValueChanged(0, 0);
+  processorProvider.state().addParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().addParameterListener(ID::bpfPower.getParamID(), this);
+  processorProvider.state().addParameterListener(ID::sidechainListen.getParamID(), this);
+  parameterChanged("", 0);
 }
 
 DetectorComponent::~DetectorComponent()
 {
-  editorRef.processorRef.parameters.bypass.removeListener(this);
-  editorRef.processorRef.parameters.bpfPower.removeListener(this);
-  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+  processorProvider.state().removeParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().removeParameterListener(ID::bpfPower.getParamID(), this);
+  processorProvider.state().removeParameterListener(ID::sidechainListen.getParamID(), this);
 };
 
-void DetectorComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef.processorRef.parameters.bypass.get();
-  bool bpfPower = editorRef.processorRef.parameters.bpfPower.get();
-  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
-
+void DetectorComponent::parameterChanged (const juce::String&, float) {
+  bool bypass = (processorProvider.state().getRawParameterValue(ID::bypass.getParamID())->load() >= 0.5f);
+  bool bpfPower = (processorProvider.state().getRawParameterValue(ID::bpfPower.getParamID())->load() >= 0.5f);
+  bool sidechainListen = (processorProvider.state().getRawParameterValue(ID::sidechainListen.getParamID())->load() >= 0.5f);
+  
   if (bypass) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
     bpfPowerButton.setAlpha(DISABLED_ALPHA);
@@ -79,15 +78,18 @@ void DetectorComponent::paint(juce::Graphics& g)
 
 void DetectorComponent::resized()
 {
+  auto scale = scaleProvider.getScale();
+  sectionLabel.setFont(FONT_PRETENDARD_MEDIUM.withHeight(UI_SECTION_LABEL_FONT_HEIGHT * scale));
+
   auto area = getLocalBounds().reduced(0);
-  sectionLabel.setBounds(area.removeFromTop(UI_SECTION_LABEL_HEIGHT));
+  sectionLabel.setBounds(area.removeFromTop(int(UI_SECTION_LABEL_HEIGHT * scale)));
   
-  auto buttonArea = area.removeFromTop(UI_BUTTON_HEIGHT);
+  auto buttonArea = area.removeFromTop(int(UI_SECTION_LABEL_HEIGHT * scale));
   channelLinkButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/3));
   bpfPowerButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   sidechainListenButton.setBounds(buttonArea.removeFromLeft(area.getWidth()/6));
   
-  auto SliderArea = area.removeFromTop(UI_KNOB_HEIGHT);
+  auto SliderArea = area.removeFromTop(int(UI_KNOB_HEIGHT * scale));
   thresholdKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
   bpfFreqKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/3));
 }

@@ -1,15 +1,15 @@
 #include "MixComponent.h"
-#include "../PluginEditor.h"
+#include "../../NamespaceParameterId.h"
 
 //==============================================================================
-MixComponent::MixComponent(PluginEditor& editor)
-:editorRef(editor),
-wetSoloButton(editor, ID::wetSolo.getParamID(), "Wet Solo"),
-noiseLevelGainKnob(editor, ID::noiseLevelGain.getParamID(), "Noise Gain"),
-dryWetKnob(editor, ID::dryWet.getParamID(), "Dry/Wet"),
-outputGainKnob(editor, ID::outputGain.getParamID(), "Output Gain"),
-noisePeakMeter(editor, 2),
-outputPeakMeter(editor, 0)
+MixComponent::MixComponent(Providers& pv)
+: scaleProvider(pv.scale), processorProvider(pv.processor),
+wetSoloButton(pv.scale, pv.processor, ID::wetSolo.getParamID(), "Wet Solo"),
+noiseLevelGainKnob(pv.editor, pv.scale, pv.processor, ID::noiseLevelGain.getParamID(), "Noise Gain"),
+dryWetKnob(pv.editor, pv.scale, pv.processor, ID::dryWet.getParamID(), "Dry/Wet"),
+outputGainKnob(pv.editor, pv.scale, pv.processor, ID::outputGain.getParamID(), "Output Gain"),
+noisePeakMeter(pv.processor, 2, true),
+outputPeakMeter(pv.processor, 0, true)
 {
   addAndMakeVisible(noisePeakMeter);
 
@@ -24,23 +24,23 @@ outputPeakMeter(editor, 0)
   
   addAndMakeVisible(outputGainKnob);
   
-  editorRef.processorRef.parameters.bypass.addListener(this);
-  editorRef.processorRef.parameters.wetSolo.addListener(this);
-  editorRef.processorRef.parameters.sidechainListen.addListener(this);
-  parameterValueChanged(0, 0);
+  processorProvider.state().addParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().addParameterListener(ID::wetSolo.getParamID(), this);
+  processorProvider.state().addParameterListener(ID::sidechainListen.getParamID(), this);
+  parameterChanged("", 0);
 }
 
 MixComponent::~MixComponent()
 {
-  editorRef.processorRef.parameters.bypass.removeListener(this);
-  editorRef.processorRef.parameters.wetSolo.removeListener(this);
-  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+  processorProvider.state().removeParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().removeParameterListener(ID::wetSolo.getParamID(), this);
+  processorProvider.state().removeParameterListener(ID::sidechainListen.getParamID(), this);
 };
 
-void MixComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef.processorRef.parameters.bypass.get();
-  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
-  bool wetSolo = editorRef.processorRef.parameters.wetSolo.get();
+void MixComponent::parameterChanged (const juce::String&, float) {
+  bool bypass = (processorProvider.state().getRawParameterValue(ID::bypass.getParamID())->load() >= 0.5f);
+  bool sidechainListen = (processorProvider.state().getRawParameterValue(ID::sidechainListen.getParamID())->load() >= 0.5f);
+  bool wetSolo = (processorProvider.state().getRawParameterValue(ID::wetSolo.getParamID())->load() >= 0.5f);
   
   if (bypass) {
     outputGainKnob.setAlpha(DISABLED_ALPHA);
@@ -70,15 +70,18 @@ void MixComponent::paint(juce::Graphics& g)
 
 void MixComponent::resized()
 {
+  auto scale = scaleProvider.getScale();
+
   int NoiseGainGap = 11;
-  auto area = getLocalBounds().withTrimmedBottom(21);
+  auto area = getLocalBounds().withTrimmedBottom(int(21 * scale));
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
-  noisePeakMeter.setBounds(leftArea.removeFromTop(leftArea.getHeight()-(UI_KNOB_HEIGHT+NoiseGainGap+UI_BUTTON_HEIGHT+UI_KNOB_HEIGHT)));
-  noiseLevelGainKnob.setBounds(leftArea.removeFromTop(UI_KNOB_HEIGHT));
-  leftArea.removeFromTop(NoiseGainGap);
-  wetSoloButton.setBounds(leftArea.removeFromTop(UI_BUTTON_HEIGHT).reduced(2,0));
+  noisePeakMeter.setBounds(leftArea.removeFromTop(leftArea.getHeight() - int((UI_KNOB_HEIGHT+NoiseGainGap+UI_BUTTON_HEIGHT+UI_KNOB_HEIGHT) * scale)));
+  noiseLevelGainKnob.setBounds(leftArea.removeFromTop(int(UI_KNOB_HEIGHT * scale)));
+  leftArea.removeFromTop(int(NoiseGainGap * scale));
+  wetSoloButton.setBounds(leftArea.removeFromTop(int(UI_BUTTON_HEIGHT * scale)).reduced(int(2 * scale),0));
   dryWetKnob.setBounds(leftArea);
+
   auto rightArea = area;
-  outputPeakMeter.setBounds(rightArea.removeFromTop(rightArea.getHeight()-(UI_KNOB_HEIGHT)).withTrimmedBottom(0));
+  outputPeakMeter.setBounds(rightArea.removeFromTop(rightArea.getHeight()-(int(UI_KNOB_HEIGHT * scale))));
   outputGainKnob.setBounds(rightArea);
 }

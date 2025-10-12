@@ -1,33 +1,33 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/Providers.h"
+#include "../Provider/ScaleProvider.h"
+#include "../Provider/ProcessorProvider.h"
 #include "../UI/Knob/KnobComponent.h"
 #include "../UI/Graph/GraphContainer.h"
 
-// Forward declaration
-class PluginEditor;
-
 //==============================================================================
 class ToneComponent : public juce::Component,
-public juce::AudioProcessorParameter::Listener
+public juce::AudioProcessorValueTreeState::Listener
 {
   public:
-  ToneComponent(PluginEditor& editor);
+  ToneComponent(Providers& pv);
   ~ToneComponent() override;
-  
+  //==============================================================================
   void paint(juce::Graphics& g) override;
   void resized() override;
-  
-  void parameterValueChanged (int parameterIndex, float newValue) override;
-  void parameterGestureChanged (int, bool) override {} //int parameterIndex, bool gestureIsStarting
+  //==============================================================================
+  void parameterChanged (const juce::String& parameterID, float newValue) override;
   
   //==============================================================================
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
+  ProcessorProvider& processorProvider;
   
   KnobComponent tiltKnob, midsideKnob;
   
-  GraphContainer graphContainer;
+  // GraphContainer graphContainer;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToneComponent)
 };

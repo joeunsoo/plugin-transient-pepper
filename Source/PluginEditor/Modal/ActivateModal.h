@@ -1,6 +1,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/ScaleProvider.h"
+#include "../Provider/LicenseProvider.h"
 #include "DeactivateComponent.h"
 #include "LoginComponent.h"
 #include "ModalLookAndFeel.h"
@@ -11,7 +13,8 @@ class PluginEditor;
 class ActivateModal : public juce::Component
 {
   public:
-  ActivateModal(PluginEditor& editor);
+  ActivateModal(const ScaleProvider& sp,
+                LicenseProvider& lp);
   ~ActivateModal() override;
 
   void showIn(juce::Component& parent);
@@ -23,7 +26,9 @@ class ActivateModal : public juce::Component
 
   
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
+  LicenseProvider& licenseProvider;
+
   ModalLookAndFeel modalLaf;
 
   DeactivateComponent deactivateComponent;

@@ -2,16 +2,15 @@
 
 #include <JuceHeader.h>
 #include "CustomToggleButton.h"
-
-// Forward declaration
-class PluginEditor;
+#include "../../Provider/ProcessorProvider.h"
+#include "../../Provider/ScaleProvider.h"
 
 //==============================================================================
 class ToggleButtonComponent : public juce::Component
 {
   public:
-  ToggleButtonComponent(
-                        PluginEditor& editor,
+  ToggleButtonComponent(const ScaleProvider& sp,
+                        ProcessorProvider& pp,
                         const String& parameterID,
                         const String Label
                         );
@@ -24,7 +23,6 @@ class ToggleButtonComponent : public juce::Component
   
   //==============================================================================
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   
   juce::Label label;
   CustomToggleButton toggleButton;

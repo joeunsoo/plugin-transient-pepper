@@ -1,17 +1,15 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/Providers.h"
 #include "MenuComponent.h"
 #include "BypassComponent.h"
-
-// Forward declaration
-class PluginEditor;
 
 //==============================================================================
 class HeaderComponent : public juce::Component
 {
   public:
-  explicit HeaderComponent(PluginEditor& editor);
+  explicit HeaderComponent(Providers& pv);
   ~HeaderComponent() override;
   
   void paint(juce::Graphics& g) override;
@@ -19,7 +17,7 @@ class HeaderComponent : public juce::Component
   
   //==============================================================================
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
 
   BypassComponent bypassComponent;
   juce::Label logoLabel;

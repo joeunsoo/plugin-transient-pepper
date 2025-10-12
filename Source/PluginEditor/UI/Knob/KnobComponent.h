@@ -2,21 +2,21 @@
 
 #include <JuceHeader.h>
 #include "KnobSlider.h"
-
-// Forward declaration
-class PluginEditor;
+#include "../../Provider/EditorProvider.h"
+#include "../../Provider/ProcessorProvider.h"
+#include "../../Provider/ScaleProvider.h"
 
 //==============================================================================
 class KnobComponent : public juce::Component
 {
   public:
-  KnobComponent(
-                PluginEditor& editor,
+  KnobComponent(EditorProvider& ep,
+                const ScaleProvider& sp,
+                ProcessorProvider& pp,
                 const String& parameterID,
                 const String labelText
                 );
   ~KnobComponent() override;
-  
   
   void paint(juce::Graphics& g) override;
   void resized() override;
@@ -33,7 +33,9 @@ class KnobComponent : public juce::Component
 
   //==============================================================================
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  EditorProvider& editorProvider;
+  const ScaleProvider& scaleProvider;
+  ProcessorProvider& processorProvider;
   
   bool isDrag = false;
 

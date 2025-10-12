@@ -1,16 +1,14 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/Providers.h"
 #include "MenuLookAndFeel.h"
-
-// Forward declaration
-class PluginEditor;
 
 //==============================================================================
 class MenuComponent : public juce::Component
 {
   public:
-  MenuComponent(PluginEditor& editor);
+  MenuComponent(Providers& pv);
   ~MenuComponent() override;
   
   void paint(juce::Graphics& g) override;
@@ -18,7 +16,10 @@ class MenuComponent : public juce::Component
   
   //==============================================================================
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  EditorProvider& editorProvider;
+  const ScaleProvider& scaleProvider;
+  ScaleController& scaleController;
+  LicenseProvider& licenseProvider;
 
   MenuLookAndFeel menuLaF;
 

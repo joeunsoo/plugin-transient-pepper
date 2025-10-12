@@ -1,11 +1,14 @@
 #include "LoginComponent.h"
+#include "ActivateModal.h"
 #include "../DefineUI.h"
 #include "../../NamespaceParameterId.h"
-#include "../PluginEditor.h"
 
 //==============================================================================
-LoginComponent::LoginComponent(PluginEditor& editor, ActivateModal& modal)
-: editorRef(editor), modalRef(modal), trialComponent(editor, modal)
+LoginComponent::LoginComponent(ActivateModal& modal,
+                               const ScaleProvider& sp,
+                               LicenseProvider& lp)
+: modalRef(modal), scaleProvider(sp), licenseProvider(lp),
+trialComponent(modal, lp)
 {
   addAndMakeVisible (flexContainer);
   
@@ -45,27 +48,19 @@ LoginComponent::LoginComponent(PluginEditor& editor, ActivateModal& modal)
   juce::Colour outlineColourId = DARK_RGB_5;
   juce::Colour focusedOutlineColourId = DARK_RGB_4;
 
-  pluginNameLabel.setFont(editorRef.fontPretendardBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
 
-  emailLabel.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
-  passwordLabel.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT));
-
-  forgotPasswordButton.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT), false);
   forgotPasswordButton.setJustificationType (juce::Justification::right);
   forgotPasswordButton.setColour(juce::HyperlinkButton::textColourId, DARK_RGB_1);
 
-  messageLabel.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT));
   messageLabel.setJustificationType (juce::Justification::centred);
-  messageLabel.setColour(juce::Label::textColourId, SECONDARY_RGB_6);
+  messageLabel.setColour(juce::Label::textColourId, UI_MESSAGE_ERROR_RGB);
 
-  emailEditor.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
   emailEditor.setJustification(juce::Justification::centredLeft);
   emailEditor.setColour (juce::TextEditor::backgroundColourId, backgroundColourId);
   emailEditor.setColour (juce::TextEditor::outlineColourId, outlineColourId);
   emailEditor.setColour (juce::TextEditor::focusedOutlineColourId, focusedOutlineColourId);
   emailEditor.setColour(juce::CaretComponent::caretColourId, DARK_RGB_0);
 
-  passwordEditor.setFont(editorRef.fontPretendardRegular.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT));
   passwordEditor.setJustification(juce::Justification::centredLeft);
   passwordEditor.setColour (juce::TextEditor::backgroundColourId, backgroundColourId);
   passwordEditor.setColour (juce::TextEditor::outlineColourId, outlineColourId);
@@ -83,10 +78,10 @@ void LoginComponent::callActivate()
 {
   auto email = emailEditor.getText();
   auto password = passwordEditor.getText();
-  auto result = editorRef.wrapperRef.licenseManager.sendActivationRequest(email,password);
+  auto result = licenseProvider.sendActivationRequest(email,password);
 
   if (result.first == 201) {
-    editorRef.wrapperRef.licenseManager.setActivate(email);
+    licenseProvider.setActivate(email);
     emailEditor.setText("");
     passwordEditor.setText("");
     messageLabel.setText("", juce::dontSendNotification);
@@ -99,6 +94,18 @@ void LoginComponent::callActivate()
 
 void LoginComponent::resized()
 {
+  auto scale = scaleProvider.getScale();
+  pluginNameLabel.setFont(FONT_PRETENDARD_BOLD.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT* scale));
+
+  emailLabel.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT * scale));
+  passwordLabel.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_MODAL_TEXT_EDITOR_LABEL_FONT_HEIGHT * scale));
+
+  forgotPasswordButton.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT * scale), false);
+
+  messageLabel.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_MODAL_TEXT_LABEL_FONT_HEIGHT * scale));
+  emailEditor.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT * scale));
+  passwordEditor.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_MODAL_TEXT_EDITOR_FONT_HEIGHT * scale));
+
   trialComponent.resized();
   emailEditor.setText("");
   passwordEditor.setText("");
@@ -106,7 +113,7 @@ void LoginComponent::resized()
 
   flexContainer.setBounds(getLocalBounds());
 
-  auto bounds = getLocalBounds().reduced(30, 10);
+  auto bounds = getLocalBounds().reduced(int(30 * scale), int(10 * scale));
   flexContainer.setBounds(getLocalBounds());
 
   juce::FlexBox flexBox;
@@ -116,52 +123,54 @@ void LoginComponent::resized()
 
   flexBox.items.add(FlexItem(pluginNameLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_PLUGIN_NAME_FONT_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(UI_PLUGIN_NAME_FONT_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
   
   flexBox.items.add(FlexItem(emailLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_MODAL_TEXT_EDITOR_LABEL_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 2, 0}));
+                    .withMinHeight(UI_MODAL_TEXT_EDITOR_LABEL_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 2 * scale, 0}));
   flexBox.items.add(FlexItem(emailEditor)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_MODAL_TEXT_EDITOR_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(UI_MODAL_TEXT_EDITOR_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
   
   flexBox.items.add(FlexItem(passwordLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_MODAL_TEXT_EDITOR_LABEL_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 2, 0}));
+                    .withMinHeight(UI_MODAL_TEXT_EDITOR_LABEL_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 2 * scale, 0}));
   flexBox.items.add(FlexItem(passwordEditor)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_MODAL_TEXT_EDITOR_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(UI_MODAL_TEXT_EDITOR_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
 
   flexBox.items.add(FlexItem(forgotPasswordButton)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_MODAL_TEXT_LABEL_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(UI_MODAL_TEXT_LABEL_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
 
   flexBox.items.add(FlexItem(messageLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_MODAL_TEXT_LABEL_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(UI_MODAL_TEXT_LABEL_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
   
   flexBox.items.add(FlexItem(loginButton)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(20.0f)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(20.0f * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
 
   flexBox.items.add(FlexItem(trialComponent)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(20.0f));
+                    .withMinHeight(20.0f * scale));
   
   flexBox.performLayout (flexContainer.getLocalBounds()); // [6]
 }
 
 void LoginComponent::paint (juce::Graphics& g)
 {
+  auto scale = scaleProvider.getScale();
+
   // FlexContainer 배경색
   g.setColour(DARK_RGB_7);
-  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
+  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS * scale);
 }

@@ -1,20 +1,20 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/Providers.h"
+#include "../Provider/ScaleProvider.h"
+#include "../Provider/ProcessorProvider.h"
 #include "CustomLookAndFeel.h"
 #include "DetectorComponent.h"
 #include "EnvelopeComponent.h"
 #include "ToneComponent.h"
 #include "MixComponent.h"
 
-// Forward declaration
-class PluginEditor;
-
 //==============================================================================
 class MainComponent : public juce::Component
 {
   public:
-  MainComponent(PluginEditor& editor);
+  MainComponent(Providers& pv);
   ~MainComponent() override;
   
   void paint(juce::Graphics& g) override;
@@ -23,14 +23,17 @@ class MainComponent : public juce::Component
   //==============================================================================
   private:
   //==============================================================================
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
+  //==============================================================================
   CustomLookAndFeel mainLaf;
-  
+
+  //==============================================================================
   DetectorComponent detectorComponent;
   EnvelopeComponent envelopeComponent;
   ToneComponent toneComponent;
   MixComponent mixComponent;
-  
+
+  //==============================================================================
   juce::DropShadow dropShadow;
   //==============================================================================
   

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="JE Transient Pepper" companyName="JoEunsoo" version="1.0.3"
+<JUCERPROJECT name="JE Transient Pepper" companyName="JoEunsoo" version="1.0.4"
               companyWebsite="http://joeunsoo.com" defines="PIP_JUCE_EXAMPLES_DIRECTORY=L1VzZXJzL2pvZXVuc29vL0pVQ0UvZXhhbXBsZXM="
               projectType="audioplug" pluginAUIsSandboxSafe="1" pluginManufacturer="JoEunsoo"
               pluginFormats="buildAAX,buildAU,buildStandalone,buildVST3" useAppConfig="0"
@@ -33,6 +33,22 @@
               file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
       </GROUP>
       <GROUP id="{1723771C-1E87-A2BD-6CD1-9DD73CF2D056}" name="PluginEditor">
+        <GROUP id="{E529E023-707A-9952-F6D1-AD75FC47A2FD}" name="Provider">
+          <FILE id="lL38xs" name="AudioProcessorProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/AudioProcessorProvider.h"/>
+          <FILE id="HSu5Ba" name="EditorProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/EditorProvider.h"/>
+          <FILE id="ouOdHR" name="LicenseProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/LicenseProvider.h"/>
+          <FILE id="HPuqHu" name="ProcessorProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/ProcessorProvider.h"/>
+          <FILE id="dFf1s8" name="Providers.h" compile="0" resource="0" file="Source/PluginEditor/Provider/Providers.h"/>
+          <FILE id="F1zCe4" name="ScaleController.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/ScaleController.h"/>
+          <FILE id="nCeOCE" name="ScaleProvider.h" compile="0" resource="0" file="Source/PluginEditor/Provider/ScaleProvider.h"/>
+          <FILE id="NFuQV0" name="WrapperLicenseProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/WrapperLicenseProvider.h"/>
+        </GROUP>
         <GROUP id="{CCE81D67-20C5-3F70-C3C4-13CAFF86FD0E}" name="Header">
           <FILE id="JbuauP" name="BypassComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Header/BypassComponent.cpp"/>
@@ -128,6 +144,7 @@
           <FILE id="kVakqk" name="ToneComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/ToneComponent.h"/>
         </GROUP>
         <FILE id="feYnkV" name="DefineUI.h" compile="0" resource="0" file="Source/PluginEditor/DefineUI.h"/>
+        <FILE id="e8AE90" name="Fonts.h" compile="0" resource="0" file="Source/PluginEditor/Fonts.h"/>
         <FILE id="QOwpJn" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/PluginEditor/PluginEditor.cpp"/>
         <FILE id="i2jxyA" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>

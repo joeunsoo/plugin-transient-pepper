@@ -4,8 +4,8 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-AboutModal::AboutModal(PluginEditor& editor)
-: editorRef(editor) // 참조 멤버 초기화
+AboutModal::AboutModal(const ScaleProvider& sp)
+: scaleProvider(sp)
 {
   setInterceptsMouseClicks (true, true); // 뒤에 클릭 못 가게 막음
   setAlwaysOnTop (true);
@@ -28,9 +28,6 @@ AboutModal::AboutModal(PluginEditor& editor)
   
   addAndMakeVisible (flexContainer);
 
-  pluginNameLabel.setFont(editorRef.fontPretendardBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
-  pluginVersionLabel.setFont(editorRef.fontPretendardMedium.withHeight(10));
-  companyNameLabel.setFont(editorRef.fontPretendardBold.withHeight(10));
 
   // 클릭 이벤트 처리
   pluginNameLabel.setInterceptsMouseClicks(false, false);
@@ -43,18 +40,25 @@ AboutModal::~AboutModal() = default;
 
 void AboutModal::resized()
 {
-  flexContainer.setBounds(getLocalBounds().withSizeKeepingCentre(250, 100));
+  auto scale = scaleProvider.getScale();
+
+  pluginNameLabel.setFont(FONT_PRETENDARD_BOLD.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT * scale));
+  pluginVersionLabel.setFont(FONT_PRETENDARD_MEDIUM.withHeight(10 * scale));
+  companyNameLabel.setFont(FONT_PRETENDARD_BOLD.withHeight(10 * scale));
+
+  flexContainer.setBounds(getLocalBounds().withSizeKeepingCentre(int(250 * scale), int(100 * scale)));
 
   juce::FlexBox flexBox;
   flexBox.flexDirection = FlexBox::Direction::column;
   flexBox.justifyContent = juce::FlexBox::JustifyContent::center;
   flexBox.alignItems = juce::FlexBox::AlignItems::center;
   
-  auto flexItemSetting = [](juce::Component& child, int height, float marginBottom) {
+  auto flexItemSetting = [this](juce::Component& child, int height, float marginBottom) {
+    auto scale = scaleProvider.getScale();
     return FlexItem(child)
-      .withWidth(300)
-      .withMinHeight(height)
-      .withMargin(FlexItem::Margin{0, 0, marginBottom, 0})
+      .withWidth(300 * scale)
+      .withMinHeight(height * scale)
+      .withMargin(FlexItem::Margin{0, 0, marginBottom * scale, 0})
     ;
   };
 
@@ -66,12 +70,14 @@ void AboutModal::resized()
 
 void AboutModal::paint (juce::Graphics& g)
 {
+  auto scale = scaleProvider.getScale();
+
   // 반투명 배경
   g.fillAll (juce::Colours::black.withAlpha (0.5f));
   
   // FlexContainer 배경색
   g.setColour(DARK_RGB_7);
-  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
+  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS * scale);
 }
 
 void AboutModal::mouseUp (const juce::MouseEvent&)

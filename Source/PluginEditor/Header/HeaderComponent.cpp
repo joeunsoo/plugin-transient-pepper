@@ -1,21 +1,19 @@
 #include "HeaderComponent.h"
-#include "../PluginEditor.h"
 
 //==============================================================================
-HeaderComponent::HeaderComponent(PluginEditor& editor)
-: editorRef(editor),// 참조 멤버 초기화
-bypassComponent(editor), menuComponent(editor) 
+HeaderComponent::HeaderComponent(Providers& pv)
+: scaleProvider(pv.scale),
+bypassComponent(pv.processor),
+menuComponent(pv)
 {
   addAndMakeVisible(bypassComponent);
   
   addAndMakeVisible(logoLabel);
-  logoLabel.setFont(editorRef.fontPretendardBold.withHeight(11.5f));
-  logoLabel.setColour(juce::Label::textColourId, SECONDARY_RGB_6);
+  logoLabel.setColour(juce::Label::textColourId, UI_HEADER_MAIN);
   logoLabel.setText(PLUGIN_NAME, juce::dontSendNotification);
   logoLabel.setJustificationType(juce::Justification::centredLeft);
   
   addAndMakeVisible(companyLabel);
-  companyLabel.setFont(editorRef.fontPretendardBold.withHeight(10.0f));
   companyLabel.setText(COMPANY_NAME, juce::dontSendNotification);
   companyLabel.setJustificationType(juce::Justification::centredRight);
   
@@ -31,16 +29,21 @@ void HeaderComponent::paint(juce::Graphics& g)
 
 void HeaderComponent::resized()
 {
-  auto area = getLocalBounds().reduced(5, 5);
+  auto scale = scaleProvider.getScale();
+
+  logoLabel.setFont(FONT_PRETENDARD_BOLD.withHeight(11.5f * scale));
+  companyLabel.setFont(FONT_PRETENDARD_BOLD.withHeight(10.0f * scale));
+  
+  auto area = getLocalBounds().reduced(int (5 * scale), int(5 * scale));
   
   // 왼쪽 영역
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
-  bypassComponent.setBounds(leftArea.removeFromLeft(30).reduced(5,5));
+  bypassComponent.setBounds(leftArea.removeFromLeft(int(30 * scale)).reduced(int (5 * scale), int(5 * scale)));
   logoLabel.setBounds(leftArea);
   
   // 오른쪽 영역
   auto rightArea = area; // 남은 절반
-  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - 30));
+  companyLabel.setBounds(rightArea.removeFromLeft(rightArea.getWidth() - int(30 * scale)));
   
-  menuComponent.setBounds(rightArea.reduced(3,3));
+  menuComponent.setBounds(rightArea.reduced(int (3 * scale), int(3 * scale)));
 }

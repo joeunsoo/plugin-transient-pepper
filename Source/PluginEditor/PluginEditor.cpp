@@ -5,9 +5,12 @@
 // 생성자 정의
 PluginEditor::PluginEditor(PluginAudioProcessor& p)
 : AudioProcessorEditor(&p), processorRef(p),
-  wrapperRef(dynamic_cast<PluginWrapper&>(p)),
-  headerComponent(*this), mainComponent(*this),
-  aboutModal(*this), activateModal(*this)  // 생성자에서 바로 전달
+wrapperRef(dynamic_cast<PluginWrapper&>(p)),
+processorProvider(p),
+licenseProvider(wrapperRef),
+providers{*this, *this, *this, processorProvider, licenseProvider},
+headerComponent(providers), mainComponent(providers),
+aboutModal(providers.scale), activateModal(providers.scale, providers.license)
 {
   addAndMakeVisible (headerComponent);
   addAndMakeVisible (mainComponent);
@@ -18,11 +21,10 @@ PluginEditor::PluginEditor(PluginAudioProcessor& p)
   
   // 툴팁
   tooltipLabel = std::make_unique<RoundedLabel>();
-  tooltipLabel->setColour(juce::Label::backgroundColourId, SECONDARY_RGB_9);
+  tooltipLabel->setColour(juce::Label::backgroundColourId, UI_MAIN_BACKGROUND);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
   tooltipLabel->setBorderRadius(UI_TOOLTIP_BORDER_RADIUS);
-  tooltipLabel->setFont(fontPretendardMedium.withHeight(UI_TOOLTIP_FONT_HEIGHT));
   tooltipLabel->setSize(60, 20);
   addAndMakeVisible(*tooltipLabel);
   tooltipLabel->setVisible(false);
@@ -38,18 +40,34 @@ PluginEditor::~PluginEditor() = default;
 
 void PluginEditor::paint(juce::Graphics& g)
 {
-  g.fillAll(SECONDARY_DARK_RGB_9);
+  g.fillAll(UI_MAIN_BACKGROUND);
 }
 
 void PluginEditor::resized()
 {
   // UI layout code
   auto area = getLocalBounds();
-  headerComponent.setBounds(area.removeFromTop(34));
+  headerComponent.setBounds(area.removeFromTop(int (34.0f * getScale())));
   mainComponent.setBounds(area);
+  
+  // 모달이 떠있다면 부모 변화에 맞춰 모달 크기/레이아웃 갱신
+  if (aboutModal.isVisible())
+  {
+    aboutModal.setBounds(mainComponent.getLocalBounds()); // 전체 오버레이 크기 동기화
+    aboutModal.resized();                   // 내부 Flex 레이아웃 즉시 갱신
+    aboutModal.repaint();                   // 배경/라운디드 박스 다시 그리기
+  }
+  
+  if (activateModal.isVisible())
+  {
+    activateModal.setBounds(mainComponent.getLocalBounds());
+    activateModal.resized();
+    activateModal.repaint();
+  }
 }
 
-void PluginEditor::setDrag(bool value, String id) {
+void PluginEditor::setDrag(bool value, String id) noexcept
+{
   isDrag = value;
   if (!value) {
     dragID = "";
@@ -57,18 +75,21 @@ void PluginEditor::setDrag(bool value, String id) {
     dragID = id;
   }
 }
-void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, const juce::String& text)
+
+void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, const juce::String& text) const noexcept
 {
+  auto scale = getScale();
   if (isDrag && dragID != id) { return ; }
   tooltipLabel->setText(text, juce::dontSendNotification);
-  tooltipLabel->setBounds(area.getX(), area.getY() + UI_TOOLTIP_OFFSET_TOP, area.getWidth(), 20); // slider 위로 위치
+  tooltipLabel->setBounds(area.getX(), area.getY() + int(UI_TOOLTIP_OFFSET_TOP * scale), area.getWidth(), int(20.0f * scale)); // slider 위로 위치
   
+  tooltipLabel->setFont(FONT_PRETENDARD_MEDIUM.withHeight(UI_TOOLTIP_FONT_HEIGHT*scale));
   auto textWidth  = tooltipLabel->getFont().getStringWidth(tooltipLabel->getText());
   auto textHeight = tooltipLabel->getFont().getHeight();
   
   // padding 포함
-  int labelWidth  = textWidth + (UI_TOOLTIP_PADDING_X*2);
-  int labelHeight = static_cast<int>(textHeight) + (UI_TOOLTIP_PADDING_Y*2);
+  int labelWidth  = textWidth + int(UI_TOOLTIP_PADDING_X * 2 * scale);
+  int labelHeight = static_cast<int>(textHeight) + int(UI_TOOLTIP_PADDING_Y * 2 * scale);
   
   // 부모 기준 가운데 정렬
   int x = area.getCentreX() - labelWidth / 2;
@@ -81,11 +102,16 @@ void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, co
   // juce::Timer::callAfterDelay(3000, [this]{ tooltipLabel->setVisible(false); });
 }
 
-void PluginEditor::setScale(int scale)
+
+void PluginEditor::setTooltipLabelVisible(bool value) const noexcept
+{
+  tooltipLabel->setVisible(value);
+}
+
+void PluginEditor::setScale(int scale) noexcept
 {
   wrapperRef.windowScale = scale;
   
-#if !DEBUG
   float factor = 1.0f;
   switch (scale)
   {
@@ -93,17 +119,12 @@ void PluginEditor::setScale(int scale)
     case 200: factor = 2.0f; break;
     default:  factor = 1.0f; break;
   }
-
-  // 전체 에디터에 transform 적용
-  setTransform(juce::AffineTransform::scale(factor));
-#else
-  setSize(640, 360);
-#endif
+  setSize((int)(640.0f * factor), (int)(360.0f * factor));
 }
 
 void PluginEditor::showAbout()
 {
-  aboutModal.showIn (*this);
+  aboutModal.showIn (mainComponent);
 }
 
 void PluginEditor::showActivate()

@@ -1,18 +1,18 @@
 #include "ToggleButtonComponent.h"
-#include "../../PluginEditor.h"
 
 //==============================================================================
 ToggleButtonComponent::ToggleButtonComponent(
-                                             PluginEditor& editor,
+                                             const ScaleProvider& sp,
+                                             ProcessorProvider& pp,
                                              const String& parameterID,
                                              const String labelText)
-:editorRef(editor)
+: toggleButton(sp)
 {
   addAndMakeVisible (toggleButton);
   
   attachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>
   (
-   editorRef.processorRef.state,
+   pp.state(),
    parameterID,
    toggleButton
    );

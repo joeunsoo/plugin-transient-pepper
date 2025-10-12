@@ -1,14 +1,13 @@
 #include "EnvelopeComponent.h"
-#include "../PluginEditor.h"
+#include "../../NamespaceParameterId.h"
 
 //==============================================================================
-EnvelopeComponent::EnvelopeComponent(PluginEditor& editor)
-: editorRef(editor),
-attackKnob (editor, ID::attack.getParamID(), "Attack" ),
-releaseKnob (editor, ID::release.getParamID(), "Release")
+EnvelopeComponent::EnvelopeComponent(Providers& pv)
+: scaleProvider(pv.scale), processorProvider(pv.processor),
+attackKnob (pv.editor, pv.scale, pv.processor, ID::attack.getParamID(), "Attack" ),
+releaseKnob (pv.editor, pv.scale, pv.processor, ID::release.getParamID(), "Release")
 {
   addAndMakeVisible(sectionLabel);
-  sectionLabel.setFont(editorRef.fontPretendardMedium.withHeight(UI_SECTION_LABEL_FONT_HEIGHT));
   sectionLabel.setText("Noise Shape", juce::dontSendNotification);
   sectionLabel.setJustificationType(juce::Justification::centredLeft);
   
@@ -17,21 +16,21 @@ releaseKnob (editor, ID::release.getParamID(), "Release")
   
   releaseKnob.setColor("secondary");
   addAndMakeVisible(releaseKnob);
-  
-  editorRef.processorRef.parameters.bypass.addListener(this);
-  editorRef.processorRef.parameters.sidechainListen.addListener(this);
-  parameterValueChanged(0, 0);
+
+  processorProvider.state().addParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().addParameterListener(ID::sidechainListen.getParamID(), this);
+  parameterChanged("", 0);
 }
 
 EnvelopeComponent::~EnvelopeComponent()
 {
-  editorRef.processorRef.parameters.bypass.removeListener(this);
-  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+  processorProvider.state().removeParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().removeParameterListener(ID::sidechainListen.getParamID(), this);
 };
 
-void EnvelopeComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef.processorRef.parameters.bypass.get();
-  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
+void EnvelopeComponent::parameterChanged (const juce::String&, float) {
+  bool bypass = (processorProvider.state().getRawParameterValue(ID::bypass.getParamID())->load() >= 0.5f);
+  bool sidechainListen = (processorProvider.state().getRawParameterValue(ID::sidechainListen.getParamID())->load() >= 0.5f);
 
   if (bypass || sidechainListen) {
     sectionLabel.setAlpha(DISABLED_ALPHA);
@@ -51,9 +50,12 @@ void EnvelopeComponent::paint(juce::Graphics& g)
 
 void EnvelopeComponent::resized()
 {
-  auto area = getLocalBounds().withTrimmedBottom(10);
-  auto labelArea = area.removeFromTop(UI_SECTION_LABEL_HEIGHT);
-  sectionLabel.setBounds(labelArea.reduced(0));
+  auto scale = scaleProvider.getScale();
+  sectionLabel.setFont(FONT_PRETENDARD_MEDIUM.withHeight(UI_SECTION_LABEL_FONT_HEIGHT * scale));
+
+  auto area = getLocalBounds().withTrimmedBottom(int(10 * scale));
+  auto labelArea = area.removeFromTop(int(UI_SECTION_LABEL_HEIGHT * scale));
+  sectionLabel.setBounds(labelArea);
   
   auto SliderArea = area;
   attackKnob.setBounds(SliderArea.removeFromLeft(area.getWidth()/2));

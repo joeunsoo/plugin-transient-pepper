@@ -1,11 +1,13 @@
 #pragma once
 
+#include "../Provider/ScaleProvider.h"
 #include "../DefineUI.h"
 
 struct MenuLookAndFeel : juce::LookAndFeel_V4
 {
   public:
-  MenuLookAndFeel() {}
+  MenuLookAndFeel(const ScaleProvider& sp)
+  :scaleProvider(sp) {}
   ~MenuLookAndFeel() override {}
 
   void setFont (juce::FontOptions f) { mainFont = f; }
@@ -54,10 +56,12 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
                                   int standardMenuItemHeight, int& idealWidth, int& idealHeight)
   override
   {
+    auto scale = scaleProvider.getScale();
+
     if (isSeparator)
     {
-      idealWidth = 50;
-      idealHeight = standardMenuItemHeight > 0 ? standardMenuItemHeight / 10 : 10;
+      idealWidth = int(50 * scale);
+      idealHeight = standardMenuItemHeight > 0 ? standardMenuItemHeight / 10 : int(10 * scale);
     }
     else
     {
@@ -83,20 +87,22 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
                           const Drawable* icon, const Colour* const textColourToUse)
   override
   {
+    auto scale = scaleProvider.getScale();
+
     if (isSeparator)
     {
-      auto r  = area.reduced (5, 0);
-      r.removeFromTop (roundToInt (((float) r.getHeight() * 0.5f) - 0.5f));
+      auto r  = area.reduced (int(5 * scale), 0);
+      r.removeFromTop (roundToInt (((float) r.getHeight() * (0.5f)) - (0.5f * scale)));
       
       g.setColour(DARK_RGB_4);
-      g.fillRect (r.removeFromTop (1));
+      g.fillRect (r.removeFromTop (int(1 * scale)));
     }
     else
     {
       auto textColour = (textColourToUse == nullptr ? getTextColour()
                          : *textColourToUse);
       
-      auto r  = area.reduced (1);
+      auto r  = area.reduced (int(1 * scale));
       
       if (isHighlighted && isActive)
       {
@@ -110,7 +116,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
         g.setColour (textColour.withMultipliedAlpha (isActive ? 1.0f : 0.5f));
       }
       
-      r.reduce (jmin (5, area.getWidth() / 20), 0);
+      r.reduce (jmin (int(5 * scale), area.getWidth() / 20), 0);
       
       auto font = getPopupMenuFont();
       
@@ -130,7 +136,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
       }
       else if (isTicked)
       {
-        auto tick = getTickShape (1.0f);
+        auto tick = getTickShape (1.0f * scale);
         g.fillPath (tick, tick.getTransformToScaleToFit (iconArea.reduced (iconArea.getWidth() / 5, 0).toFloat(), true));
       }
       
@@ -149,7 +155,7 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
         g.strokePath (path, PathStrokeType (2.0f));
       }
       
-      r.removeFromRight (3);
+      r.removeFromRight (int(3 * scale));
       g.drawFittedText (text, r, Justification::centredLeft, 1);
       
       if (shortcutKeyText.isNotEmpty())
@@ -171,16 +177,17 @@ struct MenuLookAndFeel : juce::LookAndFeel_V4
             g.setColour(DARK_RGB_3);
             auto bounds = area;
             
-            bounds.setX(area.getWidth()-15);
-            bounds.setWidth(5);
-            bounds.setY((area.getHeight()-5)/2);
-            bounds.setHeight(5);
+            bounds.setX(area.getWidth() - int(15 * scale));
+            bounds.setWidth(int(5 * scale));
+            bounds.setY((area.getHeight()- int(5 * scale))/2);
+            bounds.setHeight(int(5 * scale));
             g.fillRect(bounds);
           }
     }
   }
   
   private:
+  const ScaleProvider& scaleProvider;
   juce::FontOptions mainFont;
   int windowScale;
   

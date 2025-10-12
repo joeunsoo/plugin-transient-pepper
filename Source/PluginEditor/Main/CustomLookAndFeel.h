@@ -1,12 +1,15 @@
 #pragma once
 
 #include "../DefineUI.h"
+#include "../Provider/ScaleProvider.h"
 #include "../UI/Knob/KnobSlider.h"
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
   public:
-  CustomLookAndFeel() {}
+  CustomLookAndFeel(const ScaleProvider& sp)
+  : scaleProvider(sp)
+  {}
   ~CustomLookAndFeel() override {}
   
   void drawButtonBackground (juce::Graphics& g,
@@ -15,14 +18,15 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                              bool shouldDrawButtonAsHighlighted,
                              bool shouldDrawButtonAsDown) override
   {
+    auto scale = scaleProvider.getScale();
     auto boundsOut = button.getLocalBounds().toFloat();
     auto bounds = boundsOut;
-    bounds.removeFromTop(UI_BUTTON_PADDING_TOP);
-    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT);
-    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM);
-    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT);
+    bounds.removeFromTop(UI_BUTTON_PADDING_TOP * scale);
+    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT * scale);
+    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM * scale);
+    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT * scale);
     
-    float cornerSize = UI_BUTTON_BORDER_RADIUS;
+    float cornerSize = UI_BUTTON_BORDER_RADIUS * scale;
     
     
     // Drop shadow
@@ -32,13 +36,13 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                             juce::roundToInt(boundsOut.getHeight()),
                             true);
     {
-        juce::Graphics g2(buttonImage);
-        g2.fillRoundedRectangle(bounds, cornerSize);
+      juce::Graphics g2(buttonImage);
+      g2.fillRoundedRectangle(bounds, cornerSize);
     }
     juce::DropShadow ds(
                         juce::Colours::black.withAlpha(0.5f),
-                        2,
-                        {0, 3});
+                        int(2 * scale),
+                        {0, int(3.0f * scale)});
     
     // 위치 변환 후 그림자 적용
     g.saveState();
@@ -65,7 +69,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     
     // --- border
     g.setColour(juce::Colours::black);
-    g.drawRoundedRectangle(bounds, cornerSize, 1.0f);
+    g.drawRoundedRectangle(bounds, cornerSize, 1.0f * scale);
     
     // --- hover 효과
     if (shouldDrawButtonAsHighlighted && ! button.getToggleState())
@@ -86,8 +90,9 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                        bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
   override
   {
+    auto scale = scaleProvider.getScale();
     Font font (getTextButtonFont (button, button.getHeight()));
-
+    
     g.setFont (font);
     g.setColour (button.findColour (button.getToggleState() ? TextButton::textColourOnId
                                     : TextButton::textColourOffId)
@@ -97,15 +102,15 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     const int cornerSize = jmin (button.getHeight(), button.getWidth()) / 2;
     
     const int fontHeight = roundToInt (font.getHeight() * 0.6f);
-    const int leftIndent  = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2));
-    const int rightIndent = jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2));
+    const int leftIndent  = int(jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2)) * scale);
+    const int rightIndent = int(jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2)) * scale);
     const int textWidth = button.getWidth() - leftIndent - rightIndent;
     
     auto bounds = button.getLocalBounds();
-    bounds.removeFromTop(UI_BUTTON_PADDING_TOP + yIndent);
-    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT + leftIndent);
-    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM + yIndent);
-    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT + rightIndent);
+    bounds.removeFromTop(int(UI_BUTTON_PADDING_TOP * scale + yIndent));
+    bounds.removeFromLeft(int(UI_BUTTON_PADDING_LEFT * scale + leftIndent));
+    bounds.removeFromBottom(int(UI_BUTTON_PADDING_BOTTOM * scale + yIndent));
+    bounds.removeFromRight(int(UI_BUTTON_PADDING_RIGHT * scale + rightIndent));
     
     if (textWidth > 0)
       g.drawFittedText (button.getButtonText(),
@@ -115,24 +120,15 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
-    juce::Colour colorIn = DARK_RGB_4;
-    juce::Colour colorDotLine = DARK_RGB_4;
-    juce::Colour colorDot = DARK_RGB_5;
+    juce::Colour colorIn = DARK_RGB_6;
+    juce::Colour colorDotLine = DARK_RGB_7;
+    juce::Colour colorDot = DARK_RGB_8;
     juce::Colour colorRing = DARK_RGB_7;
     
     if (auto* knobSlider = dynamic_cast<KnobSlider*>(&slider))
     {
       juce::String color = knobSlider->color;
       juce::String ringColor = knobSlider->ringColor;
-      
-      if (color == "secondary") {
-        colorIn = SECONDARY_RGB_6;
-        colorDotLine = SECONDARY_DARK_RGB_2;
-        colorDot = SECONDARY_DARK_RGB_3;
-      }
-      if (ringColor == "secondary") {
-        colorRing = SECONDARY_DARK_RGB_6;
-      }
     }
     
     // auto bounds = juce::Rectangle<float>(x, y, width, height);
@@ -145,13 +141,13 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     auto centre = bounds.getCentre();
     
     {
-      auto radius = (size * 0.95f) / 2.0f;
+      auto radius = (size * 0.93f) / 2.0f;
       auto rx = centre.getX() - radius;
       auto ry = centre.getY() - radius;
       auto rw = radius * 2.0f;
       
       {
-        auto lineThickness = vw * 2.0f;
+        auto lineThickness = vw * 8.0f;
         Path outlineArc;
         outlineArc.addCentredArc(
                                  rx + rw * 0.5f,  // 중심 X
@@ -183,6 +179,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         g.fillEllipse(dotArea);
       };
       drawDot(rotaryStartAngle);
+      drawDot((rotaryStartAngle+rotaryEndAngle)/2);
       drawDot(rotaryEndAngle);
     }
     
@@ -214,8 +211,8 @@ struct CustomLookAndFeel : public LookAndFeel_V4
       // Drop shadow 생성
       juce::DropShadow ds(
                           juce::Colours::black.withAlpha(0.9f),
-                          static_cast<int>(vw * 120),
-                          {0, static_cast<int>(vw * 150)});
+                          static_cast<int>(vw * 100),
+                          {0, static_cast<int>(vw * 120)});
       
       // 위치 변환 후 그림자 적용
       g.saveState();
@@ -289,20 +286,14 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
-    auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT, buttonHeight);
-    return juce::Font { fontPretendardMedium.withHeight(fontHeight) };
+    auto scale = scaleProvider.getScale();
+    auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT* scale, buttonHeight);
+    return juce::Font { FONT_PRETENDARD_MEDIUM.withHeight(fontHeight) };
   }
   
-  void setFontRegular (juce::FontOptions f) { fontPretendardRegular = f; }
-  void setFontMedium (juce::FontOptions f) { fontPretendardMedium = f; }
-  void setFontSemiBold (juce::FontOptions f) { fontPretendardSemiBold = f; }
-  void setFontBold (juce::FontOptions f) { fontPretendardBold = f; }
   
   private:
-  juce::FontOptions fontPretendardRegular;
-  juce::FontOptions fontPretendardMedium;
-  juce::FontOptions fontPretendardSemiBold;
-  juce::FontOptions fontPretendardBold;
-  
+  const ScaleProvider& scaleProvider;
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CustomLookAndFeel)
 };

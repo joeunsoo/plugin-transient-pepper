@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Define.h"
+#include "Fonts.h"
 
 #define UI_TIMER_HZ 60
 
@@ -15,6 +16,7 @@
 #define UI_BUTTON_PADDING_RIGHT 2
 #define UI_BUTTON_PADDING_BOTTOM 7
 
+#define UI_KNOB_LABEL_COLOUR juce::Colours::white
 #define UI_KNOB_DRAG_SENSITIVITY 300
 #define UI_KNOB_LABEL_HEIGHT 12
 #define UI_KNOB_LABEL_FONT_HEIGHT 10.0f
@@ -53,9 +55,18 @@
 #define UI_MODAL_TEXT_EDITOR_HEIGHT 20
 #define UI_MODAL_TEXT_EDITOR_FONT_HEIGHT 10.0f
 
+#define UI_METER_MIN_DB -60.0f
+#define UI_METER_MAX_DB 0.0f
+
 #define UI_PLUGIN_NAME_FONT_HEIGHT 14
 
-#define  DISABLED_ALPHA 0.5f
+#define DISABLED_ALPHA 0.5f
+
+#define UI_HEADER_MAIN SECONDARY_RGB_6
+#define UI_MAIN_BACKGROUND juce::Colours::black
+#define UI_MAIN_PANEL_BACKGROUND juce::Colour(0xffd0d0d0)
+
+#define UI_MESSAGE_ERROR_RGB juce::Colour(0xFFdf2926)
 
 #define SECONDARY_RGB_0 juce::Colour(0xFFffffff)
 #define SECONDARY_RGB_1 juce::Colour(0xFFffdfd8)

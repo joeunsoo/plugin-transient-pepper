@@ -1,15 +1,16 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/LicenseProvider.h"
 
 // Forward declaration
-class PluginEditor;
 class ActivateModal;
 
 class TrialComponent : public juce::Component
 {
   public:
-  TrialComponent(PluginEditor& editor, ActivateModal& modal);
+  TrialComponent(ActivateModal& modal,
+                 LicenseProvider& lp);
   ~TrialComponent() override;
 
   void resized() override;
@@ -17,8 +18,8 @@ class TrialComponent : public juce::Component
 
   
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   ActivateModal& modalRef; // 포인터로 저장하면 forward declaration 가능
+  LicenseProvider& licenseProvider;
 
   juce::TextButton trialButton;
 

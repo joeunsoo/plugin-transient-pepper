@@ -1,16 +1,14 @@
 #pragma once
 #include <JuceHeader.h>
+#include "../../Provider/ProcessorProvider.h"
 #include "PeakMeterComponent.h"
-
-// Forward declaration
-class PluginEditor;
 
 class PeakMeterStereoComponent : public juce::Component
 {
   public:
-  PeakMeterStereoComponent(
-                           PluginEditor& editor,
-                           int index
+  PeakMeterStereoComponent(ProcessorProvider& pp,
+                           int index,
+                           bool usePeakHold
                            );
   ~PeakMeterStereoComponent() override;
   
@@ -18,8 +16,6 @@ class PeakMeterStereoComponent : public juce::Component
   void resized() override;
 
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
-
   bool isStereo = false;
 
   PeakMeterComponent leftPeakMeter, rightPeakMeter;

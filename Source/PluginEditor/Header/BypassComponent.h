@@ -1,15 +1,13 @@
 #pragma once
 
 #include <JuceHeader.h>
-
-// Forward declaration
-class PluginEditor;
+#include "../Provider/ProcessorProvider.h"
 
 //==============================================================================
 class BypassComponent : public juce::ToggleButton
 {
   public:
-  BypassComponent(PluginEditor& editor);
+  BypassComponent(ProcessorProvider& pp);
   ~BypassComponent();
   
   void resized() override {};
@@ -21,8 +19,6 @@ class BypassComponent : public juce::ToggleButton
   
   //==============================================================================
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
-  
   std::unique_ptr<juce::Drawable> normalSvg, overSvg, downSvg;
   std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> bypassAttachment;
   

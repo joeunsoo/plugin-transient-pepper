@@ -1,35 +1,38 @@
 #include "ToneComponent.h"
-#include "../PluginEditor.h"
+#include "../../NamespaceParameterId.h"
 
 //==============================================================================
-ToneComponent::ToneComponent(PluginEditor& editor)
-: editorRef(editor),
-tiltKnob(editor, ID::tilt.getParamID(), "Tone"),
-midsideKnob(editor, ID::midSide.getParamID(), "Mid/Side"),
-graphContainer(editor)
+ToneComponent::ToneComponent(Providers& pv)
+: scaleProvider(pv.scale), processorProvider(pv.processor),
+tiltKnob(pv.editor, pv.scale, pv.processor,  ID::tilt.getParamID(), "Tone"),
+midsideKnob(pv.editor, pv.scale, pv.processor, ID::midSide.getParamID(), "Mid/Side")
+// graphContainer(pv.processor)
 {
   addAndMakeVisible(tiltKnob);
   
   addAndMakeVisible(midsideKnob);
-  
-  editorRef.processorRef.parameters.bypass.addListener(this);
-  editorRef.processorRef.parameters.sidechainListen.addListener(this);
-  parameterValueChanged(0, 0);
 
-  addAndMakeVisible(graphContainer);
+  processorProvider.state().addParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().addParameterListener(ID::sidechainListen.getParamID(), this);
+
+  parameterChanged("", 0);
+
+  // addAndMakeVisible(graphContainer);
 }
 
 ToneComponent::~ToneComponent()
 {
-  editorRef.processorRef.parameters.bypass.removeListener(this);
-  editorRef.processorRef.parameters.sidechainListen.removeListener(this);
+  processorProvider.state().removeParameterListener(ID::bypass.getParamID(), this);
+  processorProvider.state().removeParameterListener(ID::sidechainListen.getParamID(), this);
 };
 
-void ToneComponent::parameterValueChanged (int, float) {
-  bool bypass = editorRef.processorRef.parameters.bypass.get();
-  bool sidechainListen = editorRef.processorRef.parameters.sidechainListen.get();
-  bool isStereo = editorRef.processorRef.getTotalNumOutputChannels() > 1;
+void ToneComponent::parameterChanged (const juce::String&, float) {
+  bool bypass = (processorProvider.state().getRawParameterValue(ID::bypass.getParamID())->load() >= 0.5f);
   
+  bool sidechainListen = (processorProvider.state().getRawParameterValue(ID::sidechainListen.getParamID())->load() >= 0.5f);
+  
+  bool isStereo = processorProvider.getTotalNumOutputChannels() > 1;
+
   if (bypass || sidechainListen) {
     tiltKnob.setAlpha(DISABLED_ALPHA);
   } else {
@@ -51,13 +54,14 @@ void ToneComponent::paint(juce::Graphics& g)
 
 void ToneComponent::resized()
 {
-  auto area = getLocalBounds().withTrimmedBottom(21);
-  auto graphArea = area.removeFromTop(area.getHeight()-UI_KNOB_HEIGHT);
+  auto scale = scaleProvider.getScale();
+  auto area = getLocalBounds().withTrimmedBottom(int(21 * scale));
+  auto graphArea = area.removeFromTop(area.getHeight() - int(UI_KNOB_HEIGHT * scale));
   
-  graphContainer.setBounds(graphArea);
+//  graphContainer.setBounds(graphArea);
   
   auto SliderArea = area;
-  SliderArea.removeFromLeft(SliderArea.getWidth()-140);
-  tiltKnob.setBounds(SliderArea.removeFromLeft(UI_KNOB_WIDTH));
-  midsideKnob.setBounds(SliderArea.removeFromLeft(UI_KNOB_WIDTH));
+  SliderArea.removeFromLeft(SliderArea.getWidth()-int(140 * scale));
+  tiltKnob.setBounds(SliderArea.removeFromLeft(int(UI_KNOB_WIDTH * scale)));
+  midsideKnob.setBounds(SliderArea.removeFromLeft(int(UI_KNOB_WIDTH * scale)));
 }

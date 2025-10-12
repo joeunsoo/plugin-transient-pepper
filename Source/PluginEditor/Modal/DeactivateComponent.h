@@ -1,15 +1,18 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "../Provider/ScaleProvider.h"
+#include "../Provider/LicenseProvider.h"
 
 // Forward declaration
-class PluginEditor;
 class ActivateModal;
 
 class DeactivateComponent : public juce::Component
 {
   public:
-  DeactivateComponent(PluginEditor& editor, ActivateModal& modal);
+  DeactivateComponent(ActivateModal& modal,
+                      const ScaleProvider& sp,
+                      LicenseProvider& lp);
   ~DeactivateComponent() override;
   
   void resized() override;
@@ -17,8 +20,9 @@ class DeactivateComponent : public juce::Component
 
   
   private:
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
   ActivateModal& modalRef; // 포인터로 저장하면 forward declaration 가능
+  const ScaleProvider& scaleProvider;
+  LicenseProvider& licenseProvider;
 
   juce::Component flexContainer;
   juce::Label pluginNameLabel, accountEmailLabel;

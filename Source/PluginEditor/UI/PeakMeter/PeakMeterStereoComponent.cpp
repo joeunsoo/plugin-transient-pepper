@@ -1,15 +1,14 @@
 #include "PeakMeterStereoComponent.h"
-#include "../../PluginEditor.h"
 
-PeakMeterStereoComponent::PeakMeterStereoComponent(
-                                                   PluginEditor& editor,
-                                                   int index
+PeakMeterStereoComponent::PeakMeterStereoComponent(ProcessorProvider& pp,
+                                                   int index,
+                                                   bool usePeakHold
                                                    )
-:editorRef(editor),
-leftPeakMeter(editor, index),
-rightPeakMeter(editor, index + 1)
+:
+leftPeakMeter(pp, index, usePeakHold),
+rightPeakMeter(pp, index + 1, usePeakHold)
 {
-  isStereo = editorRef.processorRef.getTotalNumOutputChannels() > 1;
+  isStereo = pp.getTotalNumOutputChannels() > 1;
 
   addAndMakeVisible(leftPeakMeter);
 
@@ -96,4 +95,5 @@ void PeakMeterStereoComponent::resized()
     leftPeakMeter.setBounds(meterArea.removeFromLeft(meterArea.getWidth() / 2));
     rightPeakMeter.setBounds(meterArea);
   }
+
 }

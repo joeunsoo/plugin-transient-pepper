@@ -1,11 +1,13 @@
 #include "DeactivateComponent.h"
+#include "ActivateModal.h"
 #include "../DefineUI.h"
 #include "../../NamespaceParameterId.h"
-#include "../PluginEditor.h"
 
 //==============================================================================
-DeactivateComponent::DeactivateComponent(PluginEditor& editor, ActivateModal& modal)
-: editorRef(editor), modalRef(modal)
+DeactivateComponent::DeactivateComponent(ActivateModal& modal,
+                                         const ScaleProvider& sp,
+                                         LicenseProvider& lp)
+: modalRef(modal), scaleProvider(sp), licenseProvider(lp)
 {
   addAndMakeVisible (flexContainer);
   
@@ -24,19 +26,15 @@ DeactivateComponent::DeactivateComponent(PluginEditor& editor, ActivateModal& mo
   deactivateButton.setColour(juce::TextButton::textColourOffId, DARK_RGB_0);
   deactivateButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB_5);
   
-  pluginNameLabel.setFont(editorRef.fontPretendardBold.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT));
   pluginNameLabel.setInterceptsMouseClicks(false, false);
   
-  accountEmailLabel.setFont(editorRef.fontPretendardMedium.withHeight(10.0f));
   accountEmailLabel.setInterceptsMouseClicks(false, false);
   
   deactivateButton.onClick = [this]()
   {
-    editorRef.wrapperRef.licenseManager.setDeactivate();
+    licenseProvider.setDeactivate();
     modalRef.resized();
   };
-
-  resized();
 }
 
 DeactivateComponent::~DeactivateComponent() {
@@ -45,7 +43,12 @@ DeactivateComponent::~DeactivateComponent() {
 
 void DeactivateComponent::resized()
 {
-  auto accountEmail = editorRef.wrapperRef.licenseManager.getActivate();
+  auto scale = scaleProvider.getScale();
+
+  pluginNameLabel.setFont(FONT_PRETENDARD_BOLD.withHeight(UI_PLUGIN_NAME_FONT_HEIGHT * scale));
+  accountEmailLabel.setFont(FONT_PRETENDARD_MEDIUM.withHeight(10.0f * scale));
+
+  auto accountEmail = licenseProvider.getActivate();
   accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
 
   auto bounds = getLocalBounds();
@@ -58,24 +61,26 @@ void DeactivateComponent::resized()
 
   flexBox.items.add(FlexItem(pluginNameLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(UI_PLUGIN_NAME_FONT_HEIGHT)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(UI_PLUGIN_NAME_FONT_HEIGHT * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
   
   flexBox.items.add(FlexItem(accountEmailLabel)
                     .withWidth(bounds.getWidth())
-                    .withMinHeight(15.0f)
-                    .withMargin(FlexItem::Margin{0, 0, 8, 0}));
+                    .withMinHeight(15.0f * scale)
+                    .withMargin(FlexItem::Margin{0, 0, 8 * scale, 0}));
   
   flexBox.items.add(FlexItem(deactivateButton)
-                    .withWidth(80.0f)
-                    .withMinHeight(20.0f));
+                    .withWidth(80.0f * scale)
+                    .withMinHeight(20.0f * scale));
   
   flexBox.performLayout (flexContainer.getLocalBounds()); // [6]
 }
 
 void DeactivateComponent::paint (juce::Graphics& g)
 {
+  auto scale = scaleProvider.getScale();
+
   // FlexContainer 배경색
   g.setColour(DARK_RGB_7);
-  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS);
+  g.fillRoundedRectangle(flexContainer.getBounds().toFloat(), UI_MODAL_BORDER_RADIUS * scale);
 }
