@@ -1,16 +1,14 @@
 #pragma once
 #include <JuceHeader.h>
-
-// Forward declaration
-class PluginEditor;
+#include "../../Provider/ScaleProvider.h"
+#include "../../DefineUI.h"
 
 class GraphComponent : public juce::Component
 {
   public:
-  GraphComponent(
+  GraphComponent(const ScaleProvider& sp,
                  juce::Colour f,
                  juce::Colour s,
-                 PluginEditor& editor,
                  int index
                  );
   ~GraphComponent() override;
@@ -20,16 +18,26 @@ class GraphComponent : public juce::Component
   void paint(juce::Graphics& g) override;
   void updateGraph (float level1, float level2);
   
-  private:
-  
-  PluginEditor& editorRef; // 포인터로 저장하면 forward declaration 가능
-  
+  private:  
+  const ScaleProvider& scaleProvider;
+
   int idx = -1;
   float lastY = 0.0f;
   int movePixels = 4;
   
   bool isInit = false;
   bool isGraphInit = false;
+
+  // 원시 레벨과 스무딩 레벨
+  float displayedLevel = 0.0f;  // raw를 attack/decay로 스무딩한 값
+  float smoothedLevel  = 0.0f;  // 스큐 적용 후 실제 그리기에 사용
+
+  // 스무딩 계수
+  float attackCoeff = 0.5f;
+  float decayCoeff  = 0.5f;
+
+  float kMeterMinDb = UI_METER_MIN_DB;
+  float kMeterMaxDb = UI_METER_MAX_DB;
 
   juce::Colour fillColour, strokeColour;
 

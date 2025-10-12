@@ -1,12 +1,11 @@
 #include "GraphContainer.h"
 #include "../../DefineUI.h"
 #include "../../../Utils.h"
-#include "../../PluginEditor.h"
 
-GraphContainer::GraphContainer(PluginEditor& editor)
-: editorRef(editor),
-inputLevelGraph (DARK_RGB_9, DARK_RGB_2, editor, 4),
-envGraph (SECONDARY_DARK_RGB_2.withAlpha(0.3f), SECONDARY_LIGHT_RGB_7, editor, 6)
+GraphContainer::GraphContainer(const ScaleProvider& sp, ProcessorProvider& pp)
+: scaleProvider(sp), processorProvider(pp),
+inputLevelGraph (sp, DARK_RGB_9, DARK_RGB_2, 4),
+envGraph (sp, SECONDARY_DARK_RGB_2.withAlpha(0.3f), SECONDARY_LIGHT_RGB_7, 6)
 {
   addAndMakeVisible(inputLevelGraph);
   addAndMakeVisible(envGraph);
@@ -17,24 +16,28 @@ GraphContainer::~GraphContainer() = default;
 
 void GraphContainer::resized()
 {
+  auto scale = scaleProvider.getScale();
+
   auto areaOut = getLocalBounds();
   auto area = areaOut;
-  area.removeFromTop(UI_GRAPH_PADDING_TOP);
-  area.removeFromLeft(UI_GRAPH_PADDING_LEFT);
-  area.removeFromBottom(UI_GRAPH_PADDING_BOTTOM);
-  area.removeFromRight(UI_GRAPH_PADDING_RIGHT);
+  area.removeFromTop(int(UI_GRAPH_PADDING_TOP * scale));
+  area.removeFromLeft(int(UI_GRAPH_PADDING_LEFT * scale));
+  area.removeFromBottom(int(UI_GRAPH_PADDING_BOTTOM * scale));
+  area.removeFromRight(int(UI_GRAPH_PADDING_RIGHT * scale));
   inputLevelGraph.setBounds(area);
   envGraph.setBounds(area);
 }
 
 void GraphContainer::paint(juce::Graphics& g)
 {
+  auto scale = scaleProvider.getScale();
+
   auto boundsOut = getLocalBounds().toFloat();
   auto bounds = boundsOut;
-  bounds.removeFromTop(UI_GRAPH_PADDING_TOP);
-  bounds.removeFromLeft(UI_GRAPH_PADDING_LEFT);
-  bounds.removeFromBottom(UI_GRAPH_PADDING_BOTTOM);
-  bounds.removeFromRight(UI_GRAPH_PADDING_RIGHT);
+  bounds.removeFromTop(int(UI_GRAPH_PADDING_TOP * scale));
+  bounds.removeFromLeft(int(UI_GRAPH_PADDING_LEFT * scale));
+  bounds.removeFromBottom(int(UI_GRAPH_PADDING_BOTTOM * scale));
+  bounds.removeFromRight(int(UI_GRAPH_PADDING_RIGHT * scale));
   
   // Drop shadow
   juce::Image graphImage(
@@ -44,32 +47,32 @@ void GraphContainer::paint(juce::Graphics& g)
                           true);
   {
       juce::Graphics g2(graphImage);
-      g2.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
+      g2.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS * scale);
   }
   juce::DropShadow ds(
                       juce::Colours::black.withAlpha(0.5f),
-                      3,
-                      {0, 2});
+                      int(3 * scale),
+                      {0, int(2 * scale)});
 
   ds.drawForImage(g, graphImage);  // 이제 2개 인자
 
   // 배경
   g.setColour(SECONDARY_DARK_RGB_9);
-  g.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS);
+  g.fillRoundedRectangle(bounds, int(UI_GRAPH_BORDER_RADIUS * scale));
 }
 
 void GraphContainer::timerCallback()
 {
     // 모든 그래프 동기화 업데이트
     {
-        float l1 = editorRef.processorRef.analysisData[4];
-        float l2 = editorRef.processorRef.analysisData[5];
+        float l1 = processorProvider.getAnalysisData(4);
+        float l2 = processorProvider.getAnalysisData(5);
         inputLevelGraph.updateGraph(l1, l2);
     }
 
     {
-        float l1 = editorRef.processorRef.analysisData[6];
-        float l2 = editorRef.processorRef.analysisData[7];
+        float l1 = processorProvider.getAnalysisData(6);
+        float l2 = processorProvider.getAnalysisData(7);
         envGraph.updateGraph(l1, l2);
     }
 

@@ -73,7 +73,7 @@ void MixComponent::resized()
   auto scale = scaleProvider.getScale();
 
   int NoiseGainGap = 11;
-  auto area = getLocalBounds().withTrimmedBottom(int(21 * scale));
+  auto area = getLocalBounds().withTrimmedBottom(int(12 * scale));
   auto leftArea = area.removeFromLeft(area.getWidth() / 2);
   noisePeakMeter.setBounds(leftArea.removeFromTop(leftArea.getHeight() - int((UI_KNOB_HEIGHT+NoiseGainGap+UI_BUTTON_HEIGHT+UI_KNOB_HEIGHT) * scale)));
   noiseLevelGainKnob.setBounds(leftArea.removeFromTop(int(UI_KNOB_HEIGHT * scale)));

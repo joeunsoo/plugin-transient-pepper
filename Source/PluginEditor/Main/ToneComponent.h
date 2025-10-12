@@ -27,7 +27,7 @@ public juce::AudioProcessorValueTreeState::Listener
   
   KnobComponent tiltKnob, midsideKnob;
   
-  // GraphContainer graphContainer;
+  GraphContainer graphContainer;
 
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToneComponent)
 };

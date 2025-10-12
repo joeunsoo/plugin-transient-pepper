@@ -5,8 +5,8 @@
 ToneComponent::ToneComponent(Providers& pv)
 : scaleProvider(pv.scale), processorProvider(pv.processor),
 tiltKnob(pv.editor, pv.scale, pv.processor,  ID::tilt.getParamID(), "Tone"),
-midsideKnob(pv.editor, pv.scale, pv.processor, ID::midSide.getParamID(), "Mid/Side")
-// graphContainer(pv.processor)
+midsideKnob(pv.editor, pv.scale, pv.processor, ID::midSide.getParamID(), "Mid/Side"),
+graphContainer(pv.scale, pv.processor)
 {
   addAndMakeVisible(tiltKnob);
   
@@ -17,7 +17,7 @@ midsideKnob(pv.editor, pv.scale, pv.processor, ID::midSide.getParamID(), "Mid/Si
 
   parameterChanged("", 0);
 
-  // addAndMakeVisible(graphContainer);
+  addAndMakeVisible(graphContainer);
 }
 
 ToneComponent::~ToneComponent()
@@ -55,10 +55,10 @@ void ToneComponent::paint(juce::Graphics& g)
 void ToneComponent::resized()
 {
   auto scale = scaleProvider.getScale();
-  auto area = getLocalBounds().withTrimmedBottom(int(21 * scale));
+  auto area = getLocalBounds().withTrimmedBottom(int(12 * scale));
   auto graphArea = area.removeFromTop(area.getHeight() - int(UI_KNOB_HEIGHT * scale));
   
-//  graphContainer.setBounds(graphArea);
+  graphContainer.setBounds(graphArea);
   
   auto SliderArea = area;
   SliderArea.removeFromLeft(SliderArea.getWidth()-int(140 * scale));
