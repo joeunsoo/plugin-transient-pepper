@@ -99,18 +99,13 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                  .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
     
     const int yIndent = jmin (4, button.proportionOfHeight (0.3f));
-    const int cornerSize = jmin (button.getHeight(), button.getWidth()) / 2;
-    
-    const int fontHeight = roundToInt (font.getHeight() * 0.6f);
-    const int leftIndent  = int(jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnLeft() ? 4 : 2)) * scale);
-    const int rightIndent = int(jmin (fontHeight, 2 + cornerSize / (button.isConnectedOnRight() ? 4 : 2)) * scale);
-    const int textWidth = button.getWidth() - leftIndent - rightIndent;
+    const int textWidth = button.getWidth();
     
     auto bounds = button.getLocalBounds();
     bounds.removeFromTop(int(UI_BUTTON_PADDING_TOP * scale + yIndent));
-    bounds.removeFromLeft(int(UI_BUTTON_PADDING_LEFT * scale + leftIndent));
+    bounds.removeFromLeft(int(UI_BUTTON_PADDING_LEFT * scale));
     bounds.removeFromBottom(int(UI_BUTTON_PADDING_BOTTOM * scale + yIndent));
-    bounds.removeFromRight(int(UI_BUTTON_PADDING_RIGHT * scale + rightIndent));
+    bounds.removeFromRight(int(UI_BUTTON_PADDING_RIGHT * scale));
     
     if (textWidth > 0)
       g.drawFittedText (button.getButtonText(),
@@ -120,15 +115,23 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   
   void drawRotarySlider (Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, Slider& slider) override
   {
-    juce::Colour colorIn = DARK_RGB_6;
-    juce::Colour colorDotLine = DARK_RGB_7;
-    juce::Colour colorDot = DARK_RGB_8;
+    juce::Colour colorIn = DARK_RGB_4;
+    juce::Colour colorDotLine = DARK_RGB_4;
+    juce::Colour colorDot = DARK_RGB_5;
     juce::Colour colorRing = DARK_RGB_7;
     
     if (auto* knobSlider = dynamic_cast<KnobSlider*>(&slider))
     {
       juce::String color = knobSlider->color;
       juce::String ringColor = knobSlider->ringColor;
+      if (color == "secondary") {
+        colorIn = SECONDARY_RGB_6;
+        colorDotLine = SECONDARY_DARK_RGB_2;
+        colorDot = SECONDARY_DARK_RGB_3;
+      }
+      if (ringColor == "secondary") {
+        colorRing = SECONDARY_DARK_RGB_6;
+      }
     }
     
     // auto bounds = juce::Rectangle<float>(x, y, width, height);

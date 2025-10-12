@@ -18,7 +18,7 @@ sidechainListenButton( pv.scale, pv.processor, ID::sidechainListen.getParamID(),
   
   addAndMakeVisible(bpfPowerButton);
   
-  // sidechainListenButton.setSvgDrawable( juce::Drawable::createFromImageData(BinaryData::headphonesbold_svg, BinaryData::headphonesbold_svgSize));
+  sidechainListenButton.setSvgDrawable( juce::Drawable::createFromImageData(BinaryData::headphonesbold_svg, BinaryData::headphonesbold_svgSize));
   addAndMakeVisible(sidechainListenButton);
   
   thresholdKnob.setRingColor("secondary");
