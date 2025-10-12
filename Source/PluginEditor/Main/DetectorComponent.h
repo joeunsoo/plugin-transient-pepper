@@ -7,9 +7,6 @@
 #include "../UI/Knob/KnobComponent.h"
 #include "../UI/ToggleButton/ToggleButtonComponent.h"
 
-// Forward declaration
-class PluginEditor;
-
 //==============================================================================
 class DetectorComponent : public juce::Component,
 public juce::AudioProcessorValueTreeState::Listener

@@ -50,7 +50,7 @@ void PeakMeterStereoFaderLabel::resized()
 {
   auto scale = scaleProvider.getScale();
 
-  label.setFont(FONT_WANTED_SANS_REGULAR.withHeight(UI_METER_LABEL_FONT_HEIGHT * scale));
+  label.setFont(FONT_PRETENDARD_REGULAR.withHeight(UI_METER_LABEL_FONT_HEIGHT * scale));
   
   auto area = getLocalBounds();
   if (area.isEmpty()) return;

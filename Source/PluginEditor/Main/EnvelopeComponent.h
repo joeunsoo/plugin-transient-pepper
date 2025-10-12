@@ -6,9 +6,6 @@
 #include "../Provider/ProcessorProvider.h"
 #include "../UI/Knob/KnobComponent.h"
 
-// Forward declaration
-class PluginEditor;
-
 //==============================================================================
 class EnvelopeComponent : public juce::Component,
 public juce::AudioProcessorValueTreeState::Listener

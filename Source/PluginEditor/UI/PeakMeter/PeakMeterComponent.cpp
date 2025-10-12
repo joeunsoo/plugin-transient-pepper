@@ -52,7 +52,7 @@ void PeakMeterComponent::paint(juce::Graphics& g)
                       {0, 3});
   
   // 배경
-  g.setColour(DARK_RGB_9);
+  g.setColour(UI_METER_BACKGROUND);
   g.fillRoundedRectangle(bounds, UI_METER_BORDER_RADIUS);
   
   // 클리핑 설정: bounds 안에서만 그리기

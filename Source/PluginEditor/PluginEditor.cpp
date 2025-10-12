@@ -21,7 +21,7 @@ aboutModal(providers.scale), activateModal(providers.scale, providers.license)
   
   // 툴팁
   tooltipLabel = std::make_unique<RoundedLabel>();
-  tooltipLabel->setColour(juce::Label::backgroundColourId, UI_MAIN_BACKGROUND);
+  tooltipLabel->setColour(juce::Label::backgroundColourId, UI_TOOLTIP_BACKGROUND);
   tooltipLabel->setColour(juce::Label::textColourId, juce::Colours::white);
   tooltipLabel->setJustificationType(juce::Justification::centred);
   tooltipLabel->setBorderRadius(UI_TOOLTIP_BORDER_RADIUS);

@@ -33,121 +33,133 @@
               file="Source/AudioProcessor/PluginAudioProcessor.cpp"/>
       </GROUP>
       <GROUP id="{1723771C-1E87-A2BD-6CD1-9DD73CF2D056}" name="PluginEditor">
-        <GROUP id="{E529E023-707A-9952-F6D1-AD75FC47A2FD}" name="Provider">
-          <FILE id="lL38xs" name="AudioProcessorProvider.h" compile="0" resource="0"
-                file="Source/PluginEditor/Provider/AudioProcessorProvider.h"/>
-          <FILE id="HSu5Ba" name="EditorProvider.h" compile="0" resource="0"
-                file="Source/PluginEditor/Provider/EditorProvider.h"/>
-          <FILE id="ouOdHR" name="LicenseProvider.h" compile="0" resource="0"
-                file="Source/PluginEditor/Provider/LicenseProvider.h"/>
-          <FILE id="HPuqHu" name="ProcessorProvider.h" compile="0" resource="0"
-                file="Source/PluginEditor/Provider/ProcessorProvider.h"/>
-          <FILE id="dFf1s8" name="Providers.h" compile="0" resource="0" file="Source/PluginEditor/Provider/Providers.h"/>
-          <FILE id="F1zCe4" name="ScaleController.h" compile="0" resource="0"
-                file="Source/PluginEditor/Provider/ScaleController.h"/>
-          <FILE id="nCeOCE" name="ScaleProvider.h" compile="0" resource="0" file="Source/PluginEditor/Provider/ScaleProvider.h"/>
-          <FILE id="NFuQV0" name="WrapperLicenseProvider.h" compile="0" resource="0"
-                file="Source/PluginEditor/Provider/WrapperLicenseProvider.h"/>
-        </GROUP>
         <GROUP id="{CCE81D67-20C5-3F70-C3C4-13CAFF86FD0E}" name="Header">
-          <FILE id="JbuauP" name="BypassComponent.cpp" compile="1" resource="0"
+          <FILE id="UdcNZL" name="BypassComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Header/BypassComponent.cpp"/>
-          <FILE id="uKiBdd" name="BypassComponent.h" compile="0" resource="0"
+          <FILE id="lbNkM8" name="BypassComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Header/BypassComponent.h"/>
-          <FILE id="b75L79" name="HeaderComponent.cpp" compile="1" resource="0"
+          <FILE id="tnzQkL" name="HeaderComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Header/HeaderComponent.cpp"/>
-          <FILE id="DICHcH" name="HeaderComponent.h" compile="0" resource="0"
+          <FILE id="eJGK1r" name="HeaderComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Header/HeaderComponent.h"/>
-          <FILE id="zNCPbh" name="MenuComponent.cpp" compile="1" resource="0"
+          <FILE id="qVBue6" name="MenuComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Header/MenuComponent.cpp"/>
-          <FILE id="NtXk1n" name="MenuComponent.h" compile="0" resource="0" file="Source/PluginEditor/Header/MenuComponent.h"/>
-          <FILE id="EPXPER" name="MenuLookAndFeel.h" compile="0" resource="0"
+          <FILE id="rXYgbQ" name="MenuComponent.h" compile="0" resource="0" file="Source/PluginEditor/Header/MenuComponent.h"/>
+          <FILE id="Uvu0hE" name="MenuLookAndFeel.h" compile="0" resource="0"
                 file="Source/PluginEditor/Header/MenuLookAndFeel.h"/>
         </GROUP>
+        <GROUP id="{687563E7-19AA-F45C-1348-889B1E3720EE}" name="Main">
+          <FILE id="H4nYbE" name="CustomLookAndFeel.h" compile="0" resource="0"
+                file="Source/PluginEditor/Main/CustomLookAndFeel.h"/>
+          <FILE id="vRYBOR" name="DetectorComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/DetectorComponent.cpp"/>
+          <FILE id="jKgDG7" name="DetectorComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Main/DetectorComponent.h"/>
+          <FILE id="LtOXHA" name="EnvelopeComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/EnvelopeComponent.cpp"/>
+          <FILE id="YqGIEV" name="EnvelopeComponent.h" compile="0" resource="0"
+                file="Source/PluginEditor/Main/EnvelopeComponent.h"/>
+          <FILE id="NFA7GG" name="MainComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/MainComponent.cpp"/>
+          <FILE id="H1ophn" name="MainComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MainComponent.h"/>
+          <FILE id="gsP2Kd" name="MixComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/MixComponent.cpp"/>
+          <FILE id="vmIBqA" name="MixComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MixComponent.h"/>
+          <FILE id="zfRDZT" name="ToneComponent.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/ToneComponent.cpp"/>
+          <FILE id="wAckuH" name="ToneComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/ToneComponent.h"/>
+        </GROUP>
         <GROUP id="{3E029F1A-5D10-DDA9-F771-0F6B87099B39}" name="Modal">
-          <FILE id="ERSxB3" name="AboutModal.cpp" compile="1" resource="0" file="Source/PluginEditor/Modal/AboutModal.cpp"/>
-          <FILE id="aegMDX" name="AboutModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/AboutModal.h"/>
-          <FILE id="fRAEMN" name="ActivateModal.cpp" compile="1" resource="0"
+          <FILE id="VHU50y" name="AboutModal.cpp" compile="1" resource="0" file="Source/PluginEditor/Modal/AboutModal.cpp"/>
+          <FILE id="MDYcPE" name="AboutModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/AboutModal.h"/>
+          <FILE id="vY1Q36" name="ActivateModal.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Modal/ActivateModal.cpp"/>
-          <FILE id="okdJBP" name="ActivateModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/ActivateModal.h"/>
-          <FILE id="npAL2b" name="DeactivateComponent.cpp" compile="1" resource="0"
+          <FILE id="KWUxMj" name="ActivateModal.h" compile="0" resource="0" file="Source/PluginEditor/Modal/ActivateModal.h"/>
+          <FILE id="HSsa2T" name="DeactivateComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Modal/DeactivateComponent.cpp"/>
-          <FILE id="FZNq72" name="DeactivateComponent.h" compile="0" resource="0"
+          <FILE id="ntBHNI" name="DeactivateComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Modal/DeactivateComponent.h"/>
-          <FILE id="WTVnL2" name="LoginComponent.cpp" compile="1" resource="0"
+          <FILE id="UfsGoQ" name="LoginComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Modal/LoginComponent.cpp"/>
-          <FILE id="s7lJDE" name="LoginComponent.h" compile="0" resource="0"
+          <FILE id="gzbyru" name="LoginComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Modal/LoginComponent.h"/>
-          <FILE id="DztaBc" name="ModalLookAndFeel.h" compile="0" resource="0"
+          <FILE id="GiUQVw" name="ModalLookAndFeel.h" compile="0" resource="0"
                 file="Source/PluginEditor/Modal/ModalLookAndFeel.h"/>
-          <FILE id="lbM28m" name="TrialComponent.cpp" compile="1" resource="0"
+          <FILE id="BcGzDa" name="TrialComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Modal/TrialComponent.cpp"/>
-          <FILE id="gumvCS" name="TrialComponent.h" compile="0" resource="0"
+          <FILE id="Muuh6M" name="TrialComponent.h" compile="0" resource="0"
                 file="Source/PluginEditor/Modal/TrialComponent.h"/>
         </GROUP>
+        <GROUP id="{5AEB57BB-6A99-C6AC-B634-AFA206DB25E9}" name="Provider">
+          <FILE id="FMeITe" name="AudioProcessorProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/AudioProcessorProvider.h"/>
+          <FILE id="bNCm7c" name="EditorProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/EditorProvider.h"/>
+          <FILE id="wUcVcG" name="LicenseProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/LicenseProvider.h"/>
+          <FILE id="yHspBQ" name="ProcessorProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/ProcessorProvider.h"/>
+          <FILE id="mYMcN0" name="Providers.h" compile="0" resource="0" file="Source/PluginEditor/Provider/Providers.h"/>
+          <FILE id="Zg0CAh" name="ScaleController.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/ScaleController.h"/>
+          <FILE id="HoKnJe" name="ScaleProvider.h" compile="0" resource="0" file="Source/PluginEditor/Provider/ScaleProvider.h"/>
+          <FILE id="hyJwUu" name="WrapperLicenseProvider.h" compile="0" resource="0"
+                file="Source/PluginEditor/Provider/WrapperLicenseProvider.h"/>
+        </GROUP>
         <GROUP id="{453373C1-BD72-BDE1-45DB-2363E3362C4B}" name="UI">
-          <GROUP id="{96DB0722-492D-0F67-674E-0CD4CEA1EAB8}" name="PeakMeter">
-            <FILE id="sCNl0u" name="PeakMeterComponent.cpp" compile="1" resource="0"
-                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterComponent.cpp"/>
-            <FILE id="jNhYjp" name="PeakMeterComponent.h" compile="0" resource="0"
-                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterComponent.h"/>
-            <FILE id="v8BDhL" name="PeakMeterStereoComponent.cpp" compile="1" resource="0"
-                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterStereoComponent.cpp"/>
-            <FILE id="DzO8MY" name="PeakMeterStereoComponent.h" compile="0" resource="0"
-                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterStereoComponent.h"/>
-          </GROUP>
-          <GROUP id="{E14B452D-889C-C5BA-6723-462CA8F7D203}" name="Graph">
-            <FILE id="Y3AzpR" name="GraphComponent.cpp" compile="1" resource="0"
+          <GROUP id="{5F4E3C8B-A28F-BB6F-E73B-1240EFEF20BB}" name="Graph">
+            <FILE id="Sb6EBn" name="GraphComponent.cpp" compile="1" resource="0"
                   file="Source/PluginEditor/UI/Graph/GraphComponent.cpp"/>
-            <FILE id="NFct9O" name="GraphComponent.h" compile="0" resource="0"
+            <FILE id="m33Rer" name="GraphComponent.h" compile="0" resource="0"
                   file="Source/PluginEditor/UI/Graph/GraphComponent.h"/>
-            <FILE id="LP97dO" name="GraphContainer.cpp" compile="1" resource="0"
+            <FILE id="nZqyyp" name="GraphContainer.cpp" compile="1" resource="0"
                   file="Source/PluginEditor/UI/Graph/GraphContainer.cpp"/>
-            <FILE id="VM153k" name="GraphContainer.h" compile="0" resource="0"
+            <FILE id="xwk2N6" name="GraphContainer.h" compile="0" resource="0"
                   file="Source/PluginEditor/UI/Graph/GraphContainer.h"/>
           </GROUP>
-          <GROUP id="{648BADE6-D49F-57F7-62E7-B0EC335831B4}" name="ToggleButton">
-            <FILE id="eW7gUB" name="CustomToggleButton.h" compile="0" resource="0"
+          <GROUP id="{BAA5C750-3548-D553-1346-8928E719F843}" name="Knob">
+            <FILE id="rbLe7s" name="KnobComponent.cpp" compile="1" resource="0"
+                  file="Source/PluginEditor/UI/Knob/KnobComponent.cpp"/>
+            <FILE id="BiPFnY" name="KnobComponent.h" compile="0" resource="0" file="Source/PluginEditor/UI/Knob/KnobComponent.h"/>
+            <FILE id="fRL5xA" name="KnobSlider.h" compile="0" resource="0" file="Source/PluginEditor/UI/Knob/KnobSlider.h"/>
+          </GROUP>
+          <GROUP id="{7B66DFCB-82BB-CEF8-869F-4045BACEFB1E}" name="PeakMeter">
+            <FILE id="jNrAIR" name="FaderComponent.h" compile="0" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/FaderComponent.h"/>
+            <FILE id="nYJfJ2" name="FaderLookAndFeel.cpp" compile="1" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/FaderLookAndFeel.cpp"/>
+            <FILE id="HNinuR" name="FaderLookAndFeel.h" compile="0" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/FaderLookAndFeel.h"/>
+            <FILE id="Buhl69" name="MeterTickLabel.h" compile="0" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/MeterTickLabel.h"/>
+            <FILE id="AJ01iA" name="PeakMeterComponent.cpp" compile="1" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterComponent.cpp"/>
+            <FILE id="xElL5G" name="PeakMeterComponent.h" compile="0" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterComponent.h"/>
+            <FILE id="xY9VgS" name="PeakMeterStereoComponent.cpp" compile="1" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterStereoComponent.cpp"/>
+            <FILE id="sHWCKv" name="PeakMeterStereoComponent.h" compile="0" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterStereoComponent.h"/>
+            <FILE id="KbTJ2K" name="PeakMeterStereoFaderLabel.cpp" compile="1"
+                  resource="0" file="Source/PluginEditor/UI/PeakMeter/PeakMeterStereoFaderLabel.cpp"/>
+            <FILE id="zvaSDe" name="PeakMeterStereoFaderLabel.h" compile="0" resource="0"
+                  file="Source/PluginEditor/UI/PeakMeter/PeakMeterStereoFaderLabel.h"/>
+          </GROUP>
+          <GROUP id="{EB8B6129-F93F-9EC0-FFC8-708E7E267DF3}" name="ToggleButton">
+            <FILE id="nDXwIQ" name="CustomToggleButton.h" compile="0" resource="0"
                   file="Source/PluginEditor/UI/ToggleButton/CustomToggleButton.h"/>
-            <FILE id="QPhwZR" name="ToggleButtonComponent.cpp" compile="1" resource="0"
+            <FILE id="cka1PN" name="ToggleButtonComponent.cpp" compile="1" resource="0"
                   file="Source/PluginEditor/UI/ToggleButton/ToggleButtonComponent.cpp"/>
-            <FILE id="gfXNv4" name="ToggleButtonComponent.h" compile="0" resource="0"
+            <FILE id="wG8lUf" name="ToggleButtonComponent.h" compile="0" resource="0"
                   file="Source/PluginEditor/UI/ToggleButton/ToggleButtonComponent.h"/>
           </GROUP>
-          <GROUP id="{B7EAA202-4DBE-3B9E-D11E-3E8CF998AF45}" name="Knob">
-            <FILE id="L4sT21" name="KnobComponent.cpp" compile="1" resource="0"
-                  file="Source/PluginEditor/UI/Knob/KnobComponent.cpp"/>
-            <FILE id="yLffHE" name="KnobComponent.h" compile="0" resource="0" file="Source/PluginEditor/UI/Knob/KnobComponent.h"/>
-            <FILE id="Dq7Drm" name="KnobSlider.h" compile="0" resource="0" file="Source/PluginEditor/UI/Knob/KnobSlider.h"/>
-          </GROUP>
-          <FILE id="oASwkQ" name="RoundedLabel.h" compile="0" resource="0" file="Source/PluginEditor/UI/RoundedLabel.h"/>
+          <FILE id="wfeVY6" name="RoundedLabel.h" compile="0" resource="0" file="Source/PluginEditor/UI/RoundedLabel.h"/>
         </GROUP>
-        <GROUP id="{05C1C842-F72D-CD15-A1E9-0B92A88E0F73}" name="Main">
-          <FILE id="V2q5zy" name="CustomLookAndFeel.h" compile="0" resource="0"
-                file="Source/PluginEditor/Main/CustomLookAndFeel.h"/>
-          <FILE id="Dz1zz3" name="DetectorComponent.cpp" compile="1" resource="0"
-                file="Source/PluginEditor/Main/DetectorComponent.cpp"/>
-          <FILE id="AjqIcQ" name="DetectorComponent.h" compile="0" resource="0"
-                file="Source/PluginEditor/Main/DetectorComponent.h"/>
-          <FILE id="UfGUU4" name="EnvelopeComponent.cpp" compile="1" resource="0"
-                file="Source/PluginEditor/Main/EnvelopeComponent.cpp"/>
-          <FILE id="AO5lP2" name="EnvelopeComponent.h" compile="0" resource="0"
-                file="Source/PluginEditor/Main/EnvelopeComponent.h"/>
-          <FILE id="bQg1GF" name="MainComponent.cpp" compile="1" resource="0"
-                file="Source/PluginEditor/Main/MainComponent.cpp"/>
-          <FILE id="MjhKnf" name="MainComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MainComponent.h"/>
-          <FILE id="nLEvhS" name="MixComponent.cpp" compile="1" resource="0"
-                file="Source/PluginEditor/Main/MixComponent.cpp"/>
-          <FILE id="JpH5Nq" name="MixComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MixComponent.h"/>
-          <FILE id="fKoI89" name="ToneComponent.cpp" compile="1" resource="0"
-                file="Source/PluginEditor/Main/ToneComponent.cpp"/>
-          <FILE id="kVakqk" name="ToneComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/ToneComponent.h"/>
-        </GROUP>
-        <FILE id="feYnkV" name="DefineUI.h" compile="0" resource="0" file="Source/PluginEditor/DefineUI.h"/>
-        <FILE id="e8AE90" name="Fonts.h" compile="0" resource="0" file="Source/PluginEditor/Fonts.h"/>
-        <FILE id="QOwpJn" name="PluginEditor.cpp" compile="1" resource="0"
+        <FILE id="Owvodi" name="DefineUI.h" compile="0" resource="0" file="Source/PluginEditor/DefineUI.h"/>
+        <FILE id="K7bSRd" name="Fonts.h" compile="0" resource="0" file="Source/PluginEditor/Fonts.h"/>
+        <FILE id="oh41wW" name="PluginEditor.cpp" compile="1" resource="0"
               file="Source/PluginEditor/PluginEditor.cpp"/>
-        <FILE id="i2jxyA" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
+        <FILE id="YP2Trl" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor/PluginEditor.h"/>
       </GROUP>
       <FILE id="cUdXGx" name="Define.h" compile="0" resource="0" file="Source/Define.h"/>
       <FILE id="HXE5Zi" name="NamespaceParameterId.h" compile="0" resource="0"

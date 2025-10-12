@@ -166,10 +166,10 @@ void PluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     
     Span<float> peakMeterSpan(analysisData.data(), 8); // 0,1 사용
     
-    peakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 0); // 0,1
-    noisePeakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 2); // 2,3
-    inputPeakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 4); // 4,5
-    envPeakMeter.computePeak ({ peakMeterSpan.data(), peakMeterSpan.size() }, 6); // 6,7
+    peakMeter.getPeaksDbfs ({ peakMeterSpan.data(), peakMeterSpan.size() }); // 0,1
+    noisePeakMeter.getPeaksDbfs ({ peakMeterSpan.data() + 2, peakMeterSpan.size() }); // 2,3
+    inputPeakMeter.getPeaksDbfs ({ peakMeterSpan.data() + 4, peakMeterSpan.size() }); // 4,5
+    envPeakMeter.getPeaksDbfs ({ peakMeterSpan.data() + 6, peakMeterSpan.size() }); // 6,7
   }
 }
 

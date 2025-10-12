@@ -1,151 +1,114 @@
-/*
- ==============================================================================
- 
- PeakMeter.h
- Created: 9 Sep 2025
- Author:  JoEunsoo
- 
- ==============================================================================
- */
-
+// PeakMeter.h
 #pragma once
 
 #include <JuceHeader.h>
 
 class PeakMeter
 {
-  public:
-  PeakMeter () = default; // 크기 모르는 상태로 생성
-  
-  void prepare (const juce::dsp::ProcessSpec& spec)
+public:
+  PeakMeter() = default;
+
+  void prepare(const juce::dsp::ProcessSpec& spec)
   {
-    this->numChannels = static_cast<int>(spec.numChannels);
-    this->numSamples  = static_cast<int>(spec.maximumBlockSize);
-    this->sampleRate  = spec.sampleRate;
-    
-    // 필요한 샘플 공간 확보 (채널 * 샘플)
-    data.allocate ((size_t) numChannels * (size_t) numSamples, true);
-    
-    // 포인터 배열 준비
-    channelPtrs.resize ((size_t) numChannels);
+    numChannels = (int) spec.numChannels;
+    numSamples  = (int) spec.maximumBlockSize;
+    sampleRate  = spec.sampleRate;
+
+    // 내부 버퍼 준비 (채널 x 샘플)
+    data.allocate((size_t)numChannels * (size_t)numSamples, true);
+
+    channelPtrs.resize((size_t)numChannels);
     for (int ch = 0; ch < numChannels; ++ch)
-      channelPtrs[(size_t) ch] = data.getData() + (size_t) ch * (size_t) numSamples;
-    
-    // dsp::AudioBlock 생성
-    buffer = dsp::AudioBlock<float> (channelPtrs.data(),
-                                     (size_t) numChannels,
-                                     (size_t) numSamples);
-    
+      channelPtrs[(size_t)ch] = data.getData() + (size_t)ch * (size_t)numSamples;
+
+    buffer = juce::dsp::AudioBlock<float>(channelPtrs.data(),
+                                          (size_t)numChannels,
+                                          (size_t)numSamples);
+
     writeIx = 0;
-    
-    // envelope 초기화
-    envelope.assign((size_t) numChannels, 0.0f);
-    currentPeak.assign((size_t) numChannels, 0.0f);
-    
-    updateCoefficients();
+
+    // 현재 블록 내 즉시 피크 (채널별)
+    currentPeak.assign((size_t)numChannels, 0.0f);
   }
-  
+
   template <typename T>
-  void push (dsp::AudioBlock<T> block)
+  void push(juce::dsp::AudioBlock<T> block)
   {
-    jassert (block.getNumChannels() == buffer.getNumChannels());
-    
-    const auto trimmed = block.getSubBlock ( block.getNumSamples()
-                                            - std::min (block.getNumSamples(), buffer.getNumSamples()));
-    
+    jassert(block.getNumChannels() == buffer.getNumChannels());
+
+    // 내부 버퍼 길이보다 긴 경우 뒤쪽 구간만 사용
+    const auto trimmed = block.getSubBlock(block.getNumSamples()
+                                           - std::min(block.getNumSamples(), buffer.getNumSamples()));
     const auto bufferLength = (int64) buffer.getNumSamples();
-    
+
+    // 새 블록의 측정을 시작하므로 초기화
+    for (size_t ch = 0; ch < buffer.getNumChannels(); ++ch)
+      currentPeak[ch] = 0.0f;
+
     for (auto samplesRemaining = (int64) trimmed.getNumSamples(); samplesRemaining > 0;)
     {
-      const auto writeOffset      = writeIx % bufferLength;
-      const auto numSamplesToWrite = std::min (samplesRemaining, bufferLength - writeOffset);
-      
-      auto destSubBlock   = buffer.getSubBlock ((size_t) writeOffset, (size_t) numSamplesToWrite);
-      const auto srcBlock = trimmed.getSubBlock (trimmed.getNumSamples() - (size_t) samplesRemaining,
-                                                 (size_t) numSamplesToWrite);
-      
-      destSubBlock.copyFrom (srcBlock);
-      
-      
-      // --- 여기서 즉시 피크 계산 ---
+      const auto writeOffset       = writeIx % bufferLength;
+      const auto numSamplesToWrite = std::min(samplesRemaining, bufferLength - writeOffset);
+
+      auto destSubBlock   = buffer.getSubBlock((size_t)writeOffset, (size_t)numSamplesToWrite);
+      const auto srcBlock = trimmed.getSubBlock(trimmed.getNumSamples() - (size_t)samplesRemaining,
+                                                (size_t)numSamplesToWrite);
+
+      destSubBlock.copyFrom(srcBlock);
+
+      // 즉시 피크 계산 (최대 절대값)
       for (size_t ch = 0; ch < buffer.getNumChannels(); ++ch)
       {
-        auto* channelData = destSubBlock.getChannelPointer(ch);
-        float localPeak = currentPeak[ch];
+        const auto* channelData = destSubBlock.getChannelPointer(ch);
+        float peak = currentPeak[ch];
         for (int64 i = 0; i < numSamplesToWrite; ++i)
-          localPeak = std::max(localPeak, std::abs(channelData[(size_t)i]));
-        currentPeak[ch] = localPeak;
+        {
+          const float a = std::abs(channelData[(size_t)i]);
+          if (a > peak) peak = a;
+        }
+        currentPeak[ch] = peak;
       }
-      
+
       samplesRemaining -= numSamplesToWrite;
       writeIx          += numSamplesToWrite;
     }
   }
-  
-  template <typename T>
-  void push (Span<T> s)
+
+  // 현재 측정된 채널별 피크를 출력 배열에 채워 넣기
+  // output.size()는 최소 채널 수 이상이어야 합니다.
+  void getPeaksLinear(juce::Span<float> output) const
   {
-    auto* ptr = s.begin();
-    dsp::AudioBlock<T> b (&ptr, 1, s.size());
-    push (b);
+    const size_t chs = buffer.getNumChannels();
+    jassert(output.size() >= chs);
+    for (size_t ch = 0; ch < chs; ++ch)
+      output[ch] = juce::jlimit(0.0f, 1.0f, currentPeak[ch]);
   }
-  
-  void computePeak(juce::Span<float> output, size_t offset)
+
+  // dBFS로 변환하여 출력 (-inf 보호: floor로 제한)
+  void getPeaksDbfs(juce::Span<float> output, float floorDb = -120.0f) const
   {
-    for (size_t ch = 0; ch < buffer.getNumChannels(); ++ch)
+    const size_t chs = buffer.getNumChannels();
+    jassert(output.size() >= chs);
+    for (size_t ch = 0; ch < chs; ++ch)
     {
-      // 블럭 단위 decay 적용
-      if (offset == 6) { // 엔벨로프 그래프는 다른 디케이 적용
-        currentPeak[ch] *= envDecayCoeff;
-      } else {
-        currentPeak[ch] *= levelDecayCoeff;
-      }
-      
-      // 블럭 전체 샘플에서 최대값 계산
-      auto* channelData = buffer.getChannelPointer(ch);
-      for (size_t i = 0; i < buffer.getNumSamples(); ++i)
-        currentPeak[ch] = std::max(currentPeak[ch], std::abs(channelData[i]));
-      
-      // 출력값 0~1로 제한
-      output[ch + offset] = juce::jlimit(0.0f, 1.0f, currentPeak[ch]);
+      const float safe = std::max(currentPeak[ch], 1.0e-12f);
+      const float db   = 20.0f * std::log10(safe);
+      output[ch] = juce::jlimit(floorDb, 12.0f, db); // +12dB까지 여유 허용(옵션)
     }
   }
-  
-  private:
-  
-  void updateCoefficients()
-  {
-    if (sampleRate <= 0.0 || numSamples <= 0)
-      return;
-    
-    // decay 시간(ms) → 초 단위
-    float decayTimeSec = levelDecayTimeMs / 1000.0f;
-    float envDecayTimeSec = envDecayTimeMs / 1000.0f;
-    
-    // 블럭 단위 decay 계수 계산
-    // formula: level *= exp(-blockSize / (sampleRate * decayTimeSec))
-    levelDecayCoeff = (float)std::exp(-float(numSamples) / (sampleRate * decayTimeSec));
-    envDecayCoeff   = (float)std::exp(-float(numSamples) / (sampleRate * envDecayTimeSec));
-  }
-  
-  
-  HeapBlock<float> data;                  // float 타입으로 직접 할당
-  std::vector<float*> channelPtrs;        // 채널별 포인터
-  dsp::AudioBlock<float> buffer { nullptr, 0, 0 }; // 나중에 prepare()에서 세팅
+
+private:
+  juce::HeapBlock<float> data;                 // float 타입 내부 버퍼
+  std::vector<float*> channelPtrs;             // 채널별 포인터
+  juce::dsp::AudioBlock<float> buffer { nullptr, 0, 0 };
   int64 writeIx = 0;
-  
+
   int numChannels = 0;
   int numSamples  = 0;
   double sampleRate = 44100.0;
-  
-  std::vector<float> envelope;
-  std::vector<float> currentPeak; // 채널별 현재 피크
-  
-  float levelDecayTimeMs = 100.0f;
-  float levelDecayCoeff  = 0.0f;
-  
-  float envDecayTimeMs = 10.0f;
-  float envDecayCoeff  = 0.0f;
-  
+
+  // 즉시 피크 (채널별)
+  std::vector<float> currentPeak;
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeter)
 };
