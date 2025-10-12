@@ -20,11 +20,10 @@ class ToggleButtonComponent : public juce::Component
   void paint(juce::Graphics& g) override;
   void resized() override;
   void setSvgDrawable(std::unique_ptr<Drawable> svgDrawable);
+  void setButtonText(const String labelText);
   
-  juce::Label label;
   //==============================================================================
   private:
-  
   CustomToggleButton toggleButton;
   
   std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> attachment;

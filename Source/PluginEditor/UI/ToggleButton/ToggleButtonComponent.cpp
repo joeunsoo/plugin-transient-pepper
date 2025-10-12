@@ -39,3 +39,8 @@ void ToggleButtonComponent::setSvgDrawable(std::unique_ptr<Drawable> svgDrawable
 {
   toggleButton.setSvgDrawable(std::move(svgDrawable));
 }
+
+void ToggleButtonComponent::setButtonText(const String labelText)
+{
+  toggleButton.setButtonText(labelText);
+}
