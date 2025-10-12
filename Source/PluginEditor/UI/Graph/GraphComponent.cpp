@@ -88,8 +88,8 @@ void GraphComponent::updateGraph(float level1, float level2)
     graphValues.clear();
     graphValues.reserve((size_t)w);
     for (int i = 0; i < w; ++i)
-      graphValues.push_back(y);
-    lastY = y;
+      graphValues.push_back(height);
+    lastY = height;
     isGraphInit = true;
     return;
   }
@@ -101,13 +101,13 @@ void GraphComponent::updateGraph(float level1, float level2)
     
     if (y < lastY)
     {
-      // 상승: 즉시 새 값으로 점프
+      // 상승
       // lastY = y;
       lastY += (y - lastY) * t * 0.5f;
     }
     else
     {
-      // 하강: 완만하게 보간 (시각적으로 너무 급격히 떨어지지 않도록)
+      // 하강
       // t에 0.5 계수를 곱해 속도를 제한
       lastY += (y - lastY) * t * 0.5f;
     }
