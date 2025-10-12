@@ -9,9 +9,13 @@ class MeterTickLabel : public juce::Component
 {
   public:
   MeterTickLabel(const ScaleProvider& sp,
+                 bool hasMeterLabelValue,
                  bool showLabel)
   :scaleProvider(sp)
-  { isLabel = showLabel; };
+  {
+    isLabel = showLabel;
+    hasMeterLabel = hasMeterLabelValue;
+  };
   ~MeterTickLabel() override = default;
   
   void paint(juce::Graphics& g) override
@@ -19,7 +23,8 @@ class MeterTickLabel : public juce::Component
     auto scale = scaleProvider.getScale();
     auto boundsOut = getLocalBounds().toFloat();
     auto bounds = boundsOut;
-    bounds.removeFromTop(UI_METER_PADDING_TOP + 18 * scale);
+    auto labelHeight = hasMeterLabel ? 18 : 0;
+    bounds.removeFromTop(UI_METER_PADDING_TOP + labelHeight * scale);
     bounds.removeFromLeft(UI_METER_PADDING_LEFT * scale);
     bounds.removeFromBottom(UI_METER_PADDING_BOTTOM * scale);
     bounds.removeFromRight(UI_METER_PADDING_RIGHT * scale);
@@ -28,6 +33,8 @@ class MeterTickLabel : public juce::Component
     static const std::array<float, 9> kLabels = { -0.0f, -3.0f, -6.0f, -10.0f, -20.0f, -30.0f, -40.0f, -50.0f, -60.0f };
     // 텍스트 스타일
     g.setFont(FONT_PRETENDARD_REGULAR.withHeight(10.0f * scale));
+    
+    g.setColour(UI_METER_TICK_COLOR);
 
     for (float dbLabel : kLabels)
     {
@@ -39,7 +46,6 @@ class MeterTickLabel : public juce::Component
       const float y   = bounds.getBottom() - bounds.getHeight() * n01;
       
       if (!isLabel) {
-        g.setColour(juce::Colours::black);
         const float xTickStart = bounds.getX();
         const float xTickEnd   = bounds.getWidth();
         g.drawLine(xTickStart, y, xTickEnd, y, 1.0f);
@@ -54,7 +60,6 @@ class MeterTickLabel : public juce::Component
         
         // 텍스트 박스: 눈금 왼쪽에 배치
         juce::Rectangle<float> textBox(0 ,y - (8.0f * scale), bounds.getWidth(), 16.0f * scale);
-        g.setColour(juce::Colours::black);
         g.drawFittedText(text, textBox.toNearestInt(), juce::Justification::centred, 1);
       }
     }
@@ -63,6 +68,7 @@ class MeterTickLabel : public juce::Component
   private:
   const ScaleProvider& scaleProvider;
   bool isLabel = false;
+  bool hasMeterLabel = false;
   
   float kMeterMinDb = UI_METER_MIN_DB;
   float kMeterMaxDb = UI_METER_MAX_DB;

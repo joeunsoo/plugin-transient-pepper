@@ -9,7 +9,7 @@ noiseLevelGainKnob(pv.editor, pv.scale, pv.processor, ID::noiseLevelGain.getPara
 dryWetKnob(pv.editor, pv.scale, pv.processor, ID::dryWet.getParamID(), "Dry/Wet"),
 outputGainKnob(pv.editor, pv.scale, pv.processor, ID::outputGain.getParamID(), "Output Gain"),
 noisePeakMeter(pv.processor, 2, true),
-outputPeakMeter(pv.processor, 0, true)
+outputPeakMeter(pv)
 {
   addAndMakeVisible(noisePeakMeter);
 

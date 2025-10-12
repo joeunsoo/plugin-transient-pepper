@@ -65,6 +65,10 @@
           <FILE id="gsP2Kd" name="MixComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Main/MixComponent.cpp"/>
           <FILE id="vmIBqA" name="MixComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/MixComponent.h"/>
+          <FILE id="MFUkmU" name="OutputMeterSection.cpp" compile="1" resource="0"
+                file="Source/PluginEditor/Main/OutputMeterSection.cpp"/>
+          <FILE id="cJbe0K" name="OutputMeterSection.h" compile="0" resource="0"
+                file="Source/PluginEditor/Main/OutputMeterSection.h"/>
           <FILE id="zfRDZT" name="ToneComponent.cpp" compile="1" resource="0"
                 file="Source/PluginEditor/Main/ToneComponent.cpp"/>
           <FILE id="wAckuH" name="ToneComponent.h" compile="0" resource="0" file="Source/PluginEditor/Main/ToneComponent.h"/>
