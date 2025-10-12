@@ -29,7 +29,7 @@ void OutputMeterSection::resized()
   auto scale = scaleProvider.getScale();
 
   auto area = getLocalBounds();
-  outputPeakMeter.setBounds(area.removeFromLeft(area.getWidth() - int(25 * scale)));
+  outputPeakMeter.setBounds(area);
   
   tickContainer.setBounds(getLocalBounds());
 
@@ -39,10 +39,11 @@ void OutputMeterSection::resized()
   tickBox.alignItems = FlexBox::AlignItems::stretch;
   
   tickBox.items.add(FlexItem(outputMeterTick)
-                    .withFlex(1.0f));
+                    .withFlex(1.0f)
+                    .withMargin({0, 0, 0, 18 * scale}));
   
   tickBox.items.add(FlexItem(meterTickLabel)
-                    .withWidth(25.0f * scale)
+                    .withWidth(18.0f * scale)
                     .withFlex(0.0f, 0.0f));
 
   tickBox.performLayout(tickContainer.getLocalBounds());

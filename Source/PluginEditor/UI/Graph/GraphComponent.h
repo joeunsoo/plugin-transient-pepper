@@ -17,6 +17,7 @@ class GraphComponent : public juce::Component
   
   void paint(juce::Graphics& g) override;
   void updateGraph (float level1, float level2);
+  void resized() override;
   
   private:  
   const ScaleProvider& scaleProvider;
@@ -24,8 +25,6 @@ class GraphComponent : public juce::Component
   int idx = -1;
   float lastY = 1.0f;
   int movePixels = 4;
-  
-  bool isGraphInit = false;
 
   // 원시 레벨과 스무딩 레벨
   float displayedLevel = 0.0f;  // raw를 attack/decay로 스무딩한 값

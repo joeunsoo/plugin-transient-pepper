@@ -71,7 +71,7 @@
 #define UI_MAIN_PANEL_BACKGROUND juce::Colour(0xffd0d0d0)
 #define UI_METER_BACKGROUND SECONDARY_DARK_RGB_9
 #define UI_FADER_THUMB_COLOR juce::Colour(0xffffffff)
-#define UI_METER_TICK_COLOR juce::Colour(0xffffffff)
+#define UI_METER_TICK_COLOR DARK_RGB_2
 
 #define UI_MESSAGE_ERROR_RGB juce::Colour(0xFFdf2926)
 

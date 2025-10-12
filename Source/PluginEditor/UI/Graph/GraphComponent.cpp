@@ -56,6 +56,8 @@ void GraphComponent::paint(juce::Graphics& g)
 
 void GraphComponent::updateGraph(float level1, float level2)
 {
+  auto scale = scaleProvider.getScale();
+
   float in1 = juce::jlimit(kMeterMinDb, kMeterMaxDb, level1);
   float in2 = juce::jlimit(kMeterMinDb, kMeterMaxDb, level2);
   
@@ -81,42 +83,47 @@ void GraphComponent::updateGraph(float level1, float level2)
   const float height = (float)getHeight();
   const float y = height - level01 * height;
   
-  if (!isGraphInit)
+  constexpr float riseCoeffBase = 0.5f; // 상승 기본 속도
+  constexpr float fallCoeffBase = 0.5f; // 하강 기본 속도
+
+  // 반복 스텝은 scale을 반영해 정수로 확정 (최소 1)
+  const int steps = juce::jmax(1, (int)std::round(movePixels * scale));
+
+  for (int i = 1; i <= steps; ++i)
   {
-    // 초기 그래프 채우기: 현재 y로 폭만큼 채움
-    const int w = juce::jmax(1, getWidth());
-    graphValues.clear();
-    graphValues.reserve((size_t)w);
-    for (int i = 0; i < w; ++i)
-      graphValues.push_back(height);
-    lastY = height;
-    isGraphInit = true;
-    return;
-  }
-  
-  // 이후 기존 코드: 상승 즉시, 하강 보간
-  for (int i = 1; i <= movePixels; ++i)
-  {
-    const float t = (float)i / (float)movePixels;
-    
-    if (y < lastY)
-    {
-      // 상승
-      // lastY = y;
-      lastY += (y - lastY) * t * 0.5f;
-    }
-    else
-    {
-      // 하강
-      // t에 0.5 계수를 곱해 속도를 제한
-      lastY += (y - lastY) * t * 0.5f;
-    }
-    
-    graphValues.push_back(lastY);
+      // 0..1 정규화된 진행도
+      const float t = (float)i / (float)steps;
+
+      const bool rising = (y < lastY); // 화면 좌표에서 y가 작아지면 레벨 상승
+      const float base = rising ? riseCoeffBase : fallCoeffBase;
+
+      // 속도에만 scale을 반영하고, 과도한 가속을 방지하기 위해 0..1로 클램프
+      float coeff = juce::jlimit(0.0f, 1.0f, base * scale);
+
+      // 한 스텝의 보간량
+      const float interp = t * coeff;
+
+      // 목표 y로 점진 이동 (상승/하강 동일 보간)
+      lastY += (y - lastY) * interp;
+
+      graphValues.push_back(lastY);
   }
   
   // 최대 width 유지
   const size_t maxSize = (size_t)juce::jmax(1, getWidth());
   while (graphValues.size() > maxSize)
     graphValues.erase(graphValues.begin());
+}
+
+
+void GraphComponent::resized()
+{
+  const float height = (float)getHeight();
+  
+  const int w = juce::jmax(1, getWidth());
+  graphValues.clear();
+  graphValues.reserve((size_t)w);
+  for (int i = 0; i < w; ++i)
+    graphValues.push_back(height);
+  lastY = height;
 }
