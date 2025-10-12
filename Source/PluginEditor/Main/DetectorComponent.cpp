@@ -10,6 +10,8 @@ channelLinkButton(pv.scale, pv.processor,ID::linkChannels.getParamID(), isStereo
 bpfPowerButton(pv.scale, pv.processor, ID::bpfPower.getParamID(), "BPF"),
 sidechainListenButton( pv.scale, pv.processor, ID::sidechainListen.getParamID(), "Listen")
 {
+  isStereo = pv.processor.getTotalNumOutputChannels() > 1;
+  channelLinkButton.label.setText(isStereo ? "L/R Link": "Mono", juce::dontSendNotification);
 
   addAndMakeVisible(sectionLabel);
   sectionLabel.setText("Transient Detector", juce::dontSendNotification);
