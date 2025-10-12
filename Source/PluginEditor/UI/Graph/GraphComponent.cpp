@@ -97,7 +97,7 @@ void GraphComponent::updateGraph(float level1, float level2)
       const float base = rising ? riseCoeffBase : fallCoeffBase;
 
       // 속도에만 scale을 반영하고, 과도한 가속을 방지하기 위해 0..1로 클램프
-      float coeff = juce::jlimit(0.0f, 1.0f, base * scale);
+      float coeff = juce::jlimit(0.0f, movePixels * scale, base * 1 / scale);
 
       // 한 스텝의 보간량
       const float interp = t * coeff;
