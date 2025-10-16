@@ -19,7 +19,7 @@ LicenseFile=../pkg/Resources/License.txt
 ; 빌드 폴더 경로 설정
 ; (여기에 JUCE Release 빌드 경로를 맞춰주세요)
 #define BUILD_RELEASE_VST3_PATH "D:\juce\projects\plugin-transient-pepper\Builds\VisualStudio2022\x64\Release\VST3\JE Transient Pepper.vst3\Contents\x86_64-win"
-#define BUILD_RELEASE_AAX_PATH  "D:\juce\projects\plugin-transient-pepper\Builds\VisualStudio2022\x64\Release\AAX\JE Transient Pepper.aaxplugin\Contents\x64"
+#define BUILD_RELEASE_AAX_PATH  "D:\juce\projects\plugin-transient-pepper\Builds\VisualStudio2022\x64\Release\AAX"
 
 [Files]
 Source: "{#BUILD_RELEASE_VST3_PATH}\JE Transient Pepper.vst3"; DestDir: "{code:GetVST3Dir}"; Flags: ignoreversion recursesubdirs; Check: ShouldInstallVST3
