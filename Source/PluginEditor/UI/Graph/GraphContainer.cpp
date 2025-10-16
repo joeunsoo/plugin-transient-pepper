@@ -79,9 +79,9 @@ void GraphContainer::timerCallback()
     float l1 = processorProvider.getAnalysisData(6);
     float l2 = processorProvider.getAnalysisData(7);
     if (isStereo) {
-      inputLevelGraph.updateGraph(l1, l2);
+      envGraph.updateGraph(l1, l2);
     } else {
-      inputLevelGraph.updateGraph(l1, l1);
+      envGraph.updateGraph(l1, l1);
     }
   }
   

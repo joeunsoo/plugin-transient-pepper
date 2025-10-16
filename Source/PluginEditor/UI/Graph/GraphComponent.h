@@ -21,7 +21,7 @@ class GraphComponent : public juce::Component
   private:  
   const ScaleProvider& scaleProvider;
 
-  float lastY = 1.0f;
+  float lastY = 0.0f;
   int movePixels = 4;
 
   // 원시 레벨과 스무딩 레벨
