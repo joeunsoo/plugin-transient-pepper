@@ -111,6 +111,8 @@ begin
     if ShouldInstallVST3 then
     begin
       Vst3Target := GetVST3Dir('');
+      if DirExists(Vst3Target + '\JETransientPepper.vst3') then
+        DelTree(Vst3Target + '\JETransientPepper.vst3', True, True, True);
       if DirExists(Vst3Target + '\JE Transient Pepper.vst3') then
         DelTree(Vst3Target + '\JE Transient Pepper.vst3', True, True, True);
     end;
