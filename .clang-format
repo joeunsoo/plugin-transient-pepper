@@ -1,6 +1,11 @@
 BasedOnStyle: LLVM
-IndentWidth: 2
-TabWidth: 2
+IndentWidth: 4
+TabWidth: 4
 UseTab: Never
 AllowShortFunctionsOnASingleLine: Inline
 ColumnLimit: 120
+# PointerAlignment: Type
+DerivePointerAlignment: false
+AlignConsecutiveDeclarations: false
+BreakBeforeBraces: Allman
+SortIncludes: true

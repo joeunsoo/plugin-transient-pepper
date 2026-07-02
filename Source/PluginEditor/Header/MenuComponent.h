@@ -5,24 +5,25 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class MenuComponent : public juce::Component {
-public:
-  MenuComponent(Providers &pv);
-  ~MenuComponent() override;
+class MenuComponent : public juce::Component
+{
+  public:
+    MenuComponent(Providers &pv);
+    ~MenuComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  //==============================================================================
-private:
-  EditorProvider &editorProvider;
-  const ScaleProvider &scaleProvider;
-  ScaleController &scaleController;
-  LicenseProvider &licenseProvider;
+    //==============================================================================
+  private:
+    EditorProvider &editorProvider;
+    const ScaleProvider &scaleProvider;
+    ScaleController &scaleController;
+    LicenseProvider &licenseProvider;
 
-  MenuLookAndFeel menuLaF;
+    MenuLookAndFeel menuLaF;
 
-  juce::DrawableButton menuButton{"menuButton", juce::DrawableButton::ImageFitted};
+    juce::DrawableButton menuButton{"menuButton", juce::DrawableButton::ImageFitted};
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MenuComponent)
 };

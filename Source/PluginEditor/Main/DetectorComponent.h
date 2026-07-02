@@ -8,27 +8,28 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class DetectorComponent : public juce::Component, public juce::AudioProcessorValueTreeState::Listener {
-public:
-  DetectorComponent(Providers &pv);
-  ~DetectorComponent() override;
+class DetectorComponent : public juce::Component, public juce::AudioProcessorValueTreeState::Listener
+{
+  public:
+    DetectorComponent(Providers &pv);
+    ~DetectorComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  void parameterChanged(const juce::String &parameterID, float newValue) override;
+    void parameterChanged(const juce::String &parameterID, float newValue) override;
 
-  //==============================================================================
-private:
-  const ScaleProvider &scaleProvider;
-  ProcessorProvider &processorProvider;
+    //==============================================================================
+  private:
+    const ScaleProvider &scaleProvider;
+    ProcessorProvider &processorProvider;
 
-  //==============================================================================
-  bool isStereo = false;
-  juce::Label sectionLabel;
-  KnobComponent thresholdKnob, bpfFreqKnob;
+    //==============================================================================
+    bool isStereo = false;
+    juce::Label sectionLabel;
+    KnobComponent thresholdKnob, bpfFreqKnob;
 
-  ToggleButtonComponent channelLinkButton, bpfPowerButton, sidechainListenButton;
+    ToggleButtonComponent channelLinkButton, bpfPowerButton, sidechainListenButton;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DetectorComponent)
 };

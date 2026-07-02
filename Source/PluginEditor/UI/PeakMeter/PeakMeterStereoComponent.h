@@ -3,18 +3,19 @@
 #include "PeakMeterComponent.h"
 #include <JuceHeader.h>
 
-class PeakMeterStereoComponent : public juce::Component {
-public:
-  PeakMeterStereoComponent(ProcessorProvider &pp, int index, bool usePeakHold);
-  ~PeakMeterStereoComponent() override;
+class PeakMeterStereoComponent : public juce::Component
+{
+  public:
+    PeakMeterStereoComponent(ProcessorProvider &pp, int index, bool usePeakHold);
+    ~PeakMeterStereoComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-private:
-  bool isStereo = false;
+  private:
+    bool isStereo = false;
 
-  PeakMeterComponent leftPeakMeter, rightPeakMeter;
+    PeakMeterComponent leftPeakMeter, rightPeakMeter;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeterStereoComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PeakMeterStereoComponent)
 };

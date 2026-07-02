@@ -11,30 +11,31 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class MainComponent : public juce::Component {
-public:
-  MainComponent(Providers &pv);
-  ~MainComponent() override;
+class MainComponent : public juce::Component
+{
+  public:
+    MainComponent(Providers &pv);
+    ~MainComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  //==============================================================================
-private:
-  //==============================================================================
-  const ScaleProvider &scaleProvider;
-  //==============================================================================
-  CustomLookAndFeel mainLaf;
+    //==============================================================================
+  private:
+    //==============================================================================
+    const ScaleProvider &scaleProvider;
+    //==============================================================================
+    CustomLookAndFeel mainLaf;
 
-  //==============================================================================
-  DetectorComponent detectorComponent;
-  EnvelopeComponent envelopeComponent;
-  ToneComponent toneComponent;
-  MixComponent mixComponent;
+    //==============================================================================
+    DetectorComponent detectorComponent;
+    EnvelopeComponent envelopeComponent;
+    ToneComponent toneComponent;
+    MixComponent mixComponent;
 
-  //==============================================================================
-  juce::DropShadow dropShadow;
-  //==============================================================================
+    //==============================================================================
+    juce::DropShadow dropShadow;
+    //==============================================================================
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

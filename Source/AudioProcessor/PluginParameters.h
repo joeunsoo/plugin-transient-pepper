@@ -11,129 +11,140 @@
 #pragma once
 #include "../NamespaceParameterId.h"
 
-struct Parameters {
-public:
-  explicit Parameters(AudioProcessorValueTreeState::ParameterLayout &layout)
-      : bypass(addToLayout<AudioParameterBool>(layout, ID::bypass, "Bypass", false)),
-        attack(addToLayout<AudioParameterFloat>(
-            layout, ID::attack, "Attack", NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f}, 0.0500f, "ms",
-            juce::AudioProcessorParameter::genericParameter,
-            [](float value, int) { return msToString(value * 1000.0f); },
-            [](const juce::String &text) { return stringToMs(text); })),
+struct Parameters
+{
+  public:
+    explicit Parameters(AudioProcessorValueTreeState::ParameterLayout &layout)
+        : bypass(addToLayout<AudioParameterBool>(layout, ID::bypass, "Bypass", false)),
+          attack(addToLayout<AudioParameterFloat>(
+              layout, ID::attack, "Attack", NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f}, 0.0500f, "ms",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int)
+              { return msToString(value * 1000.0f); }, [](const juce::String &text) { return stringToMs(text); })),
 
-        release(addToLayout<AudioParameterFloat>(
-            layout, ID::release, "Release", NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f}, 0.0500f, "ms",
-            juce::AudioProcessorParameter::genericParameter,
-            [](float value, int) { return msToString(value * 1000.0f); },
-            [](const juce::String &text) { return stringToMs(text); })),
+          release(addToLayout<AudioParameterFloat>(
+              layout, ID::release, "Release", NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f}, 0.0500f, "ms",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int)
+              { return msToString(value * 1000.0f); }, [](const juce::String &text) { return stringToMs(text); })),
 
-        threshold(addToLayout<AudioParameterFloat>(
-            layout, ID::threshold, "Threshold", NormalisableRange<float>{-40.0f, 0.0f, 0.1f, 1.0f}, -20.0f, "dB",
-            juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
-            [](const juce::String &text) { return stringToDB(text); })),
+          threshold(addToLayout<AudioParameterFloat>(
+              layout, ID::threshold, "Threshold", NormalisableRange<float>{-40.0f, 0.0f, 0.1f, 1.0f}, -20.0f, "dB",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
+              [](const juce::String &text) { return stringToDB(text); })),
 
-        bpfPower(addToLayout<AudioParameterBool>(layout, ID::bpfPower, "BPF On/Off", false)),
-        bpfFrequency(addToLayout<AudioParameterFloat>(
-            layout, ID::bpfFrequency, "BPF Freq", NormalisableRange<float>{50.0f, 12000.0f, 0.1f, 0.27375f}, 1000.0f,
-            "Hz", juce::AudioProcessorParameter::genericParameter, [](float value, int) { return hzToString(value); },
-            [](const juce::String &text) { return stringToHz(text); })),
-        sidechainListen(addToLayout<AudioParameterBool>(layout, ID::sidechainListen, "Sidechain Listen", false)),
-        tilt(addToLayout<AudioParameterFloat>(
-            layout, ID::tilt, "Tone", NormalisableRange<float>{-12.0f, 12.0f, 0.1f, 1.0f}, 0.0f, "dB",
-            juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
-            [](const juce::String &text) { return stringToDB(text); })),
+          bpfPower(addToLayout<AudioParameterBool>(layout, ID::bpfPower, "BPF On/Off", false)),
+          bpfFrequency(addToLayout<AudioParameterFloat>(
+              layout, ID::bpfFrequency, "BPF Freq", NormalisableRange<float>{50.0f, 12000.0f, 0.1f, 0.27375f}, 1000.0f,
+              "Hz", juce::AudioProcessorParameter::genericParameter, [](float value, int) { return hzToString(value); },
+              [](const juce::String &text) { return stringToHz(text); })),
+          sidechainListen(addToLayout<AudioParameterBool>(layout, ID::sidechainListen, "Sidechain Listen", false)),
+          tilt(addToLayout<AudioParameterFloat>(
+              layout, ID::tilt, "Tone", NormalisableRange<float>{-12.0f, 12.0f, 0.1f, 1.0f}, 0.0f, "dB",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
+              [](const juce::String &text) { return stringToDB(text); })),
 
-        midSide(addToLayout<AudioParameterFloat>(
-            layout, ID::midSide, "Mid/Side", NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f}, 50.0f, "%",
-            juce::AudioProcessorParameter::genericParameter, [](float value, int) { return percentToString(value); },
-            [](const juce::String &text) { return stringToPercent(text); })),
-        noiseLevelGain(addToLayout<AudioParameterFloat>(
-            layout, ID::noiseLevelGain, "Noise Gain", NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f}, 0.0f, "dB",
-            juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
-            [](const juce::String &text) { return stringToDB(text); })),
+          midSide(addToLayout<AudioParameterFloat>(
+              layout, ID::midSide, "Mid/Side", NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f}, 50.0f, "%",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int) { return percentToString(value); },
+              [](const juce::String &text) { return stringToPercent(text); })),
+          noiseLevelGain(addToLayout<AudioParameterFloat>(
+              layout, ID::noiseLevelGain, "Noise Gain", NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f}, 0.0f, "dB",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
+              [](const juce::String &text) { return stringToDB(text); })),
 
-        outputGain(addToLayout<AudioParameterFloat>(
-            layout, ID::outputGain, "Output Gain", NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f}, 0.0f, "dB",
-            juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
-            [](const juce::String &text) { return stringToDB(text); })),
+          outputGain(addToLayout<AudioParameterFloat>(
+              layout, ID::outputGain, "Output Gain", NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f}, 0.0f, "dB",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int) { return dBToString(value); },
+              [](const juce::String &text) { return stringToDB(text); })),
 
-        dryWet(addToLayout<AudioParameterFloat>(
-            layout, ID::dryWet, "Dry/Wet", NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f}, 50.0f, "%",
-            juce::AudioProcessorParameter::genericParameter, [](float value, int) { return percentToString(value); },
-            [](const juce::String &text) { return stringToPercent(text); })),
+          dryWet(addToLayout<AudioParameterFloat>(
+              layout, ID::dryWet, "Dry/Wet", NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f}, 50.0f, "%",
+              juce::AudioProcessorParameter::genericParameter, [](float value, int) { return percentToString(value); },
+              [](const juce::String &text) { return stringToPercent(text); })),
 
-        wetSolo(addToLayout<AudioParameterBool>(layout, ID::wetSolo, "Wet Solo", false)),
-        linkChannels(addToLayout<AudioParameterBool>(layout, ID::linkChannels, "Channels Link", true))
+          wetSolo(addToLayout<AudioParameterBool>(layout, ID::wetSolo, "Wet Solo", false)),
+          linkChannels(addToLayout<AudioParameterBool>(layout, ID::linkChannels, "Channels Link", true))
 
-  {}
+    {
+    }
 
-  AudioParameterBool &bypass;
+    AudioParameterBool &bypass;
 
-  AudioParameterFloat &attack;
-  AudioParameterFloat &release;
+    AudioParameterFloat &attack;
+    AudioParameterFloat &release;
 
-  AudioParameterFloat &threshold;
+    AudioParameterFloat &threshold;
 
-  AudioParameterBool &bpfPower;
-  AudioParameterFloat &bpfFrequency;
-  AudioParameterBool &sidechainListen;
+    AudioParameterBool &bpfPower;
+    AudioParameterFloat &bpfFrequency;
+    AudioParameterBool &sidechainListen;
 
-  AudioParameterFloat &tilt;
-  AudioParameterFloat &midSide;
+    AudioParameterFloat &tilt;
+    AudioParameterFloat &midSide;
 
-  AudioParameterFloat &noiseLevelGain;
-  AudioParameterFloat &outputGain;
-  AudioParameterFloat &dryWet;
+    AudioParameterFloat &noiseLevelGain;
+    AudioParameterFloat &outputGain;
+    AudioParameterFloat &dryWet;
 
-  AudioParameterBool &wetSolo;
-  AudioParameterBool &linkChannels;
+    AudioParameterBool &wetSolo;
+    AudioParameterBool &linkChannels;
 
-private:
-  template <typename Param> static void add(AudioProcessorParameterGroup &group, std::unique_ptr<Param> param) {
-    group.addChild(std::move(param));
-  }
+  private:
+    template <typename Param> static void add(AudioProcessorParameterGroup &group, std::unique_ptr<Param> param)
+    {
+        group.addChild(std::move(param));
+    }
 
-  template <typename Param>
-  static void add(AudioProcessorValueTreeState::ParameterLayout &group, std::unique_ptr<Param> param) {
-    group.add(std::move(param));
-  }
+    template <typename Param>
+    static void add(AudioProcessorValueTreeState::ParameterLayout &group, std::unique_ptr<Param> param)
+    {
+        group.add(std::move(param));
+    }
 
-  template <typename Param, typename Group, typename... Ts> static Param &addToLayout(Group &layout, Ts &&...ts) {
-    auto param = std::make_unique<Param>(std::forward<Ts>(ts)...);
-    auto &ref = *param;
-    add(layout, std::move(param));
-    return ref;
-  }
+    template <typename Param, typename Group, typename... Ts> static Param &addToLayout(Group &layout, Ts &&...ts)
+    {
+        auto param = std::make_unique<Param>(std::forward<Ts>(ts)...);
+        auto &ref = *param;
+        add(layout, std::move(param));
+        return ref;
+    }
 
-  //==============================================================================
+    //==============================================================================
 
-  static String hzToString(float value) {
-    return juce::String(value, 1) + " Hz"; // << 표시될 문자열
-  }
-  static float stringToHz(const juce::String &text) {
-    return text.dropLastCharacters(3).getFloatValue(); // "12 %" → 12
-  }
+    static String hzToString(float value)
+    {
+        return juce::String(value, 1) + " Hz"; // << 표시될 문자열
+    }
+    static float stringToHz(const juce::String &text)
+    {
+        return text.dropLastCharacters(3).getFloatValue(); // "12 %" → 12
+    }
 
-  static String msToString(float value) {
-    return juce::String(value, 0) + " ms"; // << 표시될 문자열
-  }
-  static float stringToMs(const juce::String &text) {
-    return text.dropLastCharacters(3).getFloatValue(); // "12 ms" → 12
-  }
+    static String msToString(float value)
+    {
+        return juce::String(value, 0) + " ms"; // << 표시될 문자열
+    }
+    static float stringToMs(const juce::String &text)
+    {
+        return text.dropLastCharacters(3).getFloatValue(); // "12 ms" → 12
+    }
 
-  static String percentToString(float value) {
-    return juce::String(value, 1) + " %"; // << 표시될 문자열
-  }
-  static float stringToPercent(const juce::String &text) {
-    return text.dropLastCharacters(2).getFloatValue(); // "12 %" → 12
-  }
+    static String percentToString(float value)
+    {
+        return juce::String(value, 1) + " %"; // << 표시될 문자열
+    }
+    static float stringToPercent(const juce::String &text)
+    {
+        return text.dropLastCharacters(2).getFloatValue(); // "12 %" → 12
+    }
 
-  static String dBToString(float value) {
-    return juce::String(value, 1) + " dB"; // << 표시될 문자열
-  }
-  static float stringToDB(const juce::String &text) {
-    return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
-  }
+    static String dBToString(float value)
+    {
+        return juce::String(value, 1) + " dB"; // << 표시될 문자열
+    }
+    static float stringToDB(const juce::String &text)
+    {
+        return text.dropLastCharacters(3).getFloatValue(); // "12 dB" → 12
+    }
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Parameters)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Parameters)
 };

@@ -7,24 +7,25 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class EnvelopeComponent : public juce::Component, public juce::AudioProcessorValueTreeState::Listener {
-public:
-  EnvelopeComponent(Providers &pv);
-  ~EnvelopeComponent() override;
+class EnvelopeComponent : public juce::Component, public juce::AudioProcessorValueTreeState::Listener
+{
+  public:
+    EnvelopeComponent(Providers &pv);
+    ~EnvelopeComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  void parameterChanged(const juce::String &parameterID, float newValue) override;
+    void parameterChanged(const juce::String &parameterID, float newValue) override;
 
-  //==============================================================================
-private:
-  const ScaleProvider &scaleProvider;
-  ProcessorProvider &processorProvider;
-  //==============================================================================
+    //==============================================================================
+  private:
+    const ScaleProvider &scaleProvider;
+    ProcessorProvider &processorProvider;
+    //==============================================================================
 
-  juce::Label sectionLabel;
-  KnobComponent attackKnob, releaseKnob;
+    juce::Label sectionLabel;
+    KnobComponent attackKnob, releaseKnob;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EnvelopeComponent)
 };

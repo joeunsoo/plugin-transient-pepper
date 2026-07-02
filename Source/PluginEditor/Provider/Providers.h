@@ -6,10 +6,11 @@
 #include "ScaleController.h"
 #include "ScaleProvider.h"
 
-struct Providers {
-  EditorProvider &editor;
-  ScaleProvider &scale;
-  ScaleController &scaleController;
-  ProcessorProvider &processor;
-  LicenseProvider &license;
+struct Providers
+{
+    EditorProvider &editor;
+    ScaleProvider &scale;
+    ScaleController &scaleController;
+    ProcessorProvider &processor;
+    LicenseProvider &license;
 };

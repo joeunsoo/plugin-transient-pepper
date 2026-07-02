@@ -10,26 +10,27 @@
 // Forward declaration
 class PluginEditor;
 
-class ActivateModal : public juce::Component {
-public:
-  ActivateModal(const ScaleProvider &sp, LicenseProvider &lp);
-  ~ActivateModal() override;
+class ActivateModal : public juce::Component
+{
+  public:
+    ActivateModal(const ScaleProvider &sp, LicenseProvider &lp);
+    ~ActivateModal() override;
 
-  void showIn(juce::Component &parent);
-  void close();
+    void showIn(juce::Component &parent);
+    void close();
 
-  void resized() override;
-  void paint(juce::Graphics &g) override;
-  void mouseUp(const juce::MouseEvent &e) override;
+    void resized() override;
+    void paint(juce::Graphics &g) override;
+    void mouseUp(const juce::MouseEvent &e) override;
 
-private:
-  const ScaleProvider &scaleProvider;
-  LicenseProvider &licenseProvider;
+  private:
+    const ScaleProvider &scaleProvider;
+    LicenseProvider &licenseProvider;
 
-  ModalLookAndFeel modalLaf;
+    ModalLookAndFeel modalLaf;
 
-  DeactivateComponent deactivateComponent;
-  LoginComponent loginComponent;
+    DeactivateComponent deactivateComponent;
+    LoginComponent loginComponent;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActivateModal)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ActivateModal)
 };

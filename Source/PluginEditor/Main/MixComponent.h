@@ -10,25 +10,26 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class MixComponent : public juce::Component, public juce::AudioProcessorValueTreeState::Listener {
-public:
-  MixComponent(Providers &pv);
-  ~MixComponent() override;
+class MixComponent : public juce::Component, public juce::AudioProcessorValueTreeState::Listener
+{
+  public:
+    MixComponent(Providers &pv);
+    ~MixComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  void parameterChanged(const juce::String &parameterID, float newValue) override;
-  //==============================================================================
-private:
-  const ScaleProvider &scaleProvider;
-  ProcessorProvider &processorProvider;
-  //==============================================================================
+    void parameterChanged(const juce::String &parameterID, float newValue) override;
+    //==============================================================================
+  private:
+    const ScaleProvider &scaleProvider;
+    ProcessorProvider &processorProvider;
+    //==============================================================================
 
-  ToggleButtonComponent wetSoloButton;
-  KnobComponent noiseLevelGainKnob, dryWetKnob, outputGainKnob;
-  PeakMeterStereoComponent noisePeakMeter;
-  OutputMeterSection outputPeakMeter;
+    ToggleButtonComponent wetSoloButton;
+    KnobComponent noiseLevelGainKnob, dryWetKnob, outputGainKnob;
+    PeakMeterStereoComponent noisePeakMeter;
+    OutputMeterSection outputPeakMeter;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MixComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MixComponent)
 };

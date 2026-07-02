@@ -7,38 +7,39 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class KnobComponent : public juce::Component {
-public:
-  KnobComponent(EditorProvider &ep, const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID,
-                const String labelText);
-  ~KnobComponent() override;
+class KnobComponent : public juce::Component
+{
+  public:
+    KnobComponent(EditorProvider &ep, const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID,
+                  const String labelText);
+    ~KnobComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  void sendTooltip();
+    void sendTooltip();
 
-  void setColor(const String color);
-  void setRingColor(const String color);
+    void setColor(const String color);
+    void setRingColor(const String color);
 
-  void mouseEnter(const juce::MouseEvent &event) override;
-  void mouseExit(const juce::MouseEvent &event) override;
+    void mouseEnter(const juce::MouseEvent &event) override;
+    void mouseExit(const juce::MouseEvent &event) override;
 
-  void setKnobDisabled(bool value);
+    void setKnobDisabled(bool value);
 
-  //==============================================================================
-private:
-  EditorProvider &editorProvider;
-  const ScaleProvider &scaleProvider;
-  ProcessorProvider &processorProvider;
+    //==============================================================================
+  private:
+    EditorProvider &editorProvider;
+    const ScaleProvider &scaleProvider;
+    ProcessorProvider &processorProvider;
 
-  bool isDrag = false;
+    bool isDrag = false;
 
-  KnobSlider rotarySlider;
-  juce::Label label;
-  String parameterID;
+    KnobSlider rotarySlider;
+    juce::Label label;
+    String parameterID;
 
-  std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> attachment;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(KnobComponent)
 };

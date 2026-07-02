@@ -6,21 +6,23 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class ToggleButtonComponent : public juce::Component {
-public:
-  ToggleButtonComponent(const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID, const String Label);
-  ~ToggleButtonComponent() override;
+class ToggleButtonComponent : public juce::Component
+{
+  public:
+    ToggleButtonComponent(const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID,
+                          const String Label);
+    ~ToggleButtonComponent() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
-  void setSvgDrawable(std::unique_ptr<Drawable> svgDrawable);
-  void setButtonText(const String labelText);
+    void paint(juce::Graphics &g) override;
+    void resized() override;
+    void setSvgDrawable(std::unique_ptr<Drawable> svgDrawable);
+    void setButtonText(const String labelText);
 
-  //==============================================================================
-private:
-  CustomToggleButton toggleButton;
+    //==============================================================================
+  private:
+    CustomToggleButton toggleButton;
 
-  std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> attachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> attachment;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToggleButtonComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToggleButtonComponent)
 };

@@ -8,23 +8,24 @@
 #include <JuceHeader.h>
 
 //==============================================================================
-class OutputMeterSection : public juce::Component {
-public:
-  OutputMeterSection(Providers &pv);
-  ~OutputMeterSection() override;
+class OutputMeterSection : public juce::Component
+{
+  public:
+    OutputMeterSection(Providers &pv);
+    ~OutputMeterSection() override;
 
-  void paint(juce::Graphics &g) override;
-  void resized() override;
+    void paint(juce::Graphics &g) override;
+    void resized() override;
 
-  //==============================================================================
-private:
-  const ScaleProvider &scaleProvider;
-  //==============================================================================
+    //==============================================================================
+  private:
+    const ScaleProvider &scaleProvider;
+    //==============================================================================
 
-  PeakMeterStereoComponent outputPeakMeter;
-  MeterTickLabel outputMeterTick, meterTickLabel;
+    PeakMeterStereoComponent outputPeakMeter;
+    MeterTickLabel outputMeterTick, meterTickLabel;
 
-  juce::Component tickContainer;
+    juce::Component tickContainer;
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OutputMeterSection)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OutputMeterSection)
 };

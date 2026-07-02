@@ -1,7 +1,8 @@
 #pragma once
 #include "Define.h"
 
-namespace ID {
+namespace ID
+{
 #define PARAMETER_ID(str) static const ParameterID str{#str, 1};
 
 PARAMETER_ID(bypass)
