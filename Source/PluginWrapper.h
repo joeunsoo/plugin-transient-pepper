@@ -1,27 +1,26 @@
 #pragma once
 
-#include <JuceHeader.h>
 #include "AudioProcessor/PluginAudioProcessor.h"
 #include "LicenseManager.h"
+#include <JuceHeader.h>
 
-class PluginWrapper  : public PluginAudioProcessor
-{
-  public:
+
+class PluginWrapper : public PluginAudioProcessor {
+public:
   //==============================================================================
   PluginWrapper();
   ~PluginWrapper() override;
   //==============================================================================
-  bool hasEditor() const override               { return true; }
-  AudioProcessorEditor* createEditor() override;
+  bool hasEditor() const override { return true; }
+  AudioProcessorEditor *createEditor() override;
   //==============================================================================
 
   LicenseManager licenseManager;
   int windowScale;
-  
-  private:
+
+private:
   //==============================================================================
   juce::ApplicationProperties appProperties;
-  juce::PropertiesFile* props = nullptr; // 소유권은 ApplicationProperties가 관리
-
+  juce::PropertiesFile *props =
+      nullptr; // 소유권은 ApplicationProperties가 관리
 };
-
