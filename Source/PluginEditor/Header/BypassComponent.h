@@ -8,9 +8,9 @@ class BypassComponent : public juce::ToggleButton
 {
   public:
   BypassComponent(ProcessorProvider& pp);
-  ~BypassComponent();
+  ~BypassComponent() override;
   
-  void resized() override {};
+  void resized() override {}
   
   //==============================================================================
   protected:

@@ -9,7 +9,7 @@ class PluginWrapper  : public PluginAudioProcessor
   public:
   //==============================================================================
   PluginWrapper();
-  ~PluginWrapper();
+  ~PluginWrapper() override;
   //==============================================================================
   bool hasEditor() const override               { return true; }
   AudioProcessorEditor* createEditor() override;

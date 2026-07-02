@@ -1,5 +1,6 @@
 #pragma once
 #include "ProcessorProvider.h"
+#include "../../AudioProcessor/PluginAudioProcessor.h"
 
 struct AudioProcessorProvider : ProcessorProvider {
   PluginAudioProcessor& proc;
@@ -19,7 +20,7 @@ struct AudioProcessorProvider : ProcessorProvider {
   // 출력 채널 - 스테레오 여부
   int getTotalNumOutputChannels() const noexcept override {
     return proc.getTotalNumOutputChannels();
-  };
+  }
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioProcessorProvider)
 };
