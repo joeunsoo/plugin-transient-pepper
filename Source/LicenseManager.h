@@ -33,12 +33,13 @@ class LicenseManager
     StringPairArray responseHeaders;
     int statusCode = 0;
     
-    auto responseStream =
-    url.createInputStream (URL::InputStreamOptions (URL::ParameterHandling::inAddress)
-                           .withConnectionTimeoutMs (10000)
-                           .withResponseHeaders (&responseHeaders)
-                           .withStatusCode (&statusCode)
-                           .withExtraHeaders ("Content-Type: application/json\r\n")); // 또는 application/json
+    auto responseStream = url.createInputStream(
+      juce::URL::InputStreamOptions(juce::URL::ParameterHandling::inPostData)
+        .withConnectionTimeoutMs(15000)
+        .withResponseHeaders(&responseHeaders)
+        .withStatusCode(&statusCode)
+        .withExtraHeaders("Content-Type: application/json")
+    );
     
     if (responseStream != nullptr)
     {
