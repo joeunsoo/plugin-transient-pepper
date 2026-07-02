@@ -69,7 +69,7 @@ void FaderLookAndFeel::drawLinearSlider(juce::Graphics& g,
     // 폰트 및 텍스트 측정
     juce::Font font = FONT_PRETENDARD_REGULAR.withHeight(10.0f * scale);
     g.setFont(font);
-    const float textWidth = font.getStringWidthFloat(valueText) + 10.0f * scale; // 좌우 내부 패딩
+    auto textWidth = juce::GlyphArrangement::getStringWidth (font, valueText) + 10.0f * scale; // 좌우 내부 패딩
     const float labelWidth = juce::jmax(labelMinWidth, textWidth);
     
     // 기본 위치: thumb 오른쪽

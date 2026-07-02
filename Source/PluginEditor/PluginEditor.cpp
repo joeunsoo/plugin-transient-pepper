@@ -84,7 +84,7 @@ void PluginEditor::showTooltipAt(String id, const juce::Rectangle<int>& area, co
   tooltipLabel->setBounds(area.getX(), area.getY() + int(UI_TOOLTIP_OFFSET_TOP * scale), area.getWidth(), int(20.0f * scale)); // slider 위로 위치
   
   tooltipLabel->setFont(FONT_PRETENDARD_MEDIUM.withHeight(UI_TOOLTIP_FONT_HEIGHT*scale));
-  auto textWidth  = tooltipLabel->getFont().getStringWidth(tooltipLabel->getText());
+  auto textWidth = juce::GlyphArrangement::getStringWidthInt (tooltipLabel->getFont(), tooltipLabel->getText());
   auto textHeight = tooltipLabel->getFont().getHeight();
   
   // padding 포함
