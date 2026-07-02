@@ -17,7 +17,7 @@ meterTickLabel(pv.scale, false, true)
 
 OutputMeterSection::~OutputMeterSection()
 {
-};
+}
 
 void OutputMeterSection::paint(juce::Graphics& g)
 {

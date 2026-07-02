@@ -72,7 +72,7 @@ LoginComponent::~LoginComponent() {
   loginButton.onClick = nullptr;
   emailEditor.removeListener(this);
   passwordEditor.removeListener(this);
-};
+}
 
 void LoginComponent::callActivate()
 {

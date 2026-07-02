@@ -63,7 +63,7 @@ KnobComponent::~KnobComponent()
   rotarySlider.onDragStart = nullptr;
   rotarySlider.onDragEnd = nullptr;
   attachment.reset();
-};
+}
 
 void KnobComponent::sendTooltip()
 {
@@ -88,13 +88,13 @@ void KnobComponent::mouseEnter(const juce::MouseEvent&)
 {
   isDrag = true;
   sendTooltip();
-};
+}
 
 void KnobComponent::mouseExit(const juce::MouseEvent&)
 {
   isDrag = false;
   editorProvider.setTooltipLabelVisible(false);
-};
+}
 
 void KnobComponent::paint(juce::Graphics& g)
 {

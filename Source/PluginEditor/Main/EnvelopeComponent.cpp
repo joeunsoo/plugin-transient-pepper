@@ -26,7 +26,7 @@ EnvelopeComponent::~EnvelopeComponent()
 {
   processorProvider.state().removeParameterListener(ID::bypass.getParamID(), this);
   processorProvider.state().removeParameterListener(ID::sidechainListen.getParamID(), this);
-};
+}
 
 void EnvelopeComponent::parameterChanged (const juce::String&, float) {
   bool bypass = (processorProvider.state().getRawParameterValue(ID::bypass.getParamID())->load() >= 0.5f);

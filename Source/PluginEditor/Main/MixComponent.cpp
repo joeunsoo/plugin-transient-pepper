@@ -35,7 +35,7 @@ MixComponent::~MixComponent()
   processorProvider.state().removeParameterListener(ID::bypass.getParamID(), this);
   processorProvider.state().removeParameterListener(ID::wetSolo.getParamID(), this);
   processorProvider.state().removeParameterListener(ID::sidechainListen.getParamID(), this);
-};
+}
 
 void MixComponent::parameterChanged (const juce::String&, float) {
   bool bypass = (processorProvider.state().getRawParameterValue(ID::bypass.getParamID())->load() >= 0.5f);

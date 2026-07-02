@@ -24,7 +24,7 @@ toneComponent(pv), mixComponent(pv)
 MainComponent::~MainComponent()
 {
   setLookAndFeel(nullptr);
-};
+}
 
 void MainComponent::resized()
 {

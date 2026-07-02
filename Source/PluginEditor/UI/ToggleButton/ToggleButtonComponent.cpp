@@ -22,7 +22,7 @@ ToggleButtonComponent::ToggleButtonComponent(
 ToggleButtonComponent::~ToggleButtonComponent()
 {
   attachment.reset();
-};
+}
 
 void ToggleButtonComponent::paint(juce::Graphics& g)
 {

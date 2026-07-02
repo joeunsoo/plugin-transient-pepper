@@ -20,7 +20,7 @@ deactivateComponent(*this, sp, lp), loginComponent(*this, sp, lp)
 
 ActivateModal::~ActivateModal() {
   setLookAndFeel(nullptr);
-};
+}
 
 
 void ActivateModal::resized()

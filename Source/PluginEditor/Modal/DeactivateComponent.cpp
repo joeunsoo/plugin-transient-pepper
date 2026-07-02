@@ -39,7 +39,7 @@ DeactivateComponent::DeactivateComponent(ActivateModal& modal,
 
 DeactivateComponent::~DeactivateComponent() {
   deactivateButton.onClick = nullptr;
-};
+}
 
 void DeactivateComponent::resized()
 {

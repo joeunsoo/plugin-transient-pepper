@@ -30,7 +30,7 @@ TrialComponent::TrialComponent(ActivateModal& modal,
 TrialComponent::~TrialComponent()
 {
   trialButton.onClick = nullptr;
-};
+}
 
 void TrialComponent::resized()
 {

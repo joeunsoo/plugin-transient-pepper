@@ -39,7 +39,7 @@ peakMeter(pp, index, usePeakHold)
 PeakMeterStereoFaderLabel::~PeakMeterStereoFaderLabel()
 {
   setLookAndFeel(nullptr);
-};
+}
 
 void PeakMeterStereoFaderLabel::paint(juce::Graphics& g)
 {
