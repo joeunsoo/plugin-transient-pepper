@@ -197,7 +197,9 @@ class LicenseManager
    #pragma clang diagnostic ignored "-Wsign-conversion"
    #pragma clang diagnostic ignored "-Wsign-compare"
    for (int i = 0; i < mb.getSize(); ++i)
-   mb[i] = src[i] ^ secretKey[i % secretKey.length()];
+   {
+    mb[i] = src[i] ^ secretKey[i % secretKey.length()];
+   }
    #pragma clang diagnostic  pop
    
    return juce::Base64::toBase64(mb.getData(), mb.getSize());
@@ -213,7 +215,9 @@ class LicenseManager
    #pragma clang diagnostic ignored "-Wsign-conversion"
    #pragma clang diagnostic ignored "-Wsign-compare"
    for (int i = 0; i < block.getSize(); ++i)
-   out[i] = block[i] ^ secretKey[i % secretKey.length()];
+   {
+    out[i] = block[i] ^ secretKey[i % secretKey.length()];
+   }
    #pragma clang diagnostic pop
    
    return juce::String::fromUTF8((const char*)out.getData(), (int)out.getSize());
