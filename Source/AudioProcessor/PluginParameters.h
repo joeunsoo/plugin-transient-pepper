@@ -107,7 +107,6 @@ struct Parameters
 
           wetSolo(addToLayout<AudioParameterBool>(layout, ID::wetSolo, "Wet Solo", false)),
           linkChannels(addToLayout<AudioParameterBool>(layout, ID::linkChannels, "Channels Link", true))
-
     {
     }
 
