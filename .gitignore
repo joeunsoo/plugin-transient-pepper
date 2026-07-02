@@ -7,6 +7,7 @@ Distribution.xml
 
 **/.DS_Store
 /Builds
+/build
 
 **/node_modules
 WebViewGUI/build
