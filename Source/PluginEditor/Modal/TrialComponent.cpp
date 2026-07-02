@@ -33,7 +33,6 @@ TrialComponent::~TrialComponent()
 
 void TrialComponent::resized()
 {
-
     bool isTrialExpired = licenseProvider.isTrialExpired();
     int64 trialTimestamp = licenseProvider.getTrial();
     int trialDays = licenseProvider.getTrialDays();

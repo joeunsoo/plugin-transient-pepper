@@ -34,8 +34,8 @@ void PeakMeterComponent::paint(juce::Graphics &g)
     bounds.removeFromRight(UI_METER_PADDING_RIGHT);
 
     // Drop shadow
-    juce::Image buttonImage(juce::Image::ARGB, juce::roundToInt(boundsOut.getWidth()),
-                            juce::roundToInt(boundsOut.getHeight()), true);
+    juce::Image buttonImage(
+        juce::Image::ARGB, juce::roundToInt(boundsOut.getWidth()), juce::roundToInt(boundsOut.getHeight()), true);
     juce::Graphics g2(buttonImage);
     g2.fillRoundedRectangle(bounds, UI_METER_BORDER_RADIUS);
 
@@ -56,8 +56,8 @@ void PeakMeterComponent::paint(juce::Graphics &g)
     const float level01 = skewedMap(smoothedLevel, kMeterMinDb, kMeterMaxDb, 0.0f, 1.0f, 1.0f);
     float barHeight = bounds.getHeight() * level01;
 
-    juce::ColourGradient meterGradient(SECONDARY_RGB_6, bounds.getX(), bounds.getY(), SECONDARY_RGB_6, bounds.getX(),
-                                       bounds.getBottom(), false);
+    juce::ColourGradient meterGradient(
+        SECONDARY_RGB_6, bounds.getX(), bounds.getY(), SECONDARY_RGB_6, bounds.getX(), bounds.getBottom(), false);
 
     // g.setColour(TEAL_RGB_6);
     g.setGradientFill(meterGradient);

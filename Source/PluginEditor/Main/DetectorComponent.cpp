@@ -2,7 +2,6 @@
 #include "../../NamespaceParameterId.h"
 #include "../Fonts.h"
 
-
 //==============================================================================
 DetectorComponent::DetectorComponent(Providers &pv)
     : scaleProvider(pv.scale), processorProvider(pv.processor),

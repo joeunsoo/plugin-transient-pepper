@@ -65,10 +65,13 @@ void GraphComponent::updateGraph(float level1, float level2)
         displayedLevel += decayCoeff * (inputDb - displayedLevel);
 
     // 4) 렌더용 0..1 스케일로 동일 스큐 매핑 (PeakMeterComponent와 동일한 skewedMap 사용)
-    const float level01 =
-        skewedMap(juce::jlimit(kMeterMinDb, kMeterMaxDb, displayedLevel), kMeterMinDb, kMeterMaxDb, 0.0f, 1.0f,
-                  1.0f // 동일 스큐 계수 사용 (PeakMeterComponent에서 1.0f로 호출)
-        );
+    const float level01 = skewedMap(juce::jlimit(kMeterMinDb, kMeterMaxDb, displayedLevel),
+                                    kMeterMinDb,
+                                    kMeterMaxDb,
+                                    0.0f,
+                                    1.0f,
+                                    1.0f // 동일 스큐 계수 사용 (PeakMeterComponent에서 1.0f로 호출)
+    );
 
     // 5) 화면 Y 좌표로 변환 (아래로 갈수록 값이 커지지 않도록 뒤집기)
     const float height = (float)getHeight();

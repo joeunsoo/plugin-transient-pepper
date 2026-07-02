@@ -9,7 +9,9 @@
 class ToggleButtonComponent : public juce::Component
 {
   public:
-    ToggleButtonComponent(const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID,
+    ToggleButtonComponent(const ScaleProvider &sp,
+                          ProcessorProvider &pp,
+                          const String &parameterID,
                           const String Label);
     ~ToggleButtonComponent() override;
 

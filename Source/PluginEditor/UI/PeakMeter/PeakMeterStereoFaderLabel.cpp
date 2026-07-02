@@ -1,13 +1,17 @@
 #include "PeakMeterStereoFaderLabel.h"
 #include "../../Fonts.h"
 
-PeakMeterStereoFaderLabel::PeakMeterStereoFaderLabel(const ScaleProvider &sp, ProcessorProvider &pp, int index,
-                                                     bool usePeakHold, const String &paramID, const String labelText)
+PeakMeterStereoFaderLabel::PeakMeterStereoFaderLabel(const ScaleProvider &sp,
+                                                     ProcessorProvider &pp,
+                                                     int index,
+                                                     bool usePeakHold,
+                                                     const String &paramID,
+                                                     const String labelText)
     : scaleProvider(sp), processorProvider(pp), peakMeter(pp, index, usePeakHold)
 {
     parameterID = paramID;
-    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processorProvider.state(),
-                                                                                        paramID, verticalSlider);
+    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        processorProvider.state(), paramID, verticalSlider);
 
     auto *param = processorProvider.state().getParameter(parameterID);
     jassert(param != nullptr);

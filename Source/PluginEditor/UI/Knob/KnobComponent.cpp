@@ -3,8 +3,8 @@
 #include "../../Fonts.h"
 
 //==============================================================================
-KnobComponent::KnobComponent(EditorProvider &ep, const ScaleProvider &sp, ProcessorProvider &pp, const String &paramID,
-                             const String labelText)
+KnobComponent::KnobComponent(
+    EditorProvider &ep, const ScaleProvider &sp, ProcessorProvider &pp, const String &paramID, const String labelText)
     : editorProvider(ep), scaleProvider(sp), processorProvider(pp), rotarySlider(sp)
 {
     parameterID = paramID;
@@ -15,8 +15,8 @@ KnobComponent::KnobComponent(EditorProvider &ep, const ScaleProvider &sp, Proces
 
     addAndMakeVisible(rotarySlider);
 
-    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(processorProvider.state(),
-                                                                                        parameterID, rotarySlider);
+    attachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
+        processorProvider.state(), parameterID, rotarySlider);
     label.setText(labelText, juce::dontSendNotification);
     label.setJustificationType(juce::Justification::centred);
     label.setColour(juce::Label::textColourId, UI_KNOB_LABEL_COLOUR);
@@ -63,8 +63,8 @@ void KnobComponent::sendTooltip()
 
         float size = float(std::min(rotarySlider.getWidth(), rotarySlider.getHeight()));
         float top = (float(rotarySlider.getHeight()) / 2.0f) + (size / 2.0f) + (UI_KNOB_LABEL_HEIGHT * scale);
-        juce::Rectangle<int> tooltipArea(topLeftInEditor.getX(), int(float(topLeftInEditor.getY()) + top),
-                                         rotarySlider.getWidth(), int(24 * scale));
+        juce::Rectangle<int> tooltipArea(
+            topLeftInEditor.getX(), int(float(topLeftInEditor.getY()) + top), rotarySlider.getWidth(), int(24 * scale));
 
         editorProvider.showTooltipAt(parameterID, tooltipArea, param->getCurrentValueAsText());
     }

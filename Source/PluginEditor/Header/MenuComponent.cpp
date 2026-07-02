@@ -3,7 +3,6 @@
 #include "../DefineUI.h"
 #include "../Fonts.h"
 
-
 //==============================================================================
 MenuComponent::MenuComponent(Providers &pv)
     : editorProvider(pv.editor), scaleProvider(pv.scale), scaleController(pv.scaleController),

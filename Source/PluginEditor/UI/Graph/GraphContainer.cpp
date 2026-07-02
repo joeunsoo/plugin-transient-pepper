@@ -38,8 +38,8 @@ void GraphContainer::paint(juce::Graphics &g)
     bounds.removeFromRight(UI_GRAPH_PADDING_RIGHT * scale);
 
     // Drop shadow
-    juce::Image graphImage(juce::Image::ARGB, juce::roundToInt(boundsOut.getWidth()),
-                           juce::roundToInt(boundsOut.getHeight()), true);
+    juce::Image graphImage(
+        juce::Image::ARGB, juce::roundToInt(boundsOut.getWidth()), juce::roundToInt(boundsOut.getHeight()), true);
     {
         juce::Graphics g2(graphImage);
         g2.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS * scale);

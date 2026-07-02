@@ -1,0 +1,26 @@
+CompileFlags:
+  Add:
+    [
+      "-Wall",
+      "-Wextra",
+      "-Wconversion",
+      "-Wdeprecated-declarations",
+      "-Wsign-conversion",
+      "-Wshadow",
+      "-Wpedantic",
+      "-Wuninitialized",
+      "-Wnull-dereference",
+      "-Wformat",
+      "-Wstrict-aliasing",
+      "-Wc++20-compat",
+      "-Wdeprecated",
+      "-Wnon-virtual-dtor",
+      "-Wfloat-equal",
+      "-Wsystem-headers"
+    ]
+
+Diagnostics:
+  UnusedIncludes: None
+  ClangTidy:
+    CheckOptions:
+      bugprone-narrowing-conversions: "true"

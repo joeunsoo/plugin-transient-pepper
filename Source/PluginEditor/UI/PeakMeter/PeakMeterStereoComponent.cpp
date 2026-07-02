@@ -32,8 +32,8 @@ void PeakMeterStereoComponent::paint(juce::Graphics &g)
         meterArea.removeFromRight(UI_METER_PADDING_RIGHT);
 
         // Drop shadow
-        juce::Image graphImage(juce::Image::ARGB, juce::roundToInt(area.getWidth()), juce::roundToInt(area.getHeight()),
-                               true);
+        juce::Image graphImage(
+            juce::Image::ARGB, juce::roundToInt(area.getWidth()), juce::roundToInt(area.getHeight()), true);
         juce::Graphics g2(graphImage);
         g2.fillRoundedRectangle(meterArea, UI_METER_BORDER_RADIUS);
 
@@ -55,8 +55,8 @@ void PeakMeterStereoComponent::paint(juce::Graphics &g)
         rightArea.removeFromRight(UI_METER_PADDING_RIGHT);
         {
             // Drop shadow
-            juce::Image graphImage(juce::Image::ARGB, juce::roundToInt(area.getWidth()),
-                                   juce::roundToInt(area.getHeight()), true);
+            juce::Image graphImage(
+                juce::Image::ARGB, juce::roundToInt(area.getWidth()), juce::roundToInt(area.getHeight()), true);
             {
                 juce::Graphics g2(graphImage);
                 g2.fillRoundedRectangle(leftArea, UI_METER_BORDER_RADIUS);

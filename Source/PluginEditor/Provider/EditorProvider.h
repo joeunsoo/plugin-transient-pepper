@@ -4,8 +4,8 @@ struct EditorProvider
 {
     virtual ~EditorProvider() = default;
 
-    virtual void showTooltipAt(String id, const juce::Rectangle<int> &area,
-                               const juce::String &text) const noexcept = 0;
+    virtual void
+    showTooltipAt(String id, const juce::Rectangle<int> &area, const juce::String &text) const noexcept = 0;
     virtual void setTooltipLabelVisible(bool value) const noexcept = 0;
 
     // 드래그

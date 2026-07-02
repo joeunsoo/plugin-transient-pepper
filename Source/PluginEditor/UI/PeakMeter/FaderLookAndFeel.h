@@ -15,8 +15,16 @@ class FaderLookAndFeel : public juce::LookAndFeel_V4
 
     ~FaderLookAndFeel() override = default;
 
-    void drawLinearSlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPos, float minSliderPos,
-                          float maxSliderPos, const juce::Slider::SliderStyle style, juce::Slider &slider) override;
+    void drawLinearSlider(juce::Graphics &g,
+                          int x,
+                          int y,
+                          int width,
+                          int height,
+                          float sliderPos,
+                          float minSliderPos,
+                          float maxSliderPos,
+                          const juce::Slider::SliderStyle style,
+                          juce::Slider &slider) override;
 
   private:
     const ScaleProvider *scaleProvider = nullptr; // 포인터로 변경

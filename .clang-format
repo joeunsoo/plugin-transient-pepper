@@ -4,8 +4,12 @@ TabWidth: 4
 UseTab: Never
 AllowShortFunctionsOnASingleLine: Inline
 ColumnLimit: 120
-# PointerAlignment: Type
+PointerAlignment: Right
 DerivePointerAlignment: false
 AlignConsecutiveDeclarations: false
 BreakBeforeBraces: Allman
 SortIncludes: true
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+BinPackArguments: false
+BinPackParameters: false

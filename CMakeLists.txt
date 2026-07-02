@@ -84,6 +84,7 @@ if(APPLE)
             -Wall
             -Wextra
             -Wconversion
+            -Wdeprecated-declarations
             -Wsign-conversion
             -Wshadow
             -Wpedantic

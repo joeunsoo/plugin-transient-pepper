@@ -5,8 +5,15 @@
 #include <JuceHeader.h>
 
 // 슬라이더 thumb 옆에 값을 표시하는 커스텀 LookAndFeel
-void FaderLookAndFeel::drawLinearSlider(juce::Graphics &g, int x, int y, int width, int height, float sliderPos,
-                                        float minSliderPos, float maxSliderPos, const juce::Slider::SliderStyle style,
+void FaderLookAndFeel::drawLinearSlider(juce::Graphics &g,
+                                        int x,
+                                        int y,
+                                        int width,
+                                        int height,
+                                        float sliderPos,
+                                        float minSliderPos,
+                                        float maxSliderPos,
+                                        const juce::Slider::SliderStyle style,
                                         juce::Slider &slider)
 {
     const float scale = (scaleProvider != nullptr) ? scaleProvider->getScale() : 1.0f;
@@ -82,7 +89,7 @@ void FaderLookAndFeel::drawLinearSlider(juce::Graphics &g, int x, int y, int wid
         // 텍스트 중앙 정렬
         g.setColour(fg);
         juce::Rectangle<float> textBounds = labelBounds.reduced(6.0f * scale, 2.0f * scale);
-        g.drawFittedText(valueText, textBounds.getSmallestIntegerContainer(), juce::Justification::centred,
-                         int(1 * scale));
+        g.drawFittedText(
+            valueText, textBounds.getSmallestIntegerContainer(), juce::Justification::centred, int(1 * scale));
     }
 }

@@ -2,7 +2,6 @@
 #include "../../Define.h"
 #include "../Fonts.h"
 
-
 //==============================================================================
 HeaderComponent::HeaderComponent(Providers &pv)
     : scaleProvider(pv.scale), bypassComponent(pv.processor), menuComponent(pv)

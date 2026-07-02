@@ -53,11 +53,11 @@ void AboutModal::resized()
 
     auto flexItemSetting = [this](juce::Component &child, int height, float marginBottom)
     {
-        auto scale = scaleProvider.getScale();
+        auto currentScale = scaleProvider.getScale();
         return FlexItem(child)
-            .withWidth(300 * scale)
-            .withMinHeight(float(height) * scale)
-            .withMargin(FlexItem::Margin{0, 0, marginBottom * scale, 0});
+            .withWidth(300 * currentScale)
+            .withMinHeight(float(height) * currentScale)
+            .withMargin(FlexItem::Margin{0, 0, marginBottom * currentScale, 0});
     };
 
     flexBox.items.add(flexItemSetting(pluginNameLabel, UI_PLUGIN_NAME_FONT_HEIGHT, 6.0f));

@@ -59,16 +59,19 @@ void MainComponent::paint(juce::Graphics &g)
 
     // ---------- 2. 반투명 배경 (glass effect) ----------
     juce::ColourGradient glassGradient(juce::Colours::white.withAlpha(0.10f), // 상단 밝기
-                                       bounds.getX(), bounds.getY(),
+                                       bounds.getX(),
+                                       bounds.getY(),
                                        juce::Colours::white.withAlpha(0.0f), // 하단 살짝 투명
-                                       bounds.getX(), bounds.getBottom(), false);
+                                       bounds.getX(),
+                                       bounds.getBottom(),
+                                       false);
     g.setGradientFill(glassGradient);
     g.fillRoundedRectangle(bounds, borderRadius);
 
     // 3) 위쪽 하이라이트 (빛 반사)
     g.setColour(DARK_RGB_5.withAlpha(0.35f));
-    g.drawLine(bounds.getX() + borderRadius, bounds.getY() + 1, bounds.getRight() - borderRadius, bounds.getY() + 1,
-               1.5f);
+    g.drawLine(
+        bounds.getX() + borderRadius, bounds.getY() + 1, bounds.getRight() - borderRadius, bounds.getY() + 1, 1.5f);
 
     // ---------- 4. 경계선(optional) ----------
     g.setColour(juce::Colours::black.withAlpha(0.1f));

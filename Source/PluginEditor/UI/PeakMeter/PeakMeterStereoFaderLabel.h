@@ -9,8 +9,12 @@
 class PeakMeterStereoFaderLabel : public juce::Component
 {
   public:
-    PeakMeterStereoFaderLabel(const ScaleProvider &sp, ProcessorProvider &pp, int index, bool usePeakHold,
-                              const String &parameterID, const String labelText);
+    PeakMeterStereoFaderLabel(const ScaleProvider &sp,
+                              ProcessorProvider &pp,
+                              int index,
+                              bool usePeakHold,
+                              const String &parameterID,
+                              const String labelText);
     ~PeakMeterStereoFaderLabel() override;
 
     void paint(juce::Graphics &g) override;

@@ -1,7 +1,9 @@
 #include "ToggleButtonComponent.h"
 
 //==============================================================================
-ToggleButtonComponent::ToggleButtonComponent(const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID,
+ToggleButtonComponent::ToggleButtonComponent(const ScaleProvider &sp,
+                                             ProcessorProvider &pp,
+                                             const String &parameterID,
                                              const String labelText)
     : toggleButton(sp)
 {

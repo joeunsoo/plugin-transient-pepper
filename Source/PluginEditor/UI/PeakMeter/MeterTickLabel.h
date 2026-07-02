@@ -6,7 +6,6 @@
 #include "../../Provider/ScaleProvider.h"
 #include <JuceHeader.h>
 
-
 class MeterTickLabel : public juce::Component
 {
   public:
@@ -29,8 +28,8 @@ class MeterTickLabel : public juce::Component
         bounds.removeFromRight(UI_METER_PADDING_RIGHT * scale);
         // ===== 눈금 라벨 및 눈금선 추가 =====
         // 표기할 라벨들
-        static const std::array<float, 9> kLabels = {-0.0f,  -3.0f,  -6.0f,  -10.0f, -20.0f,
-                                                     -30.0f, -40.0f, -50.0f, -60.0f};
+        static const std::array<float, 9> kLabels = {
+            -0.0f, -3.0f, -6.0f, -10.0f, -20.0f, -30.0f, -40.0f, -50.0f, -60.0f};
         // 텍스트 스타일
         g.setFont(FONT_PRETENDARD_REGULAR.withHeight(10.0f * scale));
 

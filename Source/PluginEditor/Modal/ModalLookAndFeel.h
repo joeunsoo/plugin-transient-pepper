@@ -23,8 +23,11 @@ struct ModalLookAndFeel : public LookAndFeel_V4
     ModalLookAndFeel(const ScaleProvider &sp) : scaleProvider(sp) {}
     ~ModalLookAndFeel() override {}
 
-    void drawButtonBackground(Graphics &g, Button &button, const Colour &backgroundColour,
-                              bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override
+    void drawButtonBackground(Graphics &g,
+                              Button &button,
+                              const Colour &backgroundColour,
+                              bool shouldDrawButtonAsHighlighted,
+                              bool shouldDrawButtonAsDown) override
     {
         auto scale = scaleProvider.getScale();
 
@@ -47,9 +50,16 @@ struct ModalLookAndFeel : public LookAndFeel_V4
         if (flatOnLeft || flatOnRight || flatOnTop || flatOnBottom)
         {
             Path path;
-            path.addRoundedRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), cornerSize,
-                                     cornerSize, !(flatOnLeft || flatOnTop), !(flatOnRight || flatOnTop),
-                                     !(flatOnLeft || flatOnBottom), !(flatOnRight || flatOnBottom));
+            path.addRoundedRectangle(bounds.getX(),
+                                     bounds.getY(),
+                                     bounds.getWidth(),
+                                     bounds.getHeight(),
+                                     cornerSize,
+                                     cornerSize,
+                                     !(flatOnLeft || flatOnTop),
+                                     !(flatOnRight || flatOnTop),
+                                     !(flatOnLeft || flatOnBottom),
+                                     !(flatOnRight || flatOnBottom));
 
             g.fillPath(path);
 
@@ -125,9 +135,16 @@ struct ModalLookAndFeel : public LookAndFeel_V4
 #endif
     }
 
-    void drawPopupMenuItem(Graphics &g, const juce::Rectangle<int> &area, const bool isSeparator, const bool isActive,
-                           const bool isHighlighted, const bool isTicked, const bool hasSubMenu, const String &text,
-                           const String &shortcutKeyText, const Drawable *icon,
+    void drawPopupMenuItem(Graphics &g,
+                           const juce::Rectangle<int> &area,
+                           const bool isSeparator,
+                           const bool isActive,
+                           const bool isHighlighted,
+                           const bool isTicked,
+                           const bool hasSubMenu,
+                           const String &text,
+                           const String &shortcutKeyText,
+                           const Drawable *icon,
                            const Colour *const textColourToUse) override
     {
         auto scale = scaleProvider.getScale();

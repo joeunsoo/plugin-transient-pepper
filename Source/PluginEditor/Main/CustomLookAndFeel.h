@@ -5,16 +5,17 @@
 #include "../Provider/ScaleProvider.h"
 #include "../UI/Knob/KnobSlider.h"
 
-
 struct CustomLookAndFeel : public LookAndFeel_V4
 {
   public:
     CustomLookAndFeel(const ScaleProvider &sp) : scaleProvider(sp) {}
     ~CustomLookAndFeel() override {}
 
-    void drawButtonBackground(juce::Graphics &g, juce::Button &button,
+    void drawButtonBackground(juce::Graphics &g,
+                              juce::Button &button,
                               const juce::Colour &, // backgroundColour
-                              bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override
+                              bool shouldDrawButtonAsHighlighted,
+                              bool shouldDrawButtonAsDown) override
     {
         auto scale = scaleProvider.getScale();
         auto boundsOut = button.getLocalBounds().toFloat();
@@ -27,8 +28,8 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         float cornerSize = UI_BUTTON_BORDER_RADIUS * scale;
 
         // Drop shadow
-        juce::Image buttonImage(juce::Image::ARGB, juce::roundToInt(boundsOut.getWidth()),
-                                juce::roundToInt(boundsOut.getHeight()), true);
+        juce::Image buttonImage(
+            juce::Image::ARGB, juce::roundToInt(boundsOut.getWidth()), juce::roundToInt(boundsOut.getHeight()), true);
         {
             juce::Graphics g2(buttonImage);
             g2.fillRoundedRectangle(bounds, cornerSize);
@@ -47,7 +48,8 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                                               : SECONDARY_DARK_RGB_6, // 비활성 (OFF)
                                       bounds.getTopLeft(),
                                       button.getToggleState() ? SECONDARY_DARK_RGB_2 : SECONDARY_DARK_RGB_9,
-                                      bounds.getBottomRight(), false);
+                                      bounds.getBottomRight(),
+                                      false);
 
         g.setGradientFill(gradient);
         g.fillRoundedRectangle(bounds, cornerSize);
@@ -71,7 +73,9 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         }
     }
 
-    void drawButtonText(Graphics &g, TextButton &button, bool /*shouldDrawButtonAsHighlighted*/,
+    void drawButtonText(Graphics &g,
+                        TextButton &button,
+                        bool /*shouldDrawButtonAsHighlighted*/,
                         bool /*shouldDrawButtonAsDown*/) override
     {
         auto scale = scaleProvider.getScale();
@@ -92,12 +96,24 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         bounds.removeFromRight(int(UI_BUTTON_PADDING_RIGHT * scale));
 
         if (textWidth > 0)
-            g.drawFittedText(button.getButtonText(), bounds.getX(), bounds.getY(), bounds.getWidth(),
-                             bounds.getHeight(), Justification::centred, 2);
+            g.drawFittedText(button.getButtonText(),
+                             bounds.getX(),
+                             bounds.getY(),
+                             bounds.getWidth(),
+                             bounds.getHeight(),
+                             Justification::centred,
+                             2);
     }
 
-    void drawRotarySlider(Graphics &g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle,
-                          float rotaryEndAngle, Slider &slider) override
+    void drawRotarySlider(Graphics &g,
+                          int x,
+                          int y,
+                          int width,
+                          int height,
+                          float sliderPos,
+                          float rotaryStartAngle,
+                          float rotaryEndAngle,
+                          Slider &slider) override
     {
         juce::Colour colorIn = DARK_RGB_4;
         juce::Colour colorDotLine = DARK_RGB_4;
@@ -143,7 +159,8 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                          rw * 0.5f,      // X 반지름
                                          rw * 0.5f,      // Y 반지름
                                          0.0f,           // rotation
-                                         rotaryStartAngle, rotaryEndAngle,
+                                         rotaryStartAngle,
+                                         rotaryEndAngle,
                                          true // true = moveTo(startAngle) → 선만
                 );
                 g.setColour(colorDotLine.withAlpha(0.7f));
@@ -195,8 +212,8 @@ struct CustomLookAndFeel : public LookAndFeel_V4
         if ((vw * 25) > 1)
         {
             // Drop shadow 생성
-            juce::DropShadow ds(juce::Colours::black.withAlpha(0.9f), static_cast<int>(vw * 100),
-                                {0, static_cast<int>(vw * 120)});
+            juce::DropShadow ds(
+                juce::Colours::black.withAlpha(0.9f), static_cast<int>(vw * 100), {0, static_cast<int>(vw * 120)});
 
             // 위치 변환 후 그림자 적용
             g.saveState();
@@ -215,9 +232,10 @@ struct CustomLookAndFeel : public LookAndFeel_V4
 
             // 그라데이션 윤곽선
             juce::ColourGradient grad(
-                juce::Colours::white.withAlpha(1.0f),            // startColor
-                centre.x, centre.y - BoundsIn.getWidth() / 2.0f, // 시작점 (y1)
-                juce::Colour(DARK_RGB_4).withAlpha(0.0f),        // primary-6 색상, 투명
+                juce::Colours::white.withAlpha(1.0f), // startColor
+                centre.x,
+                centre.y - BoundsIn.getWidth() / 2.0f,    // 시작점 (y1)
+                juce::Colour(DARK_RGB_4).withAlpha(0.0f), // primary-6 색상, 투명
                 centre.x,
                 centre.y - BoundsIn.getWidth() / 2.0f + BoundsIn.getWidth() / 2.0f * 0.25f, // 끝점 y2 = 20% 지점
                 false                                                                       // radial = false → linear
@@ -262,8 +280,9 @@ struct CustomLookAndFeel : public LookAndFeel_V4
             pointer.lineTo(centre.x, centre.y + (290.0f * vw));          // 종료점
 
             g.setColour(juce::Colours::white); // stroke color
-            g.strokePath(pointer, juce::PathStrokeType(pointerThickness, juce::PathStrokeType::curved,
-                                                       juce::PathStrokeType::rounded));
+            g.strokePath(
+                pointer,
+                juce::PathStrokeType(pointerThickness, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
             g.restoreState();
         }

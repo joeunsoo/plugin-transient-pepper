@@ -10,7 +10,10 @@
 class KnobComponent : public juce::Component
 {
   public:
-    KnobComponent(EditorProvider &ep, const ScaleProvider &sp, ProcessorProvider &pp, const String &parameterID,
+    KnobComponent(EditorProvider &ep,
+                  const ScaleProvider &sp,
+                  ProcessorProvider &pp,
+                  const String &parameterID,
                   const String labelText);
     ~KnobComponent() override;
 
