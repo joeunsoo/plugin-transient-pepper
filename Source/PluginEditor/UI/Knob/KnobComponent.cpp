@@ -72,10 +72,10 @@ void KnobComponent::sendTooltip()
   if (auto* param = processorProvider.state().getParameter(parameterID)) {
     auto topLeftInEditor = editorProvider.getLocalPointInEditor(&rotarySlider, juce::Point<int>(0, 0));
     
-    auto size = std::min(rotarySlider.getWidth(),rotarySlider.getHeight());
-    auto top = (rotarySlider.getHeight()/2) + (size/2) + (UI_KNOB_LABEL_HEIGHT * scale);
+    float size = float(std::min(rotarySlider.getWidth(),rotarySlider.getHeight()));
+    float top = (float(rotarySlider.getHeight()) / 2.0f) + (size / 2.0f) + (UI_KNOB_LABEL_HEIGHT * scale);
     juce::Rectangle<int> tooltipArea(topLeftInEditor.getX(),
-                                     int(topLeftInEditor.getY() + top),
+                                     int(float(topLeftInEditor.getY()) + top),
                                      rotarySlider.getWidth(),
                                      int(24 * scale));
     

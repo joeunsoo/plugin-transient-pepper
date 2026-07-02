@@ -98,14 +98,14 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                     : TextButton::textColourOffId)
                  .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
     
-    const float yIndent = jmin (4, button.proportionOfHeight (0.3f));
+    const float yIndent = float(jmin (4, button.proportionOfHeight (0.3f)));
     const int textWidth = button.getWidth();
     
-    auto bounds = button.getLocalBounds().toFloat();
-    bounds.removeFromTop(UI_BUTTON_PADDING_TOP * scale + yIndent);
-    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT * scale);
-    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM * scale + yIndent);
-    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT * scale);
+    auto bounds = button.getLocalBounds();
+    bounds.removeFromTop(int(UI_BUTTON_PADDING_TOP * scale + yIndent));
+    bounds.removeFromLeft(int(UI_BUTTON_PADDING_LEFT * scale));
+    bounds.removeFromBottom(int(UI_BUTTON_PADDING_BOTTOM * scale + yIndent));
+    bounds.removeFromRight(int(UI_BUTTON_PADDING_RIGHT * scale));
     
     if (textWidth > 0)
       g.drawFittedText (button.getButtonText(),
@@ -135,11 +135,11 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     }
     
     // auto bounds = juce::Rectangle<float>(x, y, width, height);
-    float size = std::min(width, height);
+    float size = float(std::min(width, height));
     auto vw = size*0.001f;
     
     auto bounds = juce::Rectangle<float>(0, 0, size, size)
-      .withCentre({ x + width * 0.5f, y + height * 0.5f });
+      .withCentre({ float(x) + float(width) * 0.5f, float(y) + float(height) * 0.5f });
     
     auto centre = bounds.getCentre();
     
@@ -204,7 +204,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
     // 노브 그리기
     {
       auto BoundsIn = knobBounds;
-      BoundsIn.reduce(width * 0.07f, width * 0.07f);
+      BoundsIn.reduce(float(width) * 0.07f, float(width) * 0.07f);
       juce::Graphics g2(knobImage);
       g2.setColour(juce::Colours::lightblue);
       g2.fillEllipse(BoundsIn);
@@ -290,7 +290,7 @@ struct CustomLookAndFeel : public LookAndFeel_V4
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
     auto scale = scaleProvider.getScale();
-    auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT* scale, buttonHeight);
+    auto fontHeight = std::min<float>(UI_BUTTON_FONT_HEIGHT* scale, float(buttonHeight));
     return juce::Font { FONT_PRETENDARD_MEDIUM.withHeight(fontHeight) };
   }
   

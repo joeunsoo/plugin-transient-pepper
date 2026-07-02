@@ -57,7 +57,7 @@ void AboutModal::resized()
     auto scale = scaleProvider.getScale();
     return FlexItem(child)
       .withWidth(300 * scale)
-      .withMinHeight(height * scale)
+      .withMinHeight(float(height) * scale)
       .withMargin(FlexItem::Margin{0, 0, marginBottom * scale, 0})
     ;
   };

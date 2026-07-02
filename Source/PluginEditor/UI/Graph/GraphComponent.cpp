@@ -25,7 +25,7 @@ void GraphComponent::paint(juce::Graphics& g)
   if (!graphValues.empty())
   {
     // Path 시작
-    fillPath.startNewSubPath(0, getHeight());
+    fillPath.startNewSubPath(0, float(getHeight()));
     strokePath.startNewSubPath(0, graphValues[0]);
     
     for (size_t i = 0; i < graphValues.size(); ++i)
@@ -34,7 +34,7 @@ void GraphComponent::paint(juce::Graphics& g)
       strokePath.lineTo((float)i, graphValues[i]);
     }
     
-    fillPath.lineTo((float)(graphValues.size() - 1), getHeight());
+    fillPath.lineTo((float)(graphValues.size() - 1), float(getHeight()));
     fillPath.closeSubPath();
   }
   
