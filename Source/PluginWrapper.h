@@ -4,7 +4,6 @@
 #include "LicenseManager.h"
 #include <JuceHeader.h>
 
-
 class PluginWrapper : public PluginAudioProcessor {
 public:
   //==============================================================================
@@ -21,6 +20,5 @@ public:
 private:
   //==============================================================================
   juce::ApplicationProperties appProperties;
-  juce::PropertiesFile *props =
-      nullptr; // 소유권은 ApplicationProperties가 관리
+  juce::PropertiesFile *props = nullptr; // 소유권은 ApplicationProperties가 관리
 };

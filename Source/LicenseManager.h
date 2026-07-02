@@ -1,230 +1,205 @@
 #pragma once
 
-#include <JuceHeader.h>
 #include "Define.h"
+#include <JuceHeader.h>
 
-class LicenseManager
-{
-  public:
-  LicenseManager()
-  {
+class LicenseManager {
+public:
+  LicenseManager() {
     juce::PropertiesFile::Options options;
-    options.applicationName     = "com.joeunsoo";
-    options.filenameSuffix      = "plist";
+    options.applicationName = "com.joeunsoo";
+    options.filenameSuffix = "plist";
     options.osxLibrarySubFolder = "Preferences";
-    options.storageFormat       = juce::PropertiesFile::storeAsBinary;
-    
+    options.storageFormat = juce::PropertiesFile::storeAsBinary;
+
     propertiesFile = std::make_unique<juce::PropertiesFile>(options);
   }
-  
-  std::pair<int, juce::String> sendActivationRequest(String userEmail,String userPassword)
-  {
-    juce::URL url ("https://joeunsoo.com/api/productActivation");
-    
-    juce::DynamicObject::Ptr jsonObj = new juce::DynamicObject();
-    jsonObj->setProperty ("userEmail", userEmail);
-    jsonObj->setProperty ("userPassword", userPassword);
-    jsonObj->setProperty ("productCode", PLUGIN_CODE);
 
-    juce::var jsonVar = juce::var (jsonObj.get());
-    juce::String postData = juce::JSON::toString (jsonVar);
-    url = url.withPOSTData (postData);
+  std::pair<int, juce::String> sendActivationRequest(String userEmail, String userPassword) {
+    juce::URL url("https://joeunsoo.com/api/productActivation");
+
+    juce::DynamicObject::Ptr jsonObj = new juce::DynamicObject();
+    jsonObj->setProperty("userEmail", userEmail);
+    jsonObj->setProperty("userPassword", userPassword);
+    jsonObj->setProperty("productCode", PLUGIN_CODE);
+
+    juce::var jsonVar = juce::var(jsonObj.get());
+    juce::String postData = juce::JSON::toString(jsonVar);
+    url = url.withPOSTData(postData);
 
     StringPairArray responseHeaders;
     int statusCode = 0;
-    
-    auto responseStream = url.createInputStream(
-      juce::URL::InputStreamOptions(juce::URL::ParameterHandling::inPostData)
-        .withConnectionTimeoutMs(15000)
-        .withResponseHeaders(&responseHeaders)
-        .withStatusCode(&statusCode)
-        .withExtraHeaders("Content-Type: application/json")
-    );
-    
-    if (responseStream != nullptr)
-    {
+
+    auto responseStream = url.createInputStream(juce::URL::InputStreamOptions(juce::URL::ParameterHandling::inPostData)
+                                                    .withConnectionTimeoutMs(15000)
+                                                    .withResponseHeaders(&responseHeaders)
+                                                    .withStatusCode(&statusCode)
+                                                    .withExtraHeaders("Content-Type: application/json"));
+
+    if (responseStream != nullptr) {
       juce::String response = responseStream->readEntireStreamAsString();
-      
+
       // JSON 파싱
-      juce::var json = juce::JSON::parse (response);
-      if (json.isObject())
-      {
-        auto& obj = *json.getDynamicObject();
-        
-        juce::String message = obj.getProperty ("message").toString();
-        DBG ("status: " << statusCode << ", message: " << message);
-  
+      juce::var json = juce::JSON::parse(response);
+      if (json.isObject()) {
+        auto &obj = *json.getDynamicObject();
+
+        juce::String message = obj.getProperty("message").toString();
+        DBG("status: " << statusCode << ", message: " << message);
+
         return std::make_pair(statusCode, message);
-      } else
-      {
+      } else {
         return std::make_pair(500, "Failed to parse JSON");
       }
-    }
-    else
-    {
+    } else {
       return std::make_pair(500, "Response stream is null");
     }
   }
-  
-  String getActivate()
-  {
-    if (propertiesFile == nullptr) return {};
-    
+
+  String getActivate() {
+    if (propertiesFile == nullptr)
+      return {};
+
     auto encId = encryptString(LICENCE_KEY);
     juce::String value = propertiesFile->getValue(encId, ""); // 기본값 10
-    
-    if (value.isEmpty()) return {};
+
+    if (value.isEmpty())
+      return {};
     return decryptString(value);
   }
-  
-  bool isActivate()
-  {
+
+  bool isActivate() {
     if (getActivate().length() > 0) {
       return true;
     }
     return false;
   }
-  
-  void setActivate(String email)
-  {
-    if (propertiesFile == nullptr) return;
-    
+
+  void setActivate(String email) {
+    if (propertiesFile == nullptr)
+      return;
+
     auto encId = encryptString(LICENCE_KEY);
     auto encEmail = encryptString(email);
     propertiesFile->setValue(encId, encEmail);
     propertiesFile->saveIfNeeded();
   }
-  
-  void setDeactivate()
-  {
-    if (propertiesFile == nullptr) return;
-    
+
+  void setDeactivate() {
+    if (propertiesFile == nullptr)
+      return;
+
     auto encId = encryptString(LICENCE_KEY);
     propertiesFile->setValue(encId, "");
     propertiesFile->saveIfNeeded();
   }
-  
-  int64 getTrial()
-  {
-    if (propertiesFile == nullptr) return 0;
-    
+
+  int64 getTrial() {
+    if (propertiesFile == nullptr)
+      return 0;
+
     auto encId = encryptString(LICENCE_TRIAL_KEY);
     juce::String enc = propertiesFile->getValue(encId, "");
-    
-    if (enc.isEmpty()) return 0;
+
+    if (enc.isEmpty())
+      return 0;
     juce::String decrypted = decryptString(enc);
     return decrypted.getLargeIntValue();
   }
-  
-  int getTrialDays()
-  {
+
+  int getTrialDays() {
     int64 trialTimestamp = getTrial();
     int64 nowMs = juce::Time::getCurrentTime().toMilliseconds(); // 현재 시간
-    
+
     // trial 기간 (예: 30일)
     constexpr int trialPeriodDays = 30;
-    
+
     // 경과 일수 계산
     int64 elapsedDays = (nowMs - trialTimestamp) / (1000 * 60 * 60 * 24);
-    
+
     // 남은 일수
     int64 remainingDays = trialPeriodDays - elapsedDays;
     if (remainingDays < 0)
       remainingDays = 0; // 음수 방지
-    
-    return (int) remainingDays;
+
+    return (int)remainingDays;
   }
-  
-  int64 startTrial()
-  {
+
+  int64 startTrial() {
     if (propertiesFile == nullptr)
       return 0;
-    
+
     int64 timestamp = juce::Time::getCurrentTime().toMilliseconds(); // 1970 기준 ms
-    
+
     auto encId = encryptString(LICENCE_TRIAL_KEY);
     auto enc = encryptString(juce::String(timestamp));
-    
+
     propertiesFile->setValue(encId, enc);
     propertiesFile->setValue(LICENCE_KEY, timestamp);
     propertiesFile->saveIfNeeded();
     return timestamp;
   }
-  
+
   // 트라이얼 유효 유무 확인,
   // 트라이얼 시작되지 않은 경우에도 true
   // 종료시간 지나면 true
   // 트라이얼 시작하고 종료시간 안지나면 false
-  bool isTrialExpired()
-  {
+  bool isTrialExpired() {
     int64 startTime = getTrial(); // 복호화된 트라이얼 시작 timestamp
     if (startTime == 0)
       return true; // 트라이얼이 시작되지 않았으면 만료로 간주
-    
+
     int64 now = juce::Time::getCurrentTime().toMilliseconds();
     const int64 THIRTY_DAYS_MS = int64(30) * 24 * 60 * 60 * 1000; // 30일을 ms로
-    
+
     return (now - startTime) > THIRTY_DAYS_MS;
   }
-  
-  private:
-  juce::String encryptStringPass(const juce::String& text)
-  {
-    return text;
+
+private:
+  juce::String encryptStringPass(const juce::String &text) { return text; }
+  juce::String decryptStringPass(const juce::String &base64Text) { return base64Text; }
+
+  // ---------------- XOR + Base64 ----------------
+
+  juce::MemoryBlock base64Decode(const juce::String &text) {
+    juce::MemoryOutputStream out;
+    juce::Base64::convertFromBase64(out, text);
+    return out.getMemoryBlock();
   }
-  juce::String decryptStringPass(const juce::String& base64Text)
-  {
-    return base64Text;
+
+  juce::String encryptString(const juce::String &text) {
+    juce::MemoryBlock mb(text.getNumBytesAsUTF8());
+    const char *src = text.toRawUTF8();
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion" // 경고 종류
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wsign-compare"
+    for (int i = 0; i < mb.getSize(); ++i) {
+      mb[i] = src[i] ^ secretKey[i % secretKey.length()];
+    }
+#pragma clang diagnostic pop
+
+    return juce::Base64::toBase64(mb.getData(), mb.getSize());
   }
-  
-  
-   // ---------------- XOR + Base64 ----------------
-   
-   juce::MemoryBlock base64Decode(const juce::String& text)
-   {
-   juce::MemoryOutputStream out;
-   juce::Base64::convertFromBase64(out, text);
-   return out.getMemoryBlock();
-   }
-   
-   juce::String encryptString(const juce::String& text)
-   {
-   juce::MemoryBlock mb(text.getNumBytesAsUTF8());
-   const char* src = text.toRawUTF8();
-   
-   #pragma clang diagnostic push
-   #pragma clang diagnostic ignored "-Wconversion"  // 경고 종류
-   #pragma clang diagnostic ignored "-Wsign-conversion"
-   #pragma clang diagnostic ignored "-Wsign-compare"
-   for (int i = 0; i < mb.getSize(); ++i)
-   {
-    mb[i] = src[i] ^ secretKey[i % secretKey.length()];
-   }
-   #pragma clang diagnostic  pop
-   
-   return juce::Base64::toBase64(mb.getData(), mb.getSize());
-   }
-   
-   juce::String decryptString(const juce::String& base64Text)
-   {
-   juce::MemoryBlock block = base64Decode(base64Text);
-   juce::MemoryBlock out(block.getSize());
-   
-   #pragma clang diagnostic push
-   #pragma clang diagnostic ignored "-Wconversion"  // 경고 종류
-   #pragma clang diagnostic ignored "-Wsign-conversion"
-   #pragma clang diagnostic ignored "-Wsign-compare"
-   for (int i = 0; i < block.getSize(); ++i)
-   {
-    out[i] = block[i] ^ secretKey[i % secretKey.length()];
-   }
-   #pragma clang diagnostic pop
-   
-   return juce::String::fromUTF8((const char*)out.getData(), (int)out.getSize());
-   }
-   
-  
+
+  juce::String decryptString(const juce::String &base64Text) {
+    juce::MemoryBlock block = base64Decode(base64Text);
+    juce::MemoryBlock out(block.getSize());
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion" // 경고 종류
+#pragma clang diagnostic ignored "-Wsign-conversion"
+#pragma clang diagnostic ignored "-Wsign-compare"
+    for (int i = 0; i < block.getSize(); ++i) {
+      out[i] = block[i] ^ secretKey[i % secretKey.length()];
+    }
+#pragma clang diagnostic pop
+
+    return juce::String::fromUTF8((const char *)out.getData(), (int)out.getSize());
+  }
+
   std::unique_ptr<juce::PropertiesFile> propertiesFile;
-  
+
   const juce::String secretKey = LICENCE_SECRET_KEY;
 };

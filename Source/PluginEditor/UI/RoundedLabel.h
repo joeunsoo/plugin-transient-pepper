@@ -2,27 +2,24 @@
 
 #include <JuceHeader.h>
 
-class RoundedLabel : public juce::Label
-{
+class RoundedLabel : public juce::Label {
 public:
-    RoundedLabel() = default;
+  RoundedLabel() = default;
 
-    void paint(juce::Graphics& g) override
-    {
-        auto bounds = getLocalBounds().toFloat();
+  void paint(juce::Graphics &g) override {
+    auto bounds = getLocalBounds().toFloat();
 
-        // 배경
-        g.setColour(findColour(backgroundColourId));
-        g.fillRoundedRectangle(bounds, radius);
+    // 배경
+    g.setColour(findColour(backgroundColourId));
+    g.fillRoundedRectangle(bounds, radius);
 
-        // 텍스트
-        g.setColour(findColour(textColourId));
-        g.setFont(getFont());
-        g.drawFittedText(getText(), getLocalBounds(), getJustificationType(), 1);
-    }
+    // 텍스트
+    g.setColour(findColour(textColourId));
+    g.setFont(getFont());
+    g.drawFittedText(getText(), getLocalBounds(), getJustificationType(), 1);
+  }
   void setBorderRadius(float value) { radius = value; }
-  private:
-  float radius = 4.0f;
-  
-};
 
+private:
+  float radius = 4.0f;
+};

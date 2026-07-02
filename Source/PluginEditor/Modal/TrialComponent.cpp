@@ -1,20 +1,16 @@
 #include "TrialComponent.h"
-#include "ActivateModal.h"
-#include "../DefineUI.h"
 #include "../../NamespaceParameterId.h"
+#include "../DefineUI.h"
+#include "ActivateModal.h"
 
 //==============================================================================
-TrialComponent::TrialComponent(ActivateModal& modal,
-                               LicenseProvider& lp)
-: modalRef(modal), licenseProvider(lp)
-{
+TrialComponent::TrialComponent(ActivateModal &modal, LicenseProvider &lp) : modalRef(modal), licenseProvider(lp) {
   addAndMakeVisible(trialButton);
   trialButton.setColour(juce::TextButton::buttonColourId, DARK_RGB_8);
   trialButton.setColour(juce::TextButton::textColourOffId, DARK_RGB_0);
   trialButton.setColour(juce::ComboBox::outlineColourId, DARK_RGB_8);
 
-  trialButton.onClick = [this]()
-  {
+  trialButton.onClick = [this]() {
     if (!licenseProvider.getTrial()) {
       // 트라이얼 자체를 시작안한상태 였음
       licenseProvider.startTrial();
@@ -27,13 +23,11 @@ TrialComponent::TrialComponent(ActivateModal& modal,
   };
 }
 
-TrialComponent::~TrialComponent()
-{
+TrialComponent::~TrialComponent() {
   trialButton.onClick = nullptr;
 }
 
-void TrialComponent::resized()
-{
+void TrialComponent::resized() {
 
   bool isTrialExpired = licenseProvider.isTrialExpired();
   int64 trialTimestamp = licenseProvider.getTrial();
@@ -51,7 +45,6 @@ void TrialComponent::resized()
   trialButton.setBounds(getLocalBounds());
 }
 
-void TrialComponent::paint (juce::Graphics& g)
-{
+void TrialComponent::paint(juce::Graphics &g) {
   g.fillAll(juce::Colours::transparentBlack);
 }

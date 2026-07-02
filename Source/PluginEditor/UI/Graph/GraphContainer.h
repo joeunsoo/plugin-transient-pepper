@@ -1,30 +1,27 @@
 #pragma once
-#include <JuceHeader.h>
 #include "../../DefineUI.h"
-#include "../../Provider/ScaleProvider.h"
 #include "../../Provider/ProcessorProvider.h"
+#include "../../Provider/ScaleProvider.h"
 #include "GraphComponent.h"
+#include <JuceHeader.h>
 
-class GraphContainer : public juce::Component,
-private juce::Timer
-{
-  public:
-  GraphContainer(const ScaleProvider& sp,
-                 ProcessorProvider& pp);
+class GraphContainer : public juce::Component, private juce::Timer {
+public:
+  GraphContainer(const ScaleProvider &sp, ProcessorProvider &pp);
   ~GraphContainer() override;
   //==============================================================================
 
-  void paint(juce::Graphics& g) override;
+  void paint(juce::Graphics &g) override;
   void resized() override;
-  
+
   //==============================================================================
-  private:
+private:
   //==============================================================================
   void timerCallback() override; // 단일 타이머
   //==============================================================================
-  
-  const ScaleProvider& scaleProvider;
-  ProcessorProvider& processorProvider;
+
+  const ScaleProvider &scaleProvider;
+  ProcessorProvider &processorProvider;
 
   GraphComponent inputLevelGraph, envGraph;
 

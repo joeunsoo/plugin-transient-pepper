@@ -1,33 +1,30 @@
 #pragma once
 
-#include <JuceHeader.h>
-#include "../Provider/ScaleProvider.h"
 #include "../Provider/LicenseProvider.h"
+#include "../Provider/ScaleProvider.h"
 #include "DeactivateComponent.h"
 #include "LoginComponent.h"
 #include "ModalLookAndFeel.h"
+#include <JuceHeader.h>
 
 // Forward declaration
 class PluginEditor;
 
-class ActivateModal : public juce::Component
-{
-  public:
-  ActivateModal(const ScaleProvider& sp,
-                LicenseProvider& lp);
+class ActivateModal : public juce::Component {
+public:
+  ActivateModal(const ScaleProvider &sp, LicenseProvider &lp);
   ~ActivateModal() override;
 
-  void showIn(juce::Component& parent);
+  void showIn(juce::Component &parent);
   void close();
-  
-  void resized() override;
-  void paint(juce::Graphics& g) override;
-  void mouseUp(const juce::MouseEvent& e) override;
 
-  
-  private:
-  const ScaleProvider& scaleProvider;
-  LicenseProvider& licenseProvider;
+  void resized() override;
+  void paint(juce::Graphics &g) override;
+  void mouseUp(const juce::MouseEvent &e) override;
+
+private:
+  const ScaleProvider &scaleProvider;
+  LicenseProvider &licenseProvider;
 
   ModalLookAndFeel modalLaf;
 

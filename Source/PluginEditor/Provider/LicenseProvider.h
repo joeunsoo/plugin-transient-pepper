@@ -15,8 +15,7 @@ struct LicenseProvider {
 
   // 네트워크 활성화 요청
   // return: (HTTP status code, message)
-  virtual std::pair<int, juce::String> sendActivationRequest(juce::String userEmail,
-                                                             juce::String userPassword) = 0;
+  virtual std::pair<int, juce::String> sendActivationRequest(juce::String userEmail, juce::String userPassword) = 0;
 
   // 트라이얼
   virtual int64 getTrial() const noexcept = 0;

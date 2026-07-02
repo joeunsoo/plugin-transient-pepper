@@ -1,29 +1,28 @@
 #pragma once
 
-#include <JuceHeader.h>
+#include "../Provider/ProcessorProvider.h"
 #include "../Provider/Providers.h"
 #include "../Provider/ScaleProvider.h"
-#include "../Provider/ProcessorProvider.h"
 #include "CustomLookAndFeel.h"
 #include "DetectorComponent.h"
 #include "EnvelopeComponent.h"
-#include "ToneComponent.h"
 #include "MixComponent.h"
+#include "ToneComponent.h"
+#include <JuceHeader.h>
 
 //==============================================================================
-class MainComponent : public juce::Component
-{
-  public:
-  MainComponent(Providers& pv);
+class MainComponent : public juce::Component {
+public:
+  MainComponent(Providers &pv);
   ~MainComponent() override;
-  
-  void paint(juce::Graphics& g) override;
+
+  void paint(juce::Graphics &g) override;
   void resized() override;
 
   //==============================================================================
-  private:
+private:
   //==============================================================================
-  const ScaleProvider& scaleProvider;
+  const ScaleProvider &scaleProvider;
   //==============================================================================
   CustomLookAndFeel mainLaf;
 
@@ -36,6 +35,6 @@ class MainComponent : public juce::Component
   //==============================================================================
   juce::DropShadow dropShadow;
   //==============================================================================
-  
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

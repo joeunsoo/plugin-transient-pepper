@@ -1,13 +1,7 @@
 #include "PeakMeterStereoComponent.h"
 
-PeakMeterStereoComponent::PeakMeterStereoComponent(ProcessorProvider& pp,
-                                                   int index,
-                                                   bool usePeakHold
-                                                   )
-:
-leftPeakMeter(pp, index, usePeakHold),
-rightPeakMeter(pp, index + 1, usePeakHold)
-{
+PeakMeterStereoComponent::PeakMeterStereoComponent(ProcessorProvider &pp, int index, bool usePeakHold)
+    : leftPeakMeter(pp, index, usePeakHold), rightPeakMeter(pp, index + 1, usePeakHold) {
   isStereo = pp.getTotalNumOutputChannels() > 1;
 
   addAndMakeVisible(leftPeakMeter);
@@ -19,14 +13,13 @@ rightPeakMeter(pp, index + 1, usePeakHold)
 
 PeakMeterStereoComponent::~PeakMeterStereoComponent() = default;
 
-void PeakMeterStereoComponent::paint(juce::Graphics& g)
-{
+void PeakMeterStereoComponent::paint(juce::Graphics &g) {
   g.fillAll(juce::Colours::transparentBlack);
 
   auto area = getLocalBounds().toFloat();
   auto meterArea = area;
-  meterArea.setWidth(fminf(UI_STEREO_METER_MAX_WIDTH,area.getWidth()));
-  meterArea.setX((area.getWidth()-meterArea.getWidth())/2);
+  meterArea.setWidth(fminf(UI_STEREO_METER_MAX_WIDTH, area.getWidth()));
+  meterArea.setX((area.getWidth() - meterArea.getWidth()) / 2);
 
   if (!isStereo) {
     meterArea.removeFromTop(UI_METER_PADDING_TOP);
@@ -35,20 +28,14 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
     meterArea.removeFromRight(UI_METER_PADDING_RIGHT);
 
     // Drop shadow
-    juce::Image graphImage(
-                            juce::Image::ARGB,
-                            juce::roundToInt(area.getWidth()),
-                            juce::roundToInt(area.getHeight()),
-                            true);
+    juce::Image graphImage(juce::Image::ARGB, juce::roundToInt(area.getWidth()), juce::roundToInt(area.getHeight()),
+                           true);
     juce::Graphics g2(graphImage);
     g2.fillRoundedRectangle(meterArea, UI_METER_BORDER_RADIUS);
-    
-    juce::DropShadow ds(
-                        juce::Colours::black.withAlpha(0.5f),
-                        2,
-                        {0, 3});
 
-    ds.drawForImage(g, graphImage);  // 이제 2개 인자
+    juce::DropShadow ds(juce::Colours::black.withAlpha(0.5f), 2, {0, 3});
+
+    ds.drawForImage(g, graphImage); // 이제 2개 인자
   } else {
     auto leftArea = meterArea.removeFromLeft(meterArea.getWidth() / 2);
     auto rightArea = meterArea;
@@ -62,32 +49,25 @@ void PeakMeterStereoComponent::paint(juce::Graphics& g)
     rightArea.removeFromRight(UI_METER_PADDING_RIGHT);
     {
       // Drop shadow
-      juce::Image graphImage(
-                              juce::Image::ARGB,
-                              juce::roundToInt(area.getWidth()),
-                              juce::roundToInt(area.getHeight()),
-                              true);
+      juce::Image graphImage(juce::Image::ARGB, juce::roundToInt(area.getWidth()), juce::roundToInt(area.getHeight()),
+                             true);
       {
-          juce::Graphics g2(graphImage);
-          g2.fillRoundedRectangle(leftArea, UI_METER_BORDER_RADIUS);
-          g2.fillRoundedRectangle(rightArea, UI_METER_BORDER_RADIUS);
+        juce::Graphics g2(graphImage);
+        g2.fillRoundedRectangle(leftArea, UI_METER_BORDER_RADIUS);
+        g2.fillRoundedRectangle(rightArea, UI_METER_BORDER_RADIUS);
       }
-      juce::DropShadow ds(
-                          juce::Colours::black.withAlpha(0.5f),
-                          2,
-                          {0, 3});
+      juce::DropShadow ds(juce::Colours::black.withAlpha(0.5f), 2, {0, 3});
 
-      ds.drawForImage(g, graphImage);  // 이제 2개 인자
+      ds.drawForImage(g, graphImage); // 이제 2개 인자
     }
   }
 }
 
-void PeakMeterStereoComponent::resized()
-{
+void PeakMeterStereoComponent::resized() {
   auto area = getLocalBounds();
   auto meterArea = area;
-  meterArea.setWidth(std::min(UI_STEREO_METER_MAX_WIDTH,area.getWidth()));
-  meterArea.setX((area.getWidth()-meterArea.getWidth())/2);
+  meterArea.setWidth(std::min(UI_STEREO_METER_MAX_WIDTH, area.getWidth()));
+  meterArea.setX((area.getWidth() - meterArea.getWidth()) / 2);
 
   if (!isStereo) {
     leftPeakMeter.setBounds(meterArea);
@@ -95,5 +75,4 @@ void PeakMeterStereoComponent::resized()
     leftPeakMeter.setBounds(meterArea.removeFromLeft(meterArea.getWidth() / 2));
     rightPeakMeter.setBounds(meterArea);
   }
-
 }

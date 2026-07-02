@@ -1,25 +1,24 @@
 #pragma once
 
-#include <JuceHeader.h>
+#include "../Provider/ProcessorProvider.h"
 #include "../Provider/Providers.h"
 #include "../Provider/ScaleProvider.h"
-#include "../Provider/ProcessorProvider.h"
-#include "../UI/PeakMeter/PeakMeterStereoComponent.h"
 #include "../UI/PeakMeter/MeterTickLabel.h"
+#include "../UI/PeakMeter/PeakMeterStereoComponent.h"
+#include <JuceHeader.h>
 
 //==============================================================================
-class OutputMeterSection : public juce::Component
-{
-  public:
-  OutputMeterSection(Providers& pv);
+class OutputMeterSection : public juce::Component {
+public:
+  OutputMeterSection(Providers &pv);
   ~OutputMeterSection() override;
-  
-  void paint(juce::Graphics& g) override;
+
+  void paint(juce::Graphics &g) override;
   void resized() override;
 
   //==============================================================================
-  private:
-  const ScaleProvider& scaleProvider;
+private:
+  const ScaleProvider &scaleProvider;
   //==============================================================================
 
   PeakMeterStereoComponent outputPeakMeter;

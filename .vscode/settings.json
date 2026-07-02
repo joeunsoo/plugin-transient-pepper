@@ -1,25 +1,8 @@
 {
   "cmake.sourceDirectory": "/Volumes/Works/dev/juce/projects/plugin-transient-pepper",
-  "prettier.disableLanguages": ["cpp", "c"],
+
   "files.associations": {
     "*.h": "cpp"
   },
-  "[cpp]": {
-    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
-    // 저장할 때마다 자동으로 코드 정렬
-    "editor.formatOnSave": true
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    // 저장할 때마다 자동으로 코드 정렬
-    "editor.formatOnSave": true
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    // 저장할 때마다 자동으로 코드 정렬
-    "editor.formatOnSave": true
-  },
 
-  "C_Cpp.formatting": "vcFormat", // 또는 "clangFormat"으로 변경 가능
-  "C_Cpp.intelliSenseEngine": "default"
 }

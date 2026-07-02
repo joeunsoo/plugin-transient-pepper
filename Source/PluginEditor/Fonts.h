@@ -4,29 +4,26 @@
 
 // 각 굵기별 Typeface 캐시
 inline const juce::Typeface::Ptr &PretendardRegularTypeface() {
-  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(
-      BinaryData::PretendardStdRegular_otf,
-      BinaryData::PretendardStdRegular_otfSize);
+  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdRegular_otf,
+                                                                          BinaryData::PretendardStdRegular_otfSize);
   return tf;
 }
 
 inline const juce::Typeface::Ptr &PretendardMediumTypeface() {
-  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(
-      BinaryData::PretendardStdMedium_otf,
-      BinaryData::PretendardStdMedium_otfSize);
+  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdMedium_otf,
+                                                                          BinaryData::PretendardStdMedium_otfSize);
   return tf;
 }
 
 inline const juce::Typeface::Ptr &PretendardSemiBoldTypeface() {
-  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(
-      BinaryData::PretendardStdSemiBold_otf,
-      BinaryData::PretendardStdSemiBold_otfSize);
+  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdSemiBold_otf,
+                                                                          BinaryData::PretendardStdSemiBold_otfSize);
   return tf;
 }
 
 inline const juce::Typeface::Ptr &PretendardBoldTypeface() {
-  static juce::Typeface::Ptr tf = juce::Typeface::createSystemTypefaceFor(
-      BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize);
+  static juce::Typeface::Ptr tf =
+      juce::Typeface::createSystemTypefaceFor(BinaryData::PretendardStdBold_otf, BinaryData::PretendardStdBold_otfSize);
   return tf;
 }
 

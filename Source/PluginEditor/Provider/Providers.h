@@ -1,15 +1,15 @@
 #pragma once
 
-#include "ScaleProvider.h"
-#include "ScaleController.h"
 #include "EditorProvider.h"
-#include "ProcessorProvider.h"
 #include "LicenseProvider.h"
+#include "ProcessorProvider.h"
+#include "ScaleController.h"
+#include "ScaleProvider.h"
 
 struct Providers {
-  EditorProvider&    editor;
-  ScaleProvider&     scale;
-  ScaleController&     scaleController;
-  ProcessorProvider& processor;
-  LicenseProvider& license;
+  EditorProvider &editor;
+  ScaleProvider &scale;
+  ScaleController &scaleController;
+  ProcessorProvider &processor;
+  LicenseProvider &license;
 };

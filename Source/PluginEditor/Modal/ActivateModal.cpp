@@ -1,30 +1,25 @@
 #include "ActivateModal.h"
-#include "../DefineUI.h"
 #include "../../NamespaceParameterId.h"
+#include "../DefineUI.h"
 
 //==============================================================================
-ActivateModal::ActivateModal(const ScaleProvider& sp,
-                             LicenseProvider& lp)
-: scaleProvider(sp), licenseProvider(lp),
-modalLaf(sp),
-deactivateComponent(*this, sp, lp), loginComponent(*this, sp, lp)
-{
-  setInterceptsMouseClicks (true, true); // 뒤에 클릭 못 가게 막음
-  setAlwaysOnTop (true);
+ActivateModal::ActivateModal(const ScaleProvider &sp, LicenseProvider &lp)
+    : scaleProvider(sp), licenseProvider(lp), modalLaf(sp), deactivateComponent(*this, sp, lp),
+      loginComponent(*this, sp, lp) {
+  setInterceptsMouseClicks(true, true); // 뒤에 클릭 못 가게 막음
+  setAlwaysOnTop(true);
 
-  setLookAndFeel (&modalLaf);
-  
-  addAndMakeVisible (deactivateComponent);
-  addAndMakeVisible (loginComponent);
+  setLookAndFeel(&modalLaf);
+
+  addAndMakeVisible(deactivateComponent);
+  addAndMakeVisible(loginComponent);
 }
 
 ActivateModal::~ActivateModal() {
   setLookAndFeel(nullptr);
 }
 
-
-void ActivateModal::resized()
-{
+void ActivateModal::resized() {
   auto scale = scaleProvider.getScale();
 
   if (licenseProvider.isActivate()) {
@@ -38,14 +33,12 @@ void ActivateModal::resized()
   }
 }
 
-void ActivateModal::paint (juce::Graphics& g)
-{
+void ActivateModal::paint(juce::Graphics &g) {
   // 반투명 배경
-  g.fillAll (juce::Colours::black.withAlpha (0.5f));
+  g.fillAll(juce::Colours::black.withAlpha(0.5f));
 }
 
-void ActivateModal::mouseUp (const juce::MouseEvent&)
-{
+void ActivateModal::mouseUp(const juce::MouseEvent &) {
   if (licenseProvider.isActivate()) {
     close();
   }
@@ -56,19 +49,17 @@ void ActivateModal::mouseUp (const juce::MouseEvent&)
   }
 }
 
-void ActivateModal::showIn (juce::Component& parent)
-{
+void ActivateModal::showIn(juce::Component &parent) {
   resized();
-  parent.addAndMakeVisible (this);
-  setBounds (parent.getLocalBounds());
-  toFront (true); // 맨 위로
-  
+  parent.addAndMakeVisible(this);
+  setBounds(parent.getLocalBounds());
+  toFront(true); // 맨 위로
+
   loginComponent.resized();
 }
 
-void ActivateModal::close()
-{
-  setVisible (false);
-  if (auto* p = getParentComponent())
-    p->removeChildComponent (this);
+void ActivateModal::close() {
+  setVisible(false);
+  if (auto *p = getParentComponent())
+    p->removeChildComponent(this);
 }

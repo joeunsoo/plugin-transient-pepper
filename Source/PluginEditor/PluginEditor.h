@@ -11,13 +11,11 @@
 #include "Provider/ScaleProvider.h"
 #include "Provider/WrapperLicenseProvider.h"
 
-
 #include "Header/HeaderComponent.h"
 #include "Main/MainComponent.h"
 #include "Modal/AboutModal.h"
 #include "Modal/ActivateModal.h"
 #include "UI/RoundedLabel.h"
-
 
 class PluginEditor : public juce::AudioProcessorEditor,
                      public ScaleProvider,
@@ -31,8 +29,7 @@ public:
   void resized() override;
 
   void setScale(int scale) noexcept override;
-  void showTooltipAt(String id, const juce::Rectangle<int> &area,
-                     const juce::String &text) const noexcept override;
+  void showTooltipAt(String id, const juce::Rectangle<int> &area, const juce::String &text) const noexcept override;
 
   void setTooltipLabelVisible(bool value) const noexcept override;
 
@@ -64,20 +61,14 @@ private:
   ActivateModal activateModal;
 
   //==============================================================================
-  float getScale() const noexcept override {
-    return getLocalBounds().toFloat().getWidth() / 640.0f;
-  }
-  int getWindowScale() const noexcept override {
-    return wrapperRef.windowScale;
-  }
+  float getScale() const noexcept override { return getLocalBounds().toFloat().getWidth() / 640.0f; }
+  int getWindowScale() const noexcept override { return wrapperRef.windowScale; }
 
-  Point<int> getLocalPointInEditor(const Component *source,
-                                   Point<int> point) const override {
+  Point<int> getLocalPointInEditor(const Component *source, Point<int> point) const override {
     return getLocalPoint(source, point);
   }
 
-  Point<float> getLocalPointInEditor(const Component *source,
-                                     Point<float> point) const override {
+  Point<float> getLocalPointInEditor(const Component *source, Point<float> point) const override {
     return getLocalPoint(source, point);
   }
   //==============================================================================
