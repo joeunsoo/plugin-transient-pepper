@@ -51,7 +51,7 @@ void DeactivateComponent::resized()
   auto accountEmail = licenseProvider.getActivate();
   accountEmailLabel.setText (accountEmail, juce::dontSendNotification);
 
-  auto bounds = getLocalBounds();
+  auto bounds = getLocalBounds().toFloat();
   flexContainer.setBounds(getLocalBounds());
 
   juce::FlexBox flexBox;

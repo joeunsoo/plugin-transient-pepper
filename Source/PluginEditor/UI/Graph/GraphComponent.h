@@ -22,7 +22,7 @@ class GraphComponent : public juce::Component
   const ScaleProvider& scaleProvider;
 
   float lastY = 0.0f;
-  int movePixels = 4;
+  float movePixels = 4.0f;
 
   // 원시 레벨과 스무딩 레벨
   float displayedLevel = 0.0f;  // raw를 attack/decay로 스무딩한 값

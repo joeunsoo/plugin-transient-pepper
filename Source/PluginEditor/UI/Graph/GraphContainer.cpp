@@ -34,10 +34,10 @@ void GraphContainer::paint(juce::Graphics& g)
   
   auto boundsOut = getLocalBounds().toFloat();
   auto bounds = boundsOut;
-  bounds.removeFromTop(int(UI_GRAPH_PADDING_TOP * scale));
-  bounds.removeFromLeft(int(UI_GRAPH_PADDING_LEFT * scale));
-  bounds.removeFromBottom(int(UI_GRAPH_PADDING_BOTTOM * scale));
-  bounds.removeFromRight(int(UI_GRAPH_PADDING_RIGHT * scale));
+  bounds.removeFromTop(UI_GRAPH_PADDING_TOP * scale);
+  bounds.removeFromLeft(UI_GRAPH_PADDING_LEFT * scale);
+  bounds.removeFromBottom(UI_GRAPH_PADDING_BOTTOM * scale);
+  bounds.removeFromRight(UI_GRAPH_PADDING_RIGHT * scale);
   
   // Drop shadow
   juce::Image graphImage(
@@ -58,7 +58,7 @@ void GraphContainer::paint(juce::Graphics& g)
   
   // 배경
   g.setColour(SECONDARY_DARK_RGB_9);
-  g.fillRoundedRectangle(bounds, int(UI_GRAPH_BORDER_RADIUS * scale));
+  g.fillRoundedRectangle(bounds, UI_GRAPH_BORDER_RADIUS * scale);
 }
 
 void GraphContainer::timerCallback()

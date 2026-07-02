@@ -95,7 +95,7 @@ struct ModalLookAndFeel : public LookAndFeel_V4
   juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override
   {
     auto scale = scaleProvider.getScale();
-    auto fontHeight = std::min<float>(UI_MODAL_BUTTON_FONT_HEIGHT * scale, buttonHeight);
+    auto fontHeight = std::min<float>(UI_MODAL_BUTTON_FONT_HEIGHT * scale, (float)buttonHeight);
     return juce::Font { FONT_PRETENDARD_REGULAR.withHeight(fontHeight) };
   }
   

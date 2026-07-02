@@ -98,14 +98,14 @@ struct CustomLookAndFeel : public LookAndFeel_V4
                                     : TextButton::textColourOffId)
                  .withMultipliedAlpha (button.isEnabled() ? 1.0f : 0.5f));
     
-    const int yIndent = jmin (4, button.proportionOfHeight (0.3f));
+    const float yIndent = jmin (4, button.proportionOfHeight (0.3f));
     const int textWidth = button.getWidth();
     
-    auto bounds = button.getLocalBounds();
-    bounds.removeFromTop(int(UI_BUTTON_PADDING_TOP * scale + yIndent));
-    bounds.removeFromLeft(int(UI_BUTTON_PADDING_LEFT * scale));
-    bounds.removeFromBottom(int(UI_BUTTON_PADDING_BOTTOM * scale + yIndent));
-    bounds.removeFromRight(int(UI_BUTTON_PADDING_RIGHT * scale));
+    auto bounds = button.getLocalBounds().toFloat();
+    bounds.removeFromTop(UI_BUTTON_PADDING_TOP * scale + yIndent);
+    bounds.removeFromLeft(UI_BUTTON_PADDING_LEFT * scale);
+    bounds.removeFromBottom(UI_BUTTON_PADDING_BOTTOM * scale + yIndent);
+    bounds.removeFromRight(UI_BUTTON_PADDING_RIGHT * scale);
     
     if (textWidth > 0)
       g.drawFittedText (button.getButtonText(),

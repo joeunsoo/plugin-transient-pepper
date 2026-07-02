@@ -23,7 +23,7 @@ class MeterTickLabel : public juce::Component
     auto scale = scaleProvider.getScale();
     auto boundsOut = getLocalBounds().toFloat();
     auto bounds = boundsOut;
-    auto labelHeight = hasMeterLabel ? 18 : 0;
+    auto labelHeight = hasMeterLabel ? 18.0f : 0.0f;
     bounds.removeFromTop(UI_METER_PADDING_TOP + labelHeight * scale);
     bounds.removeFromLeft(UI_METER_PADDING_LEFT * scale);
     bounds.removeFromBottom(UI_METER_PADDING_BOTTOM * scale);

@@ -113,7 +113,7 @@ void LoginComponent::resized()
 
   flexContainer.setBounds(getLocalBounds());
 
-  auto bounds = getLocalBounds().reduced(int(30 * scale), int(10 * scale));
+  auto bounds = getLocalBounds().toFloat().reduced(30.0f * scale, 10.0f * scale);
   flexContainer.setBounds(getLocalBounds());
 
   juce::FlexBox flexBox;
