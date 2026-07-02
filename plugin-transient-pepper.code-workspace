@@ -1,6 +1,11 @@
 {
   "folders": [
     {
+      "name": "Source",
+      "path": "Source",
+    },
+    {
+      "name": "plugin-transient-pepper",
       "path": ".",
     },
   ],

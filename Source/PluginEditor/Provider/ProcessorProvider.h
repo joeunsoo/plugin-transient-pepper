@@ -1,4 +1,5 @@
 #pragma once
+#include <JuceHeader.h>
 
 struct ProcessorProvider {
   virtual ~ProcessorProvider() = default;

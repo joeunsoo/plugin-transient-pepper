@@ -4,6 +4,7 @@ JETransientPepper_VST3.zip
 Distribution.xml
 ./
 ./JUCE
+.cache
 
 **/.DS_Store
 /Builds

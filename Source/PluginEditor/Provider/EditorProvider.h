@@ -1,4 +1,5 @@
 #pragma once
+#include <JuceHeader.h>
 struct EditorProvider
 {
   virtual ~EditorProvider() = default;
