@@ -2,7 +2,8 @@ sign_and_notarize.sh
 JETransientPepper_AU.zip
 JETransientPepper_VST3.zip
 Distribution.xml
-./ 
+./
+./JUCE
 
 **/.DS_Store
 /Builds
