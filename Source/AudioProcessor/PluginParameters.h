@@ -5,131 +5,157 @@ struct Parameters
 {
   public:
     explicit Parameters(AudioProcessorValueTreeState::ParameterLayout &layout)
-        : bypass(addToLayout<AudioParameterBool>(layout, ID::bypass, "Bypass", false)),
-          attack(addToLayout<AudioParameterFloat>(
+        : bypass(addToLayout<juce::AudioParameterBool>(layout, ID::bypass, "Bypass", false)),
+          attack(addToLayout<juce::AudioParameterFloat>(
               layout,
               ID::attack,
               "Attack",
-              NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f},
+              juce::NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f},
               0.0500f,
-              "ms",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return msToString(value * 1000.0f); },
-              [](const juce::String &text) { return stringToMs(text); })),
+              juce::AudioParameterFloatAttributes()
+                  .withLabel("ms")
+                  .withCategory(juce::AudioProcessorParameter::genericParameter)
+                  .withStringFromValueFunction([](float value, int) //
+                                               { return msToString(value * 1000.0f); })
+                  .withValueFromStringFunction([](const juce::String &text) //
+                                               { return stringToMs(text); }))),
 
-          release(addToLayout<AudioParameterFloat>(
+          release(addToLayout<juce::AudioParameterFloat>(
               layout,
               ID::release,
               "Release",
-              NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f},
+              juce::NormalisableRange<float>{0.001f, 0.1000f, 0.001f, 1.0f},
               0.0500f,
-              "ms",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return msToString(value * 1000.0f); },
-              [](const juce::String &text) { return stringToMs(text); })),
+              juce::AudioParameterFloatAttributes()
+                  .withLabel("ms")
+                  .withCategory(juce::AudioProcessorParameter::genericParameter)
+                  .withStringFromValueFunction([](float value, int) //
+                                               { return msToString(value * 1000.0f); })
+                  .withValueFromStringFunction([](const juce::String &text) //
+                                               { return stringToMs(text); }))),
 
-          threshold(addToLayout<AudioParameterFloat>(
-              layout,
-              ID::threshold,
-              "Threshold",
-              NormalisableRange<float>{-40.0f, 0.0f, 0.1f, 1.0f},
-              -20.0f,
-              "dB",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return dBToString(value); },
-              [](const juce::String &text) { return stringToDB(text); })),
+          threshold(
+              addToLayout<juce::AudioParameterFloat>(layout,
+                                                     ID::threshold,
+                                                     "Threshold",
+                                                     juce::NormalisableRange<float>{-40.0f, 0.0f, 0.1f, 1.0f},
+                                                     -20.0f,
+                                                     juce::AudioParameterFloatAttributes()
+                                                         .withLabel("dB")
+                                                         .withCategory(juce::AudioProcessorParameter::genericParameter)
+                                                         .withStringFromValueFunction([](float value, int) //
+                                                                                      { return dBToString(value); })
+                                                         .withValueFromStringFunction([](const juce::String &text) //
+                                                                                      { return stringToDB(text); }))),
 
-          bpfPower(addToLayout<AudioParameterBool>(layout, ID::bpfPower, "BPF On/Off", false)),
-          bpfFrequency(addToLayout<AudioParameterFloat>(
-              layout,
-              ID::bpfFrequency,
-              "BPF Freq",
-              NormalisableRange<float>{50.0f, 12000.0f, 0.1f, 0.27375f},
-              1000.0f,
-              "Hz",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return hzToString(value); },
-              [](const juce::String &text) { return stringToHz(text); })),
-          sidechainListen(addToLayout<AudioParameterBool>(layout, ID::sidechainListen, "Sidechain Listen", false)),
-          tilt(addToLayout<AudioParameterFloat>(
-              layout,
-              ID::tilt,
-              "Tone",
-              NormalisableRange<float>{-12.0f, 12.0f, 0.1f, 1.0f},
-              0.0f,
-              "dB",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return dBToString(value); },
-              [](const juce::String &text) { return stringToDB(text); })),
-
-          midSide(addToLayout<AudioParameterFloat>(
+          bpfPower(addToLayout<juce::AudioParameterBool>(layout, ID::bpfPower, "BPF On/Off", false)),
+          bpfFrequency(
+              addToLayout<juce::AudioParameterFloat>(layout,
+                                                     ID::bpfFrequency,
+                                                     "BPF Freq",
+                                                     juce::NormalisableRange<float>{50.0f, 12000.0f, 0.1f, 0.27375f},
+                                                     1000.0f,
+                                                     juce::AudioParameterFloatAttributes()
+                                                         .withLabel("Hz")
+                                                         .withCategory(juce::AudioProcessorParameter::genericParameter)
+                                                         .withStringFromValueFunction([](float value, int) //
+                                                                                      { return hzToString(value); })
+                                                         .withValueFromStringFunction([](const juce::String &text) //
+                                                                                      { return stringToHz(text); }))),
+          sidechainListen(
+              addToLayout<juce::AudioParameterBool>(layout, ID::sidechainListen, "Sidechain Listen", false)),
+          tilt(addToLayout<juce::AudioParameterFloat>(layout,
+                                                      ID::tilt,
+                                                      "Tone",
+                                                      juce::NormalisableRange<float>{-12.0f, 12.0f, 0.1f, 1.0f},
+                                                      0.0f,
+                                                      juce::AudioParameterFloatAttributes()
+                                                          .withLabel("dB")
+                                                          .withCategory(juce::AudioProcessorParameter::genericParameter)
+                                                          .withStringFromValueFunction([](float value, int) //
+                                                                                       { return dBToString(value); })
+                                                          .withValueFromStringFunction([](const juce::String &text) //
+                                                                                       { return stringToDB(text); }))),
+          midSide(addToLayout<juce::AudioParameterFloat>(
               layout,
               ID::midSide,
               "Mid/Side",
-              NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f},
+              juce::NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f},
               50.0f,
-              "%",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return percentToString(value); },
-              [](const juce::String &text) { return stringToPercent(text); })),
-          noiseLevelGain(addToLayout<AudioParameterFloat>(
-              layout,
-              ID::noiseLevelGain,
-              "Noise Gain",
-              NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f},
-              0.0f,
-              "dB",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return dBToString(value); },
-              [](const juce::String &text) { return stringToDB(text); })),
+              juce::AudioParameterFloatAttributes()
+                  .withLabel("%")
+                  .withCategory(juce::AudioProcessorParameter::genericParameter)
+                  .withStringFromValueFunction([](float value, int) //
+                                               { return percentToString(value); })
+                  .withValueFromStringFunction([](const juce::String &text) //
+                                               { return stringToPercent(text); }))),
+          noiseLevelGain(
+              addToLayout<juce::AudioParameterFloat>(layout,
+                                                     ID::noiseLevelGain,
+                                                     "Noise Gain",
+                                                     juce::NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f},
+                                                     0.0f,
+                                                     juce::AudioParameterFloatAttributes()
+                                                         .withLabel("dB")
+                                                         .withCategory(juce::AudioProcessorParameter::genericParameter)
+                                                         .withStringFromValueFunction([](float value, int) //
+                                                                                      { return dBToString(value); })
+                                                         .withValueFromStringFunction([](const juce::String &text) //
+                                                                                      { return stringToDB(text); }))),
 
-          outputGain(addToLayout<AudioParameterFloat>(
+          outputGain(addToLayout<juce::AudioParameterFloat>(
               layout,
               ID::outputGain,
               "Output Gain",
-              NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f},
+              juce::NormalisableRange<float>{-24.0f, 24.0f, 0.1f, 1.0f},
               0.0f,
-              "dB",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return dBToString(value); },
-              [](const juce::String &text) { return stringToDB(text); })),
+              juce::AudioParameterFloatAttributes()
+                  .withLabel("dB")
+                  .withCategory(juce::AudioProcessorParameter::genericParameter)
+                  .withStringFromValueFunction([](float value, int) //
+                                               { return dBToString(value); })
+                  .withValueFromStringFunction([](const juce::String &text) //
+                                               { return stringToDB(text); }))),
 
-          dryWet(addToLayout<AudioParameterFloat>(
+          dryWet(addToLayout<juce::AudioParameterFloat>(
               layout,
               ID::dryWet,
               "Dry/Wet",
-              NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f},
+              juce::NormalisableRange<float>{0.0f, 100.0f, 0.1f, 1.0f},
               50.0f,
-              "%",
-              juce::AudioProcessorParameter::genericParameter,
-              [](float value, int) { return percentToString(value); },
-              [](const juce::String &text) { return stringToPercent(text); })),
+              juce::AudioParameterFloatAttributes()
+                  .withLabel("%")
+                  .withCategory(juce::AudioProcessorParameter::genericParameter)
+                  .withStringFromValueFunction([](float value, int) //
+                                               { return percentToString(value); })
+                  .withValueFromStringFunction([](const juce::String &text) //
+                                               { return stringToPercent(text); }))),
 
-          wetSolo(addToLayout<AudioParameterBool>(layout, ID::wetSolo, "Wet Solo", false)),
-          linkChannels(addToLayout<AudioParameterBool>(layout, ID::linkChannels, "Channels Link", true))
+          wetSolo(addToLayout<juce::AudioParameterBool>(layout, ID::wetSolo, "Wet Solo", false)),
+          linkChannels(addToLayout<juce::AudioParameterBool>(layout, ID::linkChannels, "Channels Link", true))
     {
     }
 
-    AudioParameterBool &bypass;
+    juce::AudioParameterBool &bypass;
 
-    AudioParameterFloat &attack;
-    AudioParameterFloat &release;
+    juce::AudioParameterFloat &attack;
+    juce::AudioParameterFloat &release;
 
-    AudioParameterFloat &threshold;
+    juce::AudioParameterFloat &threshold;
 
-    AudioParameterBool &bpfPower;
-    AudioParameterFloat &bpfFrequency;
-    AudioParameterBool &sidechainListen;
+    juce::AudioParameterBool &bpfPower;
+    juce::AudioParameterFloat &bpfFrequency;
+    juce::AudioParameterBool &sidechainListen;
 
-    AudioParameterFloat &tilt;
-    AudioParameterFloat &midSide;
+    juce::AudioParameterFloat &tilt;
+    juce::AudioParameterFloat &midSide;
 
-    AudioParameterFloat &noiseLevelGain;
-    AudioParameterFloat &outputGain;
-    AudioParameterFloat &dryWet;
+    juce::AudioParameterFloat &noiseLevelGain;
+    juce::AudioParameterFloat &outputGain;
+    juce::AudioParameterFloat &dryWet;
 
-    AudioParameterBool &wetSolo;
-    AudioParameterBool &linkChannels;
+    juce::AudioParameterBool &wetSolo;
+    juce::AudioParameterBool &linkChannels;
 
   private:
     template <typename Param> static void add(AudioProcessorParameterGroup &group, std::unique_ptr<Param> param)
@@ -153,7 +179,7 @@ struct Parameters
 
     //==============================================================================
 
-    static String hzToString(float value)
+    static juce::String hzToString(float value)
     {
         return juce::String(value, 1) + " Hz"; // << 표시될 문자열
     }
@@ -162,7 +188,7 @@ struct Parameters
         return text.dropLastCharacters(3).getFloatValue(); // "12 %" → 12
     }
 
-    static String msToString(float value)
+    static juce::String msToString(float value)
     {
         return juce::String(value, 0) + " ms"; // << 표시될 문자열
     }
@@ -171,7 +197,7 @@ struct Parameters
         return text.dropLastCharacters(3).getFloatValue(); // "12 ms" → 12
     }
 
-    static String percentToString(float value)
+    static juce::String percentToString(float value)
     {
         return juce::String(value, 1) + " %"; // << 표시될 문자열
     }
@@ -180,7 +206,7 @@ struct Parameters
         return text.dropLastCharacters(2).getFloatValue(); // "12 %" → 12
     }
 
-    static String dBToString(float value)
+    static juce::String dBToString(float value)
     {
         return juce::String(value, 1) + " dB"; // << 표시될 문자열
     }
