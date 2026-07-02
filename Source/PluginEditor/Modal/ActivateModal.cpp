@@ -1,6 +1,4 @@
 #include "ActivateModal.h"
-#include "../../NamespaceParameterId.h"
-#include "../DefineUI.h"
 
 //==============================================================================
 ActivateModal::ActivateModal(const ScaleProvider &sp, LicenseProvider &lp)

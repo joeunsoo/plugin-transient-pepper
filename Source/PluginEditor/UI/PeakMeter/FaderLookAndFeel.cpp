@@ -1,7 +1,6 @@
 // DragOnlySlider.h
 #include "FaderLookAndFeel.h"
-#include "../../../Utils.h"
-#include "../../DefineUI.h"
+#include "../../Fonts.h"
 #include "FaderComponent.h"
 #include <JuceHeader.h>
 

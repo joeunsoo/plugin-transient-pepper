@@ -1,7 +1,7 @@
 #include "AboutModal.h"
-#include "../../NamespaceParameterId.h"
+#include "../../Define.h"
 #include "../DefineUI.h"
-#include "../PluginEditor.h"
+#include "../Fonts.h"
 
 //==============================================================================
 AboutModal::AboutModal(const ScaleProvider &sp) : scaleProvider(sp)

@@ -1,5 +1,4 @@
 #include "GraphContainer.h"
-#include "../../../Utils.h"
 #include "../../DefineUI.h"
 
 GraphContainer::GraphContainer(const ScaleProvider &sp, ProcessorProvider &pp)

@@ -1,4 +1,7 @@
 #include "HeaderComponent.h"
+#include "../../Define.h"
+#include "../Fonts.h"
+
 
 //==============================================================================
 HeaderComponent::HeaderComponent(Providers &pv)

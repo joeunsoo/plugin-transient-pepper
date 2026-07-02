@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../DefineUI.h"
+#include "../Fonts.h"
 #include "../Provider/ScaleProvider.h"
 
 #define UI_MODAL_BORDER_RADIUS 4.0f

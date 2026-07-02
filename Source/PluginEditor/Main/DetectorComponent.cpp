@@ -1,5 +1,7 @@
 #include "DetectorComponent.h"
 #include "../../NamespaceParameterId.h"
+#include "../Fonts.h"
+
 
 //==============================================================================
 DetectorComponent::DetectorComponent(Providers &pv)

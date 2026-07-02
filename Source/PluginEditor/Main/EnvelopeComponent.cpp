@@ -1,5 +1,6 @@
 #include "EnvelopeComponent.h"
 #include "../../NamespaceParameterId.h"
+#include "../Fonts.h"
 
 //==============================================================================
 EnvelopeComponent::EnvelopeComponent(Providers &pv)

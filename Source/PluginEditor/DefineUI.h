@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../Define.h"
-#include "Fonts.h"
+#include <JuceHeader.h>
 
 #define UI_TIMER_HZ 60
 

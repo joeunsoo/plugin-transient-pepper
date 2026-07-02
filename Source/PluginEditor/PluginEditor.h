@@ -3,7 +3,6 @@
 #include "../AudioProcessor/PluginAudioProcessor.h"
 #include "../PluginWrapper.h"
 
-#include "DefineUI.h"
 #include "Provider/AudioProcessorProvider.h"
 #include "Provider/EditorProvider.h"
 #include "Provider/Providers.h"

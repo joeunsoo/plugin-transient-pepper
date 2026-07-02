@@ -1,5 +1,4 @@
 #pragma once
-#include "../../DefineUI.h"
 #include "../../Provider/ProcessorProvider.h"
 #include "../../Provider/ScaleProvider.h"
 #include "GraphComponent.h"

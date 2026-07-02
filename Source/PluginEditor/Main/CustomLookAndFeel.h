@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../DefineUI.h"
+#include "../Fonts.h"
 #include "../Provider/ScaleProvider.h"
 #include "../UI/Knob/KnobSlider.h"
+
 
 struct CustomLookAndFeel : public LookAndFeel_V4
 {

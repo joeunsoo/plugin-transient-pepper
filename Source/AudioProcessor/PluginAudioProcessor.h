@@ -1,20 +1,7 @@
-/*
- ==============================================================================
-
- PluginAudioProcessor.h
- Created: 31 Aug 2025 10:22:01pm
- Author:  JoEunsoo
-
- ==============================================================================
- */
-
 #pragma once
 
-#include "../NamespaceParameterId.h"
 #include "PluginParameters.h"
 #include <JuceHeader.h>
-
-#include "../LicenseManager.h"
 
 #include "PeakMeter.h"
 #include "ProcessorBase/DCOffsetFilter.h"

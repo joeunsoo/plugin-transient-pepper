@@ -1,13 +1,3 @@
-/*
- ==============================================================================
-
- PluginAudioProcessor.cpp
- Created: 3 Sep 2025 11:01:38am
- Author:  JoEunsoo
-
- ==============================================================================
- */
-
 #include "PluginAudioProcessor.h"
 #include "../Define.h"
 #include <JuceHeader.h>

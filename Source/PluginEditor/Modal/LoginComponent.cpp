@@ -1,5 +1,5 @@
 #include "LoginComponent.h"
-#include "../../NamespaceParameterId.h"
+#include "../../Define.h"
 #include "../DefineUI.h"
 #include "ActivateModal.h"
 

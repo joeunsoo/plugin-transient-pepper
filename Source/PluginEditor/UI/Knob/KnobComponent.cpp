@@ -1,6 +1,6 @@
 #include "KnobComponent.h"
-#include "../../../NamespaceParameterId.h"
 #include "../../DefineUI.h"
+#include "../../Fonts.h"
 
 //==============================================================================
 KnobComponent::KnobComponent(EditorProvider &ep, const ScaleProvider &sp, ProcessorProvider &pp, const String &paramID,

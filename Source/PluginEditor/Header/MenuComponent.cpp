@@ -1,5 +1,8 @@
 #include "MenuComponent.h"
+#include "../../Define.h"
 #include "../DefineUI.h"
+#include "../Fonts.h"
+
 
 //==============================================================================
 MenuComponent::MenuComponent(Providers &pv)

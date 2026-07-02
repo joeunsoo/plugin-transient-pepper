@@ -1,5 +1,5 @@
 #pragma once
-#include "Define.h"
+#include <JuceHeader.h>
 
 namespace ID
 {

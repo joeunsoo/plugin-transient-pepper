@@ -2,8 +2,10 @@
 
 #include "../../../Utils.h"
 #include "../../DefineUI.h"
+#include "../../Fonts.h"
 #include "../../Provider/ScaleProvider.h"
 #include <JuceHeader.h>
+
 
 class MeterTickLabel : public juce::Component
 {

@@ -1,7 +1,6 @@
 // DragOnlySlider.h
 #pragma once
 #include "../../DefineUI.h"
-#include "../../Provider/ScaleProvider.h"
 #include <JuceHeader.h>
 
 // 마우스 드래그 외의 입력(키보드, 휠)을 모두 차단하는 슬라이더

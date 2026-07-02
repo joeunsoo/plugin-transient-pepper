@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Provider/ProcessorProvider.h"
 #include "../Provider/Providers.h"
 #include "../Provider/ScaleProvider.h"
 #include "CustomLookAndFeel.h"

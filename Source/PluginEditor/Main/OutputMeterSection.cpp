@@ -1,5 +1,4 @@
 #include "OutputMeterSection.h"
-#include "../../NamespaceParameterId.h"
 
 //==============================================================================
 OutputMeterSection::OutputMeterSection(Providers &pv)

@@ -1,6 +1,5 @@
 #include "MainComponent.h"
 #include "../DefineUI.h"
-#include "../PluginEditor.h"
 
 //==============================================================================
 MainComponent::MainComponent(Providers &pv)

@@ -1,5 +1,4 @@
 #include "TrialComponent.h"
-#include "../../NamespaceParameterId.h"
 #include "../DefineUI.h"
 #include "ActivateModal.h"
 

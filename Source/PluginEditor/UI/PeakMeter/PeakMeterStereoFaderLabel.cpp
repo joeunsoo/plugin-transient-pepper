@@ -1,4 +1,5 @@
 #include "PeakMeterStereoFaderLabel.h"
+#include "../../Fonts.h"
 
 PeakMeterStereoFaderLabel::PeakMeterStereoFaderLabel(const ScaleProvider &sp, ProcessorProvider &pp, int index,
                                                      bool usePeakHold, const String &paramID, const String labelText)
